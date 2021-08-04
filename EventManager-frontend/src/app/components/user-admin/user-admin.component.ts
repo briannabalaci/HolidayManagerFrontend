@@ -13,7 +13,7 @@ export class UserAdminComponent implements OnInit {
   public displayedColumns = ["forename", "surname", "email", "role", "department"];
   public dataSource:User[] = [];
   public dataSourceUpdated:MatTableDataSource<User> = new MatTableDataSource<User>();
-  public showForm:boolean = false;
+  public showForm:boolean = true;
 
   constructor(private service: UserService) { }
 
@@ -23,6 +23,7 @@ export class UserAdminComponent implements OnInit {
         this.dataSource = data;
         this.dataSourceUpdated.data = this.dataSource;
       }
+      
     )
   }
 
