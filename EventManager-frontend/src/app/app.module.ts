@@ -5,6 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MainComponent } from './app/components/main/main.component';
 import { MainModule } from './app/components/main/main.module';
+import { DashboardComponent } from './app/components/dashboard/dashboard.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EventCardComponent } from './app/components/dashboard/event-card/event-card.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +16,8 @@ import { MainModule } from './app/components/main/main.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MainModule
+    MainModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
