@@ -7,8 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  //role = 'attendee';
-  role = 'organizer';
+  role: string = '';
   
   filters: string[] = [
     'All Events', 'Future Events', 'Accepted', 'Declined'
@@ -18,7 +17,7 @@ export class DashboardComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    //set role from storage
+    this.role = sessionStorage.getItem('role')!;
   }
 
   onCreateEvent() {
