@@ -9,6 +9,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginModule } from 'src/app/components/login/login.module';
 import { DashboardModule } from 'src/app/components/dashboard/dashboard.module';
 import { UserAdminModule } from 'src/app/components/user-admin/user-admin.module';
+import { MatTableModule } from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field'; 
+import { MatLabel } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
 
 const routes: Routes = [
   {
@@ -27,7 +31,10 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     LoginModule,
     DashboardModule,
-    UserAdminModule
+    UserAdminModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatButtonModule
   ],
   exports: [
     MainComponent
