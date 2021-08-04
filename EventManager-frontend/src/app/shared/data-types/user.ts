@@ -1,5 +1,4 @@
 export class User {
-    id?:number;
     forename?:String;
     surname?:String;
     email?:String;

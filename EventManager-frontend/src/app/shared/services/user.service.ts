@@ -15,4 +15,5 @@ export class UserService {
     const path = `${ENVIRONMENT}/users/getAll`;
     return this.httpClient.get<User[]>(path);
   }
+  
 }
