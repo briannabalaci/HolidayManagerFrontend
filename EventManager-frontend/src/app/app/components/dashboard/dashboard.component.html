@@ -6,7 +6,7 @@
     <body>
         <mat-form-field appearance="fill">
             <mat-label>Filter</mat-label>
-            <mat-select>
+            <mat-select [(value)]="selectedFilter">
             <mat-option *ngFor="let filter of filters" [value]="filter">
                 {{filter}}
             </mat-option>

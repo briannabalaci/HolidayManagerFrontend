@@ -13,6 +13,7 @@ export class DashboardComponent implements OnInit {
   filters: string[] = [
     'All Events', 'Future Events', 'Accepted', 'Declined'
   ];
+  selectedFilter = this.filters[0];
 
   constructor() { }
 
