@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class EventCardComponent implements OnInit {
 
   status: string = 'Accepted'
+  coverImg = 'https://material.angular.io/assets/img/examples/shiba2.jpg';
 
   constructor() { }
 
