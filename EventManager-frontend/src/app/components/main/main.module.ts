@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginModule } from 'src/app/components/login/login.module';
 import { DashboardModule } from 'src/app/components/dashboard/dashboard.module';
 import { UserAdminModule } from 'src/app/components/user-admin/user-admin.module';
+import { MatTableModule } from '@angular/material/table';
 
 const routes: Routes = [
   {
@@ -24,7 +25,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     LoginModule,
     DashboardModule,
-    UserAdminModule
+    UserAdminModule,
+    MatTableModule
   ],
   exports: [
     MainComponent
