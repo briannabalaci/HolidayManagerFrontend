@@ -3,12 +3,22 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: '',
-    loadChildren: () => import("./components/main/main.module").then(m => m.MainModule)
+
+    path: 'login',
+    loadChildren: () => import('./components/login/login.module').then(m => m.LoginModule)
   },
   {
-    path: 'login',
-    loadChildren: () => import("./components/login/login.module").then(m => m.LoginModule)
+    path: 'dashboard',
+    loadChildren: () => import('./components/dashboard/dashboard.module').then(m => m.DashboardModule)
+  },
+  {
+    path: 'user-admin',
+    loadChildren: () => import('./components/user-admin/user-admin.module').then(m => m.UserAdminModule)
+  },
+  {
+    path: '**',
+    redirectTo: ''
+
   }
 ];
 
