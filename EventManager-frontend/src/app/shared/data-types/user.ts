@@ -1,8 +1,8 @@
 export class User {
-    forename?:String;
-    surname?:String;
-    email?:String;
-    password?:String;
-    role?:String;
-    department?:String;
+    forename?:string;
+    surname?:string;
+    email?:string;
+    password?:string;
+    role?:string;
+    department?:string;
 }
