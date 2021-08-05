@@ -1,28 +1,29 @@
+<h3>Create new user</h3>
 <form [formGroup]="userFormGroup" (ngSubmit)="postUser()">
-    <mat-form-field appearance="legacy" >
-        <mat-label>Forename</mat-label>
-        <input matInput placeholder="Placeholder" formControlName="forename">
-        <mat-hint>Hint</mat-hint>
+    <mat-form-field appearance="fill" >
+        <mat-label>Enter forename</mat-label>
+        <input matInput placeholder="Forename" formControlName="forename" required>
       </mat-form-field>
-      <mat-form-field appearance="legacy" >
-        <mat-label>Surname</mat-label>
-        <input matInput placeholder="Placeholder" formControlName="surname">
-        <mat-hint>Hint</mat-hint>
+
+      <mat-form-field appearance="fill" >
+        <mat-label>Enter surname</mat-label>
+        <input matInput placeholder="Surname" formControlName="surname" required>
       </mat-form-field>
-      <mat-form-field appearance="legacy" >
-        <mat-label>Email(username)</mat-label>
-        <input matInput placeholder="Placeholder" formControlName="email">
-        <mat-hint>Hint</mat-hint>
+
+      <mat-form-field appearance="fill" >
+        <mat-label>Enter email</mat-label>
+        <input matInput placeholder="name@example.com" formControlName="email" required>
       </mat-form-field>
-      <mat-form-field appearance="legacy" >
-        <mat-label>Password</mat-label>
-        <input matInput placeholder="Placeholder" formControlName="password">
-        <mat-hint>Hint</mat-hint>
+
+      <mat-form-field appearance="fill" >
+        <mat-label>Enter password</mat-label>
+        <input matInput placeholder="Password" formControlName="password" required>
       </mat-form-field>
-      <mat-form-field appearance="legacy" >
-        <mat-label>Role</mat-label>
-        <input matInput placeholder="Placeholder" formControlName="role">
-        <mat-hint>Hint</mat-hint>
+
+      <mat-form-field appearance="fill" >
+        <mat-label>Enter role</mat-label>
+        <input matInput placeholder="Role" formControlName="role" required>
       </mat-form-field>
-      <button mat-button type="submit">Submit</button>
+
+      <button type="submit" mat-raised-button color="primary">Create User</button>
 </form>
