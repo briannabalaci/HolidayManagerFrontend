@@ -1,10 +1,12 @@
-<div *ngIf="login">
-    <h1  mat-dialog-title>Error ! </h1>
-    <mat-dialog-content color="warn"> {{this.data.message}} </mat-dialog-content>
+<div class="dialog">
+    <div *ngIf="login">
+        <h1 mat-dialog-title>Error ! </h1>
+        <mat-dialog-content color="warn"> {{this.data.message}} </mat-dialog-content>
+    </div>
+    <div *ngIf="admin">
+        <h1>ADMIN</h1>
+    </div>
+    <mat-dialog-actions>
+        <button mat-raised-button color="primary" (click)="close()">Close</button>
+    </mat-dialog-actions>
 </div>
-<div *ngIf="admin">
-    <h1>ADMIN</h1>
-</div>
-<mat-dialog-actions>
-    <button mat-raised-button color="primary" (click)="close()">Close</button>
-</mat-dialog-actions>
