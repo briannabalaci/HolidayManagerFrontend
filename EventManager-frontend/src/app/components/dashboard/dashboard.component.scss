@@ -47,6 +47,7 @@ section {
         border: 1px solid rgb(235, 235, 235);
         margin-bottom: 20px;
         border-radius: 15px;
+        min-width: 152px;
     
         @include mat.elevation-transition();
         @include mat.elevation(2);
