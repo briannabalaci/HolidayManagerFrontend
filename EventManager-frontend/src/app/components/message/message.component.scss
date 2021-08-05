@@ -1,3 +1,16 @@
-h1 , button {
+
+
+dialog {
     text-align: center;
+    width: 300px;
+
+    h1 , button {
+        text-align: center;
+    }
+
+    .info {
+        display: inline-block;
+    }
 }
+
+

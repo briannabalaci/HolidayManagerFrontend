@@ -12,7 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class UserAdminComponent implements OnInit {
 
-  public displayedColumns = ["forename", "surname", "info", "edit", "delete"];
+  public displayedColumns = ["forename", "surname", "actions"];
   public dataSource:User[] = [];
   public dataSourceUpdated:MatTableDataSource<User> = new MatTableDataSource<User>();
   public showForm:boolean = true;
@@ -37,9 +37,11 @@ export class UserAdminComponent implements OnInit {
     })
   }
 
-  openInfo(): void {
+  openInfo(user: User): void {
     this.dialog.open(MessageComponent, {
-      data: this.dataSourceUpdated
+      data:{ parameter: user,
+      component: 'admin'
+        }
       }
     )
   }
