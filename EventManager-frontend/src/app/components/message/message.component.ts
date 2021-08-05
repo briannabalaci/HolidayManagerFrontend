@@ -28,4 +28,5 @@ export class MessageComponent implements OnInit {
     this.dialogRef.close();
   }
 
+
 }

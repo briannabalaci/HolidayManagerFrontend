@@ -13,6 +13,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field'; 
 import { MatLabel } from '@angular/material/form-field';
 import { MessageModule } from '../message/message.module';
+import { MatPaginator } from '@angular/material/paginator';
 
 
 const routes: Routes = [
@@ -35,7 +36,8 @@ const routes: Routes = [
     UserAdminModule,
     MatTableModule,
     MatFormFieldModule,
-    MessageModule
+    MessageModule,
+    //MatPaginator
   ],
   exports: [
     MainComponent
