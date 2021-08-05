@@ -1,9 +1,35 @@
 img {
-  height: 100%;
   width: 100%;
   object-fit: cover; 
+  max-height: 150px;
 }
 
-article {
-    height: 90%;
+h2, p {
+  display: inline-block;
+  margin: 0;
+}
+
+mat-icon {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.card-header {
+  padding: 0 5px;
+  vertical-align: middle;
+  background-color: white;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+
+}
+
+.card-bottom {
+  padding: 5px 0px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.align-text-element {
+  margin: 0px 10px 0 10px;
 }
