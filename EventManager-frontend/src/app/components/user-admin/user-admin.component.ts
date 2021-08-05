@@ -10,7 +10,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 })
 export class UserAdminComponent implements OnInit {
 
-  public displayedColumns = ["forename", "surname", "email", "role", "department"];
+  public displayedColumns = ["forename", "surname", "email", "role", "department", "info", "edit", "delete"];
   public dataSource:User[] = [];
   public dataSourceUpdated:MatTableDataSource<User> = new MatTableDataSource<User>();
   public showForm:boolean = true;
@@ -34,6 +34,7 @@ export class UserAdminComponent implements OnInit {
       this.dataSourceUpdated.data = this.dataSource;
     })
   }
+
 
 
 }
