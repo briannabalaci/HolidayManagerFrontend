@@ -9,12 +9,22 @@ import {MatDialogRef, MAT_DIALOG_DATA, MatDialog} from  '@angular/material/dialo
 export class MessageComponent implements OnInit {
 
   constructor(private  dialogRef:  MatDialogRef<MessageComponent>, @Inject(MAT_DIALOG_DATA) public  data:  any) { }
-
-  ngOnInit(): void {
+  login: boolean = false;
+  admin: boolean = false;
+  ngOnInit(): void { 
+    if (this.data.component === 'login')
+    {
+      this.login = true;
+    }
+    
+    if (this.data.component === 'admin')
+    {
+      this.admin = true;
+    }
   }
 
   close(): void {
-    
+
     this.dialogRef.close();
   }
 
