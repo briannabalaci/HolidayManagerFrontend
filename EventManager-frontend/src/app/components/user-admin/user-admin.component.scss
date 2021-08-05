@@ -1,0 +1,31 @@
+.administration {
+    font-family: sans-serif;
+}
+
+table {
+    width: 100%;
+    min-width: 400px;
+    border-collapse: collapse;
+    color: blue;
+
+
+    th {
+      text-align: center;
+      padding: 10px 5px;
+    }
+
+    td {
+      padding: 10px 5px;
+      text-align: center;
+    }
+
+
+    tbody tr:nth-of-type(2n-1) {
+      background-color: blue;
+    }
+  }
+
+h2 {
+    padding: 20px;
+    text-align: left;
+}

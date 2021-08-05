@@ -1,1 +1,22 @@
-<p>dashboard works!</p>
+<section>
+    <header>
+        <h1 class="header_element">Dashboard</h1>
+        <button  mat-raised-button color="primary" (click)="onCreateEvent()" *ngIf='role==="organizer"' class="header_element">Create event</button>
+    </header>
+    <body>
+        <mat-form-field appearance="fill">
+            <mat-label>Filter</mat-label>
+            <mat-select [(value)]="selectedFilter">
+            <mat-option *ngFor="let filter of filters" [value]="filter">
+                {{filter}}
+            </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div class="event-cards">
+            <app-event-card></app-event-card>
+            <app-event-card></app-event-card>
+            <app-event-card></app-event-card>
+            <app-event-card></app-event-card>
+        </div>
+    </body>
+</section>
