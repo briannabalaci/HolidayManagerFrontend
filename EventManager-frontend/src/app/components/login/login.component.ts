@@ -47,7 +47,8 @@ export class LoginComponent implements OnInit {
           data: { message: err.error,
             component: 'login'
           }
-        })});
+        }),
+      this.form.reset();});
   }
 
 }
