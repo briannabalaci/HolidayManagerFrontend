@@ -4,7 +4,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 import { EventCardComponent } from './event-card/event-card.component';
 import {MatSelectModule} from '@angular/material/select';
-import { MatButtonModule } from '@angular/material/button';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatCardModule} from '@angular/material/card';
 
 const routes: Routes = [
   {
@@ -22,7 +24,9 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     CommonModule,
     MatSelectModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule
   ],
   exports: [
     DashboardComponent,
