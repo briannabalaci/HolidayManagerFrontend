@@ -44,7 +44,9 @@ export class LoginComponent implements OnInit {
           
 
         }, err => {this.dialog.open(MessageComponent, {
-          data: err.error,
+          data: { message: err.error,
+            component: 'admin'
+          },
           height: '35%',
           width:'83%'
         })});
