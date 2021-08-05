@@ -34,12 +34,8 @@ const routes: Routes = [
     DashboardModule,
     UserAdminModule,
     MatTableModule,
-<<<<<<< HEAD
-    MatFormFieldModule
-=======
     MatFormFieldModule,
     MessageModule
->>>>>>> frontend-mmehi
   ],
   exports: [
     MainComponent

@@ -29,10 +29,7 @@ const routes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule
-<<<<<<< HEAD
-=======
     
->>>>>>> frontend-mmehi
   ],
   exports: [
     LoginComponent
