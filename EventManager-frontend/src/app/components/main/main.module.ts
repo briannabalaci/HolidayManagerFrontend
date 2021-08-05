@@ -12,7 +12,8 @@ import { UserAdminModule } from 'src/app/components/user-admin/user-admin.module
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field'; 
 import { MatLabel } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button';
+import { MessageModule } from '../message/message.module';
+
 
 const routes: Routes = [
   {
@@ -33,7 +34,12 @@ const routes: Routes = [
     DashboardModule,
     UserAdminModule,
     MatTableModule,
+<<<<<<< HEAD
     MatFormFieldModule
+=======
+    MatFormFieldModule,
+    MessageModule
+>>>>>>> frontend-mmehi
   ],
   exports: [
     MainComponent

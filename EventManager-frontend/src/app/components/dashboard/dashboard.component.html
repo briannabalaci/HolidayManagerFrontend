@@ -1,7 +1,7 @@
 <section>
     <header>
         <h1 class="header_element">Dashboard</h1>
-        <button (click)="onCreateEvent()" *ngIf='role==="organizer"' class="header_element btn btn-success">Create event</button>
+        <button  mat-raised-button color="primary" (click)="onCreateEvent()" *ngIf='role==="organizer"' class="header_element">Create event</button>
     </header>
     <body>
         <mat-form-field appearance="fill">
