@@ -33,8 +33,7 @@ const routes: Routes = [
     DashboardModule,
     UserAdminModule,
     MatTableModule,
-    MatFormFieldModule,
-    MatButtonModule
+    MatFormFieldModule
   ],
   exports: [
     MainComponent

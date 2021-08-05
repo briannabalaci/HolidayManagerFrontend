@@ -1,16 +1,18 @@
+<img id="login-image" src="../assets/imgs/mhp.png" alt="MHP logo">
 
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <h2>Log In</h2>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <h2>Log In</h2>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Enter your email</mat-label>
-          <input matInput placeholder="name@example.com" formControlName="username" required>
-        
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-          <mat-label>Enter your password</mat-label>
-          <input matInput type="password" placeholder="Password" formControlName="password" required>
-         
-        </mat-form-field>
-        <button mat-raised-button color="primary">Login</button>
-      </form>
+  <mat-form-field appearance="fill">
+    <mat-label>Enter your email</mat-label>
+    <input matInput placeholder="name@example.com" formControlName="username" required>
+  
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Enter your password</mat-label>
+    <input matInput type="password" placeholder="Password" formControlName="password" required>
+    
+  </mat-form-field>
+  <button mat-raised-button color="primary" class="login-button">Login</button><br>
+  <button mat-raised-button color="primary" class="password-button">Change Password</button>
+</form>
