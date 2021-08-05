@@ -1,0 +1,23 @@
+mat-form-field {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    width: 80%;
+}
+
+h3{
+    text-align: center;
+}
+
+form {
+    text-align: center;
+
+    button {
+        margin: 2%;
+      
+        &:hover{
+            background-color: #6495ED;
+        }
+    }
+}
