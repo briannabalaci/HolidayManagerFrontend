@@ -2,46 +2,60 @@
 
 section {
     padding: 15px 25px;
-}
 
-header {
-    display: flex;
-    justify-content: space-between;
-    height: 40px;
-}
+    header {
+        .top-row {
+            display: flex;
+            justify-content: space-between;
+            height: 40px;
 
-.header_element {
-    display: inline-block;
-    margin: 0;
-}
+            .header_element {
+                display: inline-block;
+                margin: 0;
+            }
 
-body  {
-    margin-top: 20px;
-}
+            button {
+                &:hover{
+                    background-color: #6495ED;
+                }
+            }
+        }
+    }
 
-.mat-form-field {
-    width: 100%;
+    .role-text {
+        font-size: 13px;
+        margin-top: -13px;
+    }
+
+    body  {
+        margin-top: 20px;
+
+        .mat-form-field {
+            width: 100%;
+        }
+    }
 }
 
 .event-cards {
     display: flex;
     flex-wrap: wrap;
-}
 
-
-
-app-event-card {
-    flex: none;
-    width: 100%;
-    // height: 150px;
-    border: 1px solid rgb(235, 235, 235);
-    margin-bottom: 20px;
-    border-radius: 15px;
-
-    @include mat.elevation-transition();
-    @include mat.elevation(2);
-
-    &:hover {
-        @include mat.elevation(8);
+    app-event-card {
+        flex: none;
+        width: 100%;
+        // height: 150px;
+        border: 1px solid rgb(235, 235, 235);
+        margin-bottom: 20px;
+        border-radius: 15px;
+    
+        @include mat.elevation-transition();
+        @include mat.elevation(2);
+    
+        &:hover {
+            @include mat.elevation(8);
+        }
     }
 }
+
+
+
