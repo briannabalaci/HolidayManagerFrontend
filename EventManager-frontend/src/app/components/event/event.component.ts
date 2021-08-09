@@ -47,4 +47,15 @@ export class EventComponent implements OnInit {
     }
   }
 
+  onSubmit() : void {
+    if (this.eventFormGroup.status === "VALID"){
+      console.log(this.eventFormGroup.value.title);
+      console.log((this.eventFormGroup.value.event_date+"").replace("00:00:00",this.eventFormGroup.value.event_time+":00"));
+      console.log(this.eventFormGroup.value.location);
+      console.log(this.eventFormGroup.value.dress_code);
+      console.log(this.eventFormGroup.value.cover_image);
+    }
+    this.eventFormGroup.reset();
+  }
+
 }
