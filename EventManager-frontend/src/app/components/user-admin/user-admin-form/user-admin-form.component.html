@@ -20,7 +20,25 @@
         <input matInput placeholder="Password" formControlName="password" required>
       </mat-form-field>
 
-      <mat-form-field appearance="fill" >
+      <mat-form-field appearance="fill">
+        <mat-label>Role</mat-label>
+        <mat-select [(value)]="selectedRole" formControlName="role" required>
+        <mat-option *ngFor="let role of roles" [value]="role">
+            {{role}}
+        </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Department</mat-label>
+        <mat-select [(value)]="selectedDepartment" formControlName="department" required>
+        <mat-option *ngFor="let department of departments" [value]="department">
+            {{department}}
+        </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- <mat-form-field appearance="fill" >
         <mat-label>Enter role</mat-label>
         <input matInput placeholder="Role" formControlName="role" required>
       </mat-form-field>
@@ -28,7 +46,7 @@
       <mat-form-field appearance="fill" >
         <mat-label>Enter department</mat-label>
         <input matInput placeholder="Department" formControlName="department" required>
-      </mat-form-field>
+      </mat-form-field> -->
 
       <button type="submit" mat-raised-button color="primary">Create User</button>
 </form>
