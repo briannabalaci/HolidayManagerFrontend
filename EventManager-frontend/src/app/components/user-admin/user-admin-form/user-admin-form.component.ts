@@ -14,6 +14,16 @@ import { MessageComponent } from '../../message/message.component';
 })
 export class UserAdminFormComponent implements OnInit {
 
+  selectedRole: string = '';
+  roles: string[] = [
+    'attendee', 'organizer', 'admin'
+  ];
+
+  selectedDepartment: string = '';
+  departments: string[] = [
+    'Java'
+  ];
+
   @Output() userEmitter = new EventEmitter<User>();
 
   userFormGroup = this.formBuilder.group({
@@ -23,7 +33,7 @@ export class UserAdminFormComponent implements OnInit {
     password: ['', Validators.required],
     role: ['', Validators.required],
     department: ['', Validators.required]
-  })
+  });
 
   constructor(private formBuilder: FormBuilder,
               private service: UserService,
@@ -34,7 +44,7 @@ export class UserAdminFormComponent implements OnInit {
 
   createUser() {
     const user = this.userFormGroup.value;
-
+    
     const usr: User = {
       forename: user.forename,
       surname: user.surname,
@@ -44,6 +54,15 @@ export class UserAdminFormComponent implements OnInit {
       department: user.department
     }
     this.userEmitter.emit(usr);
+    console.log(usr);
   }
+
+  /*onChangeRole($event:any) {
+    this.selectedRole = this.userFormGroup.controls["selectedRole"].value;
+  }
+
+  onChangeDepartment($event:any) {
+    this.selectedDepartment = this.userFormGroup.controls["selectedDepartment"].value;
+  }*/
 
 }
