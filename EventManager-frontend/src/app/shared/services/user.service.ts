@@ -16,8 +16,8 @@ export class UserService {
     return this.httpClient.get<User[]>(path);
   }
 
-  postUser(user:User): Observable<any> {
-    const path = `${ENVIRONMENT}/users/postUser`;
+  createUser(user:User): Observable<any> {
+    const path = `${ENVIRONMENT}/users/create-user`;
     return this.httpClient.post<User>(path, user);
   }
 }

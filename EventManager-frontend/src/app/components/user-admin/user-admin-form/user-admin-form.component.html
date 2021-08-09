@@ -1,5 +1,5 @@
 <h3>Create new user</h3>
-<form [formGroup]="userFormGroup" (ngSubmit)="postUser()">
+<form [formGroup]="userFormGroup" (ngSubmit)="createUser()">
     <mat-form-field appearance="fill" >
         <mat-label>Enter forename</mat-label>
         <input matInput placeholder="Forename" formControlName="forename" required>
@@ -23,6 +23,11 @@
       <mat-form-field appearance="fill" >
         <mat-label>Enter role</mat-label>
         <input matInput placeholder="Role" formControlName="role" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" >
+        <mat-label>Enter department</mat-label>
+        <input matInput placeholder="Department" formControlName="department" required>
       </mat-form-field>
 
       <button type="submit" mat-raised-button color="primary">Create User</button>

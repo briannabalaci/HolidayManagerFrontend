@@ -31,9 +31,10 @@ export class UserAdminComponent implements OnInit {
 
   collectData(user: User):void {
 
-    this.service.postUser(user).subscribe(() => {
+    this.service.createUser(user).subscribe(() => {
       this.dataSource.push(user);
       this.dataSourceUpdated.data = this.dataSource;
+      window.location.reload();
     })
   }
 
