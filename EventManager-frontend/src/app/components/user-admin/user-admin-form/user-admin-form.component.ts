@@ -3,6 +3,8 @@ import { User } from 'src/app/shared/data-types/user';
 import { EventEmitter } from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import { UserService } from 'src/app/shared/services/user.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MessageComponent } from '../../message/message.component';
 
 
 @Component({
@@ -24,12 +26,13 @@ export class UserAdminFormComponent implements OnInit {
   })
 
   constructor(private formBuilder: FormBuilder,
-              private service: UserService) { }
+              private service: UserService,
+              private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
-  postUser() {
+  createUser() {
     const user = this.userFormGroup.value;
 
     const usr: User = {
