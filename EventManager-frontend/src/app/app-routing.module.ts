@@ -16,6 +16,10 @@ const routes: Routes = [
     loadChildren: () => import('./components/user-admin/user-admin.module').then(m => m.UserAdminModule)
   },
   {
+    path: 'event',
+    loadChildren: () => import('./components/event/event.module').then(m => m.EventModule)
+  },
+  {
     path: '**',
     redirectTo: 'login'
 

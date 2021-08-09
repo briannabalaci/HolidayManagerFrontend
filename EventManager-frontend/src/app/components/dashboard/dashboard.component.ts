@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,14 +15,14 @@ export class DashboardComponent implements OnInit {
   ];
   selectedFilter = this.filters[0];
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     this.role = sessionStorage.getItem('role')!;
   }
 
   onCreateEvent() {
-    console.log('Create new event');
+    this.router.navigate(['event']);
   }
 
 }

@@ -1,0 +1,54 @@
+<section>
+    <header>
+        <div class="top-row">
+            <h1 class="header_element">New Event</h1>
+        </div>
+    </header>
+    
+    <body>
+        <form [formGroup]="eventFormGroup" (ngSubmit)="onSubmit()">
+            <mat-form-field appearance="fill" >
+                <mat-label>Title</mat-label>
+                <input matInput placeholder="Title" formControlName="title" required>
+              </mat-form-field>
+        
+              <mat-form-field appearance="fill">
+                <mat-label>Date</mat-label>
+                <input matInput [matDatepicker]="picker" placeholder="Date" formControlName="event_date" required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" >
+                <mat-label>Time</mat-label>
+                <input matInput type="time" placeholder="Time" formControlName="event_time" required>
+              </mat-form-field>
+        
+              <mat-form-field appearance="fill" >
+                <mat-label>Location</mat-label>
+                <input matInput placeholder="Location" formControlName="location" required>
+              </mat-form-field>
+        
+              <mat-form-field appearance="fill" >
+                <mat-label>Dress code</mat-label>
+                <input matInput placeholder="Dress code" formControlName="dress_code" required>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" >
+                <mat-label>File</mat-label>
+                <ngx-mat-file-input formControlName="cover_image"></ngx-mat-file-input>
+             </mat-form-field>
+            <br><br><br>
+
+            <h2>Add invitees</h2>
+            <textarea placeholder="name@example.com" rows="3" id="invitees"></textarea>
+            <input type="checkbox" id="inviteesCheckbox" (change)="checked()">
+            <label for="inviteesCheckbox">Include all</label>
+            <br><br>
+
+            
+            <button mat-raised-button color="primary" class="create-button">Create</button>
+            <button mat-raised-button type="button" color="primary" class="cancel-button">Cancel</button>
+        </form>
+    </body>
+</section>
