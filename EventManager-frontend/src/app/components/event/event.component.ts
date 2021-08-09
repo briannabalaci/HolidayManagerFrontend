@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-event',
@@ -8,6 +9,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./event.component.scss']
 })
 export class EventComponent implements OnInit {
+
+  public showInvitees = false;
 
   eventFormGroup = this.formBuilder.group({
     title: ['', Validators.required],
@@ -18,9 +21,30 @@ export class EventComponent implements OnInit {
     cover_image: ['', Validators.required]
   })
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private userService: UserService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+  }
+
+  checked(): void{
+    if (this.showInvitees === false){
+      let invitees: string="";
+      this.userService.getUsers().subscribe(
+        data => {
+          for (let user of data)
+            invitees += user.email+", ";
+
+          const textarea = document.getElementById("invitees")!;
+          textarea.innerHTML=invitees;
+        }
+      );
+      this.showInvitees = true;
+    }
+    else{
+        const textarea = document.getElementById("invitees")!;
+        textarea.innerHTML="";
+        this.showInvitees = true;
+    }
   }
 
 }

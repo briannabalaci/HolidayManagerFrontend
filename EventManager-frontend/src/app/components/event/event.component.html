@@ -23,12 +23,6 @@
                 <mat-label>Time</mat-label>
                 <input matInput type="time" placeholder="Time" formControlName="event_time" required>
               </mat-form-field>
-
-              <!-- <mat-form-field>
-                <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" formControlName="event_date">
-                <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
-                <ngx-mat-datetime-picker #picker ></ngx-mat-datetime-picker>
-             </mat-form-field> -->
         
               <mat-form-field appearance="fill" >
                 <mat-label>Location</mat-label>
@@ -47,11 +41,12 @@
             <br><br><br>
 
             <h2>Add invitees</h2>
-            <textarea placeholder="name@example.com" rows="3"></textarea>
-            <input type="checkbox" id="invitees">
-            <label for="invitees">Include all</label>
+            <textarea placeholder="name@example.com" rows="3" id="invitees"></textarea>
+            <input type="checkbox" id="inviteesCheckbox" (change)="checked()">
+            <label for="inviteesCheckbox">Include all</label>
             <br><br>
 
+            
             <button mat-raised-button color="primary" class="create-button">Create</button>
             <button mat-raised-button color="primary" class="cancel-button">Cancel</button>
         </form>
