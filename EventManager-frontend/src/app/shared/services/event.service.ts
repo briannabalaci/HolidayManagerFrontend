@@ -12,10 +12,18 @@ export class EventService {
 
   constructor(private httpClient: HttpClient) { }
 
-  createEvent(event: EventEntity) : void {
+  createEvent(event: EventEntity,file: File) : void {
     const path = `${this.ENVIRONMENT}/event/addEvent`;
     console.log(event);
-    this.httpClient.post<EventEntity>(path, event).subscribe(data => {},
+
+
+    const formData = new FormData();
+
+    formData.append('eventDto', new Blob([JSON.stringify(event)], {type: 'application/json'}));
+
+    formData.append('file',file);
+
+    this.httpClient.post<any>(path, formData).subscribe(data => {},
       err => {console.log(err)});
   }
 }

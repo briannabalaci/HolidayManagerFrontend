@@ -58,9 +58,9 @@ export class EventComponent implements OnInit {
       var dress_code = this.eventFormGroup.value.dress_code;
      var cover_image = this.eventFormGroup.value.cover_image;
 
-      this.eventService.createEvent(new EventEntity(title,eventDate || '',location,dress_code,cover_image,JSON.parse(sessionStorage.getItem('questions') || '{}'),[],JSON.parse(
+      this.eventService.createEvent(new EventEntity(title,eventDate || '',location,dress_code,JSON.parse(sessionStorage.getItem('questions') || '{}'),[],JSON.parse(
         sessionStorage.getItem('user') || '{}'
-      )))
+      )),cover_image)
     }
    
     this.eventFormGroup.reset();
