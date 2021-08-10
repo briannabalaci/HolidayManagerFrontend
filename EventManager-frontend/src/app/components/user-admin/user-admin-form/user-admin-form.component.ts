@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { User } from 'src/app/shared/data-types/user';
 import { EventEmitter } from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
@@ -65,7 +65,44 @@ export class UserAdminFormComponent implements OnInit {
     )
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if(this.createForm === false) {
+      this.updateFormValues();
+    }
+   
+  }
+
+  updateFormValues() {
+    let userForm = this.userFormGroup.value;
+    this.userFormGroup.setValue({
+      forename: this.userToEdit?.forename,
+      surname: this.userToEdit?.surname,
+      email: this.userToEdit?.email,
+      password: this.userToEdit?.password,
+      role: this.userToEdit?.role,
+      department: this.userToEdit?.department
+    })
+    // userForm.forename = this.userToEdit?.forename;
+    // userForm.forename = this.userToEdit?.forename;
+    // userForm.forename = this.userToEdit?.forename;
+
+    // surname: user.surname,
+    // email: user.email,
+    // password: user.password,
+    // role: user.role,
+    // department: user.department
+  }
+
   onSubmit() {
+    if(this.createForm === true) {
+      this.createUser();
+    }
+    else {
+      this.updateUser();
+    }
+  }
+
+  createUser() {
     const user = this.userFormGroup.value;
     
     const usr: User = {
@@ -77,7 +114,23 @@ export class UserAdminFormComponent implements OnInit {
       department: user.department
     }
     this.userEmitter.emit(usr);
+  }
+
+  updateUser() {
+    const user = this.userFormGroup.value;
     
+    const usr: User = {
+      forename: user.forename,
+      surname: user.surname,
+      email: user.email,
+      password: user.password,
+      role: user.role,
+      department: user.department
+    }
+    console.log('Updated');
+    console.log(usr);
+
+    //emit to put
   }
 
   onCancelUpdate(): void {

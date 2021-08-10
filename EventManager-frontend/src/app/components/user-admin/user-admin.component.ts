@@ -74,5 +74,4 @@ export class UserAdminComponent implements OnInit {
   toggleCreateForm(): void {
     this.createForm = !this.createForm;
   }
-
 }
