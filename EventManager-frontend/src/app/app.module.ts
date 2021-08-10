@@ -8,12 +8,9 @@ import { MessageComponent } from './components/message/message.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MessageModule } from './components/message/message.module';
-<<<<<<< HEAD
 import { EventComponent } from './components/event/event.component';
 import { EventExtrasComponent } from './components/event/event-extras/event-extras.component';
-=======
 import { NavigationComponent } from './components/navigation/navigation.component';
->>>>>>> change-password
 
 @NgModule({
   declarations: [
