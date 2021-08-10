@@ -24,7 +24,8 @@ export class UserAdminComponent implements OnInit {
       data => {
         this.dataSource = data;
         this.dataSourceUpdated.data = this.dataSource;
-      }
+      },
+      err => {console.log(err);}
       
     )
   }

@@ -5,6 +5,10 @@ import {FormBuilder, Validators} from "@angular/forms";
 import { UserService } from 'src/app/shared/services/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageComponent } from '../../message/message.component';
+import { RoleService } from 'src/app/shared/services/role.service';
+import { Role } from 'src/app/shared/data-types/role';
+import { MatTableDataSource } from '@angular/material/table';
+import { DepartmentService } from 'src/app/shared/services/department.service';
 
 
 @Component({
@@ -14,15 +18,14 @@ import { MessageComponent } from '../../message/message.component';
 })
 export class UserAdminFormComponent implements OnInit {
 
+  public dataSource:Role[] = [];
+  public dataSourceUpdated:MatTableDataSource<Role> = new MatTableDataSource<Role>();
+
   selectedRole: string = '';
-  roles: string[] = [
-    'attendee', 'organizer', 'admin'
-  ];
+  roles: string[] = [];
 
   selectedDepartment: string = '';
-  departments: string[] = [
-    'Java'
-  ];
+  departments: string[] = [];
 
   @Output() userEmitter = new EventEmitter<User>();
 
@@ -37,12 +40,29 @@ export class UserAdminFormComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private service: UserService,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog,
+              private roleService: RoleService,
+              private departmentService: DepartmentService) { }
 
   ngOnInit(): void {
+    this.roleService.getRoles().subscribe(
+      data => {
+        for (var object of data) {
+          this.roles.push(object.name!);
+        }
+      }
+    )
+
+    this.departmentService.getDepartments().subscribe(
+      data => {
+        for (var object of data) {
+          this.departments.push(object.name!);
+        }
+      }
+    )
   }
 
-  createUser() {
+  onSubmit() {
     const user = this.userFormGroup.value;
     
     const usr: User = {
@@ -54,15 +74,7 @@ export class UserAdminFormComponent implements OnInit {
       department: user.department
     }
     this.userEmitter.emit(usr);
-    console.log(usr);
+    
   }
-
-  /*onChangeRole($event:any) {
-    this.selectedRole = this.userFormGroup.controls["selectedRole"].value;
-  }
-
-  onChangeDepartment($event:any) {
-    this.selectedDepartment = this.userFormGroup.controls["selectedDepartment"].value;
-  }*/
 
 }

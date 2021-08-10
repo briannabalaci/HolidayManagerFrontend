@@ -13,6 +13,10 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatFileUploadModule } from 'angular-material-fileupload';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 
+import { EventExtrasComponent } from './event-extras/event-extras.component';
+import {MatListModule} from '@angular/material/list'; 
+import { MatSelectModule } from '@angular/material/select';
+import {MatExpansionModule} from '@angular/material/expansion';
 const routes: Routes = [
   {
     path: '',
@@ -22,7 +26,8 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    EventComponent
+    EventComponent,
+    EventExtrasComponent
   ],
   imports: [
     RouterModule.forChild(routes),
@@ -36,7 +41,8 @@ const routes: Routes = [
     MatDatepickerModule,
     MatNativeDateModule,
     MatFileUploadModule,
-    NgxMatFileInputModule
+    NgxMatFileInputModule,
+    MatExpansionModule,
   ],
   providers: [  
     NgxMatDatetimePickerModule,  

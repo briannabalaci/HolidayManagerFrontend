@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
           
           switch(data.role) {
             case 'admin':
+              sessionStorage.setItem('role',data.role);
               this.router.navigate(['user-admin']);
               break;
             case 'organizer':
