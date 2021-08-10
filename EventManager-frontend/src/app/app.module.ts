@@ -8,10 +8,12 @@ import { MessageComponent } from './components/message/message.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MessageModule } from './components/message/message.module';
+import { EventComponent } from './components/event/event.component';
+import { EventExtrasComponent } from './components/event/event-extras/event-extras.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
     
   ],
   imports: [

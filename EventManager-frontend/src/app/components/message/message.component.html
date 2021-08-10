@@ -11,6 +11,24 @@
         <p>role:  {{this.data.parameter.role}}</p> 
         <p>department:  {{this.data.parameter.department}}</p>  </mat-dialog-content>
     </div>
+
+    <div class="answers" *ngIf="event_extras">
+        <h3 mat-dialog-title> Question </h3>
+        <div *ngFor="let answer of question?.answerList; let i = index">
+            <p> Answer {{i+1}}: {{answer.text}}</p>
+        </div>
+
+        <div *ngIf="input">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Enter Answers</mat-label>
+                  <input matInput placeholder="" formControlName="answer" required>
+                </mat-form-field>
+            </form>
+        </div>
+    
+        <button mat-raised-button color="primary" class="add-button" (click)="showInput()">Add Answer</button><br>
+    </div>
     <mat-dialog-actions>
         <button mat-raised-button color="primary" (click)="close()">Close</button>
     </mat-dialog-actions>
