@@ -31,11 +31,10 @@
                 </form>
             </div>
 
-            <button mat-raised-button color="primary" class="add-button" (click)="showInputAnswer()">Add Answer</button><br>
+            <button mat-raised-button type="button" color="primary" class="add-button" (click)="showInputAnswer()">Add Answer</button><br>
         </mat-expansion-panel>
     </mat-accordion>
 
-    <mat-nav-list></mat-nav-list>
 
     <div *ngIf="input">
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -46,5 +45,5 @@
         </form>
     </div>
 
-    <button mat-raised-button color="primary" class="add-button" (click)="showInput()">Add Question</button><br>
+    <button mat-raised-button type="button" color="primary" class="add-button" (click)="showInput()">Add Question</button><br>
 </section>

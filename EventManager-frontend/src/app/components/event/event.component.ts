@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-<<<<<<< HEAD
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/shared/services/user.service';
-=======
->>>>>>> CreateEvent-Extras
 
 @Component({
   selector: 'app-event',
@@ -13,7 +10,6 @@ import { UserService } from 'src/app/shared/services/user.service';
 })
 export class EventComponent implements OnInit {
 
-<<<<<<< HEAD
   public showInvitees = false;
 
   eventFormGroup = this.formBuilder.group({
@@ -26,14 +22,10 @@ export class EventComponent implements OnInit {
   })
 
   constructor(private userService: UserService, private formBuilder: FormBuilder) { }
-=======
-  constructor() { }
->>>>>>> CreateEvent-Extras
 
   ngOnInit(): void {
   }
 
-<<<<<<< HEAD
   checked(): void{
     if (this.showInvitees === false){
       let invitees: string="";
@@ -66,6 +58,4 @@ export class EventComponent implements OnInit {
     this.eventFormGroup.reset();
   }
 
-=======
->>>>>>> CreateEvent-Extras
 }

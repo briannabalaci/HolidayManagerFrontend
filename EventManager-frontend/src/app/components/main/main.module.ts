@@ -38,11 +38,7 @@ const routes: Routes = [
     MatTableModule,
     MatFormFieldModule,
     MessageModule,
-<<<<<<< HEAD
     EventModule
-=======
-    EventModule,
->>>>>>> CreateEvent-Extras
     //MatPaginator
   ],
   exports: [
