@@ -1,7 +1,7 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { User } from 'src/app/shared/data-types/user';
 import { EventEmitter } from '@angular/core';
-import {FormBuilder, Validators} from "@angular/forms";
+import {FormBuilder, NgForm, Validators} from "@angular/forms";
 import { UserService } from 'src/app/shared/services/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageComponent } from '../../message/message.component';
@@ -28,6 +28,9 @@ export class UserAdminFormComponent implements OnInit {
   departments: string[] = [];
 
   @Output() userEmitter = new EventEmitter<User>();
+  @Output() createFormChangeEmitter = new EventEmitter();
+  @Input() createForm?: boolean;
+  @Input() userToEdit?: User;
 
   userFormGroup = this.formBuilder.group({
     forename: ['', Validators.required],
@@ -62,7 +65,34 @@ export class UserAdminFormComponent implements OnInit {
     )
   }
 
-  onSubmit() {
+  ngOnChanges(changes: SimpleChanges) {
+    if(this.createForm === false) {
+      this.updateFormValues();
+    }
+  }
+
+  updateFormValues() {
+    let userForm = this.userFormGroup.value;
+    this.userFormGroup.setValue({
+      forename: this.userToEdit?.forename,
+      surname: this.userToEdit?.surname,
+      email: this.userToEdit?.email,
+      password: this.userToEdit?.password,
+      role: this.userToEdit?.role,
+      department: this.userToEdit?.department
+    })
+  }
+
+  onSubmit(userForm: any) {
+    if(this.createForm === true) {
+      this.createUser(userForm);
+    }
+    else {
+      this.updateUser(userForm);
+    }
+  }
+
+  createUser(userForm: any) {
     const user = this.userFormGroup.value;
     
     const usr: User = {
@@ -85,7 +115,29 @@ export class UserAdminFormComponent implements OnInit {
     })
 
     this.userEmitter.emit(usr);
+    userForm.resetForm();
+  }
+
+  updateUser(userForm: any) {
+    const user = this.userFormGroup.value;
     
+    const usr: User = {
+      id: this.userToEdit?.id,
+      forename: user.forename,
+      surname: user.surname,
+      email: user.email,
+      password: user.password,
+      role: user.role,
+      department: user.department
+    }
+    this.userEmitter.emit(usr);
+    this.createFormChangeEmitter.emit();
+    userForm.resetForm();
+  }
+
+  onCancelUpdate(userForm: any): void {
+    this.createFormChangeEmitter.emit();
+    userForm.resetForm();
   }
 
 }
