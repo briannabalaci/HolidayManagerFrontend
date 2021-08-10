@@ -7,6 +7,10 @@
         <h1  mat-dialog-title>Error ! </h1>
         <mat-dialog-content color="warn"> {{this.data.message}} </mat-dialog-content>
     </div>
+    <div *ngIf="incomplete">
+        <h1  mat-dialog-title>Error ! </h1>
+        <mat-dialog-content color="warn"> Please, fill in all fields! </mat-dialog-content>
+    </div>
     <div class="info" *ngIf="admin">
         <h3  mat-dialog-title>User details </h3>
          <mat-dialog-content> <p>forename: {{this.data.parameter.forename}} </p> 

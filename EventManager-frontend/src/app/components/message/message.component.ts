@@ -23,6 +23,7 @@ export class MessageComponent implements OnInit {
   event_extras: boolean = false;
   input : boolean = false;
   email: boolean = false;
+  incomplete: boolean = false;
   public question?: Question ;
 
   ngOnInit(): void {
@@ -36,6 +37,10 @@ export class MessageComponent implements OnInit {
 
     if (this.data.component === 'email') {
       this.email = true;
+    }
+
+    if (this.data.component === 'incomplete') {
+      this.incomplete = true;
     }
 
     if (this.data.component === 'event-extras') {

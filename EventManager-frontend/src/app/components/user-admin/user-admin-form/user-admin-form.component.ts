@@ -27,6 +27,8 @@ export class UserAdminFormComponent implements OnInit {
   selectedDepartment: string = '';
   departments: string[] = [];
 
+  component: string = '';
+
   @Output() userEmitter = new EventEmitter<User>();
   @Output() createFormChangeEmitter = new EventEmitter();
   @Input() createForm?: boolean;
@@ -104,15 +106,25 @@ export class UserAdminFormComponent implements OnInit {
       department: user.department
     }
 
-    this.service.createUser(usr).subscribe(data => {}, err => 
+    if (!this.userFormGroup.valid) {
+      this.component = 'incomplete';
+    } else {
+      this.component = 'email';
+    }
+
+    this.service.createUser(usr).subscribe(data => 
+      {
+        window.location.reload();
+      }, 
+      err => 
       {
         this.dialog.open(MessageComponent, {
           data: { message: err.error,
-            component: 'email'
+            component: this.component
           }
-      }),
-      this.userFormGroup.reset();
-    })
+        }),
+        this.userFormGroup.reset();
+      })
 
     this.userEmitter.emit(usr);
     userForm.resetForm();
