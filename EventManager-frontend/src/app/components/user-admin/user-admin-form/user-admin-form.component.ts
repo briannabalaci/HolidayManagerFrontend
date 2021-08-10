@@ -73,6 +73,17 @@ export class UserAdminFormComponent implements OnInit {
       role: user.role,
       department: user.department
     }
+
+    this.service.createUser(usr).subscribe(data => {}, err => 
+      {
+        this.dialog.open(MessageComponent, {
+          data: { message: err.error,
+            component: 'email'
+          }
+      }),
+      this.userFormGroup.reset();
+    })
+
     this.userEmitter.emit(usr);
     
   }

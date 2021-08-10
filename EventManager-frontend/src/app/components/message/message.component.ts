@@ -22,6 +22,7 @@ export class MessageComponent implements OnInit {
   admin: boolean = false;
   event_extras: boolean = false;
   input : boolean = false;
+  email: boolean = false;
   public question?: Question ;
 
   ngOnInit(): void {
@@ -31,6 +32,10 @@ export class MessageComponent implements OnInit {
 
     if (this.data.component === 'admin') {
       this.admin = true;
+    }
+
+    if (this.data.component === 'email') {
+      this.email = true;
     }
 
     if (this.data.component === 'event-extras') {
