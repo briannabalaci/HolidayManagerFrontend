@@ -24,7 +24,8 @@ export class UserAdminComponent implements OnInit {
       data => {
         this.dataSource = data;
         this.dataSourceUpdated.data = this.dataSource;
-      }
+      },
+      err => {console.log(err);}
       
     )
   }
@@ -34,7 +35,9 @@ export class UserAdminComponent implements OnInit {
     this.service.postUser(user).subscribe(() => {
       this.dataSource.push(user);
       this.dataSourceUpdated.data = this.dataSource;
-    })
+    },
+    err => {console.log(err);}
+    )
   }
 
   openInfo(user: User): void {

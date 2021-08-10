@@ -14,6 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatLabel } from '@angular/material/form-field';
 import { MessageModule } from '../message/message.module';
 import { MatPaginator } from '@angular/material/paginator';
+import { EventModule } from '../event/event.module';
 
 
 const routes: Routes = [
@@ -37,6 +38,7 @@ const routes: Routes = [
     MatTableModule,
     MatFormFieldModule,
     MessageModule,
+    EventModule,
     //MatPaginator
   ],
   exports: [

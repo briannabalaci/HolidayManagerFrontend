@@ -1,0 +1,50 @@
+<section class="event-extras">
+    <!-- <mat-nav-list>
+    
+        <mat-list-item *ngFor="let question of questions; let i=index">
+            <span matLine>Question {{i+1}}:  {{question.text}}</span>
+
+            <button *ngIf='add' mat-icon-button (click)="showInfo(question)">
+                <mat-icon>add</mat-icon>
+            </button>
+    
+           
+        
+        </mat-list-item>
+   
+    </mat-nav-list> -->
+
+    <mat-accordion>
+        <mat-expansion-panel *ngFor="let question of questions; let i=index">
+            <mat-expansion-panel-header>
+                Question {{i+1}} : {{question.text}}
+            </mat-expansion-panel-header>
+            <div *ngFor="let answer of question.answerList; let i=index">
+               Answer {{i+1}} : {{answer.text}}
+            </div>
+            <div *ngIf="inputAnswer">
+                <form [formGroup]="formAnswer" (ngSubmit)="onSubmitAnswer(question)">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                      <mat-label>Enter Answer</mat-label>
+                      <input matInput placeholder="" formControlName="answer" required>
+                    </mat-form-field>
+                </form>
+            </div>
+
+            <button mat-raised-button color="primary" class="add-button" (click)="showInputAnswer()">Add Answer</button><br>
+        </mat-expansion-panel>
+    </mat-accordion>
+
+    <mat-nav-list></mat-nav-list>
+
+    <div *ngIf="input">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Enter Questions</mat-label>
+              <input matInput placeholder="" formControlName="question" required>
+            </mat-form-field>
+        </form>
+    </div>
+
+    <button mat-raised-button color="primary" class="add-button" (click)="showInput()">Add Question</button><br>
+</section>
