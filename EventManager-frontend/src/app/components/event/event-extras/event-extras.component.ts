@@ -54,6 +54,7 @@ export class EventExtrasComponent implements OnInit {
   onSubmit() : void {
     this.input = false;
     this.questions.push(new Question(this.form.value.question, new Array<Answer>()));
+    sessionStorage.setItem('questions',JSON.stringify(this.questions));
     this.form.reset();
   }
 
@@ -61,6 +62,7 @@ export class EventExtrasComponent implements OnInit {
   onSubmitAnswer(question: Question) : void {
       this.inputAnswer = false;
       question.answerList?.push(new Answer(this.formAnswer.value.answer));
+      sessionStorage.setItem('questions',JSON.stringify(this.questions));
       this.formAnswer.reset();
   }
 
