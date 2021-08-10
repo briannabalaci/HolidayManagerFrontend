@@ -58,4 +58,8 @@ export class EventComponent implements OnInit {
     this.eventFormGroup.reset();
   }
 
+  cancel(): void{
+    this.eventFormGroup.reset();
+  }
+
 }

@@ -7,6 +7,8 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
+import { NavigationComponent } from '../navigation/navigation.component';
+import { NavigationModule } from '../navigation/navigation.module';
 
 const routes: Routes = [
   {
@@ -26,7 +28,8 @@ const routes: Routes = [
     MatSelectModule,
     MatButtonModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    NavigationModule
   ],
   exports: [
     DashboardComponent,
