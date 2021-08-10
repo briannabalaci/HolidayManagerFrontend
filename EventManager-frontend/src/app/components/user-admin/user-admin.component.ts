@@ -34,7 +34,29 @@ export class UserAdminComponent implements OnInit {
   }
 
   collectData(user: User):void {
+    if(this.createForm === true) {
+      this.createUser(user);
+    }
+    else {
+      this.updateUser(user);
+    }
+  }
 
+  updateUser(user: User) {
+    this.service.updateUser(user).subscribe(() => {
+      let index = this.dataSource.length;
+      for(let i = 0; i < this.dataSource.length; i ++) {
+        if(this.dataSource[i].id === user.id) {
+          index = i;
+        }
+      }
+      this.dataSource[index] = user;
+      this.dataSourceUpdated.data = this.dataSource;
+    })
+    this.createForm = false;
+  }
+
+  createUser(user: User) {
     this.service.createUser(user).subscribe(() => {
       this.dataSource.push(user);
       this.dataSourceUpdated.data = this.dataSource;
@@ -58,7 +80,6 @@ export class UserAdminComponent implements OnInit {
         const index = this.dataSource.indexOf(user);
         this.dataSource.splice(index, 1);
         this.dataSourceUpdated.data = this.dataSource;
-        window.location.reload();
       },
       err => {
         console.log('Cannot delete user - not found');

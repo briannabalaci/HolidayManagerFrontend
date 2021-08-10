@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { User } from 'src/app/shared/data-types/user';
 import { EventEmitter } from '@angular/core';
-import {FormBuilder, Validators} from "@angular/forms";
+import {FormBuilder, NgForm, Validators} from "@angular/forms";
 import { UserService } from 'src/app/shared/services/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageComponent } from '../../message/message.component';
@@ -69,7 +69,6 @@ export class UserAdminFormComponent implements OnInit {
     if(this.createForm === false) {
       this.updateFormValues();
     }
-   
   }
 
   updateFormValues() {
@@ -82,27 +81,18 @@ export class UserAdminFormComponent implements OnInit {
       role: this.userToEdit?.role,
       department: this.userToEdit?.department
     })
-    // userForm.forename = this.userToEdit?.forename;
-    // userForm.forename = this.userToEdit?.forename;
-    // userForm.forename = this.userToEdit?.forename;
-
-    // surname: user.surname,
-    // email: user.email,
-    // password: user.password,
-    // role: user.role,
-    // department: user.department
   }
 
-  onSubmit() {
+  onSubmit(userForm: any) {
     if(this.createForm === true) {
-      this.createUser();
+      this.createUser(userForm);
     }
     else {
-      this.updateUser();
+      this.updateUser(userForm);
     }
   }
 
-  createUser() {
+  createUser(userForm: any) {
     const user = this.userFormGroup.value;
     
     const usr: User = {
@@ -114,12 +104,14 @@ export class UserAdminFormComponent implements OnInit {
       department: user.department
     }
     this.userEmitter.emit(usr);
+    userForm.resetForm();
   }
 
-  updateUser() {
+  updateUser(userForm: any) {
     const user = this.userFormGroup.value;
     
     const usr: User = {
+      id: this.userToEdit?.id,
       forename: user.forename,
       surname: user.surname,
       email: user.email,
@@ -127,14 +119,14 @@ export class UserAdminFormComponent implements OnInit {
       role: user.role,
       department: user.department
     }
-    console.log('Updated');
-    console.log(usr);
-
-    //emit to put
+    this.userEmitter.emit(usr);
+    this.createFormChangeEmitter.emit();
+    userForm.resetForm();
   }
 
-  onCancelUpdate(): void {
+  onCancelUpdate(userForm: any): void {
     this.createFormChangeEmitter.emit();
+    userForm.resetForm();
   }
 
 }

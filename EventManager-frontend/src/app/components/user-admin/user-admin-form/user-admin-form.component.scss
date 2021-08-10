@@ -21,4 +21,14 @@ form {
             background-color: #6495ED;
         }
     }
+
+    .cancel-button {
+        margin: 2%;
+        color: white;
+        background-color: #565656;
+      
+        &:hover{
+            background-color: #766F64;
+        }
+    }
 }
