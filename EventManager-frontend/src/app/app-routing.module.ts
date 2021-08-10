@@ -20,6 +20,10 @@ const routes: Routes = [
     loadChildren: () => import('./components/event/event.module').then(m => m.EventModule)
   },
   {
+    path: 'change-password',
+    loadChildren: () => import('./components/change-password/change-password.module').then(m => m.ChangePasswordModule)
+  },
+  {
     path: '**',
     redirectTo: 'login'
 

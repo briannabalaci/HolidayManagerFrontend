@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
       user.password = this.form.value.password;
       this.logInService.checkUser(user).subscribe(data => 
         {
-          
+          sessionStorage.setItem('email',data.email!);
           switch(data.role) {
             case 'admin':
               sessionStorage.setItem('role',data.role);
