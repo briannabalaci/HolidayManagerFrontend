@@ -4,6 +4,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { UserService } from 'src/app/shared/services/user.service';
 import { MessageComponent } from '../message/message.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ChildActivationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-user-admin',
@@ -16,6 +17,8 @@ export class UserAdminComponent implements OnInit {
   public dataSource:User[] = [];
   public dataSourceUpdated:MatTableDataSource<User> = new MatTableDataSource<User>();
   public showForm:boolean = true;
+  public createForm = true;
+  public userToEdit?: User;
 
   constructor(private service: UserService, private dialog: MatDialog) { }
 
@@ -64,7 +67,12 @@ export class UserAdminComponent implements OnInit {
   }
 
   edit(user: User): void {
-    console.log(user);
+    this.userToEdit = user;
+    this.createForm = false;
+  }
+
+  toggleCreateForm(): void {
+    this.createForm = !this.createForm;
   }
 
 }

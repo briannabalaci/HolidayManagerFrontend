@@ -1,4 +1,4 @@
-<h3>Create new user</h3>
+<h3>{{createForm === true ? "Create new user" : "Update user"}}</h3>
 <form [formGroup]="userFormGroup" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="fill" >
         <mat-label>Enter forename</mat-label>
@@ -38,5 +38,6 @@
         </mat-select>
       </mat-form-field>
 
-      <button type="submit" mat-raised-button color="primary">Create User</button>
+      <button type="submit" mat-raised-button color="primary">{{createForm === true ? "Create User" : "Update User"}}</button>
+      <button *ngIf="createForm === false" (click)="onCancelUpdate()" type="button" mat-raised-button color="accent">Cancel</button>
 </form>

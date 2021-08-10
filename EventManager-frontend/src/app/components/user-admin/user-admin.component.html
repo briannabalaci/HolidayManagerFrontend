@@ -51,6 +51,9 @@
                        showFirstLastButtons >
         </mat-paginator> -->
         <app-user-admin-form *ngIf="showForm"
+        [createForm]='createForm'
+        (createFormChangeEmitter)='toggleCreateForm()'
+        [userToEdit]='userToEdit'
         (userEmitter)="collectData($event)"></app-user-admin-form>
       </div>
 </section>

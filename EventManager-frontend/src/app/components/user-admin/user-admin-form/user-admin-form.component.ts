@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { User } from 'src/app/shared/data-types/user';
 import { EventEmitter } from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
@@ -28,6 +28,9 @@ export class UserAdminFormComponent implements OnInit {
   departments: string[] = [];
 
   @Output() userEmitter = new EventEmitter<User>();
+  @Output() createFormChangeEmitter = new EventEmitter();
+  @Input() createForm?: boolean;
+  @Input() userToEdit?: User;
 
   userFormGroup = this.formBuilder.group({
     forename: ['', Validators.required],
@@ -75,6 +78,10 @@ export class UserAdminFormComponent implements OnInit {
     }
     this.userEmitter.emit(usr);
     
+  }
+
+  onCancelUpdate(): void {
+    this.createFormChangeEmitter.emit();
   }
 
 }
