@@ -1,14 +1,21 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EventEntity } from '../data-types/event';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable(
+
+)
 export class EventService {
 
-  constructor() { }
+
+  private ENVIRONMENT = "http://localhost:8080";
+
+  constructor(private httpClient: HttpClient) { }
 
   createEvent(event: EventEntity) : void {
-      console.log(event);
+    const path = `${this.ENVIRONMENT}/event/addEvent`;
+    console.log(event);
+    this.httpClient.post<EventEntity>(path, event).subscribe(data => {},
+      err => {console.log(err)});
   }
 }

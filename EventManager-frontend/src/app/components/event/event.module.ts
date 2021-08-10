@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { EventComponent } from './event.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field'; 
@@ -45,7 +45,8 @@ const routes: Routes = [
     MatExpansionModule,
   ],
   providers: [  
-    NgxMatDatetimePickerModule,  
+    NgxMatDatetimePickerModule, 
+    DatePipe
   ],
   exports: [EventComponent]
 })

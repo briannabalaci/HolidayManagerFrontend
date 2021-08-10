@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -23,7 +24,7 @@ export class EventComponent implements OnInit {
     cover_image: ['', Validators.required]
   })
 
-  constructor(private userService: UserService, private formBuilder: FormBuilder, private eventService: EventService) { }
+  constructor(private userService: UserService, private formBuilder: FormBuilder, private eventService: EventService,private datePipe: DatePipe) { }
 
   ngOnInit(): void {
   }
@@ -52,12 +53,14 @@ export class EventComponent implements OnInit {
   onSubmit() : void {
     if (this.eventFormGroup.status === "VALID"){
       var title = this.eventFormGroup.value.title;
-      var eventDate = this.eventFormGroup.value.event_date+"".replace("00:00:00",this.eventFormGroup.value.event_time+":00");
+      var eventDate = this.datePipe.transform((this.eventFormGroup.value.event_date+"").replace("00:00:00",this.eventFormGroup.value.event_time+":00"),"yyyy-MM-dd HH:mm:ss");
       var location = this.eventFormGroup.value.location;
       var dress_code = this.eventFormGroup.value.dress_code;
      var cover_image = this.eventFormGroup.value.cover_image;
 
-      this.eventService.createEvent(new EventEntity(title,eventDate,location,dress_code,cover_image,JSON.parse(sessionStorage.getItem('questions') || '{}'),[]))
+      this.eventService.createEvent(new EventEntity(title,eventDate || '',location,dress_code,cover_image,JSON.parse(sessionStorage.getItem('questions') || '{}'),[],JSON.parse(
+        sessionStorage.getItem('user') || '{}'
+      )))
     }
    
     this.eventFormGroup.reset();

@@ -19,6 +19,10 @@ export class LoginComponent implements OnInit {
     password: ['', Validators.required]
   })
 
+  error: boolean = false;
+
+  errorMessage: string = " ";
+
   constructor(private formBuilder: FormBuilder,private logInService: LoginService, private router: Router, private dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -28,9 +32,11 @@ export class LoginComponent implements OnInit {
       let user = new User();
       user.email = this.form.value.username;
       user.password = this.form.value.password;
+      this.error = false;
       this.logInService.checkUser(user).subscribe(data => 
         {
-          
+         
+          sessionStorage.setItem('user',JSON.stringify(data));
           switch(data.role) {
             case 'admin':
               sessionStorage.setItem('role',data.role);
@@ -44,12 +50,16 @@ export class LoginComponent implements OnInit {
           }
           
 
-        }, err => {this.dialog.open(MessageComponent, {
-          data: { message: err.error,
-            component: 'login'
-          }
+        }, err => {
+          this.error = true;
+          
+          this.errorMessage = err.error;
         }),
-      this.form.reset();});
-  }
+      this.form.reset();};
+  
 
+  getErrorMessage() : string {
+    return this.errorMessage;
+  }
 }
+
