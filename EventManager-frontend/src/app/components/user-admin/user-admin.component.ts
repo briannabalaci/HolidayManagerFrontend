@@ -47,4 +47,23 @@ export class UserAdminComponent implements OnInit {
     )
   }
 
+  delete(user: User): void {
+    this.service.deleteUser(user.id!).subscribe(
+      data => {
+        console.log('user deleted');
+        const index = this.dataSource.indexOf(user);
+        this.dataSource.splice(index, 1);
+        this.dataSourceUpdated.data = this.dataSource;
+        window.location.reload();
+      },
+      err => {
+        console.log('Cannot delete user - not found');
+      }
+    );
+  }
+
+  edit(user: User): void {
+    console.log(user);
+  }
+
 }
