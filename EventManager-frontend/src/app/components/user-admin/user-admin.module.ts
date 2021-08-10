@@ -11,6 +11,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
+import {MatCardModule} from '@angular/material/card';
+import { NavigationModule } from '../navigation/navigation.module';
 
 const routes: Routes = [
   {
@@ -20,8 +22,10 @@ const routes: Routes = [
 ]
 
 @NgModule({
-  declarations: [UserAdminComponent,
-  UserAdminFormComponent],
+  declarations: [
+    UserAdminComponent,
+    UserAdminFormComponent
+  ],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
@@ -31,7 +35,9 @@ const routes: Routes = [
     MatInputModule,
     ReactiveFormsModule,
     MatIconModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCardModule,
+    NavigationModule
     //MatPaginator
   ],
   exports: [

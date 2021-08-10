@@ -9,11 +9,13 @@
     </div>
     <div class="info" *ngIf="admin">
         <h3  mat-dialog-title>User details </h3>
-         <mat-dialog-content> <p>forename: {{this.data.parameter.forename}} </p> 
-        <p>surname: {{this.data.parameter.surname}} </p> 
-        <p>email:  {{this.data.parameter.email}} </p> 
-        <p>role:  {{this.data.parameter.role}}</p> 
-        <p>department:  {{this.data.parameter.department}}</p>  </mat-dialog-content>
+        <mat-dialog-content> 
+            <span class="details">Forename:</span><span> {{this.data.parameter.forename}} </span><br>
+            <span class="details">Surname:</span><span> {{this.data.parameter.surname}} </span><br>
+            <span class="details">Email:</span><span> {{this.data.parameter.email}}</span><br>
+            <span class="details">Role:</span><span> {{this.data.parameter.role}}</span><br>
+            <span class="details">Department:</span><span> {{this.data.parameter.department}}</span><br> 
+        </mat-dialog-content>
     </div>
 
     <div class="answers" *ngIf="event_extras">
