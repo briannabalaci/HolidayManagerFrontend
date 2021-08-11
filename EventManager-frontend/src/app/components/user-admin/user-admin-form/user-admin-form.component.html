@@ -1,43 +1,48 @@
-<h3>{{createForm === true ? "Create new user" : "Update user"}}</h3>
-<form #userForm="ngForm" [formGroup]="userFormGroup" (ngSubmit)="onSubmit(userForm)">
-    <mat-form-field appearance="fill" >
-        <mat-label>Enter forename</mat-label>
-        <input matInput placeholder="Forename" formControlName="forename" required>
-      </mat-form-field>
-
+<br>
+<div>
+  <h3>{{createForm === true ? "Create new user" : "Update user"}}</h3>
+  <form #userForm="ngForm" [formGroup]="userFormGroup" (ngSubmit)="onSubmit(userForm)">
       <mat-form-field appearance="fill" >
-        <mat-label>Enter surname</mat-label>
-        <input matInput placeholder="Surname" formControlName="surname" required>
-      </mat-form-field>
+          <mat-label>Enter forename</mat-label>
+          <input matInput placeholder="Forename" formControlName="forename" required>
+        </mat-form-field>
 
-      <mat-form-field appearance="fill" >
-        <mat-label>Enter email</mat-label>
-        <input matInput type="email" placeholder="name@example.com" formControlName="email" required>
-      </mat-form-field>
+        <mat-form-field appearance="fill" >
+          <mat-label>Enter surname</mat-label>
+          <input matInput placeholder="Surname" formControlName="surname" required>
+        </mat-form-field>
 
-      <mat-form-field appearance="fill" >
-        <mat-label>Enter password</mat-label>
-        <input matInput type="password" placeholder="Password" formControlName="password" required>
-      </mat-form-field>
+        <mat-form-field appearance="fill" >
+          <mat-label>Enter email</mat-label>
+          <input matInput type="email" placeholder="name@example.com" formControlName="email" required>
+        </mat-form-field>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Role</mat-label>
-        <mat-select [(value)]="selectedRole" formControlName="role" required>
-        <mat-option *ngFor="let role of roles" [value]="role">
-            {{role}}
-        </mat-option>
-        </mat-select>
-      </mat-form-field>
+        <mat-form-field appearance="fill" >
+          <mat-label>Enter password</mat-label>
+          <input matInput type="password" placeholder="Password" formControlName="password" required>
+        </mat-form-field>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Department</mat-label>
-        <mat-select [(value)]="selectedDepartment" formControlName="department" required>
-        <mat-option *ngFor="let department of departments" [value]="department">
-            {{department}}
-        </mat-option>
-        </mat-select>
-      </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Role</mat-label>
+          <mat-select [(value)]="selectedRole" formControlName="role" required>
+          <mat-option *ngFor="let role of roles" [value]="role">
+              {{role}}
+          </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-      <button type="submit" mat-raised-button color="primary">{{createForm === true ? "Create User" : "Update User"}}</button>
-      <button *ngIf="createForm === false" (click)="onCancelUpdate(userForm)" type="button" mat-raised-button class="cancel-button">Cancel</button>
-</form>
+        <mat-form-field appearance="fill">
+          <mat-label>Department</mat-label>
+          <mat-select [(value)]="selectedDepartment" formControlName="department" required>
+          <mat-option *ngFor="let department of departments" [value]="department">
+              {{department}}
+          </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button type="submit" mat-raised-button color="primary">{{createForm === true ? "Create User" : "Update User"}}</button>
+        <button *ngIf="createForm === false" (click)="onCancelUpdate(userForm)" type="button" mat-raised-button class="cancel-button">Cancel</button>
+        <br>
+  </form>
+</div>
+
