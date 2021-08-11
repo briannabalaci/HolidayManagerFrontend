@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { UserDto } from 'src/app/shared/data-types/userDto';
+import { UserService } from 'src/app/shared/services/user.service';
 import { MessageComponent } from '../message/message.component';
 
 @Component({
@@ -16,7 +18,7 @@ export class ChangePasswordComponent implements OnInit {
     new_password2: ['', Validators.required]
   })
 
-  constructor(private formBuilder: FormBuilder, private dialog: MatDialog) { }
+  constructor(private formBuilder: FormBuilder, private dialog: MatDialog, private userService: UserService) { }
 
   ngOnInit(): void {
   }
@@ -27,7 +29,13 @@ export class ChangePasswordComponent implements OnInit {
         this.dialog.open(MessageComponent, {data: { message: "Retyped different password!", component: "login"}});
       else
       {
+        let userDto = new UserDto();
+        userDto.email = sessionStorage.getItem("email")!;
+        userDto.password = this.changePasswordFormGroup.value.old_password;
+        userDto.new_password = this.changePasswordFormGroup.value.new_password;
 
+        console.log(userDto);
+        // this.userService.changePassword(userDto);
       }
     }
     this.changePasswordFormGroup.reset();

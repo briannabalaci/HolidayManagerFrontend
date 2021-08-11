@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../data-types/user';
 import { Observable } from 'rxjs';
+import { UserDto } from '../data-types/userDto';
 
 const ENVIRONMENT = "http://localhost:8080";
 
@@ -29,5 +30,10 @@ export class UserService {
   updateUser(user:User): Observable<any> {
     const path = `${ENVIRONMENT}/users/update`;
     return this.httpClient.put<User>(path, user);
+  }
+
+  changePassword(userDto:UserDto): Observable<any> {
+    const path = `${ENVIRONMENT}/users/change-password`;
+    return this.httpClient.post<UserDto>(path, userDto);
   }
 }
