@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './services/user.service';
 import { LoginService } from './services/login.service';
+import { EventEntity } from './data-types/event';
+import { EventService } from './services/event.service';
 
 
 
@@ -14,7 +16,8 @@ import { LoginService } from './services/login.service';
   ],
   providers: [
     UserService,
-    LoginService
+    LoginService,
+    EventService
   ]
 })
 export class SharedModule { }
