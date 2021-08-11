@@ -1,12 +1,12 @@
 <article>
-    <h2 class="align-text-element">{{title}}</h2>
+    <h2 class="align-text-element">{{event?.title}}</h2>
     <div class="card-header">
         <mat-icon color="primary" aria-hidden="false" aria-label="Example home icon">place</mat-icon>
-        <p>{{location}}</p>
+        <p>{{event?.location}}</p>
     </div>
-    <img src= {{coverImg}} >
+    <img [src]= "makeUrlSafe(imageUrl)" >
     <div class="card-bottom">
-        <p class="align-text-element"><mat-icon color="primary" aria-hidden="false" aria-label="Example home icon">event</mat-icon>{{ date }}</p>
+        <p class="align-text-element"><mat-icon color="primary" aria-hidden="false" aria-label="Example home icon">event</mat-icon>{{ event?.eventDate }}</p>
         <p class="align-text-element">Status: {{ status }}</p>
     </div>
 </article>

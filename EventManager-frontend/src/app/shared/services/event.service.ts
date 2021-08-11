@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EventEntity } from '../data-types/event';
+import { Observable } from 'rxjs';
+import {map} from 'rxjs/operators'
 
 @Injectable(
 
@@ -8,12 +10,12 @@ import { EventEntity } from '../data-types/event';
 export class EventService {
 
 
-  private ENVIRONMENT = "http://localhost:8080";
+  private ENVIRONMENT = "http://localhost:8080/event";
 
   constructor(private httpClient: HttpClient) { }
 
   createEvent(event: EventEntity,file: File) : void {
-    const path = `${this.ENVIRONMENT}/event/addEvent`;
+    const path = `${this.ENVIRONMENT}/addEvent`;
     console.log(event);
 
 
@@ -25,5 +27,20 @@ export class EventService {
 
     this.httpClient.post<any>(path, formData).subscribe(data => {},
       err => {console.log(err)});
+  }
+
+  getEvents() : Observable<EventEntity[]> {
+    const path = `${this.ENVIRONMENT}/getAll`
+
+    return this.httpClient.get<EventEntity[]>(path);
+  }
+
+  getEventImage(eventId: number) : any {
+    const path = `${this.ENVIRONMENT}/getImage`
+    return this.httpClient.get(path + '/' + eventId, {responseType: 'blob'}).pipe(map(
+      (res) => {
+        return new Blob([res], {type: 'image/jpeg'});
+      }
+    ));
   }
 }
