@@ -1,9 +1,14 @@
 @use '~@angular/material' as mat;
 
 section {
-    padding: 15px 25px;
 
+    .div_header{
+        
+        background-color: rgb(240, 240, 240);
+    }
+    
     header {
+        padding: 15px 25px;
         .top-row {
             display: flex;
             justify-content: space-between;
@@ -29,6 +34,8 @@ section {
     }
 
     body  {
+        
+        padding: 15px 25px;
         margin-top: 20px;
 
         .mat-form-field {

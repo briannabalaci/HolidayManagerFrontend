@@ -1,11 +1,13 @@
 <section>
     <header>
-        <div class="top-row">
-            <h1 class="header_element">New Event</h1>
-        </div>
-    </header>
+      <div class="top-row">
+          <h1 class="header_element">New Event</h1>
+          <hr>
+      </div>
+  </header>
     
     <body>
+        <br>
         <form [formGroup]="eventFormGroup" (ngSubmit)="onSubmit()">
             <mat-form-field appearance="fill" >
                 <mat-label>Title</mat-label>
@@ -38,14 +40,16 @@
                 <mat-label>File</mat-label>
                 <ngx-mat-file-input formControlName="cover_image"></ngx-mat-file-input>
              </mat-form-field>
-            <br><br><br>
-
+            <br><br>
+            <h2>Questions</h2>
+            <hr>
             <app-event-extras>
 
             </app-event-extras>
 
-            
-            <h2>Add invitees</h2>
+            <br><br>
+            <h2>Invitees</h2>
+            <hr><br>
             <textarea placeholder="name@example.com" rows="3" id="invitees"></textarea>
             <input type="checkbox" id="inviteesCheckbox" (change)="checked()">
             <label for="inviteesCheckbox">Include all</label>

@@ -1,5 +1,6 @@
 <app-navigation ></app-navigation>
 <section>
+<<<<<<< HEAD
     <header>
         <div class="top-row">
             <h1 class="header_element">Dashboard</h1>
@@ -9,6 +10,19 @@
         <p class="role-text">{{role}}</p>
     </header>
 
+=======
+    <div class="div_header">
+        <header>
+            <div class="top-row">
+                <h1 class="header_element">Dashboard</h1>
+            <button mat-raised-button color="primary" (click)="onCreateEvent()" *ngIf='role==="organizer"' class="header_element">Create event</button>
+            </div>
+            <p class="role-text">{{role}}</p>
+        </header>
+    </div>
+    
+    
+>>>>>>> change-password
     <body>
         <mat-form-field appearance="fill">
             <mat-label>Filter</mat-label>

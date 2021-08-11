@@ -1,6 +1,29 @@
+@use '~@angular/material' as mat;
+
 .administration {
     font-family: sans-serif;
     margin: 0;
+}
+
+.div_header{
+        
+  background-color: rgb(240, 240, 240);
+}
+
+header {
+  padding: 15px 25px;
+  
+  .top-row {
+      display: flex;
+      justify-content: space-between;
+      height: 40px;
+      width: 100%;
+
+      .header_element {
+          display: inline-block;
+          margin: 0;
+      }
+  }
 }
 
 button {
@@ -33,4 +56,10 @@ table {
 h2 {
     padding: 20px;
     text-align: left;
+}
+
+
+table{
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 2px 13px 0 rgba(0, 0, 0, 0.19);
+  margin: 10px 0;
 }

@@ -1,7 +1,18 @@
 <app-navigation></app-navigation>
+
 <section class="administration">
-    <h2>User administration</h2>
-    <div class="mat-elevation-z8">
+  <div class="div_header">
+    <header>
+      <div class="top-row">
+          <h1 class="header_element">User administration</h1>
+      </div>
+    </header>
+  </div>
+    
+
+    <body>
+      <br>
+      <div class="mat-elevation-z8">
         <table mat-table [dataSource]="dataSourceUpdated">
       
           <!-- Forname Column -->
@@ -57,4 +68,5 @@
         [userToEdit]='userToEdit'
         (userEmitter)="collectData($event)"></app-user-admin-form>
       </div>
+    </body>
 </section>
