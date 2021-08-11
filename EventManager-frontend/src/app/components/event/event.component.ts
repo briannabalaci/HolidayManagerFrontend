@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EventEntity } from 'src/app/shared/data-types/event';
+import { Invite } from 'src/app/shared/data-types/invite';
 import { UserService } from 'src/app/shared/services/user.service';
 import { EventService } from '../../shared/services/event.service';
 
@@ -23,6 +24,10 @@ export class EventComponent implements OnInit {
     dress_code: ['', Validators.required],
     cover_image: ['', Validators.required]
   })
+
+  invitesSent : Invite[] = [];
+
+  invites: string[] = [];
 
   constructor(private userService: UserService, private formBuilder: FormBuilder, private eventService: EventService,private datePipe: DatePipe) { }
 
@@ -56,9 +61,21 @@ export class EventComponent implements OnInit {
       var eventDate = this.datePipe.transform((this.eventFormGroup.value.event_date+"").replace("00:00:00",this.eventFormGroup.value.event_time+":00"),"yyyy-MM-dd HH:mm:ss");
       var location = this.eventFormGroup.value.location;
       var dress_code = this.eventFormGroup.value.dress_code;
-     var cover_image = this.eventFormGroup.value.cover_image;
+      var cover_image = this.eventFormGroup.value.cover_image;
 
-      this.eventService.createEvent(new EventEntity(title,eventDate || '',location,dress_code,JSON.parse(sessionStorage.getItem('questions') || '{}'),[],JSON.parse(
+      this.invites = document.getElementById("invitees")?.innerHTML.split(',')! ;
+
+      for(var val of this.invites)
+      {
+        if(val !== " ")
+        {
+          this.invitesSent.push(new Invite(val))
+        }
+      }
+
+     
+
+      this.eventService.createEvent(new EventEntity(title,eventDate || '',location,dress_code,JSON.parse(sessionStorage.getItem('questions') || '{}'),this.invitesSent,JSON.parse(
         sessionStorage.getItem('user') || '{}'
       )),cover_image)
     }

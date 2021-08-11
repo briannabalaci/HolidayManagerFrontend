@@ -3,11 +3,12 @@ import { Question } from "./question";
 import { User } from "./user";
 
 export class EventEntity {
+    id?: number;
     title?: string;
     eventDate?: string;
     location?: string;
     dressCode?: string;
-    cover_image?: File;
+    cover_image?: any;
     questions?: Question[];
     invites?: Invite[];
     organizer?: User;

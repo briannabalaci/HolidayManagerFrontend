@@ -38,6 +38,11 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem('email',data.email!);
          
           sessionStorage.setItem('user',JSON.stringify(data));
+<<<<<<< HEAD
+=======
+
+          
+>>>>>>> Display_Events
           switch(data.role) {
             case 'admin':
               sessionStorage.setItem('role',data.role);

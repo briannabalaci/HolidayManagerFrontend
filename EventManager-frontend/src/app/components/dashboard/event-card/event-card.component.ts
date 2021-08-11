@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { EventEntity } from '../../../shared/data-types/event';
+import { EventService } from '../../../shared/services/event.service';
 
 @Component({
   selector: 'app-event-card',
@@ -7,15 +10,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EventCardComponent implements OnInit {
 
-  title: string = 'Best event ever';
-  location: string = 'Cluj-Napoca';
-  date: string = '1 Jan 2022'
+  imageUrl: any;
   status: string = 'Accepted'
-  coverImg = 'https://material.angular.io/assets/img/examples/shiba2.jpg';
+  // coverImg = 'https://material.angular.io/assets/img/examples/shiba2.jpg';
 
-  constructor() { }
+  @Input() event?: EventEntity;
+
+  constructor(private eventService: EventService, private domSanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
+    
+      this.eventService.getEventImage(this.event?.id || 0).subscribe((data: any) => {
+        this.imageUrl = URL.createObjectURL(data);
+
+      });
+  }
+
+  makeUrlSafe(imageUrl: string): any {
+    return this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
   }
 
 }

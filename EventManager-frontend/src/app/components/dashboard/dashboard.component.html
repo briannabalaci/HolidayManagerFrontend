@@ -3,25 +3,28 @@
     <header>
         <div class="top-row">
             <h1 class="header_element">Dashboard</h1>
-        <button mat-raised-button color="primary" (click)="onCreateEvent()" *ngIf='role==="organizer"' class="header_element">Create event</button>
+            <button mat-raised-button color="primary" (click)="onCreateEvent()" *ngIf='role==="organizer"'
+                class="header_element">Create event</button>
         </div>
         <p class="role-text">{{role}}</p>
     </header>
-    
+
     <body>
         <mat-form-field appearance="fill">
             <mat-label>Filter</mat-label>
             <mat-select [(value)]="selectedFilter">
-            <mat-option *ngFor="let filter of filters" [value]="filter">
-                {{filter}}
-            </mat-option>
+                <mat-option *ngFor="let filter of filters" [value]="filter">
+                    {{filter}}
+                </mat-option>
             </mat-select>
         </mat-form-field>
         <div class="event-cards">
-            <app-event-card></app-event-card>
-            <app-event-card></app-event-card>
-            <app-event-card></app-event-card>
-            <app-event-card></app-event-card>
+            <ng-container *ngFor="let event of events">
+                <app-event-card [event]="event" >
+
+                </app-event-card>
+            </ng-container>
+
         </div>
     </body>
 </section>
