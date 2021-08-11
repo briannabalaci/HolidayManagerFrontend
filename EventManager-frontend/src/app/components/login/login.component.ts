@@ -35,12 +35,9 @@ export class LoginComponent implements OnInit {
       this.error = false;
       this.logInService.checkUser(user).subscribe(data => 
         {
-<<<<<<< HEAD
           sessionStorage.setItem('email',data.email!);
-=======
          
           sessionStorage.setItem('user',JSON.stringify(data));
->>>>>>> Changing_LogIn
           switch(data.role) {
             case 'admin':
               sessionStorage.setItem('role',data.role);
