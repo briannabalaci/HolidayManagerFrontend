@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EventEntity } from '../data-types/event';
 import { Observable } from 'rxjs';
@@ -42,5 +42,12 @@ export class EventService {
         return new Blob([res], {type: 'image/jpeg'});
       }
     ));
+  }
+  getEventsByUserIdAndFilter(id: number, filter:string) : Observable<EventEntity[]> {
+    const path = `${this.ENVIRONMENT}/getAllBy`;
+
+    let httpParams = new HttpParams().append("id",id).append("filter",filter);
+
+    return  this.httpClient.get<EventEntity[]>(path,{params:httpParams});
   }
 }

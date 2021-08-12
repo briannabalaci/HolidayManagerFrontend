@@ -14,7 +14,7 @@
     <body>
         <mat-form-field appearance="fill">
             <mat-label>Filter</mat-label>
-            <mat-select [(value)]="selectedFilter">
+            <mat-select [(value)]="selectedFilter" (selectionChange)="getEventByFilter()">
                 <mat-option *ngFor="let filter of filters" [value]="filter">
                     {{filter}}
                 </mat-option>

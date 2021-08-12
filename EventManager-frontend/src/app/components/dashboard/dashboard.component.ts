@@ -34,5 +34,13 @@ export class DashboardComponent implements OnInit {
   onCreateEvent() {
     this.router.navigate(['event']);
   }
+  
+  getEventByFilter(): void {
+    console.log('Hello');
+    this.eventService.getEventsByUserIdAndFilter(JSON.parse(sessionStorage.getItem('user') || '{}').id, this.selectedFilter).subscribe(data => 
+    {
+      this.events = data;
+    });
+  }
 
 }
