@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-navigation',
@@ -12,7 +13,8 @@ export class NavigationComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.email = sessionStorage.getItem('email')!;
+    const token = sessionStorage.getItem('token')!;
+    this.email = jwt_decode<any>(token).email;
   }
 
   checked(e: any): void {

@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/shared/data-types/user';
 import { LoginService } from '../../shared/services/login.service';
 import { MessageComponent } from '../message/message.component';
+import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-login',
@@ -31,22 +32,21 @@ export class LoginComponent implements OnInit {
   onSubmit() : void {
       let user = new User();
       user.email = this.form.value.username;
-      user.password = this.form.value.password;
-      console.log(btoa(user.password || ''));
+      user.password = btoa(this.form.value.password);
       this.error = false;
       this.logInService.checkUser(user).subscribe(data => 
         {
-          sessionStorage.setItem('email',data.email!);
+          sessionStorage.setItem('token',data);
+          console.log(jwt_decode<any>(data));
+          const role = jwt_decode<any>(data).roles[0];
+          console.log(role);
          
-          sessionStorage.setItem('user',JSON.stringify(data));
-          switch(data.role) {
-            case 'admin':
-              sessionStorage.setItem('role',data.role);
+          switch(role) {
+            case 'ADMIN':
               this.router.navigate(['user-admin']);
               break;
-            case 'organizer':
-            case 'attendee':
-              sessionStorage.setItem('role',data.role);
+            case 'ORGANIZER':
+            case 'ATTENDEE':
               this.router.navigate(['dashboard']);
               break;
           }
@@ -56,6 +56,7 @@ export class LoginComponent implements OnInit {
           this.error = true;
           
           this.errorMessage = err.error;
+         
         }),
       this.form.reset();};
   
@@ -64,4 +65,6 @@ export class LoginComponent implements OnInit {
     return this.errorMessage;
   }
 }
+
+
 

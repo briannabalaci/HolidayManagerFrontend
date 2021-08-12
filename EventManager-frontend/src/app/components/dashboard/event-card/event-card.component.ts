@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { EventEntity } from '../../../shared/data-types/event';
 import { EventService } from '../../../shared/services/event.service';
+import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-event-card',
@@ -24,10 +25,11 @@ export class EventCardComponent implements OnInit {
         this.imageUrl = URL.createObjectURL(data);
 
       });
-
+    const token = sessionStorage.getItem('token');
+    const email = jwt_decode<any>(token || '').email;
     for(let invite of this.event?.invites || [])
     {
-        if(invite.userInvited === sessionStorage.getItem('email'))
+        if(invite.userInvited === email)
         {
           this.status = invite.status || ' ';
         }

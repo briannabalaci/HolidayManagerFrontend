@@ -34,6 +34,7 @@ export class UserAdminComponent implements OnInit {
   }
 
   collectData(user: User):void {
+    user.password = btoa(user.password || '');
     if(this.createForm === true) {
       this.createUser(user);
     }

@@ -36,17 +36,21 @@ export class EventService {
   }
 
   getEventImage(eventId: number) : any {
-    const path = `${this.ENVIRONMENT}/getImage`
+    const path = `${this.ENVIRONMENT}/getImage`;
+    if(eventId != 0) 
+    {
     return this.httpClient.get(path + '/' + eventId, {responseType: 'blob'}).pipe(map(
       (res) => {
+        
         return new Blob([res], {type: 'image/jpeg'});
       }
     ));
+    }
   }
-  getEventsByUserIdAndFilter(id: number, filter:string) : Observable<EventEntity[]> {
+  getEventsByUserIdAndFilter(email: string, filter:string) : Observable<EventEntity[]> {
     const path = `${this.ENVIRONMENT}/getAllBy`;
 
-    let httpParams = new HttpParams().append("id",id).append("filter",filter);
+    let httpParams = new HttpParams().append("email",email).append("filter",filter);
 
     return  this.httpClient.get<EventEntity[]>(path,{params:httpParams});
   }

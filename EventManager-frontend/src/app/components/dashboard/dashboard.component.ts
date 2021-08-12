@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EventService } from '../../shared/services/event.service';
 import { EventEntity } from '../../shared/data-types/event';
+import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,6 +12,7 @@ import { EventEntity } from '../../shared/data-types/event';
 export class DashboardComponent implements OnInit {
 
   role: string = '';
+  token: string = '';
   
   filters: string[] = [
     'All Events', 'Future Events', 'Accepted', 'Declined'
@@ -21,9 +23,10 @@ export class DashboardComponent implements OnInit {
   constructor(private router: Router, private eventService: EventService) { }
 
   ngOnInit(): void {
-    this.role = sessionStorage.getItem('role')!;
+    this.token = sessionStorage.getItem('token')!;
+    this.role = jwt_decode<any>(this.token).roles[0];
 
-    this.eventService.getEvents().subscribe(data => {
+    this.eventService.getEventsByUserIdAndFilter(jwt_decode<any>(this.token).email, this.selectedFilter).subscribe(data => {
       this.events = data;
     })
 
@@ -37,7 +40,7 @@ export class DashboardComponent implements OnInit {
   
   getEventByFilter(): void {
     console.log('Hello');
-    this.eventService.getEventsByUserIdAndFilter(JSON.parse(sessionStorage.getItem('user') || '{}').id, this.selectedFilter).subscribe(data => 
+    this.eventService.getEventsByUserIdAndFilter(jwt_decode<any>(this.token).email, this.selectedFilter).subscribe(data => 
     {
       this.events = data;
     });
