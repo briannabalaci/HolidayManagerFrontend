@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
       let user = new User();
       user.email = this.form.value.username;
       user.password = this.form.value.password;
+      console.log(btoa(user.password || ''));
       this.error = false;
       this.logInService.checkUser(user).subscribe(data => 
         {
