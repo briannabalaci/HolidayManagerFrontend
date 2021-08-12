@@ -11,7 +11,7 @@ import { EventService } from '../../../shared/services/event.service';
 export class EventCardComponent implements OnInit {
 
   imageUrl: any;
-  status: string = 'Accepted'
+  status: string = '';
   // coverImg = 'https://material.angular.io/assets/img/examples/shiba2.jpg';
 
   @Input() event?: EventEntity;
@@ -24,6 +24,16 @@ export class EventCardComponent implements OnInit {
         this.imageUrl = URL.createObjectURL(data);
 
       });
+
+    for(let invite of this.event?.invites || [])
+    {
+        if(invite.userInvited === sessionStorage.getItem('email'))
+        {
+          this.status = invite.status || ' ';
+        }
+    }
+
+      
   }
 
   makeUrlSafe(imageUrl: string): any {

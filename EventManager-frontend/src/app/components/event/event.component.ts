@@ -40,7 +40,7 @@ export class EventComponent implements OnInit {
       this.userService.getUsers().subscribe(
         data => {
           for (let user of data)
-            invitees += user.email+", ";
+            invitees += user.email+",";
 
           const textarea = document.getElementById("invitees")!;
           textarea.innerHTML=invitees;
@@ -67,7 +67,7 @@ export class EventComponent implements OnInit {
 
       for(var val of this.invites)
       {
-        if(val !== " ")
+        if(val !== "")
         {
           this.invitesSent.push(new Invite(val))
         }
@@ -81,6 +81,7 @@ export class EventComponent implements OnInit {
     }
    
     this.eventFormGroup.reset();
+
   }
 
   cancel(): void{

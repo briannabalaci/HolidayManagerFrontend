@@ -1,10 +1,10 @@
 export class Invite {
-    email?: string;
+    userInvited?: string;
     status?: string;
 
     constructor(email:string,status: string = "Not Accepted")
         {
-            this.email = email;
+            this.userInvited = email;
             this.status = status;
         }
 }
