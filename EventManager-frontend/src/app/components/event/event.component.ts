@@ -6,6 +6,8 @@ import { EventEntity } from 'src/app/shared/data-types/event';
 import { Invite } from 'src/app/shared/data-types/invite';
 import { UserService } from 'src/app/shared/services/user.service';
 import { EventService } from '../../shared/services/event.service';
+import jwt_decode from 'jwt-decode';
+
 
 @Component({
   selector: 'app-event',
@@ -29,7 +31,7 @@ export class EventComponent implements OnInit {
 
   invites: string[] = [];
 
-  constructor(private userService: UserService, private formBuilder: FormBuilder, private eventService: EventService,private datePipe: DatePipe) { }
+  constructor(private userService: UserService, private formBuilder: FormBuilder, private eventService: EventService,private datePipe: DatePipe, private route:Router) { }
 
   ngOnInit(): void {
   }
@@ -73,14 +75,16 @@ export class EventComponent implements OnInit {
         }
       }
 
+      const token = sessionStorage.getItem('token');
+      const email = jwt_decode<any>(token || '').email;
      
 
-      this.eventService.createEvent(new EventEntity(title,eventDate || '',location,dress_code,JSON.parse(sessionStorage.getItem('questions') || '{}'),this.invitesSent,JSON.parse(
-        sessionStorage.getItem('user') || '{}'
-      )),cover_image)
+      this.eventService.createEvent(new EventEntity(title,eventDate || '',location,dress_code,JSON.parse(sessionStorage.getItem('questions') || '{}'),this.invitesSent,email),cover_image)
     }
    
     this.eventFormGroup.reset();
+
+    this.route.navigate(['dashboard']);
 
   }
 
@@ -89,3 +93,4 @@ export class EventComponent implements OnInit {
   }
 
 }
+

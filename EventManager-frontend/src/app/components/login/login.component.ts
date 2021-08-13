@@ -50,15 +50,21 @@ export class LoginComponent implements OnInit {
               this.router.navigate(['dashboard']);
               break;
           }
+          this.form.reset();
+          Object.keys(this.form.controls).forEach(key => 
+          this.form.controls[key].setErrors(null));
           
 
         }, err => {
           this.error = true;
           
           this.errorMessage = err.error;
+
+          this.form.reset();
          
-        }),
-      this.form.reset();};
+        })
+      
+      };
   
 
   getErrorMessage() : string {

@@ -34,6 +34,7 @@ export class UserService {
 
   changePassword(userDto:UserDto): Observable<any> {
     const path = `${ENVIRONMENT}/users/change-password`;
-    return this.httpClient.post<UserDto>(path, userDto);
+    console.log(this.changePassword);
+    return this.httpClient.put<UserDto>(path, userDto);
   }
 }

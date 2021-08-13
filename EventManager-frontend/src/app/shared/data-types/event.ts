@@ -11,7 +11,7 @@ export class EventEntity {
     cover_image?: any;
     questions?: Question[];
     invites?: Invite[];
-    organizer?: User;
+    organizer?: string;
 
 
     constructor(title: string,
@@ -20,7 +20,7 @@ export class EventEntity {
         dressCode: string,
         questionsLIst: Question[],
         inviteList: Invite[],
-        organizer: User) {
+        organizer: string) {
 
 
         this.title = title;

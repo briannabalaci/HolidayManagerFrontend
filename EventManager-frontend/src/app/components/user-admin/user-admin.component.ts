@@ -58,11 +58,9 @@ export class UserAdminComponent implements OnInit {
   }
 
   createUser(user: User) {
-    this.service.createUser(user).subscribe(() => {
       this.dataSource.push(user);
       this.dataSourceUpdated.data = this.dataSource;
       window.location.reload();
-    })
   }
 
   openInfo(user: User): void {

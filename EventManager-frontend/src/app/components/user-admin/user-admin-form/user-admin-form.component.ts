@@ -79,7 +79,7 @@ export class UserAdminFormComponent implements OnInit {
       forename: this.userToEdit?.forename,
       surname: this.userToEdit?.surname,
       email: this.userToEdit?.email,
-      password: this.userToEdit?.password,
+      password: '',
       role: this.userToEdit?.role,
       department: this.userToEdit?.department
     })
@@ -114,7 +114,7 @@ export class UserAdminFormComponent implements OnInit {
 
     this.service.createUser(usr).subscribe(data => 
       {
-        window.location.reload();
+        
       }, 
       err => 
       {
@@ -124,6 +124,8 @@ export class UserAdminFormComponent implements OnInit {
           }
         }),
         this.userFormGroup.reset();
+        Object.keys(this.userFormGroup.controls).forEach(key => 
+          this.userFormGroup.controls[key].setErrors(null));
       })
 
     this.userEmitter.emit(usr);
@@ -138,7 +140,7 @@ export class UserAdminFormComponent implements OnInit {
       forename: user.forename,
       surname: user.surname,
       email: user.email,
-      password: user.password,
+      password: '',
       role: user.role,
       department: user.department
     }
