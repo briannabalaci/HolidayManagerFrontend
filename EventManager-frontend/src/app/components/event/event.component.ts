@@ -7,6 +7,8 @@ import { Invite } from 'src/app/shared/data-types/invite';
 import { UserService } from 'src/app/shared/services/user.service';
 import { EventService } from '../../shared/services/event.service';
 import jwt_decode from 'jwt-decode';
+import { DepartmentService } from 'src/app/shared/services/department.service';
+import { Department } from 'src/app/shared/data-types/department';
 
 
 @Component({
@@ -15,8 +17,10 @@ import jwt_decode from 'jwt-decode';
   styleUrls: ['./event.component.scss']
 })
 export class EventComponent implements OnInit {
-
-  public showInvitees = false;
+  departments: string[] = [];
+  selectedDepartment: string = '';
+  text: string = '';
+  minDate = new Date();
 
   eventFormGroup = this.formBuilder.group({
     title: ['', Validators.required],
@@ -31,29 +35,49 @@ export class EventComponent implements OnInit {
 
   invites: string[] = [];
 
-  constructor(private userService: UserService, private formBuilder: FormBuilder, private eventService: EventService,private datePipe: DatePipe, private route:Router) { }
+  constructor(private userService: UserService, private departmentService: DepartmentService, private formBuilder: FormBuilder, private eventService: EventService,private datePipe: DatePipe, private route:Router) { }
 
   ngOnInit(): void {
+    this.departments.push("Include all");
+    this.departmentService.getDepartments().subscribe(
+      data => {
+        for (var object of data) {
+          this.departments.push(object.name!+ " department");
+        }
+      }
+    )
+  }
+
+  doTextareaValueChange(ev: any) {
+    try {
+      this.text = ev.target.value;
+    } catch(e) {
+      console.log('could not set textarea-value');
+    }
   }
 
   checked(): void{
-    if (this.showInvitees === false){
-      let invitees: string="";
+    if (this.selectedDepartment === "Include all"){
+      let invitees: string = "";
       this.userService.getUsers().subscribe(
         data => {
           for (let user of data)
-            invitees += user.email+",";
+            invitees += user.email + ",";
 
-          const textarea = document.getElementById("invitees")!;
-          textarea.innerHTML=invitees;
+          this.text = invitees.slice(0, -1);
         }
       );
-      this.showInvitees = true;
     }
     else{
-        const textarea = document.getElementById("invitees")!;
-        textarea.innerHTML="";
-        this.showInvitees = true;
+      let invitees: string = "";
+      this.userService.getUsersByDepartment(this.selectedDepartment.split(" ")[0]).subscribe(
+        data => {
+          for (let user of data)
+            invitees += user.email + ",";
+
+            this.text = invitees.slice(0, -1);
+        }
+      );
     }
   }
 
@@ -65,7 +89,7 @@ export class EventComponent implements OnInit {
       var dress_code = this.eventFormGroup.value.dress_code;
       var cover_image = this.eventFormGroup.value.cover_image;
 
-      this.invites = document.getElementById("invitees")?.innerHTML.split(',')! ;
+      this.invites = this.text.split(',');
 
       for(var val of this.invites)
       {
@@ -83,13 +107,14 @@ export class EventComponent implements OnInit {
     }
    
     this.eventFormGroup.reset();
-
     this.route.navigate(['dashboard']);
 
   }
 
   cancel(): void{
     this.eventFormGroup.reset();
+    this.text = "";
+    this.selectedDepartment = "";
   }
 
 }

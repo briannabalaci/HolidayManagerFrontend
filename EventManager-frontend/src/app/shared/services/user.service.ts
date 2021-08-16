@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../data-types/user';
 import { Observable } from 'rxjs';
 import { UserDto } from '../data-types/userDto';
+import { Department } from '../data-types/department';
 
 const ENVIRONMENT = "http://localhost:8080";
 
@@ -14,6 +15,11 @@ export class UserService {
 
   getUsers(): Observable<User[]> {
     const path = `${ENVIRONMENT}/users/getAll`;
+    return this.httpClient.get<User[]>(path);
+  }
+
+  getUsersByDepartment(department: string): Observable<any> {
+    const path = `${ENVIRONMENT}/users/getByDepartment/${department}`;
     return this.httpClient.get<User[]>(path);
   }
 

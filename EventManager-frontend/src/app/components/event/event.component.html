@@ -16,7 +16,7 @@
         
               <mat-form-field appearance="fill">
                 <mat-label>Date</mat-label>
-                <input matInput [matDatepicker]="picker" placeholder="Date" formControlName="event_date" required>
+                <input matInput [matDatepicker]="picker" placeholder="Date" [min]="minDate" formControlName="event_date" required>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
@@ -50,9 +50,15 @@
             <br><br>
             <h2>Invitees</h2>
             <hr><br>
-            <textarea placeholder="name@example.com" rows="3" id="invitees"></textarea>
-            <input type="checkbox" id="inviteesCheckbox" (change)="checked()">
-            <label for="inviteesCheckbox">Include all</label>
+            <textarea placeholder="name@example.com" rows="3" id="invitees" (change)="doTextareaValueChange($event)" [value]="text"></textarea>
+            <mat-form-field appearance="legacy">
+              <mat-label>Choose invitees</mat-label>
+              <mat-select [(value)]="selectedDepartment" (selectionChange)='checked()'>
+              <mat-option *ngFor="let department of departments" [value]="department">
+                  {{department}}
+              </mat-option>
+              </mat-select>
+            </mat-form-field>
             <br><br>
 
             

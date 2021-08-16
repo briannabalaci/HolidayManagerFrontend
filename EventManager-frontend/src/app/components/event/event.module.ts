@@ -17,6 +17,7 @@ import { EventExtrasComponent } from './event-extras/event-extras.component';
 import {MatListModule} from '@angular/material/list'; 
 import { MatSelectModule } from '@angular/material/select';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { MatCardModule } from '@angular/material/card';
 const routes: Routes = [
   {
     path: '',
@@ -43,6 +44,8 @@ const routes: Routes = [
     MatFileUploadModule,
     NgxMatFileInputModule,
     MatExpansionModule,
+    MatSelectModule,
+    MatCardModule
   ],
   providers: [  
     NgxMatDatetimePickerModule, 
