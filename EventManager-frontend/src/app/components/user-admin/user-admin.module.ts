@@ -13,6 +13,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import {MatCardModule} from '@angular/material/card';
 import { NavigationModule } from '../navigation/navigation.module';
+import { MatSortModule } from '@angular/material/sort';
 
 const routes: Routes = [
   {
@@ -40,7 +41,8 @@ const routes: Routes = [
     NavigationModule,
     //MatPaginator
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatSortModule
   ],
   exports: [
     UserAdminComponent,

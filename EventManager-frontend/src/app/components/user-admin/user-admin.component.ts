@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from 'src/app/shared/data-types/user';
 import { MatTableDataSource } from "@angular/material/table";
 import { UserService } from 'src/app/shared/services/user.service';
 import { MessageComponent } from '../message/message.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ChildActivationEnd } from '@angular/router';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-user-admin',
@@ -20,9 +21,13 @@ export class UserAdminComponent implements OnInit {
   public createForm = true;
   public userToEdit?: User;
 
+  @ViewChild(MatSort, {static:true})sort!: MatSort;
+
   constructor(private service: UserService, private dialog: MatDialog) { }
 
+
   ngOnInit(): void {
+    
     this.service.getUsers().subscribe(
       data => {
         this.dataSource = data;
@@ -31,6 +36,7 @@ export class UserAdminComponent implements OnInit {
       err => {console.log(err);}
       
     )
+    this.dataSourceUpdated.sort = this.sort;
   }
 
   collectData(user: User):void {
