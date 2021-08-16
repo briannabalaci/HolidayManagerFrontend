@@ -14,7 +14,7 @@
        
         <div class="form-container">
             <h3>Additional information:</h3>
-            <app-dynamic-form *ngIf="event.questions" [questions]="event.questions"></app-dynamic-form>
+            <app-dynamic-form *ngIf="event.questions && event.id" [questions]="event.questions" [invite]="getMyEvent()"></app-dynamic-form>
         </div>
     </body>
 </section>

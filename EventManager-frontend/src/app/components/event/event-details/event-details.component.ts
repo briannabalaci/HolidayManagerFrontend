@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { EventEntity } from 'src/app/shared/data-types/event';
 import { EventService } from 'src/app/shared/services/event.service';
+import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-event-details',
@@ -39,8 +40,16 @@ export class EventDetailsComponent implements OnInit {
     return this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
   }
 
-  onSubmit(): void {
-    console.log('form subbmited');
+  getMyEvent() {
+    const token = sessionStorage.getItem('token')!;
+    const email = jwt_decode<any>(token).email;
+
+    for(const invite of this.event!.invites!) {
+      if(invite.userInvited === email) {
+        return invite;
+      }
+    }
+    return undefined;
   }
 
 }
