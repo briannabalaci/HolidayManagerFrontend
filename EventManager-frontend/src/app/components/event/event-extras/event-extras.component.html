@@ -1,37 +1,51 @@
 <section class="event-extras">
-    <!-- <mat-nav-list>
-    
-        <mat-list-item *ngFor="let question of questions; let i=index">
-            <span matLine>Question {{i+1}}:  {{question.text}}</span>
-
-            <button *ngIf='add' mat-icon-button (click)="showInfo(question)">
-                <mat-icon>add</mat-icon>
-            </button>
-    
-           
-        
-        </mat-list-item>
    
-    </mat-nav-list> -->
-
     <mat-accordion>
         <mat-expansion-panel *ngFor="let question of questions; let i=index">
             <mat-expansion-panel-header>
                 Question {{i+1}} : {{question.text}}
+                <div class="questionsButton">
+                    <button id="editButton" type="button" (click)="editQ(question,$event)" mat-button>
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button id="deleteButton"  type="button" (click)="deleteQuestion(i,$event)" mat-button>
+                        <mat-icon>delete_forever</mat-icon>
+                    </button>
+
+                </div>
             </mat-expansion-panel-header>
             <div *ngFor="let answer of question.answerList; let i=index">
-               Answer {{i+1}} : {{answer.text}}
+                Answer {{i+1}} : {{answer.text}}
+                <button type="button" mat-button (click)="edit(answer)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button type="button" mat-button (click)="deleteAnswer(i,question)">
+                    <mat-icon>delete_forever</mat-icon>
+                </button>
+                <div *ngIf="editAnswer">
+                    <form [formGroup]="formAnswer" (ngSubmit)="onEditAnswer(answer,question,i)">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Enter Answer</mat-label>
+                            <input matInput placeholder="" formControlName="answer"  required>
+                        </mat-form-field>
+                    </form>
+                </div>
+              
             </div>
             <div *ngIf="inputAnswer">
                 <form [formGroup]="formAnswer" (ngSubmit)="onSubmitAnswer(question)">
                     <mat-form-field class="example-full-width" appearance="fill">
-                      <mat-label>Enter Answer</mat-label>
-                      <input matInput placeholder="" formControlName="answer" required>
+                        <mat-label>Enter Answer</mat-label>
+                        <input matInput placeholder="" formControlName="answer" required>
                     </mat-form-field>
                 </form>
             </div>
-            
-            <button mat-raised-button type="button" color="primary" class="add-button" (click)="showInputAnswer()">Add Answer</button><br>
+           
+
+
+
+            <button mat-raised-button type="button" color="primary" class="add-button" (click)="showInputAnswer()">Add
+                Answer</button><br>
         </mat-expansion-panel>
     </mat-accordion>
 
@@ -39,11 +53,20 @@
     <div *ngIf="input">
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <mat-form-field class="example-full-width" appearance="fill">
-              <mat-label>Enter Questions</mat-label>
-              <input matInput placeholder="" formControlName="question" required>
+                <mat-label>Enter Questions</mat-label>
+                <input matInput placeholder="" formControlName="question" required>
+            </mat-form-field>
+        </form>
+    </div>
+    <div *ngIf="editQuestion">
+        <form [formGroup]="form" (ngSubmit)="onEditQuestion()">
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Edit Question</mat-label>
+                <input matInput placeholder="" formControlName="question"  required>
             </mat-form-field>
         </form>
     </div>
     <br>
-    <button mat-raised-button type="button" color="primary" class="add-button" (click)="showInput()">Add Question</button><br>
+    <button mat-raised-button type="button" color="primary" class="add-button" (click)="showInput()">Add
+        Question</button><br>
 </section>

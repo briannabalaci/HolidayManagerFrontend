@@ -12,3 +12,19 @@ mat-form-field {
     margin: auto auto;
     width: 80%;
 }
+.event-extras {
+
+    .questionsButton {
+        display: flex;
+        
+        #editButton {
+            float: left;
+            margin-right: -20px;
+
+        }
+        #deleteButton {
+            float: left;
+
+        }
+    }
+}
