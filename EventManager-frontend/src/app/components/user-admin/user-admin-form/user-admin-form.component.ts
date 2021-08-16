@@ -101,7 +101,7 @@ export class UserAdminFormComponent implements OnInit {
       forename: user.forename,
       surname: user.surname,
       email: user.email,
-      password: user.password,
+      password: btoa(user.password),
       role: user.role,
       department: user.department
     }

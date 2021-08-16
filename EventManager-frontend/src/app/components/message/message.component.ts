@@ -24,6 +24,7 @@ export class MessageComponent implements OnInit {
   input : boolean = false;
   email: boolean = false;
   incomplete: boolean = false;
+  confirmDelete: boolean = false;
   public question?: Question ;
 
   ngOnInit(): void {
@@ -43,6 +44,9 @@ export class MessageComponent implements OnInit {
       this.incomplete = true;
     }
 
+    if (this.data.component === 'confirmDelete') {
+      this.confirmDelete = true;
+    }
     if (this.data.component === 'event-extras') {
       console.log("HELLO");
       this.event_extras = true;
@@ -59,9 +63,9 @@ export class MessageComponent implements OnInit {
       this.question?.answerList?.push(new Answer(this.form.value.answer));
       this.input = false;
   }
-  close(): void {
+  close(condition: boolean): void {
 
-    this.dialogRef.close();
+    this.dialogRef.close(condition);
 
 
   }

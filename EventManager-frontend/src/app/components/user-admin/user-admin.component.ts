@@ -5,6 +5,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 import { MessageComponent } from '../message/message.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ChildActivationEnd } from '@angular/router';
+import { throwIfEmpty } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-admin',
@@ -73,16 +74,26 @@ export class UserAdminComponent implements OnInit {
   }
 
   delete(user: User): void {
-    this.service.deleteUser(user.id!).subscribe(
-      data => {
-        const index = this.dataSource.indexOf(user);
-        this.dataSource.splice(index, 1);
-        this.dataSourceUpdated.data = this.dataSource;
-      },
-      err => {
-        console.log('Cannot delete user - not found');
+
+    const dialogRef = this.dialog.open(MessageComponent, {
+      data: {component: 'confirmDelete'}
+    })
+
+    dialogRef.afterClosed().subscribe(data => {
+      if(data === true)
+      {
+        this.service.deleteUser(user.id!).subscribe(
+          data => {
+            const index = this.dataSource.indexOf(user);
+            this.dataSource.splice(index, 1);
+            this.dataSourceUpdated.data = this.dataSource;
+          },
+          err => {
+            console.log('Cannot delete user - not found');
+          }
+        );
       }
-    );
+    })
   }
 
   edit(user: User): void {
@@ -92,5 +103,6 @@ export class UserAdminComponent implements OnInit {
 
   toggleCreateForm(): void {
     this.createForm = !this.createForm;
+
   }
 }
