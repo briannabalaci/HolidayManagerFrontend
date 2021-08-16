@@ -1,16 +1,11 @@
-<div>
+<article>
     <form (ngSubmit)="onSubmit()" [formGroup]="form">
   
       <div *ngFor="let question of questions" class="form-row">
         <app-question [question]="question" [form]="form"></app-question>
       </div>
-  
-      <div class="form-row">
-        <button type="submit" [disabled]="!form.valid">Save</button>
-      </div>
+    
+      <button mat-raised-button type="submit" class="accept-button"  [disabled]="!form.valid">Accept</button>
+      <button mat-raised-button type="button" class="decline-button" (click)="onDecline()">Decline</button>
     </form>
-  
-    <div *ngIf="payLoad" class="form-row">
-      <strong>Saved the following values</strong><br>{{payLoad}}
-    </div>
-  </div>
+</article>

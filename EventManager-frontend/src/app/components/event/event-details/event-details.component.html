@@ -1,11 +1,20 @@
 <section *ngIf="event">
+    <!-- <header style="height: 100px;">
+
+    </header> -->
     <img [src]="makeUrlSafe(imageUrl)">
     <body *ngIf="event">
         <h2>{{event.title}}</h2>
-        <p class="align-text-element"><mat-icon color="primary" aria-hidden="false" aria-label="Example home icon">place</mat-icon> {{ event?.location }}</p>
-        <p class="align-text-element"><mat-icon color="primary" aria-hidden="false" aria-label="Example home icon">event</mat-icon> {{ event?.eventDate }}</p>
-        <p class="align-text-element"><mat-icon color="primary" aria-hidden="false" aria-label="Example home icon">checkroom</mat-icon> {{ event?.dressCode }}</p>
-
-        <app-dynamic-form *ngIf="event.questions" [questions]="event.questions"></app-dynamic-form>
+        <div>
+            <p class="align-text-element"><mat-icon color="primary" aria-hidden="false" aria-label="Example home icon">place</mat-icon> {{ event?.location }}</p>
+            <p class="align-text-element"><mat-icon color="primary" aria-hidden="false" aria-label="Example home icon">event</mat-icon> {{ event?.eventDate | date: 'dd/MM/YYYY' }}</p>
+            <p class="align-text-element"><mat-icon color="primary" aria-hidden="false" aria-label="Example home icon">schedule</mat-icon> {{ event?.eventDate | date: 'hh:mm' }}</p>
+            <p class="align-text-element"><mat-icon color="primary" aria-hidden="false" aria-label="Example home icon">checkroom</mat-icon> {{ event?.dressCode }}</p>
+        </div>
+       
+        <div class="form-container">
+            <h3>Additional information:</h3>
+            <app-dynamic-form *ngIf="event.questions" [questions]="event.questions"></app-dynamic-form>
+        </div>
     </body>
 </section>

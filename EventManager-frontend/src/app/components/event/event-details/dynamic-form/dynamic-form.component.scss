@@ -1,0 +1,25 @@
+button{
+    margin: 8%;
+    width:34%;
+    color: white;
+}
+
+.accept-button {
+    background-color: #00bd29;
+  
+    &:hover{
+        background-color: #42bd5d;
+    }
+}
+
+.decline-button {
+    background-color: #ff0000;
+  
+    &:hover{
+        background-color: #ff5e5e;
+    }
+}
+
+article {
+    padding: 15px;
+}

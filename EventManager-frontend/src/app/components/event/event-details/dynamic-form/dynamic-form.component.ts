@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { Question } from 'src/app/shared/data-types/question';
 import { QuestionControlService } from 'src/app/shared/services/question-control.service';
 
@@ -19,12 +19,16 @@ export class DynamicFormComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.questionControlService.toFormGroup(this.questions);
-    console.log(this.form);
+    this.form.reset();
   }
 
   onSubmit() {
     this.payLoad = JSON.stringify(this.form.getRawValue());
     console.log(this.payLoad);
+  }
+
+  onDecline() {
+    console.log('Decline');
   }
 
 }

@@ -1,4 +1,5 @@
 export class Invite {
+    id?: number;
     userInvited?: string;
     status?: string;
 
