@@ -21,8 +21,8 @@
             </mat-select>
         </mat-form-field>
         <div class="event-cards">
-            <ng-container *ngFor="let event of events">
-                <app-event-card [event]="event" >
+            <ng-container *ngFor="let event of events" >
+                <app-event-card [event]="event" style="cursor: pointer;" [routerLink]="['/event', event.id]">
 
                 </app-event-card>
             </ng-container>

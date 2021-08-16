@@ -17,9 +17,19 @@ import { EventExtrasComponent } from './event-extras/event-extras.component';
 import {MatListModule} from '@angular/material/list'; 
 import { MatSelectModule } from '@angular/material/select';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { EventDetailsComponent } from './event-details/event-details.component';
+import { RoleGuardService } from 'src/app/shared/services/role-guard.service';
 const routes: Routes = [
   {
-    path: '',
+    path: ':eventId',
+    component: EventDetailsComponent
+  },
+  {
+    path: '', pathMatch: 'full',
+    canActivate: [RoleGuardService], 
+    data: {
+      expectedRole: ['ORGANIZER']
+    },
     component: EventComponent
   }
 ]
@@ -27,7 +37,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     EventComponent,
-    EventExtrasComponent
+    EventExtrasComponent,
+    EventDetailsComponent
   ],
   imports: [
     RouterModule.forChild(routes),
