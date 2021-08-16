@@ -37,8 +37,10 @@ const routes: Routes = [
     MatIconModule,
     MatSelectModule,
     MatCardModule,
-    NavigationModule
+    NavigationModule,
     //MatPaginator
+    MatInputModule,
+    MatFormFieldModule
   ],
   exports: [
     UserAdminComponent,

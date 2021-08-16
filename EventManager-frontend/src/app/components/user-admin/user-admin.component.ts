@@ -93,4 +93,8 @@ export class UserAdminComponent implements OnInit {
   toggleCreateForm(): void {
     this.createForm = !this.createForm;
   }
+
+  searchUser(event: any) {
+    this.dataSourceUpdated.filter = event.target.value.trim().toLowerCase();
+  }
 }

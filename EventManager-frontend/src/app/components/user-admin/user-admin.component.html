@@ -7,12 +7,16 @@
           <h1 class="header_element">User administration</h1>
       </div>
     </header>
+
   </div>
     
 
     <body>
       <br>
       <div class="mat-elevation-z8">
+        <mat-form-field>
+          <input (keyup)="searchUser($event)" matInput placeholder=" Search user">
+        </mat-form-field>
         <table mat-table [dataSource]="dataSourceUpdated">
       
           <!-- Forname Column -->
