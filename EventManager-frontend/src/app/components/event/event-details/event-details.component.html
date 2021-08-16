@@ -1,1 +1,11 @@
-<p>event-details works!</p>
+<section *ngIf="event">
+    <img [src]="makeUrlSafe(imageUrl)">
+    <body *ngIf="event">
+        <h2>{{event.title}}</h2>
+        <p class="align-text-element"><mat-icon color="primary" aria-hidden="false" aria-label="Example home icon">place</mat-icon> {{ event?.location }}</p>
+        <p class="align-text-element"><mat-icon color="primary" aria-hidden="false" aria-label="Example home icon">event</mat-icon> {{ event?.eventDate }}</p>
+        <p class="align-text-element"><mat-icon color="primary" aria-hidden="false" aria-label="Example home icon">checkroom</mat-icon> {{ event?.dressCode }}</p>
+
+        <app-dynamic-form *ngIf="event.questions" [questions]="event.questions"></app-dynamic-form>
+    </body>
+</section>

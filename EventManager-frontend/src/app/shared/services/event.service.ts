@@ -54,4 +54,10 @@ export class EventService {
 
     return  this.httpClient.get<EventEntity[]>(path,{params:httpParams});
   }
+
+  getEvent(id: number) : Observable<EventEntity> {
+    const path = `${this.ENVIRONMENT}/${id}`;
+
+    return this.httpClient.get<EventEntity>(path);
+  }
 }
