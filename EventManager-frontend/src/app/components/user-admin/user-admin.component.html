@@ -1,6 +1,7 @@
 <app-navigation></app-navigation>
 
 <section class="administration">
+
   <div class="div_header">
     <header>
       <div class="top-row">
@@ -8,65 +9,46 @@
       </div>
     </header>
   </div>
-    
 
     <body>
       <br>
-      <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="dataSourceUpdated">
-      
-          <!-- Forname Column -->
-          <ng-container matColumnDef="forename">
-            <th mat-header-cell *matHeaderCellDef> Forename </th>
-            <td mat-cell *matCellDef="let element"> {{element.forename}} </td>
-          </ng-container>
-      
-          <!-- Surname Column -->
-          <ng-container matColumnDef="surname">
-            <th mat-header-cell *matHeaderCellDef> Surname </th>
-            <td mat-cell *matCellDef="let element"> {{element.surname}} </td>
-          </ng-container>
-
-          <!-- Email Column -->
-          <!-- <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef> Email(username) </th>
-            <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-          </ng-container> -->
-
-          <!-- Role Column -->
-          <!-- <ng-container matColumnDef="role">
-            <th mat-header-cell *matHeaderCellDef> Role </th>
-            <td mat-cell *matCellDef="let element"> {{element.role}} </td>
-          </ng-container> -->
-
-          <!-- Department Column -->
-          <!-- <ng-container matColumnDef="department">
-            <th mat-header-cell *matHeaderCellDef> Department </th>
-            <td mat-cell *matCellDef="let element"> {{element.department}} </td>
-          </ng-container> -->
-
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef> Actions </th>
-            <td mat-cell *matCellDef="let element"> 
-              <button mat-button (click)="openInfo(element)"  ><mat-icon>info</mat-icon></button>
-              <button mat-button (click)="edit(element)"><mat-icon>edit</mat-icon></button>
-              <button mat-button (click)="delete(element)"><mat-icon>delete_forever</mat-icon></button>
-            </td>
-          </ng-container>
-      
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-      
-        <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                       [pageSize]="5"
-                       showFirstLastButtons >
-        </mat-paginator> -->
-        <app-user-admin-form *ngIf="showForm"
-        [createForm]='createForm'
-        (createFormChangeEmitter)='toggleCreateForm()'
-        [userToEdit]='userToEdit'
-        (userEmitter)="collectData($event)"></app-user-admin-form>
-      </div>
+        <div class="mat-elevation-z8">
+          <div class="scrollable-table">
+            <table mat-table [dataSource]="dataSourceUpdated">
+        
+              <!-- Forname Column -->
+              <ng-container matColumnDef="forename">
+                <th mat-header-cell *matHeaderCellDef> Forename </th>
+                <td mat-cell *matCellDef="let element"> {{element.forename}} </td>
+              </ng-container>
+          
+              <!-- Surname Column -->
+              <ng-container matColumnDef="surname">
+                <th mat-header-cell *matHeaderCellDef> Surname </th>
+                <td mat-cell *matCellDef="let element"> {{element.surname}} </td>
+              </ng-container>
+    
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                <td mat-cell *matCellDef="let element"> 
+                  <button mat-button (click)="openInfo(element)"  ><mat-icon>info</mat-icon></button>
+                  <button mat-button (click)="edit(element)"><mat-icon>edit</mat-icon></button>
+                  <button mat-button (click)="delete(element)"><mat-icon>delete_forever</mat-icon></button>
+                </td>
+              </ng-container>
+          
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+          
+          <app-user-admin-form *ngIf="showForm"
+              [createForm]='createForm'
+              (createFormChangeEmitter)='toggleCreateForm()'
+              [userToEdit]='userToEdit'
+              (userEmitter)="collectData($event)">
+          </app-user-admin-form>
+        </div>  
     </body>
+    
 </section>
