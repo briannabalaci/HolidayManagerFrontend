@@ -18,9 +18,21 @@ import {MatListModule} from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { MatCardModule } from '@angular/material/card';
+import { EventDetailsComponent } from './event-details/event-details.component';
+import { RoleGuardService } from 'src/app/shared/services/role-guard.service';
+import { DynamicFormComponent } from './event-details/dynamic-form/dynamic-form.component';
+import { QuestionComponent } from './event-details/dynamic-form/question/question.component';
 const routes: Routes = [
   {
-    path: '',
+    path: ':eventId',
+    component: EventDetailsComponent
+  },
+  {
+    path: '', pathMatch: 'full',
+    canActivate: [RoleGuardService], 
+    data: {
+      expectedRole: ['ORGANIZER']
+    },
     component: EventComponent
   }
 ]
@@ -28,7 +40,10 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     EventComponent,
-    EventExtrasComponent
+    EventExtrasComponent,
+    EventDetailsComponent,
+    DynamicFormComponent,
+    QuestionComponent
   ],
   imports: [
     RouterModule.forChild(routes),

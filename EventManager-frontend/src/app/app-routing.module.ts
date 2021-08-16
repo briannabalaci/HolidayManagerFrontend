@@ -30,7 +30,7 @@ const routes: Routes = [
     loadChildren: () => import('./components/event/event.module').then(m => m.EventModule),
     canActivate: [RoleGuardService], 
     data: {
-      expectedRole: ['ORGANIZER']
+      expectedRole: ['ORGANIZER','ATTENDEE']
     }
   },
   {

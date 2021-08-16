@@ -1,0 +1,12 @@
+<div [formGroup]="form" >
+    <p class="question-text">{{question.text}}</p>
+    <mat-form-field appearance="fill" >
+        <mat-label>Choose...</mat-label>
+        <mat-select *ngIf="question.id" [formControlName]="question.id" required>
+          <mat-option *ngFor="let answer of question.answerList" [value]="answer.id">
+              {{answer.text}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    <div class="errorMessage" *ngIf="!isValid && isTouched">This answer is required</div>
+</div>
