@@ -35,7 +35,7 @@ export class DynamicFormComponent implements OnInit {
     if(this.invite) {
       this.invite.status = this.status;
 
-      if(this.status === 'Accepted') {
+      if(this.status === 'accepted') {
         this.invite.inviteQuestionResponses = [];
         for(const q of this.questions) {
           this.invite?.inviteQuestionResponses?.push(
@@ -65,11 +65,11 @@ export class DynamicFormComponent implements OnInit {
   }
 
   onAccept() {
-    this.status = "Accepted";
+    this.status = "accepted";
   }
 
   onDecline() {
-    this.status = "Declined";
+    this.status = "declined";
   }
 
 }

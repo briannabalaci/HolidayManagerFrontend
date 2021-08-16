@@ -12,8 +12,7 @@ import jwt_decode from 'jwt-decode';
 })
 export class EventDetailsComponent implements OnInit {
 
-  constructor(private eventService: EventService, private domSanitizer: DomSanitizer,
-              private formBuilder: FormBuilder) { }
+  constructor(private eventService: EventService, private domSanitizer: DomSanitizer) { }
 
   event?: EventEntity;
   imageUrl: any;
@@ -49,7 +48,7 @@ export class EventDetailsComponent implements OnInit {
         return invite;
       }
     }
-    return undefined;
+    return undefined; //will never return this
   }
 
 }
