@@ -38,7 +38,7 @@ export class UserAdminFormComponent implements OnInit {
     forename: ['', Validators.required],
     surname: ['', Validators.required],
     email: ['', Validators.required],
-    password: ['', Validators.required],
+    password: [''],
     role: ['', Validators.required],
     department: ['', Validators.required]
   });
@@ -140,7 +140,7 @@ export class UserAdminFormComponent implements OnInit {
       forename: user.forename,
       surname: user.surname,
       email: user.email,
-      password: '',
+      password: user.password,
       role: user.role,
       department: user.department
     }
