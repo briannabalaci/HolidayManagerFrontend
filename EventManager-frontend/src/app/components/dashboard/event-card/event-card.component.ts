@@ -19,6 +19,8 @@ export class EventCardComponent implements OnInit {
 
   constructor(private eventService: EventService, private domSanitizer: DomSanitizer) { }
 
+  imgUrl : any;
+
   ngOnInit(): void {
     
       this.eventService.getEventImage(this.event?.id || 0).subscribe((data: any) => {
@@ -35,11 +37,14 @@ export class EventCardComponent implements OnInit {
         }
     }
 
+
+
+
       
   }
 
   makeUrlSafe(imageUrl: string): any {
-    return this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
+    return this.domSanitizer.bypassSecurityTrustResourceUrl(imageUrl);
   }
 
 }
