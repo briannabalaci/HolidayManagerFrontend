@@ -14,17 +14,22 @@ export class DashboardComponent implements OnInit {
   role: string = '';
   token: string = '';
   
-  filters: string[] = [
-    'All Events', 'Future Events', 'Accepted', 'Declined'
-  ];
+  filters: string[] = [];
   events?: EventEntity[];
-  selectedFilter = this.filters[0];
+  selectedFilter?: string;
 
   constructor(private router: Router, private eventService: EventService) { }
 
   ngOnInit(): void {
     this.token = sessionStorage.getItem('token')!;
     this.role = jwt_decode<any>(this.token).roles[0];
+    if(this.role === 'ORGANIZER') {
+      this.filters = ['All Events', 'Future Events', 'Accepted', 'Declined', 'My Events'];
+    }
+    else {
+      this.filters = ['All Events', 'Future Events', 'Accepted', 'Declined'];
+    }
+    this.selectedFilter = this.filters[0];
 
     this.eventService.getEventsByUserIdAndFilter(jwt_decode<any>(this.token).email, this.selectedFilter).subscribe(data => {
       this.events = data;
@@ -40,7 +45,7 @@ export class DashboardComponent implements OnInit {
   
   getEventByFilter(): void {
     console.log('Hello');
-    this.eventService.getEventsByUserIdAndFilter(jwt_decode<any>(this.token).email, this.selectedFilter).subscribe(data => 
+    this.eventService.getEventsByUserIdAndFilter(jwt_decode<any>(this.token).email, this.selectedFilter!).subscribe(data => 
     {
       this.events = data;
     });
