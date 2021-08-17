@@ -1,5 +1,5 @@
 <article>
-  <div *ngIf="role === 'attendee'">
+  <div *ngIf="role === 'ATTENDEE'">
     <form (ngSubmit)="onSubmit()" [formGroup]="form">
 
       <div *ngFor="let question of questions" class="form-row">
