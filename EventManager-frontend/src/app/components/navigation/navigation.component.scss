@@ -1,14 +1,28 @@
 
 nav {
-    
     position: sticky;
-    border-radius: 20px;
     z-index: 5;
     top: 0;
+    width: 100%;
+    padding: 5px 10px;
+    
+    box-shadow: none; 
+    background-color: #f0f0f0;
+  }
+
+  .left-nav {
+    width: 40%;
+  }
+
+  .right-nav {
     width: 60%;
     float: right;
-    box-shadow: none; 
-    background-color: transparent;
+    border-radius: 20px;
+  }
+
+  .left-nav,
+  .right-nav {
+    display: inline-block;
   }
   
   .navigation {
@@ -79,11 +93,11 @@ nav {
   }
 
   #icon{
-      position: absolute;
-      left: 95px;
-      top: 140px;
+      // position: absolute;
+      // left: 95px;
+      // top: 140px;
       font-size: 20px;
-      z-index: 7;
+      // z-index: 7;
 
       @media only screen and (min-width: 768px) {
         display: none;
