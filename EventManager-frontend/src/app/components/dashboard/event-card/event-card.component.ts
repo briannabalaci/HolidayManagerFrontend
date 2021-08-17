@@ -23,10 +23,7 @@ export class EventCardComponent implements OnInit {
 
   ngOnInit(): void {
     
-      this.eventService.getEventImage(this.event?.id || 0).subscribe((data: any) => {
-        this.imageUrl = URL.createObjectURL(data);
 
-      });
     const token = sessionStorage.getItem('token');
     const email = jwt_decode<any>(token || '').email;
     for(let invite of this.event?.invites || [])

@@ -2,7 +2,7 @@
     <!-- <header style="height: 100px;">
 
     </header> -->
-    <img [src]="makeUrlSafe(imageUrl)">
+    <img [src]="makeUrlSafe(event?.cover_image!)">
     <body *ngIf="event">
         <h2>{{event.title}}</h2>
         <div>

@@ -8,7 +8,7 @@ export class EventEntity {
     eventDate?: string;
     location?: string;
     dressCode?: string;
-    cover_image?: any;
+    cover_image?: string;
     questions?: Question[];
     invites?: Invite[];
     organizer?: string;
@@ -18,6 +18,7 @@ export class EventEntity {
         eventDate: string,
         location: string,
         dressCode: string,
+        cover_image: string,
         questionsLIst: Question[],
         inviteList: Invite[],
         organizer: string) {
@@ -27,6 +28,7 @@ export class EventEntity {
         this.eventDate = eventDate;
         this.location = location;
         this.dressCode = dressCode;
+        this.cover_image = cover_image;
         this.questions = questionsLIst;
         this.invites = inviteList;
         this.organizer = organizer;

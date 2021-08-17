@@ -14,18 +14,13 @@ export class EventService {
 
   constructor(private httpClient: HttpClient) { }
 
-  createEvent(event: EventEntity,file: File) : void {
+  createEvent(event: EventEntity) : void {
     const path = `${this.ENVIRONMENT}/addEvent`;
     console.log(event);
 
 
-    const formData = new FormData();
 
-    formData.append('eventDto', new Blob([JSON.stringify(event)], {type: 'application/json'}));
-
-    formData.append('file',file);
-
-    this.httpClient.post<any>(path, formData).subscribe(data => {},
+    this.httpClient.post<any>(path, event).subscribe(data => {},
       err => {console.log(err)});
   }
 
@@ -35,18 +30,7 @@ export class EventService {
     return this.httpClient.get<EventEntity[]>(path);
   }
 
-  getEventImage(eventId: number) : any {
-    const path = `${this.ENVIRONMENT}/getImage`;
-    if(eventId != 0) 
-    {
-    return this.httpClient.get(path + '/' + eventId, {responseType: 'blob'}).pipe(map(
-      (res) => {
-        
-        return new Blob([res], {type: 'image/jpeg'});
-      }
-    ));
-    }
-  }
+  
   getEventsByUserIdAndFilter(email: string, filter:string) : Observable<EventEntity[]> {
     const path = `${this.ENVIRONMENT}/getAllBy`;
 

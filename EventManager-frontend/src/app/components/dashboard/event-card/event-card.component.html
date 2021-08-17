@@ -4,7 +4,7 @@
         <mat-icon color="primary" aria-hidden="false" aria-label="Example home icon">place</mat-icon>
         <p>{{event?.location}}</p>
     </div>
-    <iframe [src]= "makeUrlSafe(imageUrl)" scrolling= "no" ></iframe>
+    <img [src]= "makeUrlSafe(event?.cover_image!)">
     <div class="card-bottom">
         <p class="align-text-element"><mat-icon color="primary" aria-hidden="false" aria-label="Example home icon">event</mat-icon>{{ event?.eventDate }}</p>
         <p class="align-text-element">Status: {{ status }}</p>

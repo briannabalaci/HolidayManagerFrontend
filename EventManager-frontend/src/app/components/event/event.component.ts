@@ -21,6 +21,7 @@ export class EventComponent implements OnInit {
   selectedDepartment: string = '';
   text: string = '';
   minDate = new Date();
+  coverImg : string = '';
 
   eventFormGroup = this.formBuilder.group({
     title: ['', Validators.required],
@@ -88,6 +89,7 @@ export class EventComponent implements OnInit {
       var location = this.eventFormGroup.value.location;
       var dress_code = this.eventFormGroup.value.dress_code;
       var cover_image = this.eventFormGroup.value.cover_image;
+      
 
       this.invites = this.text.split(',');
 
@@ -102,8 +104,12 @@ export class EventComponent implements OnInit {
       const token = sessionStorage.getItem('token');
       const email = jwt_decode<any>(token || '').email;
      
-
-      this.eventService.createEvent(new EventEntity(title,eventDate || '',location,dress_code,JSON.parse(sessionStorage.getItem('questions') || '{}'),this.invitesSent,email),cover_image)
+      this.getBase64(cover_image).then(
+        (data: any) => {
+          this.eventService.createEvent(new EventEntity(title,eventDate || '',location,dress_code,data,JSON.parse(sessionStorage.getItem('questions') || '{}'),this.invitesSent,email))
+        
+        }
+      )
     }
    
     this.eventFormGroup.reset();
@@ -116,6 +122,16 @@ export class EventComponent implements OnInit {
     this.text = "";
     this.selectedDepartment = "";
   }
+
+  getBase64(file: File): any {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    })
+  }
+
 
 }
 

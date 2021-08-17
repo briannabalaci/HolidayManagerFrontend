@@ -25,10 +25,6 @@ export class EventDetailsComponent implements OnInit {
     this.eventService.getEvent(this.eventId).subscribe(
       data => {
         this.event = data;
-        this.eventService.getEventImage(this.event?.id || 0).subscribe((data: any) => {
-          this.imageUrl = URL.createObjectURL(data);
-    
-        });
       },
       err => {
         console.log(err.error);
