@@ -13,6 +13,7 @@ export class EventCardComponent implements OnInit {
 
   imageUrl: any;
   status: string = '';
+  date: string = '';
   // coverImg = 'https://material.angular.io/assets/img/examples/shiba2.jpg';
 
   @Input() event?: EventEntity;
@@ -22,6 +23,19 @@ export class EventCardComponent implements OnInit {
   imgUrl : any;
 
   ngOnInit(): void {
+
+    const currentDate = new Date();
+    const eventDate = new Date(this.event?.eventDate!);
+
+    if (eventDate.getDate() < currentDate.getDate())
+      this.date = eventDate.getDate().toString();
+    else
+    {
+      if (eventDate.getDate() === currentDate.getDate())
+        this.date = " Today";
+      else
+        this.date = (eventDate.getDate() - currentDate.getDate()).toString()+" days left";
+    }
     
 
     const token = sessionStorage.getItem('token');
@@ -32,12 +46,7 @@ export class EventCardComponent implements OnInit {
         {
           this.status = invite.status || ' ';
         }
-    }
-
-
-
-
-      
+    }      
   }
 
   makeUrlSafe(imageUrl: string): any {

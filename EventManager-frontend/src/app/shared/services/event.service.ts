@@ -44,4 +44,10 @@ export class EventService {
 
     return this.httpClient.get<EventEntity>(path);
   }
+
+  deleteEvent(id: number): Observable<any> {
+    const path = `${this.ENVIRONMENT}/deleteEvent/${id}`;
+
+    return this.httpClient.delete<EventEntity>(path);
+  }
 }
