@@ -4,6 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { EventEntity } from 'src/app/shared/data-types/event';
 import { EventService } from 'src/app/shared/services/event.service';
 import jwt_decode from 'jwt-decode';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-event-details',
@@ -12,14 +13,16 @@ import jwt_decode from 'jwt-decode';
 })
 export class EventDetailsComponent implements OnInit {
 
-  constructor(private eventService: EventService, private domSanitizer: DomSanitizer) { }
+  constructor(private eventService: EventService, private domSanitizer: DomSanitizer, private route: ActivatedRoute) { }
 
   event?: EventEntity;
   imageUrl: any;
+  eventId: number = 1;
 
 
   ngOnInit(): void {
-    this.eventService.getEvent(8).subscribe(
+    this.eventId = +this.route.snapshot.paramMap.get('eventId')!;
+    this.eventService.getEvent(this.eventId).subscribe(
       data => {
         this.event = data;
         this.eventService.getEventImage(this.event?.id || 0).subscribe((data: any) => {
