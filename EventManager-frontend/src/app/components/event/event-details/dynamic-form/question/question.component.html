@@ -7,6 +7,7 @@
               {{answer.text}}
           </mat-option>
         </mat-select>
+        <mat-error >This answer is required</mat-error>
       </mat-form-field>
-    <div class="errorMessage" *ngIf="!isValid && isTouched">This answer is required</div>
+    <!-- <div class="errorMessage" *ngIf="!isValid && isTouched">This answer is required</div> -->
 </div>
