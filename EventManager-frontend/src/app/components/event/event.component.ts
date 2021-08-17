@@ -9,6 +9,7 @@ import { EventService } from '../../shared/services/event.service';
 import jwt_decode from 'jwt-decode';
 import { DepartmentService } from 'src/app/shared/services/department.service';
 import { Department } from 'src/app/shared/data-types/department';
+import { ThrowStmt } from '@angular/compiler';
 
 
 @Component({
@@ -62,8 +63,10 @@ export class EventComponent implements OnInit {
       let invitees: string = "";
       this.userService.getUsers().subscribe(
         data => {
-          for (let user of data)
-            invitees += user.email + ",";
+          for (let user of data){
+            if (user.role !== "admin")
+              invitees += user.email + ",";
+          }
 
           this.text = invitees.slice(0, -1);
         }
@@ -73,9 +76,18 @@ export class EventComponent implements OnInit {
       let invitees: string = "";
       this.userService.getUsersByDepartment(this.selectedDepartment.split(" ")[0]).subscribe(
         data => {
-          for (let user of data)
-            invitees += user.email + ",";
+          for (let user of data){
+            if (user.role !== "admin")
+              invitees += user.email + ",";
+          }
 
+          const token = sessionStorage.getItem('token');
+          const email = jwt_decode<any>(token || ' ').email;
+          if (!invitees.includes(email)){
+            invitees += email;
+            this.text = invitees;
+          }
+          else
             this.text = invitees.slice(0, -1);
         }
       );
@@ -118,9 +130,7 @@ export class EventComponent implements OnInit {
   }
 
   cancel(): void{
-    this.eventFormGroup.reset();
-    this.text = "";
-    this.selectedDepartment = "";
+    this.route.navigate(['dashboard']);
   }
 
   getBase64(file: File): any {

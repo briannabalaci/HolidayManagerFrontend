@@ -27,16 +27,22 @@ export class EventCardComponent implements OnInit {
     const currentDate = new Date();
     const eventDate = new Date(this.event?.eventDate!);
 
-    if (eventDate.getDate() < currentDate.getDate())
-      this.date = eventDate.getDate().toString();
+    if (eventDate < currentDate)
+      this.date = eventDate.getMonth().toString()+"/"+eventDate.getDate() +"/"+eventDate.getFullYear().toString();
     else
     {
-      if (eventDate.getDate() === currentDate.getDate())
+      currentDate.setHours(0,0,0,0);
+      eventDate.setHours(0,0,0,0);
+      if (eventDate === currentDate)
         this.date = " Today";
       else
-        this.date = (eventDate.getDate() - currentDate.getDate()).toString()+" days left";
+      {
+        const Time = eventDate. getTime() - currentDate. getTime();
+        const Days = Time / (1000 * 3600 * 24);
+        this.date = (Days).toString()+" days left";
+      }
+        
     }
-    
 
     const token = sessionStorage.getItem('token');
     const email = jwt_decode<any>(token || '').email;
