@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
-import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-navigation',
@@ -12,7 +11,7 @@ export class NavigationComponent implements OnInit {
 
   email: string = '';
 
-  constructor(private router: Router, private _location: Location) { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     const token = sessionStorage.getItem('token')!;
@@ -31,7 +30,33 @@ export class NavigationComponent implements OnInit {
   }
 
   goBack() {
-    this._location.back();
+    const destination = this.detectDestination();
+    this.router.navigate([destination]);
+  }
+  
+  detectDestination() {
+    const url = this.router.url;
+    console.log(url);
+    switch(url) {
+      case '/user-admin':
+        return 'login';
+      case '/dashboard':
+        return 'login';
+      case '/event':
+        return 'dashboard';
+      case '/event' + this.getEventId(url):
+        return 'dashboard'
+      default:
+        return 'login';
+    }
+  }
+
+  getEventId(url: String) {
+    if(url.includes('event')) {
+      const words = url.split('/');
+      return '/' + words[words.length-1];
+    }
+    return '';
   }
 
 }
