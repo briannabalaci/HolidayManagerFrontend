@@ -70,7 +70,7 @@ export class UserAdminComponent implements OnInit {
   createUser(user: User) {
       this.dataSource.push(user);
       this.dataSourceUpdated.data = this.dataSource;
-      window.location.reload();
+     
   }
 
   openInfo(user: User): void {

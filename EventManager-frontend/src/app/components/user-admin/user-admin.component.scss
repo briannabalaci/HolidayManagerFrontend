@@ -37,7 +37,8 @@ h2 {
 
 .scrollable-table {
   width: 100%;
-  height: 350px;
+  max-height: 350px;
+  min-height: 150px;
   overflow: auto;
 
   table {
