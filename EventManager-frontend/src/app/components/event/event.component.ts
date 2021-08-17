@@ -125,7 +125,9 @@ export class EventComponent implements OnInit {
     }
    
     this.eventFormGroup.reset();
-    this.route.navigate(['dashboard']);
+    this.route.navigate(['dashboard']).then(() => {
+      window.location.reload();
+    });
 
   }
 
