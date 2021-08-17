@@ -1,9 +1,14 @@
 <section>
     <header>
-      <div class="top-row">
+      <div class="top-row" *ngIf='!update'>
           <h1 class="header_element">New Event</h1>
           <hr>
       </div>
+
+      <div class="top-row" *ngIf='update'>
+        <h1 class="header_element">Update Event</h1>
+        <hr>
+    </div>
   </header>
     
     <body>
@@ -43,7 +48,7 @@
             <br><br>
             <h2>Questions</h2>
             <hr>
-            <app-event-extras>
+            <app-event-extras [questions]="questions">
 
             </app-event-extras>
 
@@ -62,7 +67,8 @@
             <br><br>
 
             
-            <button mat-raised-button color="primary" class="create-button">Create</button>
+            <button *ngIf="!update" mat-raised-button color="primary" class="create-button">Create</button>
+            <button *ngIf="update" mat-raised-button color="primary" class="create-button">Update</button>
             <button mat-raised-button type="button" color="primary" class="cancel-button" (click)="cancel()">Cancel</button>
         </form>
     </body>

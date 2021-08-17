@@ -23,3 +23,20 @@ button{
 article {
     padding: 15px;
 }
+.organizer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    button {
+        width: 100px;
+        margin: auto auto;
+        text-align: center;
+        padding: 0px;
+    }
+
+    .event_org {
+        margin: 0 auto;
+        display: inline !important;
+    }
+}

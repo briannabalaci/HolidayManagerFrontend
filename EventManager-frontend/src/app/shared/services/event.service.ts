@@ -50,4 +50,12 @@ export class EventService {
 
     return this.httpClient.delete<EventEntity>(path);
   }
+
+  updateEvent(event: EventEntity): Observable<any> {
+    const path = `${this.ENVIRONMENT}/updateEvent`;
+
+    console.log(event);
+
+    return this.httpClient.put<any>(path,event);
+  }
 }

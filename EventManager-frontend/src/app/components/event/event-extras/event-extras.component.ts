@@ -2,7 +2,7 @@
 
 import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y/input-modality/input-modality-detector';
 import { ThrowStmt } from '@angular/compiler';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
@@ -28,7 +28,7 @@ export class EventExtrasComponent implements OnInit {
     answer: ['', Validators.required],
   })
 
-  public questions: Question[] = [];
+  @Input() questions: Question[] = [];
   input: boolean = false;
   inputAnswer: boolean = false;
   editAnswer: boolean = false;
@@ -37,6 +37,8 @@ export class EventExtrasComponent implements OnInit {
   add: boolean = true;
   constructor(private formBuilder: FormBuilder, private dialog: MatDialog) { }
   ngOnInit(): void {
+
+    sessionStorage.setItem('questions', JSON.stringify(this.questions));
 
   }
 
@@ -77,8 +79,6 @@ export class EventExtrasComponent implements OnInit {
 
 
       question.answerList?.splice(index, 1);
-
-
 
   }
 
