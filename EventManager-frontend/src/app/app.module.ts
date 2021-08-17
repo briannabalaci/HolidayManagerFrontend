@@ -11,6 +11,7 @@ import { MessageModule } from './components/message/message.module';
 import { EventComponent } from './components/event/event.component';
 import { EventExtrasComponent } from './components/event/event-extras/event-extras.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { NavigationModule } from './components/navigation/navigation.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { NavigationComponent } from './components/navigation/navigation.componen
     BrowserModule,
     AppRoutingModule,
     MainModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NavigationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

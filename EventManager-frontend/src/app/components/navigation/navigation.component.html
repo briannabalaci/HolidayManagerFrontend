@@ -1,12 +1,24 @@
 <nav id="nav">
-	<input type="checkbox" id="check" (change)="checked($event)">
-	<label class="meniu-label" for="check" >
-		<span class="open-nav"><span class="material-icons">account_circle</span></span>
-		<span class="close-nav"><span class="material-icons">cancel</span></span>
-	</label>
-	<ul class="navigation">
-        <li>Email: {{email}}</li>
-		<li><a routerLink="/change-password">Change password</a></li>
-		<li><a routerLink="/login" (click)="logout()"><span class="material-icons" id="icon">logout</span><span class="logout">Log Out</span></a></li>
-	</ul>
+	<div class="left-nav">
+		<!-- back button -->
+		<a class="back-link" (click)="goBack()"><span class="material-icons">arrow_back</span></a>
+	</div>
+	<div class="right-nav" id="right-nav">
+		<input type="checkbox" id="check" (change)="checked($event)">
+		<label class="meniu-label" for="check" >
+			<span class="open-nav"><span class="material-icons">account_circle</span></span>
+			<span class="close-nav"><span class="material-icons">cancel</span></span>
+		</label>
+		<ul class="navigation">
+			<li>Email: {{email}}</li>
+			<li><a routerLink="/change-password">Change password</a></li>
+			<li>
+				<span class="material-icons" id="icon">logout</span>
+				<a routerLink="/login" (click)="logout()">
+					<span class="logout">Log Out</span>
+				</a>
+			</li>
+		</ul>
+	</div>
+	
 </nav>

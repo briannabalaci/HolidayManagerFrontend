@@ -22,6 +22,7 @@ import { EventDetailsComponent } from './event-details/event-details.component';
 import { RoleGuardService } from 'src/app/shared/services/role-guard.service';
 import { DynamicFormComponent } from './event-details/dynamic-form/dynamic-form.component';
 import { QuestionComponent } from './event-details/dynamic-form/question/question.component';
+import { NavigationModule } from '../navigation/navigation.module';
 const routes: Routes = [
   {
     path: ':eventId',
@@ -60,7 +61,8 @@ const routes: Routes = [
     NgxMatFileInputModule,
     MatExpansionModule,
     MatSelectModule,
-    MatCardModule
+    MatCardModule,
+    NavigationModule
   ],
   providers: [  
     NgxMatDatetimePickerModule, 

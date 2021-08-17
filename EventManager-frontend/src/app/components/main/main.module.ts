@@ -16,6 +16,7 @@ import { MessageModule } from '../message/message.module';
 import { MatPaginator } from '@angular/material/paginator';
 import { EventModule } from '../event/event.module';
 import { ChangePasswordModule } from '../change-password/change-password.module';
+import { NavigationModule } from '../navigation/navigation.module';
 
 
 const routes: Routes = [
@@ -40,7 +41,8 @@ const routes: Routes = [
     MatFormFieldModule,
     MessageModule,
     EventModule,
-    ChangePasswordModule
+    ChangePasswordModule,
+    NavigationModule
     //MatPaginator
   ],
   exports: [
