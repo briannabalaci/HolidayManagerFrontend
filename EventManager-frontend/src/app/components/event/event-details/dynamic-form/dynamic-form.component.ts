@@ -7,6 +7,10 @@ import { InviteQuestionResponse } from 'src/app/shared/data-types/invite-questio
 import { Question } from 'src/app/shared/data-types/question';
 import { InviteService } from 'src/app/shared/services/invite.service';
 import { QuestionControlService } from 'src/app/shared/services/question-control.service';
+import jwt_decode from 'jwt-decode';
+import { EventService } from '../../../../shared/services/event.service';
+import { Router } from '@angular/router';
+import { EventEntity } from '../../../../shared/data-types/event';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -19,15 +23,22 @@ export class DynamicFormComponent implements OnInit {
   payLoad = '';
 
   constructor(private questionControlService: QuestionControlService,
-              private inviteService: InviteService) { }
+              private inviteService: InviteService,
+              private eventService: EventService,
+              private router: Router) { }
 
   @Input() questions: Question[] = [];
   @Input() invite?: Invite ;
+  @Input() event?: EventEntity;
 
   status: string = 'Not answered';
 
+  role: string = '';
+
   ngOnInit() {
     this.form = this.questionControlService.toFormGroup(this.questions);
+    const token = sessionStorage.getItem('token')!;
+    this.role = jwt_decode<any>(token).roles[0];
     this.form.reset();
   }
 
@@ -70,6 +81,17 @@ export class DynamicFormComponent implements OnInit {
 
   onDecline() {
     this.status = "declined";
+  }
+
+  onCancel() {
+      this.eventService.deleteEvent(this.event?.id!).subscribe(() => {}, err => {
+        console.log(err);
+      });
+  }
+
+  onUpdateEvent() {
+      sessionStorage.setItem('event',JSON.stringify(this.event!))
+      this.router.navigate(['/event']);
   }
 
 }
