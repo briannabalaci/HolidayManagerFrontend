@@ -6,6 +6,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 import { MessageComponent } from '../message/message.component';
 import jwt_decode from 'jwt-decode';
 import { Router } from '@angular/router';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-change-password',
@@ -20,7 +21,7 @@ export class ChangePasswordComponent implements OnInit {
     new_password2: ['', Validators.required]
   })
 
-  constructor(private formBuilder: FormBuilder, private dialog: MatDialog, private userService: UserService,private route:Router) { }
+  constructor(private _location: Location,private formBuilder: FormBuilder, private dialog: MatDialog, private userService: UserService,private route:Router) { }
 
   ngOnInit(): void {
   }
@@ -51,6 +52,7 @@ export class ChangePasswordComponent implements OnInit {
 
   cancel(): void{
     this.changePasswordFormGroup.reset();
+    this._location.back();
   }
 
 }
