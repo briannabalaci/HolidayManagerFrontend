@@ -37,7 +37,7 @@ export class UserAdminFormComponent implements OnInit {
   userFormGroup = this.formBuilder.group({
     forename: ['', Validators.required],
     surname: ['', Validators.required],
-    email: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
     password: [''],
     role: ['', Validators.required],
     department: ['', Validators.required]
@@ -71,6 +71,12 @@ export class UserAdminFormComponent implements OnInit {
     if(this.createForm === false) {
       this.updateFormValues();
     }
+  }
+
+  getEmailError() {
+    return this.userFormGroup.controls['email'].hasError('required') ? 'Email is required' :
+    this.userFormGroup.controls['email'].hasError('email') ? 'Not a valid email. Follow pattern email@foo.bar' :
+            '';
   }
 
   updateFormValues() {

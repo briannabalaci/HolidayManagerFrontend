@@ -5,21 +5,25 @@
       <mat-form-field appearance="fill" >
           <mat-label>Enter forename</mat-label>
           <input matInput placeholder="Forename" formControlName="forename" required>
+          <mat-error>Forename is required</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="fill" >
           <mat-label>Enter surname</mat-label>
           <input matInput placeholder="Surname" formControlName="surname" required>
+          <mat-error>Surname is required</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="fill" >
           <mat-label>Enter email</mat-label>
           <input matInput type="email" placeholder="name@example.com" formControlName="email" [readonly]="!createForm" required>
+          <mat-error>{{getEmailError()}}</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="fill" >
           <mat-label>Enter password</mat-label>
           <input matInput type="password" placeholder="Password" formControlName="password" [required]="createForm!">
+          <mat-error>Password is required</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
@@ -29,6 +33,7 @@
               {{role}}
           </mat-option>
           </mat-select>
+          <mat-error>Role is required</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
@@ -38,6 +43,7 @@
               {{department}}
           </mat-option>
           </mat-select>
+          <mat-error>Department is required</mat-error>
         </mat-form-field>
 
         <button type="submit" [disabled]="!userForm.valid" mat-raised-button color="primary">{{createForm === true ? "Create User" : "Update User"}}</button>
