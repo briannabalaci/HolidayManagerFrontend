@@ -28,6 +28,9 @@ export class UserAdminComponent implements OnInit {
 
 
   ngOnInit(): void {
+
+    this.dataSourceUpdated.filterPredicate = (data: User, filterValue: string) =>
+      (data.forename!+" "+data.surname!).toLowerCase().indexOf(filterValue) !== -1;
     
     this.service.getUsers().subscribe(
       data => {
@@ -111,6 +114,8 @@ export class UserAdminComponent implements OnInit {
     this.createForm = !this.createForm;
 
   }
+
+  
 
   searchUser(event: any) {
     this.dataSourceUpdated.filter = event.target.value.trim().toLowerCase();
