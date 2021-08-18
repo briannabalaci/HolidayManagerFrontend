@@ -11,6 +11,9 @@ import jwt_decode from 'jwt-decode';
 import { EventService } from '../../../../shared/services/event.service';
 import { Router } from '@angular/router';
 import { EventEntity } from '../../../../shared/data-types/event';
+import { MatDialog } from '@angular/material/dialog';
+import { MessageComponent } from '../../../message/message.component';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -23,52 +26,89 @@ export class DynamicFormComponent implements OnInit {
   payLoad = '';
 
   constructor(private questionControlService: QuestionControlService,
-              private inviteService: InviteService,
-              private eventService: EventService,
-              private router: Router) { }
+    private inviteService: InviteService,
+    private eventService: EventService,
+    private router: Router,
+    private dialog: MatDialog) { }
 
   @Input() questions: Question[] = [];
-  @Input() invite?: Invite ;
+  @Input() invite?: Invite;
   @Input() event?: EventEntity;
 
   status: string = 'Not answered';
 
   role: string = '';
 
+  updatePreferencesForOrganizer: boolean = false;
+
   ngOnInit() {
     this.form = this.questionControlService.toFormGroup(this.questions);
     const token = sessionStorage.getItem('token')!;
     this.role = jwt_decode<any>(token).roles[0];
     this.form.reset();
+
+    console.log(this.invite?.inviteQuestionResponses);
   }
 
   onSubmit() {
-    if(this.invite) {
-      this.invite.status = this.status;
+    if (this.invite) {
+      
 
-      if(this.status === 'accepted') {
+      if (this.status === 'accepted' && this.invite.status === 'declined') {
+        this.invite.status = this.status;
         this.invite.inviteQuestionResponses = [];
-        for(const q of this.questions) {
+
+        for (const q of this.questions) {
           this.invite?.inviteQuestionResponses?.push(
             new InviteQuestionResponse(q, this.getAnswer(q))
           );
         }
+      
+      }
+
+      else if(this.status === 'accepted' && this.invite.status === 'accepted')
+      {
+        
+        this.inviteService.getResponses(this.invite!.id!).subscribe(data => {
+          this.invite!.inviteQuestionResponses = data;
+          console.log(data + "hello");
+        })
+        
+        let i = 0;
+        for (const q of this.questions) {
+          
+          this.invite!.inviteQuestionResponses![i].answer = this.getAnswer(q);
+          i++;
+        }
+        console.log(this.invite.inviteQuestionResponses![0].id);
+      }
+      else if(this.status === 'declined' && this.invite.status === 'accepted')
+      {
+        this.invite!.inviteQuestionResponses = [];
+        this.invite.status = 'declined';
       }
     }
-    
+
+    console.log(this.invite?.inviteQuestionResponses);
     this.inviteService.answerInvite(this.invite!).subscribe(
       data => {
+        this.invite = data;
         console.log('Invite answered');
         console.log(data);
+       
       }
     );
+    this.updatePreferencesForOrganizer = false;
     
+
+    
+
   }
 
   getAnswer(question: Question): Answer {
     const answerId = this.form.value[question.id || ''];
-    for(const answer of question.answerList!) {
-      if(answerId === answer.id) {
+    for (const answer of question.answerList!) {
+      if (answerId === answer.id) {
         return answer;
       }
     }
@@ -77,21 +117,43 @@ export class DynamicFormComponent implements OnInit {
 
   onAccept() {
     this.status = "accepted";
+
   }
 
   onDecline() {
     this.status = "declined";
+
+    
   }
 
   onCancel() {
-      this.eventService.deleteEvent(this.event?.id!).subscribe(() => {}, err => {
-        console.log(err);
-      });
+
+    const dialogRef = this.dialog.open(MessageComponent, {
+      data: { component: 'confirmDelete' }
+    }
+    )
+
+    dialogRef.afterClosed().subscribe(data => {
+      if (data === true) {
+        this.eventService.deleteEvent(this.event?.id!).subscribe(() => { }, 
+        err => { console.log(err);}
+        )
+      }
+    }
+    );
   }
 
   onUpdateEvent() {
-      sessionStorage.setItem('event',JSON.stringify(this.event!))
-      this.router.navigate(['/event']);
+    sessionStorage.setItem('event', JSON.stringify(this.event!))
+    this.router.navigate(['/event']);
+
+    console.log(this.invite!.inviteQuestionResponses);
+  }
+
+  onUpdate() {
+    this.updatePreferencesForOrganizer = true;
+
+
   }
 
 }
