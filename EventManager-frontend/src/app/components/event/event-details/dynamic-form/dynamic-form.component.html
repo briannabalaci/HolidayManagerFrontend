@@ -5,7 +5,9 @@
         <app-question [question]="question" [form]="form"></app-question>
       </div>
     
-      <button mat-raised-button type="submit" class="accept-button" (click)="onAccept()" [disabled]="!form.valid">Accept</button>
-      <button mat-raised-button type="submit" class="decline-button" (click)="onDecline()">Decline</button>
+      <button mat-raised-button type="submit" class="accept-button" (click)="onAccept()" [hidden]="onAcceptStatus()" [disabled]="!form.valid">Accept</button>
+      <button mat-raised-button type="submit" class="decline-button" (click)="onDecline()" [hidden]="onDeclineStatus()" >Decline</button>
+      <button mat-raised-button type="submit" class="accept-button" [hidden]="onDeclineStatus() || onNotAccepted()" [disabled]="!form.valid" >Update</button>
+      <button mat-raised-button type="submit" class="decline-button" [hidden]="onNotAccepted()" (click)="onCancelAttendee()" >Cancel</button>
     </form>
 </article>
