@@ -11,11 +11,12 @@
             <p class="align-text-element"><mat-icon color="primary" aria-hidden="false" aria-label="Example home icon">event</mat-icon> {{ event?.eventDate | date: 'dd/MM/YYYY' }}</p>
             <p class="align-text-element"><mat-icon color="primary" aria-hidden="false" aria-label="Example home icon">schedule</mat-icon> {{ event?.eventDate | date: 'hh:mm' }}</p>
             <p class="align-text-element"><mat-icon color="primary" aria-hidden="false" aria-label="Example home icon">checkroom</mat-icon> {{ event?.dressCode }}</p>
+            <p class="align-text-element"><mat-icon color="primary" aria-hidden="false" aria-label="Example home icon">hourglass_empty</mat-icon> {{ date }}</p>
         </div>
        
         <div class="form-container">
-            <h3>Additional information:</h3>
-            <app-dynamic-form *ngIf="event.questions && event.id" [event]="event" [questions]="event.questions" [invite]="getMyEvent()"></app-dynamic-form>
+            <h3 *ngIf="canUpdate">Additional information:</h3>
+            <app-dynamic-form *ngIf="event.questions && event.id" [canUpdate]="canUpdate" [event]="event" [questions]="event.questions" [invite]="getMyEvent()"></app-dynamic-form>
         </div>
     </body>
 </section>

@@ -12,6 +12,7 @@ export class EventEntity {
     questions?: Question[];
     invites?: Invite[];
     organizer?: string;
+    time_limit: number;
 
 
     constructor(title: string,
@@ -21,7 +22,8 @@ export class EventEntity {
         cover_image: string,
         questionsLIst: Question[],
         inviteList: Invite[],
-        organizer: string) {
+        organizer: string,
+        time_limit: number) {
 
 
         this.title = title;
@@ -32,6 +34,7 @@ export class EventEntity {
         this.questions = questionsLIst;
         this.invites = inviteList;
         this.organizer = organizer;
+        this.time_limit = time_limit;
     }
 
 }

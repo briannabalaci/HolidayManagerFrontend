@@ -18,20 +18,39 @@ export class EventDetailsComponent implements OnInit {
   event?: EventEntity;
   imageUrl: any;
   eventId: number = 1;
+  date: string = '';
+  canUpdate: boolean = true;
 
 
   ngOnInit(): void {
+
     this.eventId = +this.route.snapshot.paramMap.get('eventId')!;
     this.eventService.getEvent(this.eventId).subscribe(
       data => {
         this.event = data;
+
+        const currentDate = new Date();
+        let limitDate = new Date(this.event?.eventDate!);
+        limitDate.setDate(limitDate.getDate() - this.event?.time_limit!);
+
+        if (limitDate <= currentDate){
+          this.date = 'Passed time limit for update';
+          this.canUpdate = false;
+        }
+        else
+        {
+          currentDate.setHours(0,0,0,0);
+          limitDate.setHours(0,0,0,0);
+          const Time = limitDate. getTime() - currentDate. getTime();
+          const Days = Time / (1000 * 3600 * 24);
+          this.date = Days.toString()+' days left for update';
+        }
       },
       err => {
         console.log(err.error);
       }
     );
 
-    
   }
 
   makeUrlSafe(imageUrl: string): any {

@@ -2,19 +2,22 @@
   <div *ngIf="role === 'ATTENDEE'">
     <form (ngSubmit)="onSubmit()" [formGroup]="form">
 
-      <div *ngFor="let question of questions" class="form-row">
-        <app-question [question]="question" [form]="form"></app-question>
+      <div *ngIf="canUpdate">
+        <div *ngFor="let question of questions" class="form-row">
+          <app-question [question]="question" [form]="form"></app-question>
+        </div>
       </div>
+      
 
       <button mat-raised-button type="submit" class="accept-button" (click)="onAccept()"
-        [disabled]="!form.valid">Accept</button>
-      <button mat-raised-button type="submit" class="decline-button" (click)="onDecline()">Decline</button>
+        [disabled]="!form.valid && !canUpdate">Accept</button>
+      <button mat-raised-button type="submit" class="decline-button" (click)="onDecline()" [disabled]="!canUpdate">Decline</button>
     </form>
   </div>
   <div *ngIf="role === 'ORGANIZER'" class="organizer">
 
 
-    <button mat-raised-button type="button" color="primary" (click)="onAccept()">Update</button>
+    <button mat-raised-button type="button" color="primary" (click)="onAccept()" [disabled]="!canUpdate">Update</button>
 
     <br>
     <hr>

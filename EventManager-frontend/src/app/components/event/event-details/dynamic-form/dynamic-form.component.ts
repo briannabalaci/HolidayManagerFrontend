@@ -30,6 +30,7 @@ export class DynamicFormComponent implements OnInit {
   @Input() questions: Question[] = [];
   @Input() invite?: Invite ;
   @Input() event?: EventEntity;
+  @Input() canUpdate?: boolean;
 
   status: string = 'Not answered';
 

@@ -35,7 +35,8 @@ export class EventComponent implements OnInit {
     event_time: ['', Validators.required],
     location: ['', Validators.required],
     dress_code: ['', Validators.required],
-    cover_image: ['', Validators.required]
+    cover_image: ['', Validators.required],
+    time_limit: ['', Validators.required]
   })
 
   invitesSent: Invite[] = [];
@@ -65,7 +66,8 @@ export class EventComponent implements OnInit {
         event_time: dateAndTime![1],
         location: this.eventStorage!.location,
         dress_code: this.eventStorage!.dressCode,
-        cover_image: this.eventStorage!.cover_image
+        cover_image: this.eventStorage!.cover_image,
+        time_limit: this.eventStorage!.time_limit
       })
 
       this.questions = this.eventStorage!.questions!;
@@ -134,6 +136,7 @@ export class EventComponent implements OnInit {
       var location = this.eventFormGroup.value.location;
       var dress_code = this.eventFormGroup.value.dress_code;
       var cover_image = this.eventFormGroup.value.cover_image;
+      var time_limit = this.eventFormGroup.value.time_limit;
 
 
       this.invites = this.text.split(',');
@@ -161,13 +164,13 @@ export class EventComponent implements OnInit {
         this.getBase64(cover_image).then(
           (data: any) => {
 
-            this.eventService.createEvent(new EventEntity(title, eventDate || '', location, dress_code, data, JSON.parse(sessionStorage.getItem('questions') || '{}'), this.invitesSent, email))
+            this.eventService.createEvent(new EventEntity(title, eventDate || '', location, dress_code, data, JSON.parse(sessionStorage.getItem('questions') || '{}'), this.invitesSent, email,time_limit))
 
           }
         )
       }
       else {
-        const e : EventEntity = new EventEntity(title, eventDate || '', location, dress_code, '', JSON.parse(sessionStorage.getItem('questions') || '{}'), this.invitesSent, email);
+        const e : EventEntity = new EventEntity(title, eventDate || '', location, dress_code, '', JSON.parse(sessionStorage.getItem('questions') || '{}'), this.invitesSent, email, time_limit);
         e.id = this.eventStorage?.id;
         this.eventService.updateEvent(e).subscribe(() => {}, err => {console.log(err)});
       }
