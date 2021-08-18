@@ -74,11 +74,11 @@ export class EventExtrasComponent implements OnInit {
     this.formAnswer.reset();
   }
 
-  deleteAnswer(index: number, question: Question): void {
+  deleteAnswer(index: number, question: Question, indexQ: number): void {
    
-
-
       question.answerList?.splice(index, 1);
+
+      this.questions
 
   }
 
@@ -93,9 +93,11 @@ export class EventExtrasComponent implements OnInit {
 
   }
 
-  onEditAnswer(answer: Answer, question: Question, index: number): void {
+  onEditAnswer(answer: Answer, question: Question, index: number, indexQuestion: number): void {
     console.log(answer);
     question.answerList[index].text = this.formAnswer.value.answer;
+    this.questions[indexQuestion] = question;
+    sessionStorage.setItem('questions', JSON.stringify(this.questions));
 
 
     this.editAnswer = false;
@@ -108,6 +110,10 @@ export class EventExtrasComponent implements OnInit {
 
     this.questions.splice(index, 1);
 
+    console.log('delete');
+
+    sessionStorage.setItem('questions', JSON.stringify(this.questions));
+
     this.editQuestion = false;
 
     this.editAnswer = false;
@@ -115,7 +121,7 @@ export class EventExtrasComponent implements OnInit {
     this.form.reset();
   }
 
-  editQ(question: Question, event: Event): void {
+  editQ(question: Question, event: Event, index: number): void {
 
     event.stopPropagation();
 
@@ -127,6 +133,10 @@ export class EventExtrasComponent implements OnInit {
       question: question.text
     })
 
+    this.questions[index] = question;
+
+    sessionStorage.setItem('questions', JSON.stringify(this.questions));
+
 
   }
 
@@ -137,6 +147,8 @@ export class EventExtrasComponent implements OnInit {
     const indexOfQuestion: number = this.questions.indexOf(this.editableQuestion);
 
     this.questions[indexOfQuestion].text = this.form.value.question;
+
+    sessionStorage.setItem('questions', JSON.stringify(this.questions));
 
     this.editQuestion = false;
 

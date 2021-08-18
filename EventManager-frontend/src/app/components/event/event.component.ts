@@ -185,6 +185,8 @@ export class EventComponent implements OnInit {
 
   cancel(): void{
     this.route.navigate(['dashboard']);
+
+  
   }
 
   getBase64(file: File): any {

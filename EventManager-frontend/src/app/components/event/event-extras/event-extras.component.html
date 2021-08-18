@@ -5,7 +5,7 @@
             <mat-expansion-panel-header>
                 Question {{i+1}} : {{question.text}}
                 <div class="questionsButton">
-                    <button id="editButton" type="button" (click)="editQ(question,$event)" mat-button>
+                    <button id="editButton" type="button" (click)="editQ(question,$event,i)" mat-button>
                         <mat-icon>edit</mat-icon>
                     </button>
                     <button id="deleteButton"  type="button" (click)="deleteQuestion(i,$event)" mat-button>
@@ -14,16 +14,16 @@
 
                 </div>
             </mat-expansion-panel-header>
-            <div *ngFor="let answer of question.answerList; let i=index">
-                Answer {{i+1}} : {{answer.text}}
+            <div *ngFor="let answer of question.answerList; let j=index">
+                Answer {{j+1}} : {{answer.text}}
                 <button type="button" mat-button (click)="edit(answer)">
                     <mat-icon>edit</mat-icon>
                 </button>
-                <button type="button" mat-button (click)="deleteAnswer(i,question)">
+                <button type="button" mat-button (click)="deleteAnswer(j,question,i)">
                     <mat-icon>delete_forever</mat-icon>
                 </button>
                 <div *ngIf="editAnswer">
-                    <form [formGroup]="formAnswer" (ngSubmit)="onEditAnswer(answer,question,i)">
+                    <form [formGroup]="formAnswer" (ngSubmit)="onEditAnswer(answer,question,j,i)">
                         <mat-form-field class="example-full-width" appearance="fill">
                             <mat-label>Enter Answer</mat-label>
                             <input matInput placeholder="" formControlName="answer"  required>

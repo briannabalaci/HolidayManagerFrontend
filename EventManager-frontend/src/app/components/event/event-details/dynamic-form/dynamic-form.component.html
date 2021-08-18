@@ -1,5 +1,5 @@
 <article>
-  <div *ngIf="role === 'ATTENDEE'">
+  <div *ngIf="role === 'ATTENDEE' || updatePreferencesForOrganizer">
     <form (ngSubmit)="onSubmit()" [formGroup]="form">
 
       <div *ngIf="canUpdate">
@@ -14,10 +14,23 @@
       <button mat-raised-button type="submit" class="decline-button" (click)="onDecline()" [disabled]="!canUpdate">Decline</button>
     </form>
   </div>
-  <div *ngIf="role === 'ORGANIZER'" class="organizer">
+  <div *ngIf="role === 'ORGANIZER' && !updatePreferencesForOrganizer" class="organizer">
 
+    <div *ngFor="let response of invite!.inviteQuestionResponses; let i = index;" class="form-row">
+      <b>Question {{i+1}}: </b> {{response.question!.text}}
+      <div *ngIf="invite!.status === 'Not Accepted'">
+        <p><b>R: </b> No response yet</p>
+      </div>
 
-    <button mat-raised-button type="button" color="primary" (click)="onAccept()" [disabled]="!canUpdate">Update</button>
+      <div *ngIf="invite!.status === 'accepted'">
+
+        <b>R: {{response.answer!.text}}</b> 
+
+      </div>
+    </div>
+
+    
+    <button mat-raised-button type="button" color="primary" (click)="onUpdate()"  [disabled]="!canUpdate">Update</button>
 
     <br>
     <hr>
