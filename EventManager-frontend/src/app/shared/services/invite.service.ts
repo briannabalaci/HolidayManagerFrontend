@@ -22,4 +22,19 @@ export class InviteService {
     const path = `${this.ENVIRONMENT}/getResponses`;
     return this.httpClient.get<InviteQuestionResponse[]>(path + '/' + id);
   }
+  getEventStatus(): Observable<Invite[]> {
+    const path = `${this.ENVIRONMENT}/getByStatus/${status}`;
+    return this.httpClient.get<Invite[]>(path);
+  }
+
+  updateResponses(response: InviteQuestionResponse): Observable<any> {
+    const path = `${this.ENVIRONMENT}/inviteQuestionResponse/update`
+    return this.httpClient.put<InviteQuestionResponse>(path, response);
+  }
+
+  deleteResponse(id: number): Observable<any> {
+    const path = `${this.ENVIRONMENT}/inviteQuestionResponse/delete/${id}`;
+    return this.httpClient.delete<InviteQuestionResponse>(path);
+  }
+
 }

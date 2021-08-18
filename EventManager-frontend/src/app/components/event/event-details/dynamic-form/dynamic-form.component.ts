@@ -7,13 +7,14 @@ import { InviteQuestionResponse } from 'src/app/shared/data-types/invite-questio
 import { Question } from 'src/app/shared/data-types/question';
 import { InviteService } from 'src/app/shared/services/invite.service';
 import { QuestionControlService } from 'src/app/shared/services/question-control.service';
-import jwt_decode from 'jwt-decode';
 import { EventService } from '../../../../shared/services/event.service';
-import { Router } from '@angular/router';
 import { EventEntity } from '../../../../shared/data-types/event';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageComponent } from '../../../message/message.component';
 import { ThrowStmt } from '@angular/compiler';
+import {Location} from '@angular/common';
+import { Router } from '@angular/router';
+import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -24,6 +25,9 @@ export class DynamicFormComponent implements OnInit {
 
   form!: FormGroup;
   payLoad = '';
+  verif: any;
+  role: string = '';
+  token: string = '';
 
   constructor(private questionControlService: QuestionControlService,
     private inviteService: InviteService,
@@ -35,17 +39,16 @@ export class DynamicFormComponent implements OnInit {
   @Input() invite?: Invite;
   @Input() event?: EventEntity;
   @Input() canUpdate?: boolean;
+  @Input() response?: InviteQuestionResponse;
 
   status: string = 'Not answered';
-
-  role: string = '';
 
   updatePreferencesForOrganizer: boolean = false;
 
   ngOnInit() {
     this.form = this.questionControlService.toFormGroup(this.questions);
     const token = sessionStorage.getItem('token')!;
-    this.role = jwt_decode<any>(token).roles[0];
+    this.role = jwt_decode<any>(token).roles[0]; //might be roles[1]
     this.form.reset();
 
     console.log(this.invite?.inviteQuestionResponses);
@@ -118,13 +121,17 @@ export class DynamicFormComponent implements OnInit {
 
   onAccept() {
     this.status = "accepted";
-
+    //this.route.navigate(['dashboard']);
   }
 
   onDecline() {
     this.status = "declined";
+    //this.route.navigate(['dashboard']);
+    // this.inviteService.deleteResponse(this.invite?.id?).subscribe(
+    //   data => {
 
-    
+    //   }
+    // )
   }
 
   onCancel() {
@@ -153,8 +160,42 @@ export class DynamicFormComponent implements OnInit {
 
   onUpdate() {
     this.updatePreferencesForOrganizer = true;
-
-
   }
+
+
+  onAcceptStatus(): boolean {
+    if(this.invite?.status === "accepted") {
+      this.verif = true;
+    } else {
+      this.verif = false;
+    }
+    return this.verif;
+  }
+
+  onDeclineStatus(): boolean {
+    if(this.invite?.status === "declined") {
+      this.verif = true;
+    } else {
+      this.verif = false;
+    }
+    return this.verif;
+  }
+
+  onNotAccepted(): boolean {
+    if(this.invite?.status === "Not answered") {
+      this.verif = true;
+    } else {
+      this.verif = false;
+    }
+    return this.verif;
+  }
+
+  onCancelAttendee() {
+    this.router.navigate(['dashboard']);
+  }
+
+  // onUpdate() {
+  //   this.inviteService.updateResponses(this.invite?.inviteQuestionResponses?);
+  // }
 
 }
