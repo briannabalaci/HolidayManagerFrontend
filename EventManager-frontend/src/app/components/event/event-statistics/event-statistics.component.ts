@@ -126,7 +126,11 @@ export class EventStatisticsComponent implements OnInit {
   }
 
   downloadPdf() {
-    console.log("Merge");
+    this.eventService.getGeneratedPdf(this.event?.id!).subscribe(data => {
+      console.log('PDF');
+      console.log(data);
+      console.log(typeof data);
+    })
   }
 
 }

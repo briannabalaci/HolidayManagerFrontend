@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EventEntity } from '../data-types/event';
 import { Observable } from 'rxjs';
@@ -57,5 +57,18 @@ export class EventService {
     console.log(event);
 
     return this.httpClient.put<any>(path,event);
+  }
+
+  getGeneratedPdf(eventId: number) {
+    const path = `${this.ENVIRONMENT}/${eventId}/statistics`;
+    let  headers= new HttpHeaders({
+      'Content-Type':  'application/pdf',
+      responseType : 'blob',
+      Accept : 'application/pdf',
+      observe : 'response'
+      })
+    return this.httpClient.get(path, {
+      headers:headers , responseType: 'blob' 
+  });
   }
 }
