@@ -107,8 +107,8 @@ export class DynamicFormComponent implements OnInit {
       }
     );
     this.updatePreferencesForOrganizer = false;
+    this.updatePreferencesForAttendee = false;
     
-
     
 
   }
@@ -159,6 +159,7 @@ export class DynamicFormComponent implements OnInit {
 
   onUpdate() {
     this.updatePreferencesForOrganizer = true;
+    this.status = 'accepted';
   }
   onUpdateAttendee() {​​​​​​​​
     this.updatePreferencesForAttendee = true;
