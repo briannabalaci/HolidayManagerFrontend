@@ -23,10 +23,16 @@ import { RoleGuardService } from 'src/app/shared/services/role-guard.service';
 import { DynamicFormComponent } from './event-details/dynamic-form/dynamic-form.component';
 import { QuestionComponent } from './event-details/dynamic-form/question/question.component';
 import { NavigationModule } from '../navigation/navigation.module';
+import { EventStatisticsComponent } from './event-statistics/event-statistics.component';
+import { MatTableModule } from '@angular/material/table';
 const routes: Routes = [
   {
     path: ':eventId',
     component: EventDetailsComponent
+  },
+  {
+    path: ':eventId/statistics',
+    component: EventStatisticsComponent
   },
   {
     path: '', pathMatch: 'full',
@@ -44,12 +50,14 @@ const routes: Routes = [
     EventExtrasComponent,
     EventDetailsComponent,
     DynamicFormComponent,
-    QuestionComponent
+    QuestionComponent,
+    EventStatisticsComponent
   ],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
     MatFormFieldModule,
+    MatTableModule,
     MatButtonModule,
     MatInputModule,
     ReactiveFormsModule,

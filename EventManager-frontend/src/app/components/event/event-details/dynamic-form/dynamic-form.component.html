@@ -43,13 +43,13 @@
 
       <div *ngIf="invite!.status === 'accepted'">
 
-        <b>R: {{response.answer!.text}}</b> 
+        <b>R: {{response.answer!.text}}</b>
 
       </div>
     </div>
 
-    
-    <button mat-raised-button type="button" color="primary" (click)="onUpdate()"  [disabled]="!canUpdate">Update</button>
+
+    <button mat-raised-button type="button" color="primary" (click)="onUpdate()" [disabled]="!canUpdate">Update</button>
 
     <br>
     <hr>

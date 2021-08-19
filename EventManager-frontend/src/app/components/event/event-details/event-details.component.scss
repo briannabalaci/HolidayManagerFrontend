@@ -27,4 +27,17 @@ body {
         }
     }
 
+    button {
+        display: flex;
+        text-align: center;
+        margin: auto auto;
+        
+        .statistics-button {
+            
+            &:hover{
+                background-color: #6495ED;
+            }
+        }
+    }
+
 }

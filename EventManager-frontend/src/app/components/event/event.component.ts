@@ -27,6 +27,7 @@ export class EventComponent implements OnInit {
   questions: Question[] = [];
   update: boolean = false;
   eventStorage?: EventEntity;
+  eventId: number = 0;
 
 
   eventFormGroup = this.formBuilder.group({
@@ -46,6 +47,8 @@ export class EventComponent implements OnInit {
   constructor(private userService: UserService, private departmentService: DepartmentService, private formBuilder: FormBuilder, private eventService: EventService, private datePipe: DatePipe, private route: Router) { }
 
   ngOnInit(): void {
+    sessionStorage.setItem("back", "-1");
+
     this.departments.push("Include all");
     this.departmentService.getDepartments().subscribe(
       data => {
@@ -55,11 +58,14 @@ export class EventComponent implements OnInit {
       }
     )
 
+    
+
     if (sessionStorage.getItem('event') !== null) {
 
       this.update = true;
       this.eventStorage = JSON.parse(sessionStorage.getItem('event')!);
       const dateAndTime = this.eventStorage?.eventDate!.split(" ");
+      this.eventId = this.eventStorage!.id!;
       this.eventFormGroup.setValue({
         title: this.eventStorage!.title,
         event_date: new Date(dateAndTime![0]),
@@ -77,7 +83,8 @@ export class EventComponent implements OnInit {
         invitees += invite.userInvited + ",";
       }
       this.text = invitees.slice(0, -1);
-      
+      sessionStorage.setItem("back",this.eventStorage!.id!.toString());
+      sessionStorage.removeItem("event");
     }
   }
 
