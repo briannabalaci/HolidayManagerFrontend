@@ -58,7 +58,7 @@ export class DynamicFormComponent implements OnInit {
     if (this.invite) {
       
 
-      if (this.status === 'accepted' && this.invite.status === 'declined') {
+      if (this.status === 'accepted' && this.invite.status === 'declined' || 'Not Accepted') {
         this.invite.status = this.status;
         this.invite.inviteQuestionResponses = [];
 
@@ -182,7 +182,7 @@ export class DynamicFormComponent implements OnInit {
   }
 
   onNotAccepted(): boolean {
-    if(this.invite?.status === "Not answered") {
+    if(this.invite?.status === "Not Accepted") {
       this.verif = true;
     } else {
       this.verif = false;
