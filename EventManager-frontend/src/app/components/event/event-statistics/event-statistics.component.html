@@ -51,9 +51,12 @@
             </div>
         </div>
 
-        <p *ngIf="!shouldShowNoSuchUsers" class="statistic-message">No such users yet!</p>
-
-        <button mat-raised-button type="submit" color="primary" class="pdf-button" (click)="downloadPdf()">Download PDF</button>
+        <button mat-raised-button type="submit" class="pdf-button" (click)="downloadPdf()">
+            Download PDF 
+            <span class="material-icons">
+            picture_as_pdf
+            </span>
+        </button>
 
     </body>
 </section>

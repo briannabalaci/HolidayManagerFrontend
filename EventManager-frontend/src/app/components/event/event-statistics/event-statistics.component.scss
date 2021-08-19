@@ -51,24 +51,23 @@ section {
         }
       }
     }
+  }
+  
+  .filter {
+    padding: 2% 2%;
+  }
+
+  .pdf-button {
+    display: flex;
+    text-align: center;
+    margin: auto auto;
+    margin-top: 5%;
+      background-color: #ff0000;
+      color: white;
     
-    .filter {
-      padding: 2% 2%;
-    }
-    
-    button {
-      display: flex;
-      text-align: center;
-      margin: auto auto;
-      margin-top: 10%;
-      
-      .pdf-button {
-          
-          &:hover{
-              background-color: #6495ED;
-          }
+      &:hover{
+          background-color: #ff5e5e;
       }
-    }
   }
 }
 

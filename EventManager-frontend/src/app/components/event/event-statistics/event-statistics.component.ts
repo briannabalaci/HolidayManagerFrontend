@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
@@ -44,7 +45,8 @@ export class EventStatisticsComponent implements OnInit {
 
   constructor(private eventService: EventService,
               private route: ActivatedRoute,
-              private userService: UserService) { }
+              private userService: UserService,
+              private datePipe: DatePipe) { }
 
   event?: EventEntity;
   eventId: number = 1;
@@ -131,7 +133,16 @@ export class EventStatisticsComponent implements OnInit {
   }
 
   downloadPdf() {
-    console.log("Merge");
+    this.eventService.getGeneratedPdf(this.event?.id!).subscribe(data => {
+      const url = window.URL.createObjectURL(data);
+      const link = document.createElement('a');
+      link.setAttribute('target', '_blank');
+      link.setAttribute('href', url);
+      link.setAttribute('download', `Event Report ${this.datePipe.transform(new Date(), 'dd/MM/yyyy')}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    })
   }
 
 }
