@@ -68,7 +68,7 @@ export class EventService {
       observe : 'response'
       })
     return this.httpClient.get(path, {
-      headers:headers , responseType: 'blob' 
+      headers:headers, responseType : 'blob',
   });
   }
 }

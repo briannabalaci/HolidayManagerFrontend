@@ -127,9 +127,10 @@ export class EventStatisticsComponent implements OnInit {
 
   downloadPdf() {
     this.eventService.getGeneratedPdf(this.event?.id!).subscribe(data => {
-      console.log('PDF');
+      const url = window.URL.createObjectURL(data);
       console.log(data);
-      console.log(typeof data);
+      console.log(url);
+      window.open(url);
     })
   }
 
