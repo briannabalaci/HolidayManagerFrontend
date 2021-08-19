@@ -46,6 +46,8 @@ export class EventComponent implements OnInit {
   constructor(private userService: UserService, private departmentService: DepartmentService, private formBuilder: FormBuilder, private eventService: EventService, private datePipe: DatePipe, private route: Router) { }
 
   ngOnInit(): void {
+    sessionStorage.setItem("back", "-1");
+
     this.departments.push("Include all");
     this.departmentService.getDepartments().subscribe(
       data => {
@@ -77,7 +79,8 @@ export class EventComponent implements OnInit {
         invitees += invite.userInvited + ",";
       }
       this.text = invitees.slice(0, -1);
-      
+      sessionStorage.setItem("back",this.eventStorage!.id!.toString());
+      sessionStorage.removeItem("event");
     }
   }
 

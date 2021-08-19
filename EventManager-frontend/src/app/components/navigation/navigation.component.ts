@@ -43,7 +43,10 @@ export class NavigationComponent implements OnInit {
       case '/dashboard':
         return 'login';
       case '/event':
-        return 'dashboard';
+        if (sessionStorage.getItem("back") === "-1")
+          return 'dashboard';
+        else
+          return '/event/' + sessionStorage.getItem("back");
       case '/event' + this.getEventId(url):
         return 'dashboard'
       default:
