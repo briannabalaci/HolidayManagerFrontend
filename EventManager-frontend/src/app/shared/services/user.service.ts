@@ -23,6 +23,11 @@ export class UserService {
     return this.httpClient.get<User[]>(path);
   }
 
+  findByEmail(email: string): Observable<User> {
+    const path = `${ENVIRONMENT}/users/findByEmail/${email}`;
+    return this.httpClient.get<User>(path);
+  }
+
   createUser(user:User): Observable<any> {
     const path = `${ENVIRONMENT}/users/create-user`;
     return this.httpClient.post<User>(path, user);

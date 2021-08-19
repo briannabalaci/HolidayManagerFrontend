@@ -4,7 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { EventEntity } from 'src/app/shared/data-types/event';
 import { EventService } from 'src/app/shared/services/event.service';
 import jwt_decode from 'jwt-decode';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-event-details',
@@ -13,7 +13,10 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class EventDetailsComponent implements OnInit {
 
-  constructor(private eventService: EventService, private domSanitizer: DomSanitizer, private route: ActivatedRoute) { }
+  role: string = '';
+  token: string = '';
+
+  constructor(private eventService: EventService, private domSanitizer: DomSanitizer, private route: ActivatedRoute, private router: Router) { }
 
   event?: EventEntity;
   imageUrl: any;
@@ -21,6 +24,9 @@ export class EventDetailsComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.token = sessionStorage.getItem('token')!;
+    this.role = jwt_decode<any>(this.token).roles[0];
+
     this.eventId = +this.route.snapshot.paramMap.get('eventId')!;
     this.eventService.getEvent(this.eventId).subscribe(
       data => {
@@ -30,7 +36,6 @@ export class EventDetailsComponent implements OnInit {
         console.log(err.error);
       }
     );
-
     
   }
 

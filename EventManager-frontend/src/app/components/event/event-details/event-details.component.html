@@ -17,5 +17,7 @@
             <h3>Additional information:</h3>
             <app-dynamic-form *ngIf="event.questions && event.id" [questions]="event.questions" [invite]="getMyEvent()"></app-dynamic-form>
         </div>
+
+        <button routerLink="statistics"  mat-raised-button type="submit" color="primary" class="statistics-button" *ngIf='role==="ORGANIZER"'>Statistics</button>
     </body>
 </section>
