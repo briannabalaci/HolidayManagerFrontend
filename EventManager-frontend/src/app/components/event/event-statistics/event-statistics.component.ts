@@ -36,6 +36,10 @@ export class EventStatisticsComponent implements OnInit {
     return getFilterByKey(this.selectedFilter) != Filter.Declined;
   }
 
+  get shouldShowNoSuchUsers(): boolean {
+    return this.dataSourceUpdated.data.length > 0;
+  }
+
   public dataSourceUpdated:MatTableDataSource<any> = new MatTableDataSource<any>();
 
   constructor(private eventService: EventService,
@@ -118,6 +122,7 @@ export class EventStatisticsComponent implements OnInit {
     }
     
     this.dataSourceUpdated.data = this.dataSource.filter(row => row.status.toLowerCase() === filter);
+    console.log(this.dataSourceUpdated.data.length);
   }
 
   onFilterChange(): void {

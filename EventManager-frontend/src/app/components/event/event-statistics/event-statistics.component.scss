@@ -8,55 +8,66 @@ section {
     }
   }
 
-  .scrollable-table {
-    width: 100%;
-    overflow-x: scroll;
-    table-layout: fixed;
-    white-space: nowrap;
-  
-    table {
+  body {
+    p.statistic-message {
+      margin: 5%;
+      font-style: italic;
+    }
+
+    .mat-elevation-z8 {
+      box-shadow: none;
+    }
+
+    .scrollable-table {
       width: 100%;
-      border-collapse: collapse;
-      color: blue;
-      margin-bottom: 30px;
-      box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 2px 13px 0 rgba(0, 0, 0, 0.19);
-      margin: 10px 0;
-  
-      th {
-        text-align: center;
-        padding: 10px 5px;
-      }
-  
-      td {
-        padding: 10px 5px;
-        text-align: center;
-      }
-  
-      tbody tr:nth-of-type(2n-1) {
-        background-color: blue;
-      }
-  
-      .column-name {
-        font-style: italic;
+      overflow-x: scroll;
+      table-layout: fixed;
+      white-space: nowrap;
+    
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        color: blue;
+        margin-bottom: 30px;
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 2px 13px 0 rgba(0, 0, 0, 0.19);
+        margin: 10px 0;
+    
+        th {
+          text-align: center;
+          padding: 10px 5px;
+        }
+    
+        td {
+          padding: 10px 5px;
+          text-align: center;
+        }
+    
+        tbody tr:nth-of-type(2n-1) {
+          background-color: blue;
+        }
+    
+        .column-name {
+          font-style: italic;
+        }
       }
     }
-  }
-  
-  .filter {
-    padding: 2% 2%;
-  }
-  
-  button {
-    display: flex;
-    text-align: center;
-    margin: auto auto;
-    margin-top: 5%;
     
-    .pdf-button {
-        
-        &:hover{
-            background-color: #6495ED;
-        }
+    .filter {
+      padding: 2% 2%;
+    }
+    
+    button {
+      display: flex;
+      text-align: center;
+      margin: auto auto;
+      margin-top: 10%;
+      
+      .pdf-button {
+          
+          &:hover{
+              background-color: #6495ED;
+          }
+      }
     }
   }
 }
