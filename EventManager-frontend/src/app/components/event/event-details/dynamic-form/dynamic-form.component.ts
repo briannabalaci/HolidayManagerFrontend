@@ -41,7 +41,7 @@ export class DynamicFormComponent implements OnInit {
   @Input() canUpdate?: boolean;
   @Input() response?: InviteQuestionResponse;
 
-  status: string = 'Not answered';
+  status: string = 'Not accepted';
 
   updatePreferencesForOrganizer: boolean = false;
 
@@ -50,7 +50,7 @@ export class DynamicFormComponent implements OnInit {
     const token = sessionStorage.getItem('token')!;
     this.role = jwt_decode<any>(token).roles[0]; //might be roles[1]
     this.form.reset();
-
+    console.log('line 53');
     console.log(this.invite?.inviteQuestionResponses);
   }
 
@@ -58,7 +58,7 @@ export class DynamicFormComponent implements OnInit {
     if (this.invite) {
       
 
-      if (this.status === 'accepted' && this.invite.status === 'declined' || 'Not Accepted') {
+      if (this.status === 'accepted' && ((this.invite.status === 'declined') || (this.invite.status === 'Not Accepted'))) {
         this.invite.status = this.status;
         this.invite.inviteQuestionResponses = [];
 
@@ -74,8 +74,9 @@ export class DynamicFormComponent implements OnInit {
       {
         
         this.inviteService.getResponses(this.invite!.id!).subscribe(data => {
+         
           this.invite!.inviteQuestionResponses = data;
-          console.log(data + "hello");
+          
         })
         
         let i = 0;
@@ -92,8 +93,6 @@ export class DynamicFormComponent implements OnInit {
         this.invite.status = 'declined';
       }
     }
-
-    console.log(this.invite?.inviteQuestionResponses);
     this.inviteService.answerInvite(this.invite!).subscribe(
       data => {
         this.invite = data;

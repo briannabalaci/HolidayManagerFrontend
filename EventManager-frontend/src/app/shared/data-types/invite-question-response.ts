@@ -10,5 +10,6 @@ export class InviteQuestionResponse {
     constructor(question: Question, answer: Answer) {
         this.question = question;
         this.answer = answer;
+       
     }
 }

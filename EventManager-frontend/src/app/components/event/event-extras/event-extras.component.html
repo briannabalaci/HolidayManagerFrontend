@@ -1,5 +1,5 @@
 <section class="event-extras">
-   
+
     <mat-accordion>
         <mat-expansion-panel *ngFor="let question of questions; let i=index">
             <mat-expansion-panel-header>
@@ -8,7 +8,7 @@
                     <button id="editButton" type="button" (click)="editQ(question,$event,i)" mat-button>
                         <mat-icon>edit</mat-icon>
                     </button>
-                    <button id="deleteButton"  type="button" (click)="deleteQuestion(i,$event)" mat-button>
+                    <button id="deleteButton" type="button" (click)="deleteQuestion(i,$event)" mat-button>
                         <mat-icon>delete_forever</mat-icon>
                     </button>
 
@@ -26,11 +26,11 @@
                     <form [formGroup]="formAnswer" (ngSubmit)="onEditAnswer(answer,question,j,i)">
                         <mat-form-field class="example-full-width" appearance="fill">
                             <mat-label>Enter Answer</mat-label>
-                            <input matInput placeholder="" formControlName="answer"  required>
+                            <input matInput placeholder="" formControlName="answer" required>
                         </mat-form-field>
                     </form>
                 </div>
-              
+
             </div>
             <div *ngIf="inputAnswer">
                 <form [formGroup]="formAnswer" (ngSubmit)="onSubmitAnswer(question)">
@@ -40,7 +40,7 @@
                     </mat-form-field>
                 </form>
             </div>
-           
+
 
 
 
@@ -62,7 +62,7 @@
         <form [formGroup]="form" (ngSubmit)="onEditQuestion()">
             <mat-form-field class="example-full-width" appearance="fill">
                 <mat-label>Edit Question</mat-label>
-                <input matInput placeholder="" formControlName="question"  required>
+                <input matInput placeholder="" formControlName="question" required>
             </mat-form-field>
         </form>
     </div>
