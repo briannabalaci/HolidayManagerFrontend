@@ -27,6 +27,7 @@ export class EventComponent implements OnInit {
   questions: Question[] = [];
   update: boolean = false;
   eventStorage?: EventEntity;
+  eventId: number = 0;
 
 
   eventFormGroup = this.formBuilder.group({
@@ -55,11 +56,14 @@ export class EventComponent implements OnInit {
       }
     )
 
+    
+
     if (sessionStorage.getItem('event') !== null) {
 
       this.update = true;
       this.eventStorage = JSON.parse(sessionStorage.getItem('event')!);
       const dateAndTime = this.eventStorage?.eventDate!.split(" ");
+      this.eventId = this.eventStorage!.id!;
       this.eventFormGroup.setValue({
         title: this.eventStorage!.title,
         event_date: new Date(dateAndTime![0]),

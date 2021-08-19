@@ -10,6 +10,7 @@ import { VirtualTimeScheduler } from 'rxjs';
 import { Answer } from 'src/app/shared/data-types/answer';
 import { Question } from 'src/app/shared/data-types/question';
 import { MessageComponent } from '../../message/message.component';
+import { QuestionControlService } from '../../../shared/services/question-control.service';
 
 @Component({
   selector: 'app-event-extras',
@@ -29,17 +30,22 @@ export class EventExtrasComponent implements OnInit {
   })
 
   @Input() questions: Question[] = [];
+
   input: boolean = false;
   inputAnswer: boolean = false;
   editAnswer: boolean = false;
   editQuestion: boolean = false;
   editableQuestion: Question;
   add: boolean = true;
-  constructor(private formBuilder: FormBuilder, private dialog: MatDialog) { }
+  constructor(private formBuilder: FormBuilder, private dialog: MatDialog,private questionControlService:QuestionControlService) { }
   ngOnInit(): void {
+
+  
+    console.log(this.questions);
 
     sessionStorage.setItem('questions', JSON.stringify(this.questions));
 
+    
   }
 
   showInfo(question: Question): void {
