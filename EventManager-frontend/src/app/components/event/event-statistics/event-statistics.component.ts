@@ -28,39 +28,12 @@ export class EventStatisticsComponent implements OnInit {
     return this.event?.questions || [];
   }
 
-  get invites(): Invite[] {
-    return this.event?.invites || [];
-  }
-
   get displayedColumns(): string[] {
     return['name', ...this.questions.map(question => "" + question.id)];
   }
 
   get shouldShowQuestionColumns(): boolean {
     return getFilterByKey(this.selectedFilter) != Filter.Declined;
-  }
-
-  get dataSource(): any[] {
-    return this.invites.map(invite => {
-
-      const responses: string[][] = invite.inviteQuestionResponses?.map(response => {
-        return [
-          ''+response.question?.id, response.answer?.text || ''
-        ]
-      }) || [];
-
-      let result:any = {};
-      responses.forEach(function(data){
-        result[data[0]] = data[1]
-      });
-
-      return {
-        name: this.findName(invite.userInvited || ''),
-        //invite.userInvited,
-        status: invite.status,
-        ...result
-      }
-    })
   }
 
   public dataSourceUpdated:MatTableDataSource<any> = new MatTableDataSource<any>();
@@ -74,18 +47,49 @@ export class EventStatisticsComponent implements OnInit {
   filters: string[] = Object.keys(Filter);
   selectedFilter: string = this.filters[0];
   user: string = '';
+  dataSource: any[] = [];
+  invites: Invite[] = [];
+
+  invitesWithNames : {invite: Invite; name: string}[] = [];
 
   ngOnInit(): void {
     this.eventId = +this.route.snapshot.paramMap.get('eventId')!;
     this.eventService.getEvent(this.eventId).subscribe(
       data => {
         this.event = data;
-        this.filterByStatus(Filter.Accepted);
+        this.invites = this.event.invites!;
+
+        //get names of each user
+        this.invites.forEach(invite => {
+          this.userService.findByEmail(invite.userInvited!).subscribe(user => 
+            {
+              const responses: string[][] = invite.inviteQuestionResponses?.map(response => {
+                return [
+                  ''+response.question?.id, response.answer?.text || ''
+                ]
+              }) || [];
+  
+              let result:any = {};
+              responses.forEach(function(data){
+                result[data[0]] = data[1]
+              });
+              this.dataSource.push( {
+                name: user.forename?.concat(" ", user.surname || '')!,
+                //invite.userInvited,
+                status: invite.status,
+                ...result
+              });
+              this.filterByStatus(Filter.Accepted);
+              console.log(this.dataSource);
+            });
+        })
+        
       },
       err => {
         console.log(err.error);
       }
     );
+
   }
 
   findName(email: string) {
