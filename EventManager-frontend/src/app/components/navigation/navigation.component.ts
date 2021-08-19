@@ -48,16 +48,22 @@ export class NavigationComponent implements OnInit {
         else
           return '/event/' + sessionStorage.getItem("back");
       case '/event' + this.getEventId(url):
-        return 'dashboard'
+        return 'dashboard';
+      case '/event' + this.getEventId(url) + '/statistics':
+        return '/event' + this.getEventId(url);
       default:
         return 'login';
     }
   }
 
   getEventId(url: String) {
-    if(url.includes('event')) {
+    if(url.includes('event') && !url.includes('statistics')) {
       const words = url.split('/');
       return '/' + words[words.length-1];
+    }
+    if(url.includes('statistics')) {
+      const words = url.split('/');
+      return '/' + words[words.length-2];
     }
     return '';
   }
