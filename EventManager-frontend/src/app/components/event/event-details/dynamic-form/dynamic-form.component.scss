@@ -40,3 +40,15 @@ article {
         display: inline !important;
     }
 }
+
+.attendee {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    button {
+        width: 100px;
+        margin: auto auto;
+        text-align: center;
+        padding: 0px;
+    }
+}

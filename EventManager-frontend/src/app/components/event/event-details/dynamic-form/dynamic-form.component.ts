@@ -41,9 +41,10 @@ export class DynamicFormComponent implements OnInit {
   @Input() canUpdate?: boolean;
   @Input() response?: InviteQuestionResponse;
 
-  status: string = 'Not answered';
+  status: string = 'Not Accepted';
 
   updatePreferencesForOrganizer: boolean = false;
+  updatePreferencesForAttendee: boolean = false;
 
   ngOnInit() {
     this.form = this.questionControlService.toFormGroup(this.questions);
@@ -58,10 +59,10 @@ export class DynamicFormComponent implements OnInit {
     if (this.invite) {
       
 
-      if (this.status === 'accepted' && this.invite.status === 'declined' || 'Not Accepted') {
+      if (this.status === 'accepted' && ((this.invite.status === 'declined') || (this.invite.status === 'Not Accepted'))) {
         this.invite.status = this.status;
         this.invite.inviteQuestionResponses = [];
-
+        console.log("line 65");
         for (const q of this.questions) {
           this.invite?.inviteQuestionResponses?.push(
             new InviteQuestionResponse(q, this.getAnswer(q))
@@ -72,7 +73,7 @@ export class DynamicFormComponent implements OnInit {
 
       else if(this.status === 'accepted' && this.invite.status === 'accepted')
       {
-        
+        console.log("line 76");
         this.inviteService.getResponses(this.invite!.id!).subscribe(data => {
           this.invite!.inviteQuestionResponses = data;
           console.log(data + "hello");
@@ -91,6 +92,11 @@ export class DynamicFormComponent implements OnInit {
         this.invite!.inviteQuestionResponses = [];
         this.invite.status = 'declined';
       }
+      else if(this.status === 'declined' && this.invite.status === 'Not Accepted')
+      {
+        this.invite!.inviteQuestionResponses = [];
+        this.invite.status = 'declined';
+      }
     }
 
     console.log(this.invite?.inviteQuestionResponses);
@@ -103,7 +109,7 @@ export class DynamicFormComponent implements OnInit {
       }
     );
     this.updatePreferencesForOrganizer = false;
-    
+    this.updatePreferencesForAttendee = false;
 
     
 
@@ -121,17 +127,11 @@ export class DynamicFormComponent implements OnInit {
 
   onAccept() {
     this.status = "accepted";
-    //this.route.navigate(['dashboard']);
+    
   }
 
   onDecline() {
-    this.status = "declined";
-    //this.route.navigate(['dashboard']);
-    // this.inviteService.deleteResponse(this.invite?.id?).subscribe(
-    //   data => {
-
-    //   }
-    // )
+    this.status = "declined"; 
   }
 
   onCancel() {
@@ -160,6 +160,13 @@ export class DynamicFormComponent implements OnInit {
 
   onUpdate() {
     this.updatePreferencesForOrganizer = true;
+    if(this.invite?.status === "accepted") {
+      this.status = "accepted";
+    }
+  }
+
+  onUpdateAttendee() {
+    this.updatePreferencesForAttendee = true;
   }
 
 
