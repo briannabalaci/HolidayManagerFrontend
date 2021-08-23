@@ -55,6 +55,7 @@ export class EventStatisticsComponent implements OnInit {
   user: string = '';
   dataSource: any[] = [];
   invites: Invite[] = [];
+  filter: string = '';
 
   invitesWithNames : {invite: Invite; name: string}[] = [];
 
@@ -107,23 +108,23 @@ export class EventStatisticsComponent implements OnInit {
   }
 
   filterByStatus(status: Filter) {
-    let filter = "";
     switch(status) {
       case Filter.Accepted:
-        filter = "accepted";
+        this.filter = "accepted";
         break;
       case Filter.Declined:
-        filter = "declined";
+        this.filter = "declined";
         break;
       case Filter.Pending:
-        filter = "not accepted";
+        this.filter = "pending";
         break;
       default: //All
+      this.filter = "all";
         this.dataSourceUpdated.data = this.dataSource;
         return;
     }
     
-    this.dataSourceUpdated.data = this.dataSource.filter(row => row.status.toLowerCase() === filter);
+    this.dataSourceUpdated.data = this.dataSource.filter(row => row.status.toLowerCase() === this.filter.toLowerCase());
     console.log(this.dataSourceUpdated.data.length);
   }
 
@@ -133,7 +134,7 @@ export class EventStatisticsComponent implements OnInit {
   }
 
   downloadPdf() {
-    this.eventService.getGeneratedPdf(this.event?.id!).subscribe(data => {
+    this.eventService.getGeneratedPdf(this.event?.id!, this.filter).subscribe(data => {
       const url = window.URL.createObjectURL(data);
       const link = document.createElement('a');
       link.setAttribute('target', '_blank');

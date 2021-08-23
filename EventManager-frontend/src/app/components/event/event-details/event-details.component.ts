@@ -48,7 +48,7 @@ export class EventDetailsComponent implements OnInit {
           limitDate.setHours(0,0,0,0);
           const Time = limitDate. getTime() - currentDate. getTime();
           const Days = Time / (1000 * 3600 * 24);
-          this.date = Days.toString()+' days left for update';
+          this.date = Days.toString()+' days left to update';
         }
       },
       err => {

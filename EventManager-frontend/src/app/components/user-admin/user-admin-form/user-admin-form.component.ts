@@ -120,7 +120,7 @@ export class UserAdminFormComponent implements OnInit {
 
     this.service.createUser(usr).subscribe(data => 
       {
-        
+        this.userEmitter.emit(usr);
       }, 
       err => 
       {
@@ -134,7 +134,6 @@ export class UserAdminFormComponent implements OnInit {
           this.userFormGroup.controls[key].setErrors(null));
       })
 
-    this.userEmitter.emit(usr);
     userForm.resetForm();
   }
 
