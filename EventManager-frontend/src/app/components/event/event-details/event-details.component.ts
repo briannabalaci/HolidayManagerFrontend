@@ -5,6 +5,7 @@ import { EventEntity } from 'src/app/shared/data-types/event';
 import { EventService } from 'src/app/shared/services/event.service';
 import jwt_decode from 'jwt-decode';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
 
 @Component({
   selector: 'app-event-details',

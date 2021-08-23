@@ -7,6 +7,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ChildActivationEnd } from '@angular/router';
 import { throwIfEmpty } from 'rxjs/operators';
 import { MatSort } from '@angular/material/sort';
+import { formatCurrency } from '@angular/common';
+import { UserAdminFormComponent } from './user-admin-form/user-admin-form.component';
 
 @Component({
   selector: 'app-user-admin',
@@ -70,7 +72,7 @@ export class UserAdminComponent implements OnInit {
   createUser(user: User) {
       this.dataSource.push(user);
       this.dataSourceUpdated.data = this.dataSource;
-     
+      window.location.reload();
   }
 
   openInfo(user: User): void {
@@ -96,6 +98,8 @@ export class UserAdminComponent implements OnInit {
             const index = this.dataSource.indexOf(user);
             this.dataSource.splice(index, 1);
             this.dataSourceUpdated.data = this.dataSource;
+            this.createForm = true;
+            window.location.reload();
           },
           err => {
             console.log('Cannot delete user - not found');
@@ -103,6 +107,7 @@ export class UserAdminComponent implements OnInit {
         );
       }
     })
+    
   }
 
   edit(user: User): void {
@@ -115,7 +120,6 @@ export class UserAdminComponent implements OnInit {
 
   }
 
-  
 
   searchUser(event: any) {
     this.dataSourceUpdated.filter = event.target.value.trim().toLowerCase();
