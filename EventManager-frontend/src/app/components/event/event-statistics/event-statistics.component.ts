@@ -116,7 +116,7 @@ export class EventStatisticsComponent implements OnInit {
         filter = "declined";
         break;
       case Filter.Pending:
-        filter = "not accepted";
+        filter = "pending";
         break;
       default: //All
         this.dataSourceUpdated.data = this.dataSource;

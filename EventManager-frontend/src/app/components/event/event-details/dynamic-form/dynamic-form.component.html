@@ -10,15 +10,15 @@
     
       <button mat-raised-button type="submit" class="accept-button" (click)="onAccept()" [hidden]="onAcceptStatus()" [disabled]="!form.valid || !canUpdate">Accept</button>
       <button mat-raised-button type="submit" class="decline-button" (click)="onDecline()" [hidden]="onDeclineStatus()" [disabled]="!canUpdate" >Decline</button>
-      <button mat-raised-button type="submit" class="accept-button" (click)="onUpdate()" [hidden]="onDeclineStatus() || onNotAccepted()" [disabled]="!form.valid || !canUpdate" >Update</button>
-      <button mat-raised-button type="submit" class="decline-button" [hidden]="onNotAccepted()" (click)="onCancelAttendee()" >Cancel</button>
+      <button mat-raised-button type="submit" class="accept-button" (click)="onUpdate()" [hidden]="onDeclineStatus() || onPending()" [disabled]="!form.valid || !canUpdate" >Update</button>
+      <button mat-raised-button type="submit" class="decline-button" [hidden]="onPending()" (click)="onCancelAttendee()" >Cancel</button>
     </form>
   </div>
 
   <div *ngIf="role==='ATTENDEE' && !updatePreferencesForAttendee" class="attendee">
     <div *ngFor="let response of invite!.inviteQuestionResponses; let i = index;" class="form-row">
       <b>Question {{i+1}}: </b> {{response.question!.text}}
-      <div *ngIf="invite!.status === 'Not Accepted'">
+      <div *ngIf="invite!.status === 'pending'">
         <p><b>R: </b> No response yet</p>
       </div>
 
@@ -37,7 +37,7 @@
 
     <div *ngFor="let response of invite!.inviteQuestionResponses; let i = index;" class="form-row">
       <b>Question {{i+1}}: </b> {{response.question!.text}}
-      <div *ngIf="invite!.status === 'Not Accepted'">
+      <div *ngIf="invite!.status === 'pending'">
         <p><b>R: </b> No response yet</p>
       </div>
 
@@ -54,8 +54,8 @@
     <br>
     <hr>
     <div class="event_org">
-      <button mat-raised-button type="submit" class="accept-button" (click)="onUpdateEvent()">Update Event</button>
-      <button mat-raised-button type="button" class="decline-button" (click)="onCancel()">Cancel Event</button>
+      <button mat-raised-button type="submit" class="accept-button" (click)="onUpdateEvent()" [disabled]="passed" >Update Event</button>
+      <button mat-raised-button type="button" class="decline-button" (click)="onCancel()" [disabled]="passed">Cancel Event</button>
     </div>
   </div>
 

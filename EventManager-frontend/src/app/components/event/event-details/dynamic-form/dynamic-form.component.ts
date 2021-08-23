@@ -28,6 +28,7 @@ export class DynamicFormComponent implements OnInit {
   verif: any;
   role: string = '';
   token: string = '';
+  passed: boolean = false;
 
   constructor(private questionControlService: QuestionControlService,
     private inviteService: InviteService,
@@ -41,7 +42,7 @@ export class DynamicFormComponent implements OnInit {
   @Input() canUpdate?: boolean;
   @Input() response?: InviteQuestionResponse;
 
-  status: string = 'Not Accepted';
+  status: string = 'pending';
 
   updatePreferencesForOrganizer: boolean = false;
 
@@ -53,17 +54,23 @@ export class DynamicFormComponent implements OnInit {
     this.role = jwt_decode<any>(token).roles[0]; //might be roles[1]
     this.form.reset();
 
-    if(this.invite?.status === 'Not Accepted')
+    if(this.invite?.status === 'pending')
     {
       this.updatePreferencesForAttendee = true;
     }
-  }
+
+    const currentDate = new Date();
+    const eventDate = new Date(this.event?.eventDate!);
+
+    if (eventDate < currentDate)
+      this.passed = true;
+}
 
   onSubmit() {
     if (this.invite) {
       
       
-      if (this.status === 'accepted' && ((this.invite.status === 'declined') || (this.invite.status === 'Not Accepted'))) {
+      if (this.status === 'accepted' && ((this.invite.status === 'declined') || (this.invite.status === 'pending'))) {
         this.invite.status = this.status;
         this.invite.inviteQuestionResponses = [];
 
@@ -77,7 +84,6 @@ export class DynamicFormComponent implements OnInit {
 
       else if(this.status === 'accepted' && this.invite.status === 'accepted')
       {
-        console.log("line 53");
         this.inviteService.getResponses(this.invite!.id!).subscribe(data => {
          
           this.invite!.inviteQuestionResponses = data;
@@ -97,7 +103,7 @@ export class DynamicFormComponent implements OnInit {
         this.invite!.inviteQuestionResponses = [];
         this.invite.status = 'declined';
       }
-      else if(this.status === 'declined' && this.invite.status === 'Not Accepted')
+      else if(this.status === 'declined' && this.invite.status === 'pending')
       {
         this.invite!.inviteQuestionResponses = [];
         this.invite.status = 'declined';
@@ -106,8 +112,6 @@ export class DynamicFormComponent implements OnInit {
     this.inviteService.answerInvite(this.invite!).subscribe(
       data => {
         this.invite = data;
-        console.log('Invite answered');
-        console.log(data);
        
       }
     );
@@ -188,8 +192,8 @@ export class DynamicFormComponent implements OnInit {
     return this.verif;
   }
 
-  onNotAccepted(): boolean {
-    if(this.invite?.status === "Not Accepted") {
+  onPending(): boolean {
+    if(this.invite?.status === "pending") {
       this.verif = true;
     } else {
       this.verif = false;
