@@ -192,11 +192,7 @@ export class DynamicFormComponent implements OnInit {
     return this.verif;
   }
 
-<<<<<<< HEAD
-  onNotAccepted(): boolean {
-=======
   onPending(): boolean {
->>>>>>> time-limit
     if(this.invite?.status === "pending") {
       this.verif = true;
     } else {
