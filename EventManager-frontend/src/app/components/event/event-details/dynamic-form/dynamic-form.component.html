@@ -1,7 +1,7 @@
 <article>
   <div *ngIf="(role === 'ATTENDEE' && updatePreferencesForAttendee) || updatePreferencesForOrganizer ">
     <form (ngSubmit)="onSubmit()" [formGroup]="form">
-
+     
       <div *ngIf="canUpdate">
         <div *ngFor="let question of questions" class="form-row">
           <app-question [question]="question" [form]="form"></app-question>
@@ -16,6 +16,7 @@
   </div>
 
   <div *ngIf="role==='ATTENDEE' && !updatePreferencesForAttendee" class="attendee">
+    <h3 [hidden]="onDeclineStatus() || onNotAccepted()" *ngIf="canUpdate">Additional information:</h3>
     <div *ngFor="let response of invite!.inviteQuestionResponses; let i = index;" class="form-row">
       <b>Question {{i+1}}: </b> {{response.question!.text}}
       <div *ngIf="invite!.status === 'pending'">
@@ -34,7 +35,7 @@
   </div>
 
   <div *ngIf="role === 'ORGANIZER' && !updatePreferencesForOrganizer" class="organizer">
-
+    <h3 [hidden]="onDeclineStatus() || onNotAccepted()" *ngIf="canUpdate">Additional information:</h3>
     <div *ngFor="let response of invite!.inviteQuestionResponses; let i = index;" class="form-row">
       <b>Question {{i+1}}: </b> {{response.question!.text}}
       <div *ngIf="invite!.status === 'pending'">
@@ -54,8 +55,13 @@
     <br>
     <hr>
     <div class="event_org">
+<<<<<<< HEAD
       <button mat-raised-button type="submit" class="accept-button" (click)="onUpdateEvent()" [disabled]="passed" >Update Event</button>
       <button mat-raised-button type="button" class="decline-button" (click)="onCancel()" [disabled]="passed">Cancel Event</button>
+=======
+      <button id="modify" mat-raised-button type="submit" class="accept-button" (click)="onUpdateEvent()">Update Event</button>
+      <button id="modify" mat-raised-button type="button" class="decline-button" (click)="onCancel()">Cancel Event</button>
+>>>>>>> bug_fixes_amihai
     </div>
   </div>
 

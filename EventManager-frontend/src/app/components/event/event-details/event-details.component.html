@@ -15,7 +15,6 @@
         </div>
        
         <div class="form-container">
-            <h3 *ngIf="canUpdate">Additional information:</h3>
             <app-dynamic-form *ngIf="event.questions && event.id" [canUpdate]="canUpdate" [event]="event" [questions]="event.questions" [invite]="getMyEvent()"></app-dynamic-form>
         </div>
 
