@@ -59,8 +59,8 @@ export class EventService {
     return this.httpClient.put<any>(path,event);
   }
 
-  getGeneratedPdf(eventId: number) {
-    const path = `${this.ENVIRONMENT}/${eventId}/statistics`;
+  getGeneratedPdf(eventId: number, filter: string) {
+    const path = `${this.ENVIRONMENT}/${eventId}/statistics/${filter}`;
     let  headers= new HttpHeaders({
       'Content-Type':  'application/pdf',
       responseType : 'blob',

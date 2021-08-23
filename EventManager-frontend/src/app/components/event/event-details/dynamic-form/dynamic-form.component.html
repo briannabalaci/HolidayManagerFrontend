@@ -18,7 +18,7 @@
   <div *ngIf="role==='ATTENDEE' && !updatePreferencesForAttendee" class="attendee">
     <div *ngFor="let response of invite!.inviteQuestionResponses; let i = index;" class="form-row">
       <b>Question {{i+1}}: </b> {{response.question!.text}}
-      <div *ngIf="invite!.status === 'Not Accepted'">
+      <div *ngIf="invite!.status === 'pending'">
         <p><b>R: </b> No response yet</p>
       </div>
 
@@ -37,7 +37,7 @@
 
     <div *ngFor="let response of invite!.inviteQuestionResponses; let i = index;" class="form-row">
       <b>Question {{i+1}}: </b> {{response.question!.text}}
-      <div *ngIf="invite!.status === 'Not Accepted'">
+      <div *ngIf="invite!.status === 'pending'">
         <p><b>R: </b> No response yet</p>
       </div>
 

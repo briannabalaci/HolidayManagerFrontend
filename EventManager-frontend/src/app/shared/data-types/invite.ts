@@ -6,7 +6,7 @@ export class Invite {
     status?: string;
     inviteQuestionResponses?: InviteQuestionResponse[];
 
-    constructor(email:string,status: string = "Not Accepted")
+    constructor(email:string,status: string = "pending")
         {
             this.userInvited = email;
             this.status = status;

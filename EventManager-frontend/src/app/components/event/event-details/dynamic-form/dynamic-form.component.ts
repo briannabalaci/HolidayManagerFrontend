@@ -41,7 +41,7 @@ export class DynamicFormComponent implements OnInit {
   @Input() canUpdate?: boolean;
   @Input() response?: InviteQuestionResponse;
 
-  status: string = 'Not Accepted';
+  status: string = 'pending';
 
   updatePreferencesForOrganizer: boolean = false;
 
@@ -53,7 +53,7 @@ export class DynamicFormComponent implements OnInit {
     this.role = jwt_decode<any>(token).roles[0]; //might be roles[1]
     this.form.reset();
 
-    if(this.invite?.status === 'Not Accepted')
+    if(this.invite?.status === 'pending')
     {
       this.updatePreferencesForAttendee = true;
     }
@@ -63,7 +63,7 @@ export class DynamicFormComponent implements OnInit {
     if (this.invite) {
       
       
-      if (this.status === 'accepted' && ((this.invite.status === 'declined') || (this.invite.status === 'Not Accepted'))) {
+      if (this.status === 'accepted' && ((this.invite.status === 'declined') || (this.invite.status === 'pending'))) {
         this.invite.status = this.status;
         this.invite.inviteQuestionResponses = [];
 
@@ -97,7 +97,7 @@ export class DynamicFormComponent implements OnInit {
         this.invite!.inviteQuestionResponses = [];
         this.invite.status = 'declined';
       }
-      else if(this.status === 'declined' && this.invite.status === 'Not Accepted')
+      else if(this.status === 'declined' && this.invite.status === 'pending')
       {
         this.invite!.inviteQuestionResponses = [];
         this.invite.status = 'declined';
@@ -189,7 +189,7 @@ export class DynamicFormComponent implements OnInit {
   }
 
   onNotAccepted(): boolean {
-    if(this.invite?.status === "Not Accepted") {
+    if(this.invite?.status === "pending") {
       this.verif = true;
     } else {
       this.verif = false;
