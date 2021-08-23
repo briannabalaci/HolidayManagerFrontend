@@ -40,8 +40,6 @@ export class EventExtrasComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private dialog: MatDialog,private questionControlService:QuestionControlService) { }
   ngOnInit(): void {
 
-  
-    console.log(this.questions);
 
     sessionStorage.setItem('questions', JSON.stringify(this.questions));
 

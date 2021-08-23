@@ -36,7 +36,6 @@ export class NavigationComponent implements OnInit {
   
   detectDestination() {
     const url = this.router.url;
-    console.log(url);
     switch(url) {
       case '/user-admin':
         return 'login';
