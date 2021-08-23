@@ -61,7 +61,40 @@
             <br><br>
             <h2>Invitees</h2>
             <hr><br>
-            <textarea placeholder="name@example.com" rows="3" id="invitees" (change)="doTextareaValueChange($event)" [value]="text"></textarea>
+
+            
+            <!-- <textarea placeholder="name@example.com" rows="3" id="invitees" (change)="doTextareaValueChange($event)" [value]="text"></textarea> -->
+            
+
+            <mat-form-field class="example-chip-list" appearance="fill">
+              <mat-label>Invitation list</mat-label>
+              <mat-chip-list #chipList aria-label="Email selection">
+                <mat-chip
+                  *ngFor="let email of selectedEmails"
+                  [selectable]="selectable"
+                  [removable]="removable"
+                  (removed)="remove(email)">
+                  {{email}}
+                  <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+                <input
+                  placeholder="New email..."
+                  #inviteInput
+                  [formControl]="emailCtrl"
+                  [matAutocomplete]="auto"
+                  [matChipInputFor]="chipList"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  (matChipInputTokenEnd)="add($event)">
+              </mat-chip-list>
+              <mat-error>Email does not exist</mat-error>
+              <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                <mat-option *ngFor="let email of filteredEmails | async" [value]="email" (click)="addFromClick()">
+                  {{email}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+
+            
             <mat-form-field appearance="legacy">
               <mat-label>Choose invitees</mat-label>
               <mat-select [(value)]="selectedDepartment" (selectionChange)='checked()'>

@@ -25,6 +25,9 @@ import { QuestionComponent } from './event-details/dynamic-form/question/questio
 import { NavigationModule } from '../navigation/navigation.module';
 import { EventStatisticsComponent } from './event-statistics/event-statistics.component';
 import { MatTableModule } from '@angular/material/table';
+import {MatChipsModule} from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
 const routes: Routes = [
   {
     path: ':eventId',
@@ -70,7 +73,9 @@ const routes: Routes = [
     MatExpansionModule,
     MatSelectModule,
     MatCardModule,
-    NavigationModule
+    NavigationModule,
+    MatChipsModule,
+    MatAutocompleteModule
   ],
   providers: [  
     NgxMatDatetimePickerModule, 
