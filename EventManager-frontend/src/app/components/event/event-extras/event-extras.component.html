@@ -8,11 +8,11 @@
                     <b>Question {{i+1}}:</b>
                 </mat-panel-title>
                 <mat-panel-description>
-                    <input id="questionText" type="text" (change)="editQ(question,i)"
+                    <input id="{{'questionText' + i}}" type="text" (change)="editQ(question,i)"
                         (keydown.Space)="$event.stopImmediatePropagation()" (click)="$event.stopImmediatePropagation()"
                         value="{{question.text}}">
 
-                    <button id="deleteButton" type="button" (click)="deleteQuestion(i,$event)" mat-button>
+                    <button id="{{'deleteButton' + i}}" type="button" (click)="deleteQuestion(i,$event)" mat-button>
                         <mat-icon>delete_forever</mat-icon>
                     </button>
 
@@ -22,7 +22,7 @@
             <div class="answers" *ngFor="let answer of question.answerList; let j=index">
 
                 <div class="answer-element">
-                    <b> Answer {{j+1}} : </b> <input id="{{'answer' + j}}" type="text" (change)="edit(j,i)"
+                    <b> Answer {{j+1}} : </b> <input id="{{'answer' + j + i}}" type="text" (change)="edit(j,i)"
                         (keydown.Space)="$event.stopImmediatePropagation()" value="{{answer.text}}">
 
                     <button type="button" mat-button (click)="deleteAnswer(j,question,i)">

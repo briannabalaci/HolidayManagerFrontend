@@ -87,7 +87,7 @@ export class EventExtrasComponent implements OnInit {
 
   edit(index: number, indexQuestion: number): void {
 
-    this.questions[indexQuestion].answerList[index].text = document.getElementById("answer"+index).value;
+    this.questions[indexQuestion].answerList[index].text = document.getElementById("answer"+index+indexQuestion).value;
 
     sessionStorage.setItem('questions', JSON.stringify(this.questions));
 
@@ -109,7 +109,7 @@ export class EventExtrasComponent implements OnInit {
 
   editQ(question: Question, index: number): void {
 
-    this.questions[index].text = document.getElementById("questionText").value;
+    this.questions[index].text = document.getElementById("questionText" + index).value;
 
     sessionStorage.setItem('questions', JSON.stringify(this.questions));
 
