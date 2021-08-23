@@ -26,6 +26,11 @@ section {
             width: 100%;
             resize: none;
         }
+
+        img.cover_image {
+            max-width: 100%;
+            margin: auto;
+        }
     }
 
     button{

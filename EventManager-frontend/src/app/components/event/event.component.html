@@ -15,67 +15,75 @@
     <body>
         <br>
         <form [formGroup]="eventFormGroup" (ngSubmit)="onSubmit()">
-            <mat-form-field appearance="fill" >
-                <mat-label>Title</mat-label>
-                <input matInput placeholder="Title" formControlName="title" required>
-              </mat-form-field>
-        
-              <mat-form-field appearance="fill">
-                <mat-label>Date</mat-label>
-                <input matInput [matDatepicker]="picker" placeholder="Date" [min]="minDate" formControlName="event_date" required>
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-              </mat-form-field>
+          <mat-form-field appearance="fill" >
+            <mat-label>Title</mat-label>
+            <input matInput placeholder="Title" formControlName="title" required>
+          </mat-form-field>
+    
+          <mat-form-field appearance="fill">
+            <mat-label>Date</mat-label>
+            <input matInput [matDatepicker]="picker" placeholder="Date" [min]="minDate" formControlName="event_date" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
 
-              <mat-form-field appearance="fill" >
-                <mat-label>Time</mat-label>
-                <input matInput type="time" placeholder="Time" formControlName="event_time" required>
-              </mat-form-field>
-        
-              <mat-form-field appearance="fill" >
-                <mat-label>Location</mat-label>
-                <input matInput placeholder="Location" formControlName="location" required>
-              </mat-form-field>
-        
-              <mat-form-field appearance="fill" >
-                <mat-label>Dress code</mat-label>
-                <input matInput placeholder="Dress code" formControlName="dress_code" required>
-              </mat-form-field>
+          <mat-form-field appearance="fill" >
+            <mat-label>Time</mat-label>
+            <input matInput type="time" placeholder="Time" formControlName="event_time" required>
+          </mat-form-field>
+    
+          <mat-form-field appearance="fill" >
+            <mat-label>Location</mat-label>
+            <input matInput placeholder="Location" formControlName="location" required>
+          </mat-form-field>
+    
+          <mat-form-field appearance="fill" >
+            <mat-label>Dress code</mat-label>
+            <input matInput placeholder="Dress code" formControlName="dress_code" required>
+          </mat-form-field>
 
-              <mat-form-field appearance="fill" >
-                <mat-label>File</mat-label>
-                <ngx-mat-file-input formControlName="cover_image" accept="image/jpeg, image/png"></ngx-mat-file-input>
-             </mat-form-field>
+          <img *ngIf="imageSrc" class="cover_image" [src]="imageSrc"/> 
 
-             <mat-form-field appearance="fill" >
-              <mat-label>Time limit</mat-label>
-              <input style="width: 85%;" type="number" matInput placeholder="Time limit" formControlName="time_limit" required><span>Days</span>
-              </mat-form-field>
-            <br><br>
-            <h2>Questions</h2>
-            <hr>
-            <app-event-extras [questions]="questions" >
+          <mat-form-field appearance="fill" >
+            <mat-label>Cover image</mat-label>
+            <ngx-mat-file-input #coverImageInput formControlName="cover_image" accept="image/jpeg, image/png" (change)="onCoverImageInputChange()"></ngx-mat-file-input>
+            <button mat-icon-button matSuffix *ngIf="!coverImageInput.empty"  (click)="clearCoverImage(); coverImageInput.clear($event)">
+              <mat-icon>clear</mat-icon>
+            </button>
+            <mat-error *ngIf="eventFormGroup.controls.cover_image.hasError('required')">
+              Please select a file
+            </mat-error>
+          </mat-form-field>
 
-            </app-event-extras>
+          <mat-form-field appearance="fill" >
+            <mat-label>Time limit</mat-label>
+            <input style="width: 85%;" type="number" matInput placeholder="Time limit" formControlName="time_limit" required><span>Days</span>
+          </mat-form-field>
+          
+          <br><br>
+          <h2>Questions</h2>
+          <hr>
+          <app-event-extras [questions]="questions" >
 
-            <br><br>
-            <h2>Invitees</h2>
-            <hr><br>
-            <textarea placeholder="name@example.com" rows="3" id="invitees" (change)="doTextareaValueChange($event)" [value]="text"></textarea>
-            <mat-form-field appearance="legacy">
-              <mat-label>Choose invitees</mat-label>
-              <mat-select [(value)]="selectedDepartment" (selectionChange)='checked()'>
-              <mat-option *ngFor="let department of departments" [value]="department">
-                  {{department}}
-              </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <br><br>
+          </app-event-extras>
 
-            
-            <button *ngIf="!update" mat-raised-button color="primary" class="create-button">Create</button>
-            <button *ngIf="update" mat-raised-button color="primary" class="create-button">Update</button>
-            <button mat-raised-button type="button" color="primary" class="cancel-button" (click)="cancel()">Cancel</button>
+          <br><br>
+          <h2>Invitees</h2>
+          <hr><br>
+          <textarea placeholder="name@example.com" rows="3" id="invitees" (change)="doTextareaValueChange($event)" [value]="text"></textarea>
+          <mat-form-field appearance="legacy">
+            <mat-label>Choose invitees</mat-label>
+            <mat-select [(value)]="selectedDepartment" (selectionChange)='checked()'>
+            <mat-option *ngFor="let department of departments" [value]="department">
+                {{department}}
+            </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <br><br>
+
+          <button *ngIf="!update" mat-raised-button color="primary" class="create-button" [disabled]="!eventFormGroup.valid">Create</button>
+          <button *ngIf="update" mat-raised-button color="primary" class="create-button" [disabled]="!eventFormGroup.valid">Update</button>
+          <button mat-raised-button type="button" color="primary" class="cancel-button" (click)="cancel()">Cancel</button>
         </form>
     </body>
 </section>

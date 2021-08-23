@@ -25,6 +25,8 @@ import { QuestionComponent } from './event-details/dynamic-form/question/questio
 import { NavigationModule } from '../navigation/navigation.module';
 import { EventStatisticsComponent } from './event-statistics/event-statistics.component';
 import { MatTableModule } from '@angular/material/table';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
+
 const routes: Routes = [
   {
     path: ':eventId',
@@ -66,7 +68,7 @@ const routes: Routes = [
     MatDatepickerModule,
     MatNativeDateModule,
     MatFileUploadModule,
-    NgxMatFileInputModule,
+    MaterialFileInputModule,
     MatExpansionModule,
     MatSelectModule,
     MatCardModule,

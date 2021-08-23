@@ -14,14 +14,9 @@ export class EventService {
 
   constructor(private httpClient: HttpClient) { }
 
-  createEvent(event: EventEntity) : void {
+  createEvent(event: EventEntity) : Observable<any> {
     const path = `${this.ENVIRONMENT}/addEvent`;
-    console.log(event);
-
-
-
-    this.httpClient.post<any>(path, event).subscribe(data => {},
-      err => {console.log(err)});
+    return this.httpClient.post<any>(path, event);
   }
 
   getEvents() : Observable<EventEntity[]> {

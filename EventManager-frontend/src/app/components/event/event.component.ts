@@ -12,7 +12,7 @@ import { Department } from 'src/app/shared/data-types/department';
 import { ThrowStmt } from '@angular/compiler';
 import { throwIfEmpty } from 'rxjs/operators';
 import { Question } from 'src/app/shared/data-types/question';
-
+import { AssetService } from 'src/app/shared/services/asset.service';
 
 @Component({
   selector: 'app-event',
@@ -29,6 +29,10 @@ export class EventComponent implements OnInit {
   eventStorage?: EventEntity;
   eventId: number = 0;
 
+  MHP_IMAGE_PATH = 'imgs/mhp.png';
+  defaultImageFile: File = new File([], "");
+
+  imageSrc:string = '';
 
   eventFormGroup = this.formBuilder.group({
     title: ['', Validators.required],
@@ -36,17 +40,26 @@ export class EventComponent implements OnInit {
     event_time: ['', Validators.required],
     location: ['', Validators.required],
     dress_code: ['', Validators.required],
-    cover_image: ['', Validators.required],
+    cover_image: [undefined, []],
     time_limit: ['', Validators.required]
   })
 
   invitesSent: Invite[] = [];
-
   invites: string[] = [];
 
-  constructor(private userService: UserService, private departmentService: DepartmentService, private formBuilder: FormBuilder, private eventService: EventService, private datePipe: DatePipe, private route: Router) { }
+  constructor(private userService: UserService,
+    private departmentService: DepartmentService,
+    private formBuilder: FormBuilder,
+    private eventService: EventService,
+     private datePipe: DatePipe,
+     private route: Router,
+     private assetService: AssetService) { }
 
   ngOnInit(): void {
+    this.assetService.assetToFile(this.MHP_IMAGE_PATH).subscribe(imageFile => {
+      this.defaultImageFile = imageFile;
+    });
+
     sessionStorage.setItem("back", "-1");
 
     this.departments.push("Include all");
@@ -57,8 +70,6 @@ export class EventComponent implements OnInit {
         }
       }
     )
-
-    
 
     if (sessionStorage.getItem('event') !== null) {
 
@@ -136,17 +147,48 @@ export class EventComponent implements OnInit {
     }
   }
 
-  onSubmit(): void {
-    if (this.eventFormGroup.status === "VALID") {
-      this.eventFormGroup.value.event_date.setHours(0,0,0,0);
+  clearCoverImage() {
+    this.imageSrc = '';
+  }
 
+  onCoverImageInputChange() {
+    let file = this.eventFormGroup.controls.cover_image.value?.files[0];
+    if(!file) {
+      this.clearCoverImage();
+      return;
+    }
+
+    const pattern = /image-*/;
+    if (!file.type.match(pattern)) {
+      alert('invalid format');
+      this.eventFormGroup.controls.cover_image.setValue(undefined);
+      this.clearCoverImage();
+      return;
+    }
+
+    this.updateCoverImage(file);
+  }
+
+  _handleReaderLoaded(e: any) {
+    let reader = e.target;
+    this.imageSrc = reader.result;
+  }
+
+  updateCoverImage(imageFile: File): void {
+    const reader = new FileReader();
+    reader.onload = this._handleReaderLoaded.bind(this);
+    reader.readAsDataURL(imageFile);
+  }
+
+  onSubmit(): void {
+    if (this.eventFormGroup.valid) {
+      this.eventFormGroup.value.event_date.setHours(0,0,0,0);
       var title = this.eventFormGroup.value.title;
       var eventDate = this.datePipe.transform((this.eventFormGroup.value.event_date + "").replace("00:00:00", this.eventFormGroup.value.event_time + ":00"), "yyyy-MM-dd HH:mm:ss");
       var location = this.eventFormGroup.value.location;
       var dress_code = this.eventFormGroup.value.dress_code;
-      var cover_image = this.eventFormGroup.value.cover_image;
+      var cover_image = this.eventFormGroup.value.cover_image?.files[0] || this.defaultImageFile;
       var time_limit = this.eventFormGroup.value.time_limit;
-
 
       this.invites = this.text.split(',');
 
@@ -173,7 +215,13 @@ export class EventComponent implements OnInit {
         this.getBase64(cover_image).then(
           (data: any) => {
 
-            this.eventService.createEvent(new EventEntity(title, eventDate || '', location, dress_code, data, JSON.parse(sessionStorage.getItem('questions') || '{}'), this.invitesSent, email,time_limit))
+            this.eventService.createEvent(new EventEntity(title, eventDate || '', location, dress_code, data, JSON.parse(sessionStorage.getItem('questions') || '{}'), this.invitesSent, email,time_limit)).subscribe(
+              data => {
+                this.route.navigate(['dashboard']).then(() => {
+                  window.location.reload();
+                });
+              },
+              err => {console.log(err)});
 
           }
         )
@@ -181,7 +229,11 @@ export class EventComponent implements OnInit {
       else {
         const e : EventEntity = new EventEntity(title, eventDate || '', location, dress_code, '', JSON.parse(sessionStorage.getItem('questions') || '{}'), this.invitesSent, email, time_limit);
         e.id = this.eventStorage?.id;
-        this.eventService.updateEvent(e).subscribe(() => {}, err => {console.log(err)});
+        this.eventService.updateEvent(e).subscribe(() => {
+          this.route.navigate(['dashboard']).then(() => {
+            window.location.reload();
+          });
+        }, err => {console.log(err)});
       }
     }
 
@@ -189,13 +241,10 @@ export class EventComponent implements OnInit {
     this.route.navigate(['dashboard']).then(() => {
       window.location.reload();
     });
-
   }
 
   cancel(): void{
     this.route.navigate(['dashboard']);
-
-  
   }
 
   getBase64(file: File): any {
