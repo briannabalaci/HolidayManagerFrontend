@@ -33,9 +33,6 @@ export class EventExtrasComponent implements OnInit {
 
   input: boolean = false;
   inputAnswer: boolean = false;
-  editAnswer: boolean = false;
-  editQuestion: boolean = false;
-  editableQuestion: Question;
   add: boolean = true;
   constructor(private formBuilder: FormBuilder, private dialog: MatDialog,private questionControlService:QuestionControlService) { }
   ngOnInit(): void {
@@ -82,30 +79,21 @@ export class EventExtrasComponent implements OnInit {
    
       question.answerList?.splice(index, 1);
 
-      this.questions
+      this.questions[indexQ] = question;
+
+      sessionStorage.setItem('questions', JSON.stringify(this.questions));
 
   }
 
-  edit(answer: Answer): void {
+  edit(index: number, indexQuestion: number): void {
 
+    this.questions[indexQuestion].answerList[index].text = document.getElementById("answer"+index).value;
 
-    this.editAnswer = true;
-
-    this.formAnswer.setValue({
-      answer: answer.text
-    })
-
-  }
-
-  onEditAnswer(answer: Answer, question: Question, index: number, indexQuestion: number): void {
-    console.log(answer);
-    question.answerList[index].text = this.formAnswer.value.answer;
-    this.questions[indexQuestion] = question;
     sessionStorage.setItem('questions', JSON.stringify(this.questions));
 
-
-    this.editAnswer = false;
   }
+
+ 
 
   deleteQuestion(index: number,event: Event) {
 
@@ -114,53 +102,19 @@ export class EventExtrasComponent implements OnInit {
 
     this.questions.splice(index, 1);
 
-    console.log('delete');
-
     sessionStorage.setItem('questions', JSON.stringify(this.questions));
-
-    this.editQuestion = false;
-
-    this.editAnswer = false;
 
     this.form.reset();
   }
 
-  editQ(question: Question, event: Event, index: number): void {
+  editQ(question: Question, index: number): void {
 
-    event.stopPropagation();
-
-    this.editQuestion = true;
-
-    this.editableQuestion = question;
-
-    this.form.setValue({
-      question: question.text
-    })
-
-    this.questions[index] = question;
+    this.questions[index].text = document.getElementById("questionText").value;
 
     sessionStorage.setItem('questions', JSON.stringify(this.questions));
 
 
   }
-
-  onEditQuestion() {
-
-    
-
-    const indexOfQuestion: number = this.questions.indexOf(this.editableQuestion);
-
-    this.questions[indexOfQuestion].text = this.form.value.question;
-
-    sessionStorage.setItem('questions', JSON.stringify(this.questions));
-
-    this.editQuestion = false;
-
-    this.editableQuestion = '';
-    
-
-  }
-
 
 
 
