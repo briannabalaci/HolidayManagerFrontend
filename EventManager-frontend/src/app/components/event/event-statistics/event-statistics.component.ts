@@ -116,7 +116,11 @@ export class EventStatisticsComponent implements OnInit {
         this.filter = "declined";
         break;
       case Filter.Pending:
+<<<<<<< HEAD
         this.filter = "pending";
+=======
+        filter = "pending";
+>>>>>>> time-limit
         break;
       default: //All
       this.filter = "all";

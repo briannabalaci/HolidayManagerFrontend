@@ -138,6 +138,8 @@ export class EventComponent implements OnInit {
 
   onSubmit(): void {
     if (this.eventFormGroup.status === "VALID") {
+      this.eventFormGroup.value.event_date.setHours(0,0,0,0);
+
       var title = this.eventFormGroup.value.title;
       var eventDate = this.datePipe.transform((this.eventFormGroup.value.event_date + "").replace("00:00:00", this.eventFormGroup.value.event_time + ":00"), "yyyy-MM-dd HH:mm:ss");
       var location = this.eventFormGroup.value.location;

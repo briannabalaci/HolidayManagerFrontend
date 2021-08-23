@@ -28,6 +28,7 @@ export class DynamicFormComponent implements OnInit {
   verif: any;
   role: string = '';
   token: string = '';
+  passed: boolean = false;
 
   constructor(private questionControlService: QuestionControlService,
     private inviteService: InviteService,
@@ -57,7 +58,13 @@ export class DynamicFormComponent implements OnInit {
     {
       this.updatePreferencesForAttendee = true;
     }
-  }
+
+    const currentDate = new Date();
+    const eventDate = new Date(this.event?.eventDate!);
+
+    if (eventDate < currentDate)
+      this.passed = true;
+}
 
   onSubmit() {
     if (this.invite) {
@@ -77,7 +84,6 @@ export class DynamicFormComponent implements OnInit {
 
       else if(this.status === 'accepted' && this.invite.status === 'accepted')
       {
-        console.log("line 53");
         this.inviteService.getResponses(this.invite!.id!).subscribe(data => {
          
           this.invite!.inviteQuestionResponses = data;
@@ -106,8 +112,6 @@ export class DynamicFormComponent implements OnInit {
     this.inviteService.answerInvite(this.invite!).subscribe(
       data => {
         this.invite = data;
-        console.log('Invite answered');
-        console.log(data);
        
       }
     );
@@ -188,7 +192,11 @@ export class DynamicFormComponent implements OnInit {
     return this.verif;
   }
 
+<<<<<<< HEAD
   onNotAccepted(): boolean {
+=======
+  onPending(): boolean {
+>>>>>>> time-limit
     if(this.invite?.status === "pending") {
       this.verif = true;
     } else {
