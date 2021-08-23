@@ -147,12 +147,15 @@ export class DynamicFormComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(data => {
       if (data === true) {
-        this.eventService.deleteEvent(this.event?.id!).subscribe(() => { }, 
+        this.eventService.deleteEvent(this.event?.id!).subscribe(() => { 
+          this.router.navigate(['dashboard'])
+        }, 
         err => { console.log(err);}
         )
       }
     }
     );
+    
   }
 
   onUpdateEvent() {
