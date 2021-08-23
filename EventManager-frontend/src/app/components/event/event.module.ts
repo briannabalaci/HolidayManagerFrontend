@@ -26,6 +26,8 @@ import { NavigationModule } from '../navigation/navigation.module';
 import { EventStatisticsComponent } from './event-statistics/event-statistics.component';
 import { MatTableModule } from '@angular/material/table';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
+import {MatChipsModule} from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 const routes: Routes = [
   {
@@ -72,7 +74,9 @@ const routes: Routes = [
     MatExpansionModule,
     MatSelectModule,
     MatCardModule,
-    NavigationModule
+    NavigationModule,
+    MatChipsModule,
+    MatAutocompleteModule
   ],
   providers: [  
     NgxMatDatetimePickerModule, 

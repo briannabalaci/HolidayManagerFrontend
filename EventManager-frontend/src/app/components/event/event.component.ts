@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EventEntity } from 'src/app/shared/data-types/event';
@@ -10,9 +10,13 @@ import jwt_decode from 'jwt-decode';
 import { DepartmentService } from 'src/app/shared/services/department.service';
 import { Department } from 'src/app/shared/data-types/department';
 import { ThrowStmt } from '@angular/compiler';
-import { throwIfEmpty } from 'rxjs/operators';
+import { map, startWith, throwIfEmpty } from 'rxjs/operators';
 import { Question } from 'src/app/shared/data-types/question';
 import { AssetService } from 'src/app/shared/services/asset.service';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { Observable } from 'rxjs';
+import { MatChipInputEvent, MatChipList } from '@angular/material/chips';
+import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-event',
@@ -46,6 +50,7 @@ export class EventComponent implements OnInit {
 
   invitesSent: Invite[] = [];
   invites: string[] = [];
+  emails: string[] = [];
 
   constructor(private userService: UserService,
     private departmentService: DepartmentService,
@@ -71,6 +76,31 @@ export class EventComponent implements OnInit {
       }
     )
 
+    this.userService.getUsers().subscribe(
+      data => {
+        for (let user of data){
+          if (user.role !== "admin")
+            this.emails.push(user.email!);
+        }
+        this.filteredEmails = this.emailCtrl.valueChanges.pipe(
+          startWith(null),
+          map(
+            (email: string | null) => {
+              if(email) {
+                return this._filter(email);
+              }
+              else {
+                return this.emails.filter( ( el ) => !this.selectedEmails.includes( el ));
+              }
+            }
+            )
+          
+          );
+      }
+    );
+
+    
+
     if (sessionStorage.getItem('event') !== null) {
 
       this.update = true;
@@ -90,10 +120,8 @@ export class EventComponent implements OnInit {
       this.questions = this.eventStorage!.questions!;
       let invitees = '';
       this.invitesSent = this.eventStorage!.invites!;
-      for (let invite of this.invitesSent) {
-        invitees += invite.userInvited + ",";
-      }
-      this.text = invitees.slice(0, -1);
+
+      this.selectedEmails = this.invitesSent.map(invite => invite.userInvited!);
       sessionStorage.setItem("back",this.eventStorage!.id!.toString());
       sessionStorage.removeItem("event");
     }
@@ -108,40 +136,26 @@ export class EventComponent implements OnInit {
   }
 
   checked(): void {
+    this.chipList!.errorState = false;
+    this.inviteInput!.nativeElement.value = '';
     if (this.selectedDepartment === "Include all") {
-      let invitees: string = "";
-      this.userService.getUsers().subscribe(
-        data => {
-          for (let user of data){
-            if (user.role !== "admin")
-              invitees += user.email + ",";
-          }
-
-          this.text = invitees.slice(0, -1);
-        }
-      );
+      this.selectedEmails = [];
+      this.selectedEmails = this.emails;
     }
     else {
-      let invitees: string = "";
+      this.selectedEmails = [];
       this.userService.getUsersByDepartment(this.selectedDepartment.split(" ")[0]).subscribe(
         data => {
           for (let user of data){
             if (user.role !== "admin")
-              invitees += user.email + ",";
+              this.selectedEmails.push(user.email);
           }
 
           const token = sessionStorage.getItem('token');
           const email = jwt_decode<any>(token || ' ').email;
-          if (!invitees.includes(email)){
-            invitees += email;
-            this.text = invitees;
+          if (!this.selectedEmails.includes(email)){
+            this.selectedEmails.push(email);
           }
-          else
-            this.text = invitees.slice(0, -1);
-          // for (let user of data)
-          //   invitees += user.email + ",";
-
-          // this.text = invitees.slice(0, -1);
         }
       );
     }
@@ -190,7 +204,8 @@ export class EventComponent implements OnInit {
       var cover_image = this.eventFormGroup.value.cover_image?.files[0] || this.defaultImageFile;
       var time_limit = this.eventFormGroup.value.time_limit;
 
-      this.invites = this.text.split(',');
+
+      this.invites = this.selectedEmails;
 
       for (var val of this.invites) {
         if (val !== "" ) {
@@ -256,8 +271,61 @@ export class EventComponent implements OnInit {
     })
   }
 
+  selectable = true;
+  removable = true;
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  emailCtrl = new FormControl();
+  filteredEmails?: Observable<string[]>;
+  selectedEmails: string[] = [];
 
+  @ViewChild('inviteInput') inviteInput: ElementRef<HTMLInputElement> | undefined;
+  @ViewChild('chipList') chipList: MatChipList | undefined;
 
+  addFromClick(): void {
+    this.chipList!.errorState = false;
+  }
+
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+    // Add our email
+    if (value) {
+      if(this.emails.includes(value)) {
+        this.selectedEmails.push(value);
+        this.chipList!.errorState = false;
+      }
+      else {
+        this.chipList!.errorState = true;
+      }
+    }
+
+    // Clear the input value
+    event.chipInput!.clear();
+
+    this.emailCtrl.setValue(null);
+  }
+
+  remove(email: string): void {
+    const index = this.selectedEmails.indexOf(email);
+    this.inviteInput!.nativeElement.value = '';
+    if (index >= 0) {
+      this.selectedEmails.splice(index, 1);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.selectedEmails.push(event.option.viewValue);
+    this.chipList!.errorState = false;
+    if(this.inviteInput)
+      this.inviteInput!.nativeElement.value = '';
+    this.emailCtrl.setValue(null);
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    let unselectedEmails = this.emails.filter( ( el ) => !this.selectedEmails.includes( el ));
+    return unselectedEmails.filter(email => email.toLowerCase().includes(filterValue));
+  }
 
 }
 
