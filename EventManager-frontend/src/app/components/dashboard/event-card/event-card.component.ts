@@ -53,28 +53,30 @@ export class EventCardComponent implements OnInit {
     {
         if(invite.userInvited === email)
         {
-          if (!this.passed){
             this.status = invite.status || ' ';
             if (this.status === 'pending'){
 
-              const currentDate = new Date();
-              let limitDate = new Date(this.event?.eventDate!);
-              limitDate.setDate(limitDate.getDate() - this.event?.time_limit!);
+              if (this.passed)
+                this.status='';
+              else{
+                const currentDate = new Date();
+                let limitDate = new Date(this.event?.eventDate!);
+                limitDate.setDate(limitDate.getDate() - this.event?.time_limit!);
 
-              if (limitDate > currentDate)
-              {
-                currentDate.setHours(0,0,0,0);
-                limitDate.setHours(0,0,0,0);
-                const Time = limitDate. getTime() - currentDate. getTime();
-                const Days = Time / (1000 * 3600 * 24);
-                this.status = Days.toString()+' days left to respond';
+                if (limitDate > currentDate)
+                {
+                  currentDate.setHours(0,0,0,0);
+                  limitDate.setHours(0,0,0,0);
+                  const Time = limitDate. getTime() - currentDate. getTime();
+                  const Days = Time / (1000 * 3600 * 24);
+                  this.status = Days.toString()+' days left to respond';
+                }
               }
             }
-          }
         }
     }  
     
-    if (!this.status.includes("days left") && !this.passed)
+    if (!this.status.includes("days left") && this.status !== '')
       this.status = "Status: " + this.status;
   }
 
