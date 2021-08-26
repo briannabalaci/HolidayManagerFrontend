@@ -27,7 +27,22 @@ header {
 }
 
 button {
-    width: 5px;
+  width: 24px!important;
+  min-width: unset;
+  padding: 0;
+  margin: 0 5px;
+
+  &.info_btn {
+    color: #17A2B8;
+  }
+
+  &.edit_btn {
+    color: gray;
+  }
+
+  &.delete_btn {
+    color: red;
+  }
 }
 
 h2 {
