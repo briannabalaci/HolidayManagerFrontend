@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 
 export class LoginService {
 
-  private ENVIRONMENT = "http://localhost:8080";
+  private ENVIRONMENT = "https://service-tr.feedback-internship.de";
 
   constructor(private httpClient: HttpClient) { }
 

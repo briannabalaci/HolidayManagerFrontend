@@ -10,7 +10,7 @@ import {map} from 'rxjs/operators'
 export class EventService {
 
 
-  private ENVIRONMENT = "http://localhost:8080/event";
+  private ENVIRONMENT = "https://service-tr.feedback-internship.de/event";
 
   constructor(private httpClient: HttpClient) { }
 
