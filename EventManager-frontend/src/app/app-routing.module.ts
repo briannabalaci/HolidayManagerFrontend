@@ -35,7 +35,11 @@ const routes: Routes = [
   },
   {
     path: 'change-password',
-    loadChildren: () => import('./components/change-password/change-password.module').then(m => m.ChangePasswordModule)
+    loadChildren: () => import('./components/change-password/change-password.module').then(m => m.ChangePasswordModule),
+    canActivate: [RoleGuardService], 
+    data: {
+      expectedRole: ['ORGANIZER','ATTENDEE']
+    }
   },
   {
     path: '**',

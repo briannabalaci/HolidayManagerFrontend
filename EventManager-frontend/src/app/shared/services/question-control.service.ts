@@ -4,9 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Question } from '../data-types/question';
 import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class QuestionControlService {
 
 
