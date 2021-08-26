@@ -10,6 +10,7 @@ import { RoleGuardService } from './services/role-guard.service';
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { JwtHelperService, JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { QuestionControlService } from './services/question-control.service';
 
 @NgModule({
   declarations: [],
@@ -27,7 +28,8 @@ import { JwtHelperService, JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
     AuthService,
     AuthGuardService,
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
-    JwtHelperService
+    JwtHelperService,
+    QuestionControlService
   ]
 })
 export class SharedModule { }

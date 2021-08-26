@@ -72,6 +72,10 @@ h2 {
     td {
       padding: 10px 5px;
       text-align: center;
+
+      &.action_btns {
+        width: 120px;
+      }
     }
 
 

@@ -32,11 +32,19 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 const routes: Routes = [
   {
     path: ':eventId',
-    component: EventDetailsComponent
+    component: EventDetailsComponent,
+    canActivate: [RoleGuardService], 
+    data: {
+      expectedRole: ['ORGANIZER', 'ATTENDEE']
+    }
   },
   {
     path: ':eventId/statistics',
-    component: EventStatisticsComponent
+    component: EventStatisticsComponent,
+    canActivate: [RoleGuardService], 
+    data: {
+      expectedRole: ['ORGANIZER']
+    }
   },
   {
     path: '', pathMatch: 'full',
@@ -45,6 +53,10 @@ const routes: Routes = [
       expectedRole: ['ORGANIZER']
     },
     component: EventComponent
+  },
+  {
+    path: '**',
+    redirectTo: 'login'
   }
 ]
 
