@@ -14,6 +14,7 @@ export class EventCardComponent implements OnInit {
   imageUrl: any;
   status: string = '';
   date: string = '';
+  passed: boolean = false;
   // coverImg = 'https://material.angular.io/assets/img/examples/shiba2.jpg';
 
   @Input() event?: EventEntity;
@@ -27,8 +28,10 @@ export class EventCardComponent implements OnInit {
     const currentDate = new Date();
     const eventDate = new Date(this.event?.eventDate!);
 
-    if (eventDate < currentDate)
+    if (eventDate < currentDate){
       this.date = eventDate.getDate() +"/"+(eventDate.getMonth()+1).toString()+"/"+eventDate.getFullYear().toString();
+      this.passed = true;
+    }
     else
     {
       currentDate.setHours(0,0,0,0);
@@ -50,26 +53,28 @@ export class EventCardComponent implements OnInit {
     {
         if(invite.userInvited === email)
         {
-          this.status = invite.status || ' ';
-          if (this.status === 'pending'){
+          if (!this.passed){
+            this.status = invite.status || ' ';
+            if (this.status === 'pending'){
 
-            const currentDate = new Date();
-            let limitDate = new Date(this.event?.eventDate!);
-            limitDate.setDate(limitDate.getDate() - this.event?.time_limit!);
+              const currentDate = new Date();
+              let limitDate = new Date(this.event?.eventDate!);
+              limitDate.setDate(limitDate.getDate() - this.event?.time_limit!);
 
-            if (limitDate > currentDate)
-            {
-              currentDate.setHours(0,0,0,0);
-              limitDate.setHours(0,0,0,0);
-              const Time = limitDate. getTime() - currentDate. getTime();
-              const Days = Time / (1000 * 3600 * 24);
-              this.status = Days.toString()+' days left to respond';
+              if (limitDate > currentDate)
+              {
+                currentDate.setHours(0,0,0,0);
+                limitDate.setHours(0,0,0,0);
+                const Time = limitDate. getTime() - currentDate. getTime();
+                const Days = Time / (1000 * 3600 * 24);
+                this.status = Days.toString()+' days left to respond';
+              }
             }
           }
         }
     }  
     
-    if (!this.status.includes("days left"))
+    if (!this.status.includes("days left") && !this.passed)
       this.status = "Status: " + this.status;
   }
 
