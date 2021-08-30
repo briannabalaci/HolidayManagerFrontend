@@ -48,7 +48,10 @@
             <mat-label>Cover image</mat-label>
             <ngx-mat-file-input #coverImageInput formControlName="cover_image" accept="image/jpeg, image/png" (change)="onCoverImageInputChange()"></ngx-mat-file-input>
             <button mat-icon-button matSuffix *ngIf="!coverImageInput.empty"  (click)="clearCoverImage(); coverImageInput.clear($event)">
-              <mat-icon>clear</mat-icon>
+              <mat-icon style="-webkit-text-fill-color:blue">clear</mat-icon>
+            </button>
+            <button type="button" mat-icon-button matSuffix *ngIf="coverImageInput.empty">
+              <mat-icon style="-webkit-text-fill-color:grey">attach_file</mat-icon>
             </button>
             <mat-error *ngIf="eventFormGroup.controls.cover_image.hasError('required')">
               Please select a file
