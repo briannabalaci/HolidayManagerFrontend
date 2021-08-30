@@ -1,7 +1,7 @@
 <section class="event-extras">
 
     <mat-accordion >
-        <mat-expansion-panel *ngFor="let question of questions; let i=index" hideToggle>
+        <mat-expansion-panel *ngFor="let question of questions; let i=index" >
             <mat-expansion-panel-header>
 
                 <mat-panel-title>
@@ -13,7 +13,7 @@
                         value="{{question.text}}">
 
                     <button id="{{'deleteButton' + i}}" type="button" (click)="deleteQuestion(i,$event)" mat-button>
-                        <mat-icon>delete_forever</mat-icon>
+                        <mat-icon id="delete">delete_forever</mat-icon>
                     </button>
 
 
