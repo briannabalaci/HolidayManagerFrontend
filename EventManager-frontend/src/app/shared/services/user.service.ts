@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { UserDto } from '../data-types/userDto';
 import { Department } from '../data-types/department';
 
-const ENVIRONMENT = "http://localhost:8080";
+const ENVIRONMENT = "https://service-tr.feedback-internship.de";
 
 @Injectable()
 

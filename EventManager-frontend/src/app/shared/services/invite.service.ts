@@ -9,7 +9,7 @@ import { InviteQuestionResponse } from '../data-types/invite-question-response';
 })
 export class InviteService {
 
-  private ENVIRONMENT = "http://localhost:8080/invites";
+  private ENVIRONMENT = "https://service-tr.feedback-internship.de/invites";
 
   constructor(private httpClient: HttpClient) { }
 

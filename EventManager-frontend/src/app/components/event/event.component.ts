@@ -201,7 +201,14 @@ export class EventComponent implements OnInit {
       var eventDate = this.datePipe.transform((this.eventFormGroup.value.event_date + "").replace("00:00:00", this.eventFormGroup.value.event_time + ":00"), "yyyy-MM-dd HH:mm:ss");
       var location = this.eventFormGroup.value.location;
       var dress_code = this.eventFormGroup.value.dress_code;
-      var cover_image = this.eventFormGroup.value.cover_image?.files[0] || this.defaultImageFile;
+      if(this.eventFormGroup.value.cover_image?.files !== undefined)
+      {
+        var cover_image = this.eventFormGroup.value.cover_image?.files[0]
+      }
+      else {
+        var cover_image : any = this.defaultImageFile;
+      }
+      
       var time_limit = this.eventFormGroup.value.time_limit;
 
 

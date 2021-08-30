@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Department } from '../data-types/department';
 
-const ENVIRONMENT = "http://localhost:8080";
+const ENVIRONMENT = "https://service-tr.feedback-internship.de";
 
 @Injectable({
   providedIn: 'root'

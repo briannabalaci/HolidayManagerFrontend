@@ -16,6 +16,9 @@ mat-form-field {
 .event-extras {
 
     
+        .mat-expansion-panel-header-title {
+            font-size: 14px;
+        }
         .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
            
             align-items: center;
@@ -25,6 +28,11 @@ mat-form-field {
                 border:none;
                 width: 140px;
                 
+            }
+
+            #delete {
+                position: relative;
+                right: 15px;
             }
            
             
