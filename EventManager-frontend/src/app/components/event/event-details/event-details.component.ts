@@ -24,6 +24,7 @@ export class EventDetailsComponent implements OnInit {
   eventId: number = 1;
   date: string = '';
   canUpdate: boolean = true;
+  statisticsDisplay = true;
 
 
   ngOnInit(): void {
@@ -73,6 +74,11 @@ export class EventDetailsComponent implements OnInit {
       }
     }
     return undefined; //will never return this
+  }
+
+  changeValue(statisticsDisplay: boolean) {
+      this.statisticsDisplay = !statisticsDisplay;
+
   }
 
 }

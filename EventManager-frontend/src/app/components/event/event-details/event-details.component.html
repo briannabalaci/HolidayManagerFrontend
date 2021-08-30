@@ -15,9 +15,9 @@
         </div>
        
         <div class="form-container">
-            <app-dynamic-form *ngIf="event.questions && event.id" [canUpdate]="canUpdate" [event]="event" [questions]="event.questions" [invite]="getMyEvent()"></app-dynamic-form>
+            <app-dynamic-form *ngIf="event.questions && event.id" [canUpdate]="canUpdate" [event]="event" [questions]="event.questions" [invite]="getMyEvent()" (newValue)="changeValue($event)"></app-dynamic-form>
         </div>
 
-        <button routerLink="statistics"  mat-raised-button type="submit" color="primary" class="statistics-button" *ngIf='role==="ORGANIZER"'>Statistics</button>
+        <button routerLink="statistics"  mat-raised-button type="submit" color="primary" class="statistics-button" *ngIf='role==="ORGANIZER" && statisticsDisplay'>Statistics</button>
     </body>
 </section>

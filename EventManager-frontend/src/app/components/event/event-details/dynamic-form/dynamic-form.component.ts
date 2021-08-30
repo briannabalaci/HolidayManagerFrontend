@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { Answer } from 'src/app/shared/data-types/answer';
 import { Invite } from 'src/app/shared/data-types/invite';
@@ -42,13 +42,15 @@ export class DynamicFormComponent implements OnInit {
   @Input() canUpdate?: boolean;
   @Input() response?: InviteQuestionResponse;
 
-  @Output()
+  @Output() newValue = new EventEmitter<boolean>();
 
   status: string = 'pending';
 
   updatePreferencesForOrganizer: boolean = false;
 
   updatePreferencesForAttendee: boolean = false;
+
+
 
   ngOnInit() {
     this.form = this.questionControlService.toFormGroup(this.questions);
@@ -119,7 +121,7 @@ export class DynamicFormComponent implements OnInit {
     );
     this.updatePreferencesForOrganizer = false;
     this.updatePreferencesForAttendee = false;
-    
+    this.newValue.emit(false);
     
 
   }
@@ -173,6 +175,7 @@ export class DynamicFormComponent implements OnInit {
 
   onUpdate() {
     this.updatePreferencesForOrganizer = true;
+    this.newValue.emit(true);
     this.status = 'accepted';
   }
   onUpdateAttendee() {​​​​​​​​
