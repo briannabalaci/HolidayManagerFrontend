@@ -2,18 +2,21 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Department } from '../data-types/department';
-
-const ENVIRONMENT = "https://service-tr.feedback-internship.de";
+import { EnvService } from './env.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DepartmentService {
 
-  constructor(private httpClient: HttpClient) { }
+  ENVIRONMENT: string;
+
+  constructor(private httpClient: HttpClient, private environment: EnvService) {
+    this.ENVIRONMENT = environment.getEnvironment();
+   }
 
   getDepartments(): Observable<Department[]> {
-    const path = `${ENVIRONMENT}/departments/getAll`;
+    const path = `${this.ENVIRONMENT}/departments/getAll`;
     return this.httpClient.get<Department[]>(path);
   }
 }

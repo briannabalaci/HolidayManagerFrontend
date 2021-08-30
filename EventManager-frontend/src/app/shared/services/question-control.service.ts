@@ -3,14 +3,17 @@ import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Question } from '../data-types/question';
 import { Observable } from 'rxjs';
+import { EnvService } from './env.service';
 
 @Injectable()
 export class QuestionControlService {
 
 
-  private ENVIRONMENT = "https://service-tr.feedback-internship.de";
+  private ENVIRONMENT: string;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private environment: EnvService) {
+    this.ENVIRONMENT = environment.getEnvironment();
+   }
 
   toFormGroup(questions: Question[] ) {
     const group: any = {};
