@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { Answer } from 'src/app/shared/data-types/answer';
 import { Invite } from 'src/app/shared/data-types/invite';
@@ -41,6 +41,8 @@ export class DynamicFormComponent implements OnInit {
   @Input() event?: EventEntity;
   @Input() canUpdate?: boolean;
   @Input() response?: InviteQuestionResponse;
+
+  @Output()
 
   status: string = 'pending';
 
