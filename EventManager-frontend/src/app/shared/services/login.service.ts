@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../data-types/user';
 import { Observable } from 'rxjs';
+import { EnvService } from './env.service';
 
 
 
@@ -11,9 +12,11 @@ import { Observable } from 'rxjs';
 
 export class LoginService {
 
-  private ENVIRONMENT = "https://service-tr.feedback-internship.de";
+  private ENVIRONMENT: string;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private environment: EnvService) {
+    this.ENVIRONMENT = environment.getEnvironment();
+   }
 
   checkUser(user: User) : Observable<string> {
     const url = `${this.ENVIRONMENT}/users/login`;

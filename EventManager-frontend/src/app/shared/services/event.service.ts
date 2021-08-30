@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { EventEntity } from '../data-types/event';
 import { Observable } from 'rxjs';
 import {map} from 'rxjs/operators'
+import { EnvService } from './env.service';
 
 @Injectable(
 
@@ -10,9 +11,11 @@ import {map} from 'rxjs/operators'
 export class EventService {
 
 
-  private ENVIRONMENT = "https://service-tr.feedback-internship.de/event";
+  private ENVIRONMENT : string;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private environment: EnvService) {
+    this.ENVIRONMENT = environment.getEnvironment() + '/event';
+   }
 
   createEvent(event: EventEntity) : Observable<any> {
     const path = `${this.ENVIRONMENT}/addEvent`;
