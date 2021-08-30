@@ -15,6 +15,12 @@ import {Location} from '@angular/common';
 })
 export class ChangePasswordComponent implements OnInit {
 
+  error: boolean = false;
+  error2: boolean = false;
+
+  errorMessage: string = " ";
+  errorMessage2: string = " ";
+
   changePasswordFormGroup = this.formBuilder.group({
     old_password: ['', Validators.required],
     new_password: ['', Validators.required],
@@ -28,8 +34,13 @@ export class ChangePasswordComponent implements OnInit {
 
   onSubmit() : void {
     if (this.changePasswordFormGroup.status === "VALID"){
-      if(this.changePasswordFormGroup.value.new_password !== this.changePasswordFormGroup.value.new_password2)
-        this.dialog.open(MessageComponent, {data: { message: "Retyped different password!", component: "login"}});
+      if(this.changePasswordFormGroup.value.new_password !== this.changePasswordFormGroup.value.new_password2){
+        this.error = false;
+        this.errorMessage = "";
+        
+        this.error2 = true;
+        this.errorMessage2 = "Retyped different password!";
+      }
       else
       {
         let userDto = new UserDto();
@@ -41,10 +52,19 @@ export class ChangePasswordComponent implements OnInit {
 
         console.log(userDto);
         this.userService.changePassword(userDto).subscribe(data => {
-          console.log(data);
+          this.error = false;
+          this.errorMessage = "";
+          
+          sessionStorage.clear();
+          this.route.navigate(['login']);
+        },
+        err => {
+          this.error2 = false;
+          this.errorMessage2 = "";
+
+          this.error = true;
+          this.errorMessage = "Incorrect old password!";
         });
-        sessionStorage.clear();
-        this.route.navigate(['login']);
       }
     }
     this.changePasswordFormGroup.reset();
