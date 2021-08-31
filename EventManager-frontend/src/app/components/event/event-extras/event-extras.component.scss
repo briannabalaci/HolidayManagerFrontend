@@ -18,6 +18,11 @@ mat-form-field {
     
         .mat-expansion-panel-header-title {
             font-size: 14px;
+
+            #errorIcon {
+                padding: 0;
+                right: 5px;
+            }
         }
         .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
            
@@ -30,9 +35,15 @@ mat-form-field {
                 
             }
 
-            #delete {
+           
+            .deleteButton {
+                padding: 0;
+                left: 5px;
                 position: relative;
-                right: 15px;
+                min-width: unset;
+                width: 24px !important;
+
+               
             }
            
             

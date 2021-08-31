@@ -1,19 +1,18 @@
 <section class="event-extras">
 
     <mat-accordion >
-        <mat-expansion-panel *ngFor="let question of questions; let i=index" >
+        <mat-expansion-panel id="{{'ErrorQuestion' + i}}" [expanded]="indexExpand === i" *ngFor="let question of questions; let i=index" >
             <mat-expansion-panel-header>
-
                 <mat-panel-title>
                     <b>Question {{i+1}}:</b>
                 </mat-panel-title>
                 <mat-panel-description>
-                    <input id="{{'questionText' + i}}" type="text" (change)="editQ(question,i)"
+                    <input id="{{'questionText' + i}}"  type="text" (change)="editQ(question,i)"
                         (keydown.Space)="$event.stopImmediatePropagation()" (click)="$event.stopImmediatePropagation()"
                         value="{{question.text}}">
 
-                    <button id="{{'deleteButton' + i}}" type="button" (click)="deleteQuestion(i,$event)" mat-button>
-                        <mat-icon id="delete">delete_forever</mat-icon>
+                    <button id="{{'deleteButton' + i}}" class="deleteButton" type="button" (click)="deleteQuestion(i,$event)" mat-button>
+                        <mat-icon >delete_forever</mat-icon>
                     </button>
 
 
@@ -53,7 +52,7 @@
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <mat-form-field class="example-full-width" appearance="fill">
                 <mat-label>Enter Questions</mat-label>
-                <input matInput placeholder="" formControlName="question" required>
+                <input matInput placeholder="" formControlName="question" >
             </mat-form-field>
         </form>
     </div>

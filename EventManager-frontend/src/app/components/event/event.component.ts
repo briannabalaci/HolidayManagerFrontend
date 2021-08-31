@@ -32,6 +32,7 @@ export class EventComponent implements OnInit {
   update: boolean = false;
   eventStorage?: EventEntity;
   eventId: number = 0;
+  submitBasedOnAnswer: boolean = true;
 
   MHP_IMAGE_PATH = 'imgs/mhp.png';
   defaultImageFile: File = new File([], "");
@@ -234,7 +235,7 @@ export class EventComponent implements OnInit {
         this.getBase64(cover_image).then(
           (data: any) => {
 
-            this.eventService.createEvent(new EventEntity(title, eventDate || '', location, dress_code, data, JSON.parse(sessionStorage.getItem('questions') || '{}'), this.invitesSent, email,time_limit)).subscribe(
+            this.eventService.createEvent(new EventEntity(title, eventDate || '', location, dress_code, data, this.questions, this.invitesSent, email,time_limit)).subscribe(
               data => {
                 this.route.navigate(['dashboard']).then(() => {
                   window.location.reload();
@@ -246,7 +247,7 @@ export class EventComponent implements OnInit {
         )
       }
       else {
-        const e : EventEntity = new EventEntity(title, eventDate || '', location, dress_code, '', JSON.parse(sessionStorage.getItem('questions') || '{}'), this.invitesSent, email, time_limit);
+        const e : EventEntity = new EventEntity(title, eventDate || '', location, dress_code, '', this.questions, this.invitesSent, email, time_limit);
         e.id = this.eventStorage?.id;
         this.eventService.updateEvent(e).subscribe(() => {
           this.route.navigate(['dashboard']).then(() => {
@@ -326,6 +327,31 @@ export class EventComponent implements OnInit {
 
     let unselectedEmails = this.emails.filter( ( el ) => !this.selectedEmails.includes( el ));
     return unselectedEmails.filter(email => email.toLowerCase().includes(filterValue));
+  }
+
+  changeStatus(canUpdate: boolean) {
+      this.submitBasedOnAnswer = canUpdate;
+  }
+
+  addQuestion(question : Question) {
+    this.questions.push(question);
+
+    this.submitBasedOnAnswer = false;
+    
+  }
+
+  updateQuestions(questions : Question[]) {
+    this.questions = questions;
+
+    this.submitBasedOnAnswer = true;
+
+    for(var question of this.questions)
+    {
+      if(question.answerList?.length === 0)
+      {
+        this.submitBasedOnAnswer = false;
+      }
+    }
   }
 
 }
