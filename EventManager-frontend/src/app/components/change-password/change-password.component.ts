@@ -57,6 +57,11 @@ export class ChangePasswordComponent implements OnInit {
           
           sessionStorage.clear();
           this.route.navigate(['login']);
+
+          this.changePasswordFormGroup.reset();
+          Object.keys(this.changePasswordFormGroup.controls).forEach(key =>
+            this.changePasswordFormGroup.controls[key].setErrors(null));
+          
         },
         err => {
           this.error2 = false;
@@ -64,10 +69,12 @@ export class ChangePasswordComponent implements OnInit {
 
           this.error = true;
           this.errorMessage = "Incorrect old password!";
+
+          this.changePasswordFormGroup.reset();
         });
       }
     }
-    this.changePasswordFormGroup.reset();
+  
   }
 
   cancel(): void{
