@@ -150,12 +150,6 @@ export class EventComponent implements OnInit {
             if (user.role !== "admin")
               this.selectedEmails.push(user.email);
           }
-
-          const token = sessionStorage.getItem('token');
-          const email = jwt_decode<any>(token || ' ').email;
-          if (!this.selectedEmails.includes(email)){
-            this.selectedEmails.push(email);
-          }
         }
       );
     }
@@ -211,8 +205,12 @@ export class EventComponent implements OnInit {
       
       var time_limit = this.eventFormGroup.value.time_limit;
 
-
+      const token = sessionStorage.getItem('token');
+      const email = jwt_decode<any>(token || '').email;
       this.invites = this.selectedEmails;
+      if (!this.selectedEmails.includes(email)){
+        this.selectedEmails.push(email);
+      }
 
       for (var val of this.invites) {
         if (val !== "" ) {
@@ -231,8 +229,7 @@ export class EventComponent implements OnInit {
         }
       }
 
-      const token = sessionStorage.getItem('token');
-      const email = jwt_decode<any>(token || '').email;
+      
       if (this.update === false) {
         this.getBase64(cover_image).then(
           (data: any) => {
