@@ -28,12 +28,13 @@ import { MatTableModule } from '@angular/material/table';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import {MatChipsModule} from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { EventGuardService } from 'src/app/shared/services/event-guard.service';
 
 const routes: Routes = [
   {
     path: ':eventId',
     component: EventDetailsComponent,
-    canActivate: [RoleGuardService], 
+    canActivate: [RoleGuardService, EventGuardService], 
     data: {
       expectedRole: ['ORGANIZER', 'ATTENDEE']
     }

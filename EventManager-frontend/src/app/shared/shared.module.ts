@@ -12,6 +12,7 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { JwtHelperService, JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { QuestionControlService } from './services/question-control.service';
 import { EnvService } from './services/env.service';
+import { EventGuardService } from './services/event-guard.service';
 
 @NgModule({
   declarations: [],
@@ -31,7 +32,8 @@ import { EnvService } from './services/env.service';
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService,
     QuestionControlService,
-    EnvService
+    EnvService,
+    EventGuardService
   ]
 })
 export class SharedModule { }
