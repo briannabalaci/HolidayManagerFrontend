@@ -38,7 +38,7 @@ const routes: Routes = [
     loadChildren: () => import('./components/change-password/change-password.module').then(m => m.ChangePasswordModule),
     canActivate: [RoleGuardService], 
     data: {
-      expectedRole: ['ORGANIZER','ATTENDEE']
+      expectedRole: ['ORGANIZER','ATTENDEE', 'ADMIN']
     }
   },
   {

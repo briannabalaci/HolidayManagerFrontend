@@ -4,7 +4,7 @@ nav {
   top: 0;
   width: 100%;
   padding: 5px 10px;
-  
+  height: 45px;
   box-shadow: none; 
   background-color: #f0f0f0;
 }
@@ -18,6 +18,7 @@ nav {
   float: right;
   border-radius: 20px;
   margin-bottom: 2%;
+  max-width: 280px;
 }
 
 .left-nav,
@@ -37,7 +38,7 @@ nav {
   li{
     font-size: 13px;
     font-weight: 450;
-    padding: 10px 15px;
+    padding: 2px 0;
     display: block;
     border-radius: 20px;
     
@@ -92,8 +93,10 @@ nav {
   }
 }
 
-.material-icons{
+.material-icons,
+.material-icons-outlined{
     font-size: 35px;
+    margin-left: 5px;
 }
 
 #icon{
@@ -103,9 +106,9 @@ nav {
   padding-bottom: 5%;
   vertical-align: text-top;
 
-  @media only screen and (min-width: 768px) {
-    display: none;
-  }
+  // @media only screen and (min-width: 768px) {
+  //   display: none;
+  // }
 }
 
 .logout{
