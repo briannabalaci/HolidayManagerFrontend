@@ -84,7 +84,7 @@ export class EventExtrasComponent implements OnInit {
     this.inputAnswer = true;
     this.canUpdateBasedOnQuestion = false;
     this.questionEmitter.emit(newQuestion);
-    // sessionStorage.setItem('questions', JSON.stringify(this.questions));
+   
     this.form.reset();
   }
 
@@ -95,7 +95,6 @@ export class EventExtrasComponent implements OnInit {
     question.answerList?.push(newAnswer);
     this.questionsEmitter.emit(this.questions);
     this.checkAnswers();
-    // sessionStorage.setItem('questions', JSON.stringify(this.questions));
     this.formAnswer.reset();
   }
 
@@ -109,7 +108,6 @@ export class EventExtrasComponent implements OnInit {
 
       this.checkAnswers();
 
-      // sessionStorage.setItem('questions', JSON.stringify(this.questions));
 
   }
 
@@ -119,7 +117,6 @@ export class EventExtrasComponent implements OnInit {
 
     this.questionsEmitter.emit(this.questions);
 
-    // sessionStorage.setItem('questions', JSON.stringify(this.questions));
 
   }
 
@@ -134,8 +131,6 @@ export class EventExtrasComponent implements OnInit {
 
     this.questionsEmitter.emit(this.questions);
 
-    // sessionStorage.setItem('questions', JSON.stringify(this.questions));
-
     this.form.reset();
   }
 
@@ -145,7 +140,6 @@ export class EventExtrasComponent implements OnInit {
 
     this.questionsEmitter.emit(this.questions);
 
-    // sessionStorage.setItem('questions', JSON.stringify(this.questions));
 
 
   }
