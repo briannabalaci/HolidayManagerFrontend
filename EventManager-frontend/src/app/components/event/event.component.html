@@ -18,6 +18,7 @@
           <mat-form-field appearance="fill" >
             <mat-label>Title</mat-label>
             <input matInput placeholder="Title" formControlName="title" required>
+            <mat-error>Title is required</mat-error>
           </mat-form-field>
     
           <mat-form-field appearance="fill">
@@ -25,21 +26,25 @@
             <input matInput [matDatepicker]="picker" placeholder="Date" [min]="minDate" formControlName="event_date" required>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
+            <mat-error>Date is required</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="fill" >
             <mat-label>Time</mat-label>
             <input matInput type="time" placeholder="Time" formControlName="event_time" required>
+            <mat-error>Time is required</mat-error>
           </mat-form-field>
     
           <mat-form-field appearance="fill" >
             <mat-label>Location</mat-label>
             <input matInput placeholder="Location" formControlName="location" required>
+            <mat-error>Location is required</mat-error>
           </mat-form-field>
     
           <mat-form-field appearance="fill" >
             <mat-label>Dress code</mat-label>
             <input matInput placeholder="Dress code" formControlName="dress_code" required>
+            <mat-error>Dress code is required</mat-error>
           </mat-form-field>
 
           <img *ngIf="imageSrc" class="cover_image" [src]="imageSrc"/> 
@@ -61,6 +66,7 @@
           <mat-form-field appearance="fill" >
             <mat-label>Time limit</mat-label>
             <input style="width: 85%;" type="number" matInput placeholder="Time limit" formControlName="time_limit" required><span>Days</span>
+            <mat-error>Time limit is required</mat-error>
           </mat-form-field>
           
           <br><br>
