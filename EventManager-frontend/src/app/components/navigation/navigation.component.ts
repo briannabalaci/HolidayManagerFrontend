@@ -37,10 +37,6 @@ export class NavigationComponent implements OnInit {
   detectDestination() {
     const url = this.router.url;
     switch(url) {
-      case '/user-admin':
-        return 'login';
-      case '/dashboard':
-        return 'login';
       case '/event':
         if (sessionStorage.getItem("back") === "-1")
           return 'dashboard';
@@ -53,6 +49,14 @@ export class NavigationComponent implements OnInit {
       default:
         return 'login';
     }
+  }
+
+  canGoBack() {
+    const url = this.router.url;
+    if(url === '/user-admin' || url === '/dashboard') {
+      return false;
+    }
+    return true;
   }
 
   getEventId(url: String) {
