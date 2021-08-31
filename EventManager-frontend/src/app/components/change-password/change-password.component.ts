@@ -43,6 +43,7 @@ export class ChangePasswordComponent implements OnInit {
       }
       else
       {
+        console.log('nu');
         let userDto = new UserDto();
         const token = sessionStorage.getItem('token');
         const email = jwt_decode<any>(token || ' ').email;
