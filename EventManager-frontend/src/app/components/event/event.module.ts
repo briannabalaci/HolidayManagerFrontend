@@ -34,7 +34,7 @@ const routes: Routes = [
   {
     path: ':eventId',
     component: EventDetailsComponent,
-    canActivate: [RoleGuardService, EventGuardService], 
+    canActivate: [RoleGuardService], 
     data: {
       expectedRole: ['ORGANIZER', 'ATTENDEE']
     }
