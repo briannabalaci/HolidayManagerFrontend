@@ -2,7 +2,7 @@
 
 import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y/input-modality/input-modality-detector';
 import { ThrowStmt } from '@angular/compiler';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
@@ -31,26 +31,43 @@ export class EventExtrasComponent implements OnInit {
 
   @Input() questions: Question[] = [];
 
+  // @Output() newQuestion = new EventEmitter<boolean>();
+
+  @Output() questionEmitter = new EventEmitter<Question>();
+
+  @Output() questionsEmitter = new EventEmitter<Question[]>();
+
+
+
   input: boolean = false;
   inputAnswer: boolean = false;
   add: boolean = true;
+  indexExpand : number = -1;
+  canUpdateBasedOnQuestion : boolean = false;
+
+
   constructor(private formBuilder: FormBuilder, private dialog: MatDialog,private questionControlService:QuestionControlService) { }
   ngOnInit(): void {
 
 
-    sessionStorage.setItem('questions', JSON.stringify(this.questions));
-
-    
   }
 
-  showInfo(question: Question): void {
-    sessionStorage.setItem('question', JSON.stringify(question));
-    this.dialog.open(MessageComponent, {
-      data: {
-        component: 'event-extras'
+  checkAnswers() {
+    for(var i = 0; i < this.questions.length; i++)
+    {
+      console.log("Hi");
+      if(this.questions[i].answerList?.length === 0)
+      {
+        document.getElementById('ErrorQuestion' + i)?.style.border = "solid 2px red";
       }
-    })
+      else 
+      {
+        document.getElementById('ErrorQuestion' + i)?.style.border = "none";
+      }
+
+   }
   }
+
 
   showInput(): void {
     this.input = true;
@@ -62,16 +79,22 @@ export class EventExtrasComponent implements OnInit {
 
   onSubmit(): void {
     this.input = false;
-    this.questions.push(new Question(this.form.value.question, new Array<Answer>()));
-    sessionStorage.setItem('questions', JSON.stringify(this.questions));
+    let newQuestion = new Question(this.form.value.question, new Array<Answer>());
+    this.indexExpand = this.questions.length;
+    this.inputAnswer = true;
+    this.canUpdateBasedOnQuestion = false;
+    this.questionEmitter.emit(newQuestion);
+   
     this.form.reset();
   }
 
 
   onSubmitAnswer(question: Question): void {
     this.inputAnswer = false;
-    question.answerList?.push(new Answer(this.formAnswer.value.answer));
-    sessionStorage.setItem('questions', JSON.stringify(this.questions));
+    let newAnswer = new Answer(this.formAnswer.value.answer);
+    question.answerList?.push(newAnswer);
+    this.questionsEmitter.emit(this.questions);
+    this.checkAnswers();
     this.formAnswer.reset();
   }
 
@@ -81,7 +104,10 @@ export class EventExtrasComponent implements OnInit {
 
       this.questions[indexQ] = question;
 
-      sessionStorage.setItem('questions', JSON.stringify(this.questions));
+      this.questionsEmitter.emit(this.questions);
+
+      this.checkAnswers();
+
 
   }
 
@@ -89,7 +115,8 @@ export class EventExtrasComponent implements OnInit {
 
     this.questions[indexQuestion].answerList[index].text = document.getElementById("answer"+index+indexQuestion).value;
 
-    sessionStorage.setItem('questions', JSON.stringify(this.questions));
+    this.questionsEmitter.emit(this.questions);
+
 
   }
 
@@ -102,7 +129,7 @@ export class EventExtrasComponent implements OnInit {
 
     this.questions.splice(index, 1);
 
-    sessionStorage.setItem('questions', JSON.stringify(this.questions));
+    this.questionsEmitter.emit(this.questions);
 
     this.form.reset();
   }
@@ -111,7 +138,8 @@ export class EventExtrasComponent implements OnInit {
 
     this.questions[index].text = document.getElementById("questionText" + index).value;
 
-    sessionStorage.setItem('questions', JSON.stringify(this.questions));
+    this.questionsEmitter.emit(this.questions);
+
 
 
   }
