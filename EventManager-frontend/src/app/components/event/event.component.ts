@@ -17,6 +17,8 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { Observable } from 'rxjs';
 import { MatChipInputEvent, MatChipList } from '@angular/material/chips';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { initializeApp } from '@firebase/app';
 
 @Component({
   selector: 'app-event',
@@ -198,7 +200,8 @@ export class EventComponent implements OnInit {
       var dress_code = this.eventFormGroup.value.dress_code;
       if(this.eventFormGroup.value.cover_image?.files !== undefined)
       {
-        var cover_image = this.eventFormGroup.value.cover_image?.files[0]
+        var cover_image = this.eventFormGroup.value.cover_image?.files[0];
+
       }
       else {
         var cover_image : any = this.defaultImageFile;
@@ -258,6 +261,8 @@ export class EventComponent implements OnInit {
     }
 
     this.eventFormGroup.reset();
+    Object.keys(this.eventFormGroup.controls).forEach(key =>
+      this.eventFormGroup.controls[key].setErrors(null));
   }
 
   cancel(): void{

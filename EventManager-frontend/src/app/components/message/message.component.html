@@ -23,7 +23,7 @@
     </div>
 
     <div class="confirmation" *ngIf="confirmDelete">
-        <h3 mat-dialog-title>Are you sure you want to delete this object?</h3>
+        <h3 mat-dialog-title>{{data.message}}</h3>
         <button mat-raised-button color="primary" (click)="close(true)">Yes</button>
     </div>
 

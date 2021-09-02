@@ -16,6 +16,7 @@ export class EventDetailsComponent implements OnInit {
 
   role: string = '';
   token: string = '';
+  email: string = '';
 
   constructor(private eventService: EventService, private domSanitizer: DomSanitizer, private route: ActivatedRoute, private router: Router) { }
 
@@ -30,6 +31,7 @@ export class EventDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.token = sessionStorage.getItem('token')!;
     this.role = jwt_decode<any>(this.token).roles[0];
+    this.email = jwt_decode<any>(this.token).email;
 
     this.eventId = +this.route.snapshot.paramMap.get('eventId')!;
     this.eventService.getEvent(this.eventId).subscribe(

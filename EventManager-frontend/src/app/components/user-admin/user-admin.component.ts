@@ -87,7 +87,10 @@ export class UserAdminComponent implements OnInit {
   delete(user: User): void {
 
     const dialogRef = this.dialog.open(MessageComponent, {
-      data: {component: 'confirmDelete'}
+      data: {
+        component: 'confirmDelete',
+        message: 'Are you sure you want to delete this user?'
+    }
     })
 
     dialogRef.afterClosed().subscribe(data => {

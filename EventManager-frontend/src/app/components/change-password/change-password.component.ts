@@ -39,6 +39,7 @@ export class ChangePasswordComponent implements OnInit {
         this.errorMessage = "";
         
         this.error2 = true;
+        this.changePasswordFormGroup.controls['new_password2'].setErrors({'error2':true});
         this.errorMessage2 = "Retyped different password!";
       }
       else
@@ -67,6 +68,7 @@ export class ChangePasswordComponent implements OnInit {
         err => {
           this.error2 = false;
           this.errorMessage2 = "";
+          this.changePasswordFormGroup.controls['new_password2'].setErrors({'error2':true});
 
           this.error = true;
           this.errorMessage = "Incorrect old password!";

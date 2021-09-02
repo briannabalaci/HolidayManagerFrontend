@@ -27,7 +27,7 @@ export class DynamicFormComponent implements OnInit {
   payLoad = '';
   verif: any;
   role: string = '';
-  token: string = '';
+  email: string = '';
   passed: boolean = false;
 
   constructor(private questionControlService: QuestionControlService,
@@ -56,6 +56,7 @@ export class DynamicFormComponent implements OnInit {
     this.form = this.questionControlService.toFormGroup(this.questions);
     const token = sessionStorage.getItem('token')!;
     this.role = jwt_decode<any>(token).roles[0]; //might be roles[1]
+    this.email = jwt_decode<any>(token).email;
     this.form.reset();
 
     if(this.invite?.status === 'pending')
@@ -149,7 +150,10 @@ export class DynamicFormComponent implements OnInit {
   onCancel() {
 
     const dialogRef = this.dialog.open(MessageComponent, {
-      data: { component: 'confirmDelete' }
+      data: { 
+        component: 'confirmDelete' ,
+        message: 'Are you sure you want to cancel this event?'
+    }
     }
     )
 

@@ -1,5 +1,5 @@
 <article>
-  <div *ngIf="(role === 'ATTENDEE' && updatePreferencesForAttendee) || updatePreferencesForOrganizer ">
+  <div *ngIf="(event!.organizer !== email && updatePreferencesForAttendee) || updatePreferencesForOrganizer ">
     <form (ngSubmit)="onSubmit()" [formGroup]="form">
      
       <div *ngIf="canUpdate">
@@ -15,7 +15,7 @@
     </form>
   </div>
 
-  <div *ngIf="role==='ATTENDEE' && !updatePreferencesForAttendee" class="attendee">
+  <div *ngIf="event!.organizer !== email && !updatePreferencesForAttendee" class="attendee">
     <h3 [hidden]="onDeclineStatus() || onPending()" *ngIf="canUpdate">Additional information:</h3>
     <div *ngFor="let response of invite!.inviteQuestionResponses; let i = index;" class="form-row">
       <b>Question {{i+1}}: </b> {{response.question!.text}}
@@ -34,7 +34,7 @@
 
   </div>
 
-  <div *ngIf="role === 'ORGANIZER' && !updatePreferencesForOrganizer" class="organizer">
+  <div *ngIf="event!.organizer === email && !updatePreferencesForOrganizer" class="organizer">
     <h3 [hidden]="onDeclineStatus() || onPending()" *ngIf="canUpdate">Additional information:</h3>
     <div *ngFor="let response of invite!.inviteQuestionResponses; let i = index;" class="form-row">
       <b>Question {{i+1}}: </b> {{response.question!.text}}
