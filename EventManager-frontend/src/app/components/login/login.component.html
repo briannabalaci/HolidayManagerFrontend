@@ -6,13 +6,14 @@
   <mat-form-field appearance="fill">
     <mat-label>Enter email</mat-label>
     <input matInput type="email" pattern=".+@+.+\.com" placeholder="name@example.com" formControlName="username" required>
-    <mat-error *ngIf="form.controls['username'].touched">Email is required</mat-error>
+    <mat-error *ngIf="form.controls['username'].touched && !form.controls['username'].valid && form.value['username'] === ''">Email is required</mat-error>
+    <mat-error *ngIf="form.controls['username'].touched && !form.controls['username'].valid && form.value['username'] !== ''">Email correct format expected</mat-error>
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Enter password</mat-label>
     <input matInput type="password" placeholder="Password" formControlName="password" required>
-    <mat-error *ngIf="form.controls['username'].touched">Password is required</mat-error>
-    <mat-error *ngIf="error">{{getErrorMessage()}}</mat-error>
+    <mat-error *ngIf="form.controls['password'].touched && !form.controls['password'].valid">Password is required</mat-error>
+    <mat-error *ngIf="error && !form.controls['password'].touched">{{getErrorMessage()}}</mat-error>
     
   </mat-form-field>
   <button [disabled]="form.status !== 'VALID'" type="submit" mat-raised-button color="primary" class="login-button">Login</button><br>
