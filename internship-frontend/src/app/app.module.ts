@@ -18,6 +18,7 @@ import { RegisterPanelComponent } from './landing/register-panel/register-panel.
 import { LoginFormComponent } from './landing/login-panel/login-form/login-form.component';
 import { LoginPanelComponent } from './landing/login-panel/login-panel.component';
 import { LoginPanelModule } from './landing/login-panel/login-panel.module';
+import { CreateUserComponent } from './admin/create-user/create-user.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { LoginPanelModule } from './landing/login-panel/login-panel.module';
     LoginPanelComponent,
     LoginFormComponent,
     RegisterPanelComponent,
-    RegisterFormComponent
+    RegisterFormComponent,
+    CreateUserComponent
   ],
   imports: [
     BrowserModule,
