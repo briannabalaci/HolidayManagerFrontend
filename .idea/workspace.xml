@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="6c9a3444-00c0-4596-ac79-b3ccb5bff118" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/internship-frontend/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/internship-frontend/angular.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internship-frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/internship-frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internship-frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/internship-frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internship-frontend/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/internship-frontend/src/app/app.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internship-frontend/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/internship-frontend/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internship-frontend/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/internship-frontend/src/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internship-frontend/src/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/internship-frontend/src/styles.scss" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2CnITYxDxKl8UDYKTlMiSq9k8ZN" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/TestIntern02/Documents/teamjacky_web&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\intellij\\IntelliJ IDEA 2022.2\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external&quot;
+  }
+}</component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="teamjacky_web" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="teamjacky_web" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6c9a3444-00c0-4596-ac79-b3ccb5bff118" name="Changes" comment="" />
+      <created>1659431931573</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1659431931573</updated>
+      <workItem from="1659431935887" duration="6524000" />
+      <workItem from="1659449644191" duration="286000" />
+      <workItem from="1659506505167" duration="829000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
