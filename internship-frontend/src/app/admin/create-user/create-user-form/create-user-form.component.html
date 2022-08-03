@@ -36,8 +36,25 @@
     </mat-option>
   </mat-select>
 </mat-form-field>
-
-
+<br>
+<mat-form-field appearance="fill">
+    <mat-label>Role</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let role of roles" [value]="role.value">
+        {{role.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br>
+  <mat-form-field appearance="fill">
+    <mat-label>Department</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let userType of userTypes" [value]="userType.value">
+        {{userType.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br>
 
       <a href="/login">Do you have an account? Log in.</a><br>
       <button mat-raised-button color="accent" type="submit" id="form-button">Register</button>
