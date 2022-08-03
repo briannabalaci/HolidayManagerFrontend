@@ -28,7 +28,7 @@ import { LoginResetFormComponent } from './landing/login-panel/login-reset-form/
     LoginFormComponent,
     LoginResetFormComponent,
     RegisterPanelComponent,
-    RegisterFormComponent
+    RegisterFormComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,5 @@
 <div>
+  <mat-hint class="hint-green" *ngIf="showSuccesfulPasswordMessage">Password changed successfully.</mat-hint> <br>
 <form id="login-form" [formGroup]="loginUserDataFormGroup" (ngSubmit) = "loginUser()">
       <mat-form-field appearance="fill">
         <mat-label>Email</mat-label>

@@ -1,31 +1,37 @@
 <div>
     <!-- <form id="login-reset-form" [formGroup]="loginUserDataFormGroup" (ngSubmit) = "loginUser()"> -->
-        <form [formGroup]="loginChangePasswordFormGroup">
+        <form [formGroup]="loginChangePasswordFormGroup" (ngSubmit) = "changeUserPassword()">
           <mat-form-field appearance="fill">
             <mat-label>Email</mat-label>
             <input matInput placeholder="myemail@gmail.com" formControlName="email">
-          </mat-form-field><br>
+            <mat-hint class="password-hint" *ngIf="showEmailErrorString">* The email or the old password is incorrect.</mat-hint>   
+        </mat-form-field><br>
           <mat-form-field appearance="fill">
             <mat-label>Old password</mat-label>
-            <input matInput [type]="hide1 ? 'password' : 'text'" formControlName="password_old">
+            <input matInput [type]="hide1 ? 'password' : 'text'" formControlName="oldPassword">
             <button mat-icon-button matSuffix (click)="hide1 = !hide1" type="button" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide1">
               <mat-icon>{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
           </mat-form-field><br>
           <mat-form-field appearance="fill">
             <mat-label>New password</mat-label>
-            <input matInput [type]="hide2 ? 'password' : 'text'" formControlName="password_new_1">
+            <input matInput [type]="hide2 ? 'password' : 'text'" formControlName="newPassword">
             <button mat-icon-button matSuffix (click)="hide2 = !hide2" type="button" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide2">
               <mat-icon>{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
+            </button> 
+            <mat-hint class="password-hint" *ngIf="showPasswordErrorString">* The passwords do not match.</mat-hint>
           </mat-form-field><br>
+
           <mat-form-field appearance="fill">
             <mat-label>Repeat new password</mat-label>
-            <input matInput [type]="hide3 ? 'password' : 'text'" formControlName="password_new_2">
+            <input matInput [type]="hide3 ? 'password' : 'text'" formControlName="newPassword2">
             <button mat-icon-button matSuffix (click)="hide3 = !hide3" type="button" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide3">
               <mat-icon>{{hide3 ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
-          </mat-form-field><br>         
+            <mat-hint class="password-hint" *ngIf="showPasswordErrorString">* The passwords do not match.</mat-hint>
+            <mat-hint class="password-hint" *ngIf="showPasswordSameString">* Your new password can't be the same as your old password.</mat-hint> 
+        </mat-form-field><br>  
+    
           <br>
     <!--      <a href="/register">Don't you have an account? Register.</a><br>-->
     <button mat-raised-button color="accent" type="submit" id="form-button">Set new password</button>

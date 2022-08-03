@@ -9,6 +9,7 @@ import {FormBuilder, Validator, Validators} from "@angular/forms";
 })
 export class LoginFormComponent implements OnInit {
   hide = true;
+  showSuccesfulPasswordMessage = false;
   loginUserDataFormGroup = this.formBuilder.group({
     email:["",Validators.required],
     password:["",Validators.required],
