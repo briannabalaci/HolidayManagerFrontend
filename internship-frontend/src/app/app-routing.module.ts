@@ -16,7 +16,8 @@ const routes: Routes = [
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   { path: 'register', component: RegisterPanelComponent },
-  { path: 'login', component: LoginPanelComponent }
+  { path: 'login', component: LoginPanelComponent },
+
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
