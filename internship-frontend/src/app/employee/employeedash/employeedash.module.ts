@@ -9,6 +9,9 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
 import { EmployeedashComponent } from './employeedash.component';
 import { Routes } from '@angular/router';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+
 const routes: Routes = [
   {
     path: 'employee', component: EmployeedashComponent
@@ -24,7 +27,14 @@ const routes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
-    MatIconModule
+    MatIconModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    ReactiveFormsModule
+
+  ],
+  exports:[
+    MatDatepickerModule
   ],
   providers: [],
 })

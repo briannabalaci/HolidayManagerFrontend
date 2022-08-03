@@ -1,18 +1,19 @@
-
-<form id="login-form">
+<div>
+<form id="login-form" [formGroup]="loginUserDataFormGroup" (ngSubmit) = "loginUser()">
       <mat-form-field appearance="fill">
         <mat-label>Email</mat-label>
-        <input matInput placeholder="myemail@gmail.com">
+        <input matInput placeholder="myemail@gmail.com" formControlName="email">
       </mat-form-field><br>
       <mat-form-field appearance="fill">
         <mat-label>Password</mat-label>
-        <input matInput [type]="hide ? 'password' : 'text'">
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
           <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
       </mat-form-field><br>
       <br>
-      <a href="/register">Don't you have an account? Register.</a><br>
+<!--      <a href="/register">Don't you have an account? Register.</a><br>-->
       <button mat-raised-button color="accent" type="submit" id="form-button">Login</button>
 </form>
+</div>
 

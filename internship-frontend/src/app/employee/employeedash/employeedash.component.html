@@ -1,14 +1,44 @@
 <h1>Employee Dashboard</h1>
+<p>Vacations days left: {{vacationdays}}</p>
 <mat-form-field appearance="fill">
-  <mat-label>Toppings</mat-label>
-  <mat-select [formControl]="toppings" multiple>
-    <mat-select-trigger>
-      {{toppings.value?.[0] || ''}}
-      <span *ngIf="(toppings.value?.length || 0) > 1" class="example-additional-selection">
-        (+{{(toppings.value?.length || 0) - 1}} {{toppings.value?.length === 2 ? 'other' : 'others'}})
-      </span>
-    </mat-select-trigger>
-    <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+  <mat-label>Requests</mat-label>
+  <mat-select  >
+    <mat-option *ngFor="let holiday of holidayList" [value]="holiday.value">
+      {{holiday.viewValue}}</mat-option>
   </mat-select>
 </mat-form-field>
-<p>employeedash works!</p>
+<br>
+<table mat-table [dataSource]="dataSource">
+  <ng-container matColumnDef="Start date">
+      <th mat-header-cell *matHeaderCellDef> Start date </th>
+      <td mat-cell *matCellDef="let element"> {{element.startDate}} </td>
+  </ng-container>
+  <ng-container matColumnDef="End date">
+      <th mat-header-cell *matHeaderCellDef> End date </th>
+      <td mat-cell *matCellDef="let element"> {{element.endDate}} </td>
+  </ng-container>
+  <ng-container matColumnDef="Status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+<br>
+<button mat-flat-button color="accent">Create request</button>
+<br><br>
+<mat-form-field appearance="fill">
+  <mat-label>Start date</mat-label>
+  <input matInput>
+</mat-form-field>
+<mat-form-field appearance="fill">
+  <mat-label>End date</mat-label>
+  <input matInput>
+</mat-form-field>
+<mat-form-field appearance="fill">
+  <mat-label>Substite</mat-label>
+  <input matInput>
+</mat-form-field><br>
+<button mat-flat-button color="accent">Cancel</button>
+<button mat-flat-button color="accent">Send/Update</button>

@@ -21,15 +21,16 @@ import { RegisterPanelComponent } from './landing/register-panel/register-panel.
 import { LoginFormComponent } from './landing/login-panel/login-form/login-form.component';
 import { LoginPanelComponent } from './landing/login-panel/login-panel.component';
 import { LoginPanelModule } from './landing/login-panel/login-panel.module';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
     AppComponent,
     EmployeedashComponent,
     LoginPanelComponent,
-    LoginFormComponent,
     RegisterPanelComponent,
-    RegisterFormComponent
+    RegisterFormComponent,
+    LoginFormComponent
 
   ],
   imports: [
@@ -46,8 +47,8 @@ import { LoginPanelModule } from './landing/login-panel/login-panel.module';
     MatTableModule,
     MatIconModule,
     RegisterPanelModule,
-    LoginPanelModule
-
+    LoginPanelModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
