@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,EventEmitter, OnInit,Output, } from '@angular/core';
+import { FormBuilder,Validators } from '@angular/forms';
+import { User } from 'src/app/shared/data-type/user';
 interface Department {
   value: string;
   viewValue: string;
@@ -20,9 +22,15 @@ interface UserType {
 })
   
 export class CreateUserFormComponent implements OnInit {
-
+  @Output() clickCreate =new EventEmitter<User>();
   hide = true;
   hide_confirm = true;
+  type_d = "";
+  role_d = "";
+  department_d = "";
+
+
+
   departments: Department[] = [
     {value: 'JAVA', viewValue: 'Java'},
     {value: 'ABAP', viewValue: 'ABAP'},
@@ -38,11 +46,52 @@ export class CreateUserFormComponent implements OnInit {
     {value: 'TEAMLEAD', viewValue: 'ABAP'},
     {value: 'EMPLOYEE', viewValue: 'Employee'},
   ];
-  constructor() { 
+
+
+
+  changeDepartment(value: string) {
+    this.department_d = value;
+}
+changeRole(value: string) {
+  this.role_d = value;
+}
+changeType(value: string) {
+  this.type_d = value;
+}
+  createUserForm = this.formBuilder.group({
+    
+    email:['',Validators.required],
+    password: ['', Validators.required],
+    verifPassword:['',Validators.required],
+    forName:['',Validators.required],
+    surName:['',Validators.required],
+    
+    nrHolidays:['',Validators.required],
+   
+    
+  })
+  constructor(private formBuilder:FormBuilder) { 
  
   }
 
   ngOnInit(): void {
   }
+  createUser(): void{
+    const valuesFromForm = this.createUserForm.value;
+    const newUser = {
+      email:valuesFromForm.email,
+    password:valuesFromForm.password,
+    forname:valuesFromForm.forName,
+    surname:valuesFromForm.surName,
+    department: this.department_d,
+    role:this.role_d,
+    nrHolidays:valuesFromForm.nrHolidays,
+    type:this.type_d,
 
+    }
+   
+    console.log("ok",newUser);
+     //@ts-ignore
+    this.clickCreate.emit(newUser);
+  }
 }
