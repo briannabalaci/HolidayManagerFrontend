@@ -19,12 +19,14 @@ import { LoginFormComponent } from './landing/login-panel/login-form/login-form.
 import { LoginPanelComponent } from './landing/login-panel/login-panel.component';
 import { LoginPanelModule } from './landing/login-panel/login-panel.module';
 import {HttpClientModule} from "@angular/common/http";
+import { LoginResetFormComponent } from './landing/login-panel/login-reset-form/login-reset-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginPanelComponent,
     LoginFormComponent,
+    LoginResetFormComponent,
     RegisterPanelComponent,
     RegisterFormComponent
   ],
