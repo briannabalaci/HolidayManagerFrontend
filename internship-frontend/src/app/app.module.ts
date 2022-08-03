@@ -18,9 +18,13 @@ import { RegisterPanelComponent } from './landing/register-panel/register-panel.
 import { LoginFormComponent } from './landing/login-panel/login-form/login-form.component';
 import { LoginPanelComponent } from './landing/login-panel/login-panel.component';
 import { LoginPanelModule } from './landing/login-panel/login-panel.module';
+<<<<<<< HEAD
 import { CreateUserComponent } from './admin/create-user/create-user.component';
 import { CreateUserFormComponent } from './admin/create-user/create-user-form/create-user-form.component';
 import { DropDownComponent } from './admin/create-user/create-user-form/drop-down/drop-down.component';
+=======
+import {HttpClientModule} from "@angular/common/http";
+>>>>>>> origin/development
 
 @NgModule({
   declarations: [
@@ -45,7 +49,8 @@ import { DropDownComponent } from './admin/create-user/create-user-form/drop-dow
     MatTableModule,
     MatIconModule,
     RegisterPanelModule,
-    LoginPanelModule
+    LoginPanelModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
