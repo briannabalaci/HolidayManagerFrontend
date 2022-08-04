@@ -23,6 +23,9 @@ import { CreateUserComponent } from './admin/create-user/create-user.component';
 import { CreateUserFormComponent } from './admin/create-user/create-user-form/create-user-form.component';
 import { DropDownComponent } from './admin/create-user/create-user-form/drop-down/drop-down.component';
 import { HttpClientModule } from '@angular/common/http';
+import { UserListComponent } from './admin/user-list/user-list.component';
+import { UserTableComponent } from './admin/user-list/user-table/user-table.component';
+import { AdminComponent } from './admin/admin/admin.component';
 
 
 @NgModule({
@@ -34,7 +37,10 @@ import { HttpClientModule } from '@angular/common/http';
     RegisterFormComponent,
     CreateUserComponent,
     CreateUserFormComponent,
-    DropDownComponent
+    DropDownComponent,
+    UserListComponent,
+    UserTableComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

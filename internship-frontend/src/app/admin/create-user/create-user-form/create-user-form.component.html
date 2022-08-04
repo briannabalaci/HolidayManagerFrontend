@@ -19,16 +19,9 @@
           <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
       </mat-form-field><br>
-      <mat-form-field appearance="fill">
-        <mat-label>Confirm password</mat-label>
-        <input matInput [type]="hide_confirm ? 'password' : 'text'" formControlName="verifPassword">
-        <button mat-icon-button matSuffix (click)="hide_confirm = !hide_confirm" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide_confirm">
-          <mat-icon>{{hide_confirm ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
-      </mat-form-field><br>
-      <br>
-      <mat-form-field appearance="fill">
-        <mat-label>Holydays nr.</mat-label>
+     
+          <mat-form-field appearance="fill">
+        <mat-label>Holydays nr  .</mat-label>
         <input matInput placeholder="0" type="number" formControlName="nrHolidays">
       </mat-form-field><br>
 <mat-form-field appearance="fill">
