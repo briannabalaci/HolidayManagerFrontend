@@ -19,6 +19,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterPanelComponent },
   { path: 'login', component: LoginPanelComponent },
   { path: 'employee', component: EmployeedashComponent }
+
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
