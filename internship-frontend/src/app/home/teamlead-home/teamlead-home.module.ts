@@ -12,6 +12,7 @@ import {MatListModule} from "@angular/material/list";
 import {Routes} from "@angular/router";
 import {RegisterPanelComponent} from "../../landing/register-panel/register-panel.component";
 import {TeamleadHomeComponent} from "./teamlead-home.component";
+import { TeamsRequestsComponent } from './teams-requests/teams-requests.component';
 
 const routes: Routes = [
   {
@@ -21,10 +22,12 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    TeamleadRequestsComponent
+    TeamleadRequestsComponent,
+    TeamsRequestsComponent
   ],
   exports: [
-    TeamleadRequestsComponent
+    TeamleadRequestsComponent,
+    TeamsRequestsComponent
   ],
   imports: [
     MatButtonModule,

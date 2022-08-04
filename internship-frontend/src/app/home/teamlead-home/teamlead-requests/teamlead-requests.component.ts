@@ -11,6 +11,21 @@ const ELEMENT_DATA: RequestsUser[] = [
     startDate: '11.08.2022',
     endDate: '12.09.2022',
     type: 'Rest holiday'
+  },
+  {
+    startDate: '11.08.2022',
+    endDate: '12.09.2022',
+    type: 'Rest holiday'
+  },
+  {
+    startDate: '11.08.2022',
+    endDate: '12.09.2022',
+    type: 'Rest holiday'
+  },
+  {
+    startDate: '11.08.2022',
+    endDate: '12.09.2022',
+    type: 'Rest holiday'
   }
 ]
 
