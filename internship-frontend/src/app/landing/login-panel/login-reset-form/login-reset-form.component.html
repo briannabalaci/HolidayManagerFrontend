@@ -32,6 +32,7 @@
           <mat-card class="password-hint" *ngIf="showPasswordSameString">Your new password can't be the same as your old password.</mat-card>
           <mat-card class="password-hint" *ngIf="showEmailErrorString">The email or the old password is incorrect.</mat-card> 
           <mat-card class="password-hint" *ngIf="showPasswordEmptyString">Please fill out all the fields.</mat-card>     
+          <mat-card class="password-hint-green" *ngIf="showSuccesfulPasswordMessage">Password changed successfully.</mat-card> 
           <br>
             <!--      <a href="/register">Don't you have an account? Register.</a><br>-->
     <button mat-raised-button color="accent" type="submit" id="form-button">Set new password</button>

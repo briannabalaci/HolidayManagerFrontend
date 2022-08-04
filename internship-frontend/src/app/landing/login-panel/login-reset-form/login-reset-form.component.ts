@@ -3,7 +3,7 @@ import {FormBuilder, Validator, Validators} from "@angular/forms";
 import { ChangePasswordService, UserChangePasswordData } from 'src/app/service/change-password.service';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { LoginFormComponent } from '../login-form/login-form.component';
-
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login-reset-form',
@@ -19,13 +19,14 @@ export class LoginResetFormComponent implements OnInit {
   showPasswordSameString = false;
   showEmailErrorString = false;
   showPasswordEmptyString = false;
+  showSuccesfulPasswordMessage = false;
   loginChangePasswordFormGroup = this.formBuilder.group({
     email:["",Validators.required],
     oldPassword:["",Validators.required],
     newPassword:["",Validators.required],
     newPassword2:["",Validators.required],
   })
-  constructor(private formBuilder:FormBuilder, private userChangePasswordService : ChangePasswordService, private route:AppRoutingModule) { }
+  constructor(private formBuilder:FormBuilder, private userChangePasswordService : ChangePasswordService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -47,7 +48,7 @@ export class LoginResetFormComponent implements OnInit {
         if(result === 'Invalid password or email') {
           this.showEmailErrorString = true;
         } else {
-          window.location.href = '/login';
+          this.showSuccesfulPasswordMessage = true;
         }
       })
     }
@@ -57,5 +58,6 @@ export class LoginResetFormComponent implements OnInit {
     this.showPasswordSameString = false;
     this.showEmailErrorString = false;
     this.showPasswordEmptyString = false;
+    this.showSuccesfulPasswordMessage = false;
   }
 }
