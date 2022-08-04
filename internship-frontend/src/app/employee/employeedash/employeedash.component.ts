@@ -1,21 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl} from "@angular/forms";
-
-interface HolidayType {
-  value: string;
-  viewValue: string;
+export class HolidayType {
+  value?: string;
+  viewValue?: string;
+  constructor(value: string, viewvalue: string) { }
 }
 export class Holiday{
-  startDate?: string;
-  endDate?: string;
+  startDate?: Date;
+  endDate?: Date;
   status?: string;
+  substitute?:string;
+  type?:Type;
+}
+enum Type {
+  REST,
+  SPECIAL,
+  UNPAID
 }
 
+// TO DO: move new data type in a separate folder
 const HOLIDAY_DATA: Holiday[] =[ 
-  {startDate: '02.03.2021',endDate: '12.03.2021', status: 'Pending'},
-  {startDate: '04.05.2022',endDate: '14.05.2022', status: 'Rejected'},
-  {startDate: '01.05.2021',endDate: '02.03.2020', status: 'Approved'},
-  {startDate: '02.03.2020',endDate: '02.03.2020', status: 'Pending'}
+  {startDate: new Date(1995, 11, 17),endDate: new Date(1995, 11, 17), status: 'Pending', type: Type.REST, substitute: 'Andor' },
+  {startDate: new Date(2010, 12, 17),endDate: new Date(2010, 12, 27), status: 'Rejected', type: Type.SPECIAL, substitute: 'Brianna'},
+  {startDate: new Date(2022, 8, 17),endDate: new Date(2022, 8, 25), status: 'Approved', type: Type.UNPAID, substitute: 'Tara'},
+  {startDate: new Date(2021, 1, 13),endDate: new Date(2021, 2, 1), status: 'Pending', type: Type.REST, substitute: 'Alexandra'}
 ];
 
 @Component({
@@ -25,8 +32,11 @@ const HOLIDAY_DATA: Holiday[] =[
 })
 export class EmployeedashComponent implements OnInit {
   public vacationdays = 2;
+  endDate = 'Angular';
+  startDate = 'Angular';
+  substitute = '';
 
-  displayedColumns: string[] = ['Start date', 'End date',  'Status'];
+  displayedColumns: string[] = ['Start date', 'End date',  'Status', 'Edit'];
   dataSource = HOLIDAY_DATA;
   holidayList: HolidayType[] = [
     {value: 'all-requests', viewValue: 'All requests'},
@@ -38,4 +48,39 @@ export class EmployeedashComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  clearData(): void{
+  this.endDate = '';
+  this.startDate = '';
+  this.substitute = '';
+  }
+
+  completeData(row: any): void{
+    this.endDate = row.endDate;
+    this.startDate = row.startDate;
+    this.substitute = row.substitute;
+  }
+
+  onChange(deviceValue: any): void{
+    switch(deviceValue){
+      case 'all-requests': {
+        this.dataSource = HOLIDAY_DATA;
+        break;
+      }
+      case 'rest-holiday':{
+        this.dataSource = HOLIDAY_DATA.filter(holiday=>holiday.type ===Type.REST);
+        break;
+      }
+      case 'special-holiday':{
+        this.dataSource = HOLIDAY_DATA.filter(holiday=>holiday.type ===Type.SPECIAL);
+        break;
+      }
+      case 'unpaid-holiday':{
+        this.dataSource = HOLIDAY_DATA.filter(holiday=>holiday.type ===Type.UNPAID);
+        break;
+      }
+    }
+  }
 }
+
+
+

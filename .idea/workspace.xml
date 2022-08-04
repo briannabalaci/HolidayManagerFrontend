@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6c9a3444-00c0-4596-ac79-b3ccb5bff118" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/internship-frontend/src/app/service/user.service.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internship-frontend/src/app/service/user.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internship-frontend/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/internship-frontend/angular.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internship-frontend/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/internship-frontend/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internship-frontend/src/app/landing/login-panel/login-form/login-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/internship-frontend/src/app/landing/login-panel/login-form/login-form.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internship-frontend/src/app/landing/login-panel/login-form/login-form.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/internship-frontend/src/app/landing/login-panel/login-form/login-form.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internship-frontend/src/app/landing/login-panel/login-form/login-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/internship-frontend/src/app/landing/login-panel/login-form/login-form.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internship-frontend/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/internship-frontend/src/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internship-frontend/src/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/internship-frontend/src/styles.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
