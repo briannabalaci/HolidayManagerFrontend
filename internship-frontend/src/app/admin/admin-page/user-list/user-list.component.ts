@@ -16,7 +16,7 @@ export class UserListComponent implements OnInit {
   users?: User[];
   dataSource: any;
   constructor(private adminService:AdminService){}
-  displayedColumns: string[] = ['email', 'department',"getdetails"];
+  displayedColumns: string[] = ['email', 'department',"edituser"];
  
   @ViewChild(MatPaginator, { static: true })
   paginator!: MatPaginator;
@@ -31,9 +31,10 @@ export class UserListComponent implements OnInit {
     });
     
   }
-  getRecord(id: any)
+  getRecord(user:User)
   {
-    alert(id);
+    alert(user);
+    //EDIT USER
   }
 }
 
