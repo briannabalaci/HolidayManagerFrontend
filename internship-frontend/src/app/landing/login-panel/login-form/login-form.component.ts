@@ -36,4 +36,7 @@ export class LoginFormComponent implements OnInit {
       }
     })
   }
+  resetWarnings(){
+    this.showSuccesfulPasswordMessage = false;
+  }
 }

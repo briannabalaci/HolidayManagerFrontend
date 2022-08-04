@@ -3,6 +3,8 @@ import {FormBuilder, Validator, Validators} from "@angular/forms";
 import { ChangePasswordService, UserChangePasswordData } from 'src/app/service/change-password.service';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { LoginFormComponent } from '../login-form/login-form.component';
+
+
 @Component({
   selector: 'app-login-reset-form',
   templateUrl: './login-reset-form.component.html',
@@ -16,6 +18,7 @@ export class LoginResetFormComponent implements OnInit {
   showPasswordErrorString = false;
   showPasswordSameString = false;
   showEmailErrorString = false;
+  showPasswordEmptyString = false;
   loginChangePasswordFormGroup = this.formBuilder.group({
     email:["",Validators.required],
     oldPassword:["",Validators.required],
@@ -28,10 +31,12 @@ export class LoginResetFormComponent implements OnInit {
   }
   changeUserPassword(){
     const valuesFromForm = this.loginChangePasswordFormGroup.value;
-    if(valuesFromForm.newPassword2 != valuesFromForm.newPassword){
+    if(valuesFromForm.email === '' || valuesFromForm.oldPassword === '' || valuesFromForm.newPassword2 === '' || valuesFromForm.newPassword === '') {
+      this.showPasswordEmptyString = true;
+    } else if(valuesFromForm.newPassword2 != valuesFromForm.newPassword){
       this.showPasswordErrorString = true;
-    } else if(valuesFromForm.oldPassword == valuesFromForm.newPassword ){
-      this.showPasswordSameString = true;
+    } else if(valuesFromForm.oldPassword == valuesFromForm.newPassword){
+        this.showPasswordSameString = true;
     } else {
       const changeData:UserChangePasswordData = {
         email:valuesFromForm.email!,
@@ -39,12 +44,18 @@ export class LoginResetFormComponent implements OnInit {
         newPassword:valuesFromForm.newPassword!
       }
       this.userChangePasswordService.changeData(changeData).subscribe(result => {
-        if(result === 'Email or password incorrect!') {
+        if(result === 'Invalid password or email') {
           this.showEmailErrorString = true;
         } else {
           window.location.href = '/login';
         }
       })
     }
+  }
+  resetWarnings(){
+    this.showPasswordErrorString = false;
+    this.showPasswordSameString = false;
+    this.showEmailErrorString = false;
+    this.showPasswordEmptyString = false;
   }
 }

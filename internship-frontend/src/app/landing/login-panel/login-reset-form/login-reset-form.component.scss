@@ -9,12 +9,21 @@
 ::ng-deep .mat-form-field {
     width: 320px;
  }
-@media screen and ( max-width: 341px ) {
+ .password-hint {
+    width: 325px;
+    font-size: 12px;
+    color: white;
+    background: red;
+}
+@media screen and ( max-width: 500px ) {
     ::ng-deep .mat-form-field {
         width: 80%;
      }
+     .password-hint {
+        width: 85%;
+    }
   }
-.password-hint {
-    font-size: 12px;
-    color: red;
-}
+
+  .mat-raised-button{
+    color: white !important;
+  }

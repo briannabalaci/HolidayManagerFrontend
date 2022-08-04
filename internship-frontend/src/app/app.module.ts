@@ -20,6 +20,7 @@ import { LoginPanelComponent } from './landing/login-panel/login-panel.component
 import { LoginPanelModule } from './landing/login-panel/login-panel.module';
 import {HttpClientModule} from "@angular/common/http";
 import { LoginResetFormComponent } from './landing/login-panel/login-reset-form/login-reset-form.component';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { LoginResetFormComponent } from './landing/login-panel/login-reset-form/
     MatIconModule,
     RegisterPanelModule,
     LoginPanelModule,
-    HttpClientModule
+    HttpClientModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
