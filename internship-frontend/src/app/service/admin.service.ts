@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from '../shared/data-type/user';
+import { User } from '../shared/data-type/User';
+
 const ADD_USER="http://localhost:8090/user/add-user"
 @Injectable({
   providedIn: 'root'

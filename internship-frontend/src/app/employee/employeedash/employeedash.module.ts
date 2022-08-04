@@ -7,12 +7,14 @@ import {MatInputModule} from '@angular/material/input';
 import {MatTableModule} from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
-
+import { EmployeedashComponent } from './employeedash.component';
 import { Routes } from '@angular/router';
-import { CreateUserComponent } from './create-user.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+
 const routes: Routes = [
   {
-    path: 'createuser', component: CreateUserComponent
+    path: 'employee', component: EmployeedashComponent
  }
 ]
 @NgModule({
@@ -25,8 +27,15 @@ const routes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
-    MatIconModule
+    MatIconModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    ReactiveFormsModule
+
+  ],
+  exports:[
+    MatDatepickerModule
   ],
   providers: [],
 })
-export class CreteUserModule { }
+export class LoginPanelModule { }

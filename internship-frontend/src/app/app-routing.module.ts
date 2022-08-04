@@ -5,7 +5,7 @@ import { RegisterPanelModule } from './landing/register-panel/register-panel.mod
 import { RegisterPanelComponent } from './landing/register-panel/register-panel.component';
 import { LoginPanelComponent } from './landing/login-panel/login-panel.component';
 import { CreateUserComponent } from './admin/create-user/create-user.component';
-/*
+
 const routes: Routes = [
   {path: 'register', loadChildren: () => import('./landing/register-panel/register-panel.module').then(n => RegisterPanelModule)},
   {path: 'login', loadChildren: () => import('./landing/login-panel/login-panel.module').then(n => LoginPanelModule)},
@@ -13,13 +13,13 @@ const routes: Routes = [
   {path: 'register', redirectTo: 'register', pathMatch: 'full'},
   {path: '', redirectTo: 'register', pathMatch: 'full'}
 ];
-*/
+/*
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   { path: 'register', component: RegisterPanelComponent },
   { path: 'login', component: LoginPanelComponent },
   { path: 'createuser', component: CreateUserComponent }
-];
+];*/
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]

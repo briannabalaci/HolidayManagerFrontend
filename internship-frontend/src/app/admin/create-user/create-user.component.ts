@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from 'src/app/service/admin.service';
 import { UserService } from 'src/app/service/user.service';
-import { User } from 'src/app/shared/data-type/user';
+import { User } from 'src/app/shared/data-type/User';
+
+
 
 @Component({
   selector: 'app-create-user',

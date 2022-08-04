@@ -3,8 +3,11 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
+import { EmployeedashComponent } from './employee/employeedash/employeedash.component';
+import {FormsModule} from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+//import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -31,20 +34,27 @@ import { AdminComponent } from './admin/admin/admin.component';
 @NgModule({
   declarations: [
     AppComponent,
+    EmployeedashComponent,
     LoginPanelComponent,
-    LoginFormComponent,
     RegisterPanelComponent,
     RegisterFormComponent,
+<<<<<<< HEAD
     CreateUserComponent,
     CreateUserFormComponent,
     DropDownComponent,
     UserListComponent,
     UserTableComponent,
     AdminComponent
+=======
+    LoginFormComponent
+
+>>>>>>> development
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
+    BrowserAnimationsModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatSelectModule,
