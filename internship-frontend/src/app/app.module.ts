@@ -16,12 +16,12 @@ import {MatSelectModule} from '@angular/material/select';
 import { LoginFormComponent } from './landing/login-panel/login-form/login-form.component';
 import { LoginPanelComponent } from './landing/login-panel/login-panel.component';
 import { LoginPanelModule } from './landing/login-panel/login-panel.module';
-import { CreateUserComponent } from './admin/create-user/create-user.component';
-import { CreateUserFormComponent } from './admin/create-user/create-user-form/create-user-form.component';
-import { DropDownComponent } from './admin/create-user/create-user-form/drop-down/drop-down.component';
-import { UserListComponent } from './admin/user-list/user-list.component';
-import { UserTableComponent } from './admin/user-list/user-table/user-table.component';
+
 import { HttpClientModule } from '@angular/common/http';
+import { AdminPageComponent } from './admin/admin-page/admin-page.component';
+import { CreateUserComponent } from './admin/admin-page/create-user/create-user.component';
+import { CreateUserFormComponent } from './admin/admin-page/create-user/create-user-form/create-user-form.component';
+
 
 
 
@@ -32,10 +32,9 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     LoginPanelComponent,
     LoginFormComponent,
-  CreateUserFormComponent,
-    DropDownComponent,
-    UserListComponent,
-    UserTableComponent,
+    AdminPageComponent,
+    CreateUserComponent,
+    CreateUserFormComponent
  
   ],
   imports: [
