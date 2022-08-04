@@ -43,8 +43,8 @@ export class CreateUserFormComponent implements OnInit {
   
   ];
   userTypes: UserType[] = [
-    {value: 'ADMIN', viewValue: 'Java'},
-    {value: 'TEAMLEAD', viewValue: 'ABAP'},
+    {value: 'ADMIN', viewValue: 'Admin'},
+    {value: 'TEAMLEAD', viewValue: 'Teamlead'},
     {value: 'EMPLOYEE', viewValue: 'Employee'},
   ];
 

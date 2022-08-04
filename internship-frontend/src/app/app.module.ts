@@ -21,6 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AdminPageComponent } from './admin/admin-page/admin-page.component';
 import { CreateUserComponent } from './admin/admin-page/create-user/create-user.component';
 import { CreateUserFormComponent } from './admin/admin-page/create-user/create-user-form/create-user-form.component';
+import { UserListComponent } from './admin/admin-page/user-list/user-list.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 
@@ -34,7 +36,8 @@ import { CreateUserFormComponent } from './admin/admin-page/create-user/create-u
     LoginFormComponent,
     AdminPageComponent,
     CreateUserComponent,
-    CreateUserFormComponent
+    CreateUserFormComponent,
+    UserListComponent
  
   ],
   imports: [
@@ -49,7 +52,8 @@ import { CreateUserFormComponent } from './admin/admin-page/create-user/create-u
     MatTableModule,
     MatIconModule,
     LoginPanelModule,
-    HttpClientModule
+    HttpClientModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]
