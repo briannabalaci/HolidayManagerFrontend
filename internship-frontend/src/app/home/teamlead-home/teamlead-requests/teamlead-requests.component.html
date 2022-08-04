@@ -1,0 +1,20 @@
+<section class="section-home-teamlead">
+  <mat-label class="section-label">Vacation days left: {{leftDays}}</mat-label>
+
+  <br>
+
+  <mat-form-field appearance="fill">
+    <mat-select class="section-dropdown-requests">
+      <mat-option *ngFor="let request of requestsTypes" [value]="request">
+        {{request}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <header>
+    <h2>Requests</h2>
+  </header>
+  <mat-list role="list">
+    <mat-list-item *ngFor = "let request of teamLeadRequests">{{request.startDate}} - {{request.endDate}} - {{request.type}}</mat-list-item>
+  </mat-list>
+</section>

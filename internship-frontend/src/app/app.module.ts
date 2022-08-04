@@ -19,6 +19,8 @@ import { LoginFormComponent } from './landing/login-panel/login-form/login-form.
 import { LoginPanelComponent } from './landing/login-panel/login-panel.component';
 import { LoginPanelModule } from './landing/login-panel/login-panel.module';
 import {HttpClientModule} from "@angular/common/http";
+import { TeamleadHomeComponent } from './home/teamlead-home/teamlead-home.component';
+import {TeamleadHomeModule} from "./home/teamlead-home/teamlead-home.module";
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import {HttpClientModule} from "@angular/common/http";
     LoginPanelComponent,
     LoginFormComponent,
     RegisterPanelComponent,
-    RegisterFormComponent
+    RegisterFormComponent,
+    TeamleadHomeComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +44,8 @@ import {HttpClientModule} from "@angular/common/http";
     MatIconModule,
     RegisterPanelModule,
     LoginPanelModule,
-    HttpClientModule
+    HttpClientModule,
+    TeamleadHomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
