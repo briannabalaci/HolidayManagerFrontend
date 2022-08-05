@@ -1,0 +1,14 @@
+<div>
+  <header>
+    <h1>Team management </h1>
+  </header>
+  <app-teams-table></app-teams-table>
+
+  <app-create-team (clickCreate)="createTeam($event)"  *ngIf = "showForm"> </app-create-team>
+
+  <button class="btn" mat-raised-button color="accent" (click)="toggleShowAddForm()">{{showForm? 'Cancel':'Create team'}}  </button>
+
+  <footer>
+
+  </footer>
+</div>

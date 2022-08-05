@@ -22,6 +22,10 @@ import { LoginFormComponent } from './landing/login-panel/login-form/login-form.
 import { LoginPanelComponent } from './landing/login-panel/login-panel.component';
 import { LoginPanelModule } from './landing/login-panel/login-panel.module';
 import {HttpClientModule} from "@angular/common/http";
+import { TeamManagementComponent } from './team-management/team-management.component';
+import { TeamsTableComponent } from './team-management/teams-table/teams-table.component';
+import { CreateTeamComponent } from './team-management/create-team/create-team.component';
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
   declarations: [
@@ -30,7 +34,10 @@ import {HttpClientModule} from "@angular/common/http";
     LoginPanelComponent,
     RegisterPanelComponent,
     RegisterFormComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    TeamManagementComponent,
+    TeamsTableComponent,
+    CreateTeamComponent
 
   ],
   imports: [
@@ -48,7 +55,8 @@ import {HttpClientModule} from "@angular/common/http";
     MatIconModule,
     RegisterPanelModule,
     LoginPanelModule,
-    HttpClientModule
+    HttpClientModule,
+    MatListModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
