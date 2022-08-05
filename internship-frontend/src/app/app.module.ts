@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -6,8 +6,6 @@ import { AppComponent } from './app.component';
 import { EmployeedashComponent } from './employee/employeedash/employeedash.component';
 import {FormsModule} from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-//import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -21,11 +19,12 @@ import { RegisterPanelComponent } from './landing/register-panel/register-panel.
 import { LoginFormComponent } from './landing/login-panel/login-form/login-form.component';
 import { LoginPanelComponent } from './landing/login-panel/login-panel.component';
 import { LoginPanelModule } from './landing/login-panel/login-panel.module';
-import {HttpClientModule} from "@angular/common/http";
 import { TeamleadHomeComponent } from './home/teamlead-home/teamlead-home.component';
 import {TeamleadHomeModule} from "./home/teamlead-home/teamlead-home.module";
+import {HttpClientModule, HTTP_INTERCEPTORS} from "@angular/common/http";
 import { LoginResetFormComponent } from './landing/login-panel/login-reset-form/login-reset-form.component';
 import {MatCardModule} from '@angular/material/card';
+import { AuthentificationInterceptor } from './service/authentification.interceptor';
 
 @NgModule({
   declarations: [
@@ -58,7 +57,7 @@ import {MatCardModule} from '@angular/material/card';
     TeamleadHomeModule,
     MatCardModule
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthentificationInterceptor, multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

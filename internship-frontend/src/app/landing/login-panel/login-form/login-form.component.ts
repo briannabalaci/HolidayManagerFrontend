@@ -35,9 +35,8 @@ export class LoginFormComponent implements OnInit {
     }
     console.log(loginData.email+" "+loginData.password)
     this.userService.login(loginData).subscribe(result => {
-
-
-      console.log(result)
+      console.log(result);
+     document.cookie = "Token = "+result['token']+"; path=/";
       if(result == null) this.showPasswordErrorMessage = true;
       else
       {
