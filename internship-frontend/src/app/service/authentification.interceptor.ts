@@ -16,9 +16,11 @@ export class AuthentificationInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     console.log("Headers are set");
-   const jwt = this.cookieService.get("Token");
-   const headers:any = { "app-auth": jwt};
-   request = request.clone( {setHeaders: headers});
+    if (!request.url.includes("/auth")) {
+      const jwt = this.cookieService.get("Token");
+      const headers: any = {"app-auth": jwt};
+      request = request.clone({setHeaders: headers});
+  }
    return next.handle(request);
   }
 }

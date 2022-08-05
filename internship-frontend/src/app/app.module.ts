@@ -29,6 +29,7 @@ import {HttpClientModule, HTTP_INTERCEPTORS} from "@angular/common/http";
 import { LoginResetFormComponent } from './landing/login-panel/login-reset-form/login-reset-form.component';
 import {MatCardModule} from '@angular/material/card';
 import { AuthentificationInterceptor } from './service/authentification.interceptor';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { AuthentificationInterceptor } from './service/authentification.intercep
     TeamsTableComponent,
     CreateTeamComponent,
     TeamleadHomeComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
