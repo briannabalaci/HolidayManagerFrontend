@@ -32,13 +32,14 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginPanelComponent,
-    LoginFormComponent,
+  
     AdminPageComponent,
     CreateUserComponent,
     CreateUserFormComponent,
-    UserListComponent
- 
+    UserListComponent,
+
+   
+
   ],
   imports: [
     BrowserModule,
@@ -53,7 +54,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatIconModule,
     LoginPanelModule,
     HttpClientModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

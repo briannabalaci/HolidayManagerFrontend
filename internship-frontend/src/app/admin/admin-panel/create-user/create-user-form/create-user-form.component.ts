@@ -1,6 +1,7 @@
 import { Component,EventEmitter, OnInit,Output, } from '@angular/core';
 import { FormBuilder,Validators } from '@angular/forms';
-import { User } from 'src/app/shared/data-type/user';
+import { User } from 'src/app/shared/data-type/User';
+
 interface Department {
   value: string;
   viewValue: string;
