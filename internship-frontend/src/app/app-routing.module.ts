@@ -4,6 +4,7 @@ import { LoginPanelModule } from './landing/login-panel/login-panel.module';
 import { RegisterPanelModule } from './landing/register-panel/register-panel.module';
 import { RegisterPanelComponent } from './landing/register-panel/register-panel.component';
 import { LoginPanelComponent } from './landing/login-panel/login-panel.component';
+import {TeamleadHomeComponent} from "./home/teamlead-home/teamlead-home.component";
 import { EmployeedashComponent } from './employee/employeedash/employeedash.component';
 /*
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   { path: 'register', component: RegisterPanelComponent },
   { path: 'login', component: LoginPanelComponent },
+  { path: 'teamlead-home', component: TeamleadHomeComponent},
   { path: 'employee', component: EmployeedashComponent }
 
 ];

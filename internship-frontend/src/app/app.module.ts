@@ -19,6 +19,8 @@ import { RegisterPanelComponent } from './landing/register-panel/register-panel.
 import { LoginFormComponent } from './landing/login-panel/login-form/login-form.component';
 import { LoginPanelComponent } from './landing/login-panel/login-panel.component';
 import { LoginPanelModule } from './landing/login-panel/login-panel.module';
+import { TeamleadHomeComponent } from './home/teamlead-home/teamlead-home.component';
+import {TeamleadHomeModule} from "./home/teamlead-home/teamlead-home.module";
 import {HttpClientModule, HTTP_INTERCEPTORS} from "@angular/common/http";
 import { LoginResetFormComponent } from './landing/login-panel/login-reset-form/login-reset-form.component';
 import {MatCardModule} from '@angular/material/card';
@@ -32,7 +34,9 @@ import { AuthentificationInterceptor } from './service/authentification.intercep
     LoginFormComponent,
     LoginResetFormComponent,
     RegisterPanelComponent,
-    RegisterFormComponent
+    RegisterFormComponent,
+    TeamleadHomeComponent,
+    LoginFormComponent
   ],
   imports: [
     BrowserModule,
@@ -50,6 +54,7 @@ import { AuthentificationInterceptor } from './service/authentification.intercep
     RegisterPanelModule,
     LoginPanelModule,
     HttpClientModule,
+    TeamleadHomeModule,
     MatCardModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthentificationInterceptor, multi:true}],
