@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, Validator, Validators} from "@angular/forms";
 import { ChangePasswordService, UserChangePasswordData } from 'src/app/service/change-password.service';
-import { AppRoutingModule } from 'src/app/app-routing.module';
-import { LoginFormComponent } from '../login-form/login-form.component';
 import {Router} from "@angular/router";
 
 @Component({
@@ -11,9 +9,9 @@ import {Router} from "@angular/router";
   styleUrls: ['./login-reset-form.component.scss']
 })
 export class LoginResetFormComponent implements OnInit {
-  hide1 = true;
-  hide2 = true;
-  hide3 = true;
+  hidePasswordOld = true;
+  hidePasswordNew1 = true;
+  hidePasswordNew2 = true;
   showFormLogin = false;
   showPasswordErrorString = false;
   showPasswordSameString = false;
@@ -32,11 +30,15 @@ export class LoginResetFormComponent implements OnInit {
   }
   changeUserPassword(){
     const valuesFromForm = this.loginChangePasswordFormGroup.value;
-    if(valuesFromForm.email === '' || valuesFromForm.oldPassword === '' || valuesFromForm.newPassword2 === '' || valuesFromForm.newPassword === '') {
+    const emailIsEmpty = (valuesFromForm.email === '');
+    const newPasswordsDoNotMatch = (valuesFromForm.newPassword2 != valuesFromForm.newPassword);
+    const newPasswordIsSame = (valuesFromForm.oldPassword == valuesFromForm.newPassword);
+    const anyPasswordIsEmpty = (valuesFromForm.oldPassword === '' || valuesFromForm.newPassword2 === '' || valuesFromForm.newPassword === '');
+    if(emailIsEmpty || anyPasswordIsEmpty) {
       this.showPasswordEmptyString = true;
-    } else if(valuesFromForm.newPassword2 != valuesFromForm.newPassword){
+    } else if(newPasswordsDoNotMatch){
       this.showPasswordErrorString = true;
-    } else if(valuesFromForm.oldPassword == valuesFromForm.newPassword){
+    } else if(newPasswordIsSame){
         this.showPasswordSameString = true;
     } else {
       const changeData:UserChangePasswordData = {

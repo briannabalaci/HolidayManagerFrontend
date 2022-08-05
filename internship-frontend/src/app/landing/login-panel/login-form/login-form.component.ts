@@ -13,7 +13,7 @@ import {Router} from "@angular/router";
 })
 
 export class LoginFormComponent implements OnInit {
-  hide = true;
+  hidePassword = true;
   showPasswordErrorMessage = false;
   loginUserDataFormGroup = this.formBuilder.group({
     email:["",Validators.required],
