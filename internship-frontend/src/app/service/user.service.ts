@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {UserLoginData} from "../shared/data-type/UserLoginData";
 import {Department, Role, User, UserType} from "../shared/data-type/User";
@@ -10,7 +10,6 @@ const GET_USERS_FROM_TEAM = "http://localhost:8090/team/users"
 const GET_ALL_USERS = "http://localhost:8090/user/get-all"
 const FILTER_USERS_BY_NAME = "http://localhost:8090/user/filter-name"
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -18,8 +17,8 @@ export class UserService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public login(loginData: UserLoginData): Observable<User>{
-    return this.httpClient.post<User>(LOGIN,loginData);
+  public login(loginData: UserLoginData): Observable<any>{
+    return this.httpClient.post<any>(LOGIN,loginData);
   }
 
   public getAllUsersByTeam(teamID: number): Observable<User[]> {
