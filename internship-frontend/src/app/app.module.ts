@@ -24,12 +24,16 @@ import { LoginPanelModule } from './landing/login-panel/login-panel.module';
 import {HttpClientModule} from "@angular/common/http";
 import { TeamleadHomeComponent } from './home/teamlead-home/teamlead-home.component';
 import {TeamleadHomeModule} from "./home/teamlead-home/teamlead-home.module";
+import { LoginResetFormComponent } from './landing/login-panel/login-reset-form/login-reset-form.component';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
     AppComponent,
     EmployeedashComponent,
     LoginPanelComponent,
+    LoginFormComponent,
+    LoginResetFormComponent,
     RegisterPanelComponent,
     RegisterFormComponent,
     TeamleadHomeComponent,
@@ -51,7 +55,8 @@ import {TeamleadHomeModule} from "./home/teamlead-home/teamlead-home.module";
     RegisterPanelModule,
     LoginPanelModule,
     HttpClientModule,
-    TeamleadHomeModule
+    TeamleadHomeModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

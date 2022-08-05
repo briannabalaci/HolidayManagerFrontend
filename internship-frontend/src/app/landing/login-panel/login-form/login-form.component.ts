@@ -5,13 +5,16 @@ import {UserLoginData} from "../../../shared/data-type/UserLoginData";
 import {User, UserType} from "../../../shared/data-type/User";
 import {Router} from "@angular/router";
 
+
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss']
 })
+
 export class LoginFormComponent implements OnInit {
-  hide = true;
+  hidePassword = true;
+  showPasswordErrorMessage = false;
   loginUserDataFormGroup = this.formBuilder.group({
     email:["",Validators.required],
     password:["",Validators.required],
@@ -20,10 +23,12 @@ export class LoginFormComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  resetWarnings(){
+    this.showPasswordErrorMessage = false;
+  }
   loginUser(){
     const valuesFromForm = this.loginUserDataFormGroup.value;
-
+  
     const loginData:UserLoginData = {
       email:valuesFromForm.email!,
       password:valuesFromForm.password!
@@ -33,7 +38,7 @@ export class LoginFormComponent implements OnInit {
 
 
       console.log(result)
-      if(result == null) alert("Failed to login! Wrong credentials!")
+      if(result == null) this.showPasswordErrorMessage = true;
       else
       {
         // @ts-ignore
@@ -53,4 +58,5 @@ export class LoginFormComponent implements OnInit {
       }
     })
   }
+
 }
