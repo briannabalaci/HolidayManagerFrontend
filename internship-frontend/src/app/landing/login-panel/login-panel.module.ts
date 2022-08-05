@@ -7,6 +7,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatTableModule} from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
+
 import { LoginPanelComponent } from './login-panel.component';
 import { Routes } from '@angular/router';
 const routes: Routes = [
@@ -16,7 +17,11 @@ const routes: Routes = [
 ]
 @NgModule({
   declarations: [
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> development
   ],
   imports: [
     MatButtonModule,
@@ -25,7 +30,7 @@ const routes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
-    MatIconModule
+    MatIconModule,
   ],
   providers: [],
 })

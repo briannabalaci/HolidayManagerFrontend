@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login-panel.component.scss']
 })
 export class LoginPanelComponent implements OnInit {
-
+  showFormLogin? = true;
   constructor() { }
 
   ngOnInit(): void {

@@ -1,19 +1,19 @@
 <div>
 <form id="login-form" [formGroup]="loginUserDataFormGroup" (ngSubmit) = "loginUser()">
-      <mat-form-field appearance="fill">
-        <mat-label>Email</mat-label>
-        <input matInput placeholder="myemail@gmail.com" formControlName="email">
+  <mat-card class="password-hint" *ngIf="showPasswordErrorMessage">The email or the password is incorrect.</mat-card>
+     <mat-form-field appearance="outline" color="accent">
+        <mat-icon matPrefix>alternate_email</mat-icon>
+        <input matInput placeholder=" Email" formControlName="email" (click)="resetWarnings()">
       </mat-form-field><br>
-      <mat-form-field appearance="fill">
-        <mat-label>Password</mat-label>
-        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      <mat-form-field appearance="outline" color="accent">
+        <mat-icon matPrefix>lock</mat-icon>
+        <input matInput placeholder=" Password" [type]="hidePassword ? 'password' : 'text'" formControlName="password" (click)="resetWarnings()">
+        <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword" [attr.aria-label]="'hidePassword password'" [attr.aria-pressed]="hidePassword">
+          <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
       </mat-form-field><br>
       <br>
-<!--      <a href="/register">Don't you have an account? Register.</a><br>-->
-      <button mat-raised-button color="accent" type="submit" id="form-button">Login</button>
+      <button mat-raised-button type="submit" id="form-button" color="accent">Login</button>
 </form>
 </div>
 
