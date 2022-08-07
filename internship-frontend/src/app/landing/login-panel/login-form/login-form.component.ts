@@ -4,9 +4,13 @@ import {FormBuilder, Validator, Validators} from "@angular/forms";
 import {UserLoginData} from "../../../shared/data-type/UserLoginData";
 
 import {Router} from "@angular/router";
+
 import { UserType } from 'src/app/shared/data-type/User';
 
 
+
+
+import {parseJwt} from "../../../utils/JWTParser";
 
 
 
@@ -32,7 +36,7 @@ export class LoginFormComponent implements OnInit {
   }
   loginUser(){
     const valuesFromForm = this.loginUserDataFormGroup.value;
-  
+
     const loginData:UserLoginData = {
       email:valuesFromForm.email!,
       password:valuesFromForm.password!
@@ -45,7 +49,7 @@ export class LoginFormComponent implements OnInit {
       else
       {
         // @ts-ignore
-        const type:UserType = result["type"]
+        const type:UserType = parseJwt(result.token).type;
         if(type == UserType.ADMIN){
           alert("Este admin")
           this.router.navigate(['/admin'])

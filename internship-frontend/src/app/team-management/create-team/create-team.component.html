@@ -1,0 +1,37 @@
+<form [formGroup]="teamFormGroup" (ngSubmit)="createTeam()" >
+  <mat-form-field appearance="legacy">
+    <mat-label> Name</mat-label>
+    <input matInput placeholder="Name of the team" formControlName="name">
+    <mat-hint>Type the name of the team</mat-hint>
+  </mat-form-field>
+
+
+  <div>
+    <mat-form-field class="search-field" appearance="legacy">
+      <mat-label>Search User</mat-label>
+      <input matInput (keyup)="searchUser()"
+             type="text"
+             autocomplete="off"
+             placeholder="Search user"
+             [(ngModel)]="typedName"
+             name="typedName"/>
+    </mat-form-field>
+
+    <nav>
+      <mat-action-list id="list-users" class="list" *ngIf="foundUsers.length!=0">
+        <button mat-list-item id="{{user.id}}" *ngFor="let user of foundUsers;index as i;">{{user.forname + ' ' + user.surname}}
+<!--        <button mat-list-item id="{{user.id}}" class="item-list"  (click)="clickOnUser(user.id)" *ngFor="let user of foundUsers;index as i;">{{user.first_name + ' ' + user.last_name}}-->
+          <mat-icon matListIcon>person</mat-icon>
+        </button>
+      </mat-action-list>
+    </nav>
+
+    <ul *ngIf="foundUsers.length==0">
+      <li> No results</li>
+    </ul>
+
+  </div>
+
+
+  <button mat-raised-button color="accent" type="submit"> ADD </button>
+</form>

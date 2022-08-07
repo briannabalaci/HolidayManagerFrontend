@@ -1,11 +1,9 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { EmployeedashComponent } from './employee/employeedash/employeedash.component';
-import {FormsModule} from "@angular/forms";
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
@@ -16,9 +14,8 @@ import {MatTableModule} from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
 
-import { LoginFormComponent } from './landing/login-panel/login-form/login-form.component';
-import { LoginPanelComponent } from './landing/login-panel/login-panel.component';
 import { LoginPanelModule } from './landing/login-panel/login-panel.module';
+
 
 
 
@@ -33,24 +30,49 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 
-import { TeamleadHomeComponent } from './home/teamlead-home/teamlead-home.component';
-import {TeamleadHomeModule} from "./home/teamlead-home/teamlead-home.module";
+
+
 import {HttpClientModule, HTTP_INTERCEPTORS} from "@angular/common/http";
-import { LoginResetFormComponent } from './landing/login-panel/login-reset-form/login-reset-form.component';
-import {MatCardModule} from '@angular/material/card';
 import { AuthentificationInterceptor } from './service/authentification.interceptor';
+import { AdminComponent } from './admin/admin.component';
+import { EmployeedashComponent } from './employee/employeedash/employeedash.component';
+import { TeamleadHomeComponent } from './home/teamlead-home/teamlead-home.component';
+import { LoginFormComponent } from './landing/login-panel/login-form/login-form.component';
+import { LoginPanelComponent } from './landing/login-panel/login-panel.component';
+import { LoginResetFormComponent } from './landing/login-panel/login-reset-form/login-reset-form.component';
+import { RegisterPanelComponent } from './landing/register-panel/register-panel.component';
+import { CreateTeamComponent } from './team-management/create-team/create-team.component';
+import { TeamManagementComponent } from './team-management/team-management.component';
+import { TeamsTableComponent } from './team-management/teams-table/teams-table.component';
+import { MatListModule } from '@angular/material/list';
+import { TeamleadHomeModule } from './home/teamlead-home/teamlead-home.module';
+import { MatCardModule } from '@angular/material/card';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+
   
     AdminPageComponent,
     CreateUserComponent,
     CreateUserFormComponent,
     UserListComponent,
 
-   
+
+    EmployeedashComponent,
+    LoginPanelComponent,
+    LoginFormComponent,
+    LoginResetFormComponent,
+    RegisterPanelComponent,
+
+    LoginFormComponent,
+    TeamManagementComponent,
+    TeamsTableComponent,
+    CreateTeamComponent,
+    TeamleadHomeComponent,
+    LoginFormComponent,
+    AdminComponent
 
   ],
   imports: [
@@ -66,8 +88,14 @@ import { AuthentificationInterceptor } from './service/authentification.intercep
     MatIconModule,
     LoginPanelModule,
     HttpClientModule,
+
     MatPaginatorModule,
     
+
+    MatListModule,
+    TeamleadHomeModule,
+    MatCardModule
+
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthentificationInterceptor, multi:true}],
   bootstrap: [AppComponent]
