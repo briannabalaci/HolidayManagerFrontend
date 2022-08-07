@@ -2,16 +2,16 @@ import { Component,EventEmitter, OnInit,Output, } from '@angular/core';
 import { FormBuilder,Validators } from '@angular/forms';
 import { User } from 'src/app/shared/data-type/User';
 
-interface Department {
+interface DepartmentInt {
   value: string;
   viewValue: string;
 }
-interface Role {
+interface RoleInt {
   value: string;
   viewValue: string;
 }
 
-interface UserType {
+interface UserTypeInt {
   value: string;
   viewValue: string;
 }
@@ -32,17 +32,17 @@ export class CreateUserFormComponent implements OnInit {
 
 
 
-  departments: Department[] = [
+  departments: DepartmentInt[] = [
     {value: 'JAVA', viewValue: 'Java'},
     {value: 'ABAP', viewValue: 'ABAP'},
     {value: 'BUSINESS_INTELLIGENCE', viewValue: 'Business_Intelligence'},
   ];
-  roles: Role[] = [
+  roles: RoleInt[] = [
     {value: 'TESTER', viewValue: 'Tester'},
     {value: 'DEVELOPER', viewValue: 'Developer'},
   
   ];
-  userTypes: UserType[] = [
+  userTypes: UserTypeInt[] = [
     {value: 'ADMIN', viewValue: 'Admin'},
     {value: 'TEAMLEAD', viewValue: 'Teamlead'},
     {value: 'EMPLOYEE', viewValue: 'Employee'},
@@ -63,7 +63,6 @@ changeType(value: string) {
     
     email:['',Validators.required],
     password: ['', Validators.required],
-    verifPassword:['',Validators.required],
     forName:['',Validators.required],
     surName:['',Validators.required],
     

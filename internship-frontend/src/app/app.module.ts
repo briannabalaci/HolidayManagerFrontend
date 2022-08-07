@@ -35,13 +35,19 @@ import { AuthentificationInterceptor } from './service/authentification.intercep
 import { MatListModule } from '@angular/material/list';
 import { TeamleadHomeModule } from './home/teamlead-home/teamlead-home.module';
 import { MatCardModule } from '@angular/material/card';
+import { AdminModule } from './admin/admin.module';
+import { TeamManagementComponent } from './team-management/team-management.component';
+import { TeamsTableComponent } from './team-management/teams-table/teams-table.component';
+import { CreateTeamComponent } from './team-management/create-team/create-team.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
 
-  
+    TeamManagementComponent,
+    TeamsTableComponent,
+    CreateTeamComponent
 
     
 
@@ -58,16 +64,14 @@ import { MatCardModule } from '@angular/material/card';
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
-    MatIconModule,
-    LoginPanelModule,
+    MatIconModule, 
     HttpClientModule,
-
     MatPaginatorModule,
-    
-    LoginPanelModule,
+  LoginPanelModule,
     MatListModule,
     TeamleadHomeModule,
-    MatCardModule
+    MatCardModule,
+    AdminModule
 
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthentificationInterceptor, multi:true}],
