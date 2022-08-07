@@ -5,12 +5,14 @@ import {UserLoginData} from "../../../shared/data-type/UserLoginData";
 
 import {Router} from "@angular/router";
 
-import { UserType } from 'src/app/shared/data-type/User';
 
 
 
 
 import {parseJwt} from "../../../utils/JWTParser";
+import { UserType } from 'src/app/shared/data-type/User';
+
+
 
 
 
