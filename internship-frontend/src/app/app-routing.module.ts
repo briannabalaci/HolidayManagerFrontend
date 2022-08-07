@@ -4,7 +4,7 @@ import { LoginPanelModule } from './landing/login-panel/login-panel.module';
 
 import { LoginPanelComponent } from './landing/login-panel/login-panel.component';
 
-import { AdminPageComponent } from './admin/admin-page/admin-page.component';
+
 
 
 
@@ -32,7 +32,7 @@ const routes: Routes = [
   { path: 'login', component: LoginPanelComponent },
 
   { path: 'login', component: LoginPanelComponent },
-  { path: 'admin', component: AdminPageComponent }
+
 
   { path: 'employee', component: EmployeedashComponent, canActivate:[AuthguardService] },
   { path: 'team-management', component: TeamManagementComponent, canActivate:[AuthguardService] },
