@@ -64,7 +64,8 @@ import { CreateTeamComponent } from './team-management/create-team/create-team.c
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
-    MatIconModule, 
+    MatIconModule,
+
     HttpClientModule,
     MatPaginatorModule,
   LoginPanelModule,
