@@ -10,6 +10,9 @@ import {TeamManagementComponent} from "./team-management/team-management.compone
 import {AuthguardService} from "./authguards/authguard.service";
 import {AdminComponent} from "./admin/admin.component";
 import {AuthguardAdminService} from "./authguards/authguard-admin.service";
+import { AuthguardTeamleadService } from './authguards/authguard-teamlead.service';
+import { AuthguardEmployeeService } from './authguards/authguard-employee.service';
+import { AuthguardLoginService } from './authguards/authguard-login.service';
 /*
 const routes: Routes = [
   {path: 'register', loadChildren: () => import('./landing/register-panel/register-panel.module').then(n => RegisterPanelModule)},
@@ -21,14 +24,13 @@ const routes: Routes = [
 */
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
-  { path: 'register', component: RegisterPanelComponent },
-  { path: 'login', component: LoginPanelComponent },
-  { path: 'employee', component: EmployeedashComponent, canActivate:[AuthguardService] },
-  { path: 'team-management', component: TeamManagementComponent, canActivate:[AuthguardService] },
-  { path: 'teamlead-home', component: TeamleadHomeComponent, canActivate:[AuthguardService]},
-  { path: 'employee', component: EmployeedashComponent, canActivate:[AuthguardService] },
+  // Add AuthguardLoginService when we have a logout function.
+  { path: 'login', component: LoginPanelComponent , canActivate: [AuthguardLoginService] },
+  { path: 'employee', component: EmployeedashComponent, canActivate:[AuthguardService, AuthguardEmployeeService] },
+  { path: 'team-management', component: TeamManagementComponent, canActivate:[AuthguardService, AuthguardAdminService] },
+  { path: 'teamlead', component: TeamleadHomeComponent, canActivate:[AuthguardService, AuthguardTeamleadService]},
   { path: 'admin', component: AdminComponent, canActivate:[AuthguardService,AuthguardAdminService] },
-
+  { path: "**",redirectTo:"login"}
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

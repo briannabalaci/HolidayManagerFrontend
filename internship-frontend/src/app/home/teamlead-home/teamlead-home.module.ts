@@ -16,7 +16,7 @@ import { TeamsRequestsComponent } from './teams-requests/teams-requests.componen
 
 const routes: Routes = [
   {
-    path: 'teamlead-dashboard', component: TeamleadHomeComponent
+    path: 'teamlead', component: TeamleadHomeComponent
   }
 ]
 

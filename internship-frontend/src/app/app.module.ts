@@ -30,6 +30,7 @@ import { LoginResetFormComponent } from './landing/login-panel/login-reset-form/
 import {MatCardModule} from '@angular/material/card';
 import { AuthentificationInterceptor } from './service/authentification.interceptor';
 import { AdminComponent } from './admin/admin.component';
+import { NavBarComponent } from './landing/nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { AdminComponent } from './admin/admin.component';
     CreateTeamComponent,
     TeamleadHomeComponent,
     LoginFormComponent,
-    AdminComponent
+    AdminComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,
