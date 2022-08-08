@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService} from "../../../service/user.service";
 import {FormBuilder, Validator, Validators} from "@angular/forms";
-import {UserLoginData} from "../../../shared/data-type/UserLoginData";
-import {User, UserType} from "../../../shared/data-type/User";
 import {Router} from "@angular/router";
+import { UserLoginData } from 'src/app/shared/data-type/UserLoginData';
+import { UserType } from 'src/app/shared/data-type/User';
 
 @Component({
   selector: 'app-login-form',

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {UserLoginData} from "../shared/data-type/UserLoginData";
-import {User} from "../shared/data-type/User";
+import { User } from '../shared/data-type/User';
+import { UserLoginData } from '../shared/data-type/UserLoginData';
+
 
 const LOGIN = "http://localhost:8090/user/login"
 
