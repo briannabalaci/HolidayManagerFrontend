@@ -33,6 +33,7 @@ import { AdminComponent } from './admin/admin.component';
 import { UserSearchBarComponent } from './team-management/create-team/user-search-bar/user-search-bar.component';
 import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
 import { TeamleadPickerComponent } from './team-management/create-team/teamlead-picker/teamlead-picker.component';
+import { NavBarComponent } from './landing/nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,7 @@ import { TeamleadPickerComponent } from './team-management/create-team/teamlead-
     AdminComponent,
     UserSearchBarComponent,
     TeamleadPickerComponent,
-
+    NavBarComponent
   ],
   imports: [
     BrowserModule,
