@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
-import { User } from '../shared/data-type/User';
-import { UserLoginData } from '../shared/data-type/UserLoginData';
-
-
-const LOGIN = "http://localhost:8090/user/login"
-import {Department, Role,  UserType} from "../shared/data-type/User";
+import {UserLoginData} from "../shared/data-type/UserLoginData";
+import {Department, Role, User, UserType} from "../shared/data-type/User";
 import {Team} from "../shared/data-type/Team";
 
+const LOGIN = "http://localhost:8090/login/auth"
 const GET_USERS_FROM_TEAM = "http://localhost:8090/team/users"
 const GET_ALL_USERS = "http://localhost:8090/user/get-all"
 const FILTER_USERS_BY_NAME = "http://localhost:8090/user/filter-name"
