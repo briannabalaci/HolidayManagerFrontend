@@ -6,6 +6,10 @@ import { RegisterPanelComponent } from './landing/register-panel/register-panel.
 import { LoginPanelComponent } from './landing/login-panel/login-panel.component';
 import {TeamleadHomeComponent} from "./home/teamlead-home/teamlead-home.component";
 import { EmployeedashComponent } from './employee/employeedash/employeedash.component';
+import {TeamManagementComponent} from "./team-management/team-management.component";
+import {AuthguardService} from "./authguards/authguard.service";
+import {AdminComponent} from "./admin/admin.component";
+import {AuthguardAdminService} from "./authguards/authguard-admin.service";
 /*
 const routes: Routes = [
   {path: 'register', loadChildren: () => import('./landing/register-panel/register-panel.module').then(n => RegisterPanelModule)},
@@ -19,8 +23,11 @@ const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   { path: 'register', component: RegisterPanelComponent },
   { path: 'login', component: LoginPanelComponent },
-  { path: 'teamlead-home', component: TeamleadHomeComponent},
-  { path: 'employee', component: EmployeedashComponent }
+  { path: 'employee', component: EmployeedashComponent, canActivate:[AuthguardService] },
+  { path: 'team-management', component: TeamManagementComponent, canActivate:[AuthguardService] },
+  { path: 'teamlead-home', component: TeamleadHomeComponent, canActivate:[AuthguardService]},
+  { path: 'employee', component: EmployeedashComponent, canActivate:[AuthguardService] },
+  { path: 'admin', component: AdminComponent, canActivate:[AuthguardService,AuthguardAdminService] },
 
 ];
 @NgModule({
