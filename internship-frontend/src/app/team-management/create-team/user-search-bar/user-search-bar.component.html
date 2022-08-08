@@ -1,0 +1,29 @@
+<div>
+  <mat-form-field class="search-field" appearance="legacy">
+    <mat-label>Search User</mat-label>
+    <input matInput (keyup)="searchUser()"
+           type="text"
+           autocomplete="off"
+           placeholder="Search user"
+           formControlName = "typedName"
+           name="typedName"/>
+    <!--      <mat-icon matSuffix>search</mat-icon>-->
+    <mat-hint>Type the name of a user to search </mat-hint>
+
+  </mat-form-field>
+
+
+
+  <nav>
+    <mat-action-list id="list-users" class="list" *ngIf="foundUsers.length!=0">
+      <button mat-list-item (click)="addToTeam(user)" id="{{user.id}}" *ngFor="let user of foundUsers;index as i;">{{user.forname + ' ' + user.surname}}
+        <!--        <button mat-list-item id="{{user.id}}" class="item-list"  (click)="clickOnUser(user.id)" *ngFor="let user of foundUsers;index as i;">{{user.first_name + ' ' + user.last_name}}-->
+        <mat-icon matListIcon>person</mat-icon>
+      </button>
+    </mat-action-list>
+  </nav>
+
+  <ul *ngIf="foundUsers.length==0 && this.typed==true">
+    <li> No results</li>
+  </ul>
+</div>

@@ -30,6 +30,9 @@ import { LoginResetFormComponent } from './landing/login-panel/login-reset-form/
 import {MatCardModule} from '@angular/material/card';
 import { AuthentificationInterceptor } from './service/authentification.interceptor';
 import { AdminComponent } from './admin/admin.component';
+import { UserSearchBarComponent } from './team-management/create-team/user-search-bar/user-search-bar.component';
+import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
+import { TeamleadPickerComponent } from './team-management/create-team/teamlead-picker/teamlead-picker.component';
 
 @NgModule({
   declarations: [
@@ -46,13 +49,15 @@ import { AdminComponent } from './admin/admin.component';
     CreateTeamComponent,
     TeamleadHomeComponent,
     LoginFormComponent,
-    AdminComponent
+    AdminComponent,
+    UserSearchBarComponent,
+    TeamleadPickerComponent,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    BrowserAnimationsModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatSelectModule,
@@ -66,7 +71,8 @@ import { AdminComponent } from './admin/admin.component';
     HttpClientModule,
     MatListModule,
     TeamleadHomeModule,
-    MatCardModule
+    MatCardModule,
+    NgxMatSelectSearchModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthentificationInterceptor, multi:true}],
   bootstrap: [AppComponent]
