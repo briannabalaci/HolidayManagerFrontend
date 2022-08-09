@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {UserLoginData} from "../shared/data-type/UserLoginData";
-import {Department, Role, User, UserType} from "../shared/data-type/User";
-import {Team} from "../shared/data-type/Team";
+import {User} from "../shared/data-type/User";
 
 const LOGIN = "http://localhost:8090/login/auth"
 const GET_USERS_FROM_TEAM = "http://localhost:8090/team/users"

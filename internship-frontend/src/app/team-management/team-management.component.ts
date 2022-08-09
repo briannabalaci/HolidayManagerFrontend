@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Team} from "../shared/data-type/Team";
 import {TeamService} from "../service/team.service";
-import {UserService} from "../service/user.service";
 
 
 

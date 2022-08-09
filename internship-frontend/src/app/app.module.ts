@@ -1,6 +1,5 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EmployeedashComponent } from './employee/employeedash/employeedash.component';
@@ -13,9 +12,6 @@ import {MatInputModule} from '@angular/material/input';
 import {MatTableModule} from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
-import { RegisterFormComponent } from './landing/register-panel/register-form/register-form.component';
-import { RegisterPanelModule } from './landing/register-panel/register-panel.module';
-import { RegisterPanelComponent } from './landing/register-panel/register-panel.component';
 import { LoginFormComponent } from './landing/login-panel/login-form/login-form.component';
 import { LoginPanelComponent } from './landing/login-panel/login-panel.component';
 import { LoginPanelModule } from './landing/login-panel/login-panel.module';
@@ -29,27 +25,41 @@ import {HttpClientModule, HTTP_INTERCEPTORS} from "@angular/common/http";
 import { LoginResetFormComponent } from './landing/login-panel/login-reset-form/login-reset-form.component';
 import {MatCardModule} from '@angular/material/card';
 import { AuthentificationInterceptor } from './service/authentification.interceptor';
+import { CreateUserFormComponent } from './admin/admin-page/create-user/create-user-form/create-user-form.component';
+import { CreateUserComponent } from './admin/admin-page/create-user/create-user.component';
+import { EditUserFormComponent } from './admin/admin-page/edit-user/edit-user-form/edit-user-form.component';
+import { EditUserComponent } from './admin/admin-page/edit-user/edit-user.component';
+import { UserListComponent } from './admin/admin-page/user-list/user-list.component';
 import { AdminComponent } from './admin/admin.component';
 import { UserSearchBarComponent } from './team-management/create-team/user-search-bar/user-search-bar.component';
 import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
 import { TeamleadPickerComponent } from './team-management/create-team/teamlead-picker/teamlead-picker.component';
+import { AdminModule } from './admin/admin.module';
+import { AdminPageComponent } from './admin/admin-page/admin-page.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { NavBarComponent } from './landing/nav-bar/nav-bar.component';
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 @NgModule({
   declarations: [
     AppComponent,
     EmployeedashComponent,
     LoginPanelComponent,
-    LoginFormComponent,
+
     LoginResetFormComponent,
-    RegisterPanelComponent,
-    RegisterFormComponent,
-    LoginFormComponent,
+
+
     TeamManagementComponent,
     TeamsTableComponent,
     CreateTeamComponent,
     TeamleadHomeComponent,
     LoginFormComponent,
+    AdminPageComponent,
+    UserListComponent,
+    EditUserComponent,
+    EditUserFormComponent,
+    CreateUserComponent,
+    CreateUserFormComponent,
     AdminComponent,
     UserSearchBarComponent,
     TeamleadPickerComponent,
@@ -67,13 +77,16 @@ import { NavBarComponent } from './landing/nav-bar/nav-bar.component';
     MatInputModule,
     MatTableModule,
     MatIconModule,
-    RegisterPanelModule,
+    AdminModule,
+    MatPaginatorModule,
     LoginPanelModule,
     HttpClientModule,
     MatListModule,
     TeamleadHomeModule,
     MatCardModule,
-    NgxMatSelectSearchModule
+    NgxMatSelectSearchModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthentificationInterceptor, multi:true}],
   bootstrap: [AppComponent]
