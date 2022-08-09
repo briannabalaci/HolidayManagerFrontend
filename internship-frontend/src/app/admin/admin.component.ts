@@ -12,5 +12,6 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  getRecord() { this.router.navigate(['/user-panel']);}
+  getRecord() { this.router.navigate(['/user-panel']); }
+  getRecord2() { this.router.navigate(['/team-management']);}
 }

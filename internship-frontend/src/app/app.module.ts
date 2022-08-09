@@ -32,14 +32,13 @@ import { EditUserFormComponent } from './admin/admin-page/edit-user/edit-user-fo
 import { EditUserComponent } from './admin/admin-page/edit-user/edit-user.component';
 import { UserListComponent } from './admin/admin-page/user-list/user-list.component';
 import { AdminComponent } from './admin/admin.component';
-<<<<<<< HEAD
+
 import { AdminModule } from './admin/admin.module';
 import { AdminPageComponent } from './admin/admin-page/admin-page.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
-=======
 import { NavBarComponent } from './landing/nav-bar/nav-bar.component';
->>>>>>> development
+
 
 @NgModule({
   declarations: [
@@ -55,7 +54,7 @@ import { NavBarComponent } from './landing/nav-bar/nav-bar.component';
     CreateTeamComponent,
     TeamleadHomeComponent,
     LoginFormComponent,
-<<<<<<< HEAD
+
 
     AdminPageComponent,
     UserListComponent,
@@ -63,11 +62,9 @@ import { NavBarComponent } from './landing/nav-bar/nav-bar.component';
     EditUserFormComponent,
     CreateUserComponent,
     CreateUserFormComponent,
-    AdminComponent
-=======
     AdminComponent,
-    NavBarComponent
->>>>>>> development
+ NavBarComponent
+
   ],
   imports: [
     BrowserModule,
