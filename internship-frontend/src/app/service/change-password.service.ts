@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-const CHANGE_PASSWORD = "http://localhost:8090/user/change-password"
+const CHANGE_PASSWORD = "http://localhost:8090/login/change-password"
 
 export class UserChangePasswordData{
   email?:string;

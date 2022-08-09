@@ -16,8 +16,14 @@ import {TeamManagementComponent} from "./team-management/team-management.compone
 import {AuthguardService} from "./authguards/authguard.service";
 import {AdminComponent} from "./admin/admin.component";
 import {AuthguardAdminService} from "./authguards/authguard-admin.service";
+
 import { EditUserComponent } from './admin/admin-page/edit-user/edit-user.component';
 import { AdminPageComponent } from './admin/admin-page/admin-page.component';
+
+import { AuthguardTeamleadService } from './authguards/authguard-teamlead.service';
+import { AuthguardEmployeeService } from './authguards/authguard-employee.service';
+import { AuthguardLoginService } from './authguards/authguard-login.service';
+
 /*
 const routes: Routes = [
   {path: 'register', loadChildren: () => import('./landing/register-panel/register-panel.module').then(n => RegisterPanelModule)},
@@ -30,6 +36,7 @@ const routes: Routes = [
 
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
+
  
   { path: 'login', component: LoginPanelComponent },
 
@@ -43,6 +50,15 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent, canActivate:[AuthguardService,AuthguardAdminService] },
   { path: 'update-user/:param', component: EditUserComponent, canActivate: [AuthguardService, AuthguardAdminService] },
   { path: 'user-panel', component: AdminPageComponent, canActivate:[AuthguardService,AuthguardAdminService] },
+
+  // Add AuthguardLoginService when we have a logout function.
+  { path: 'login', component: LoginPanelComponent , canActivate: [AuthguardLoginService] },
+  { path: 'employee', component: EmployeedashComponent, canActivate:[AuthguardService, AuthguardEmployeeService] },
+  { path: 'team-management', component: TeamManagementComponent, canActivate:[AuthguardService, AuthguardAdminService] },
+  { path: 'teamlead', component: TeamleadHomeComponent, canActivate:[AuthguardService, AuthguardTeamleadService]},
+  { path: 'admin', component: AdminComponent, canActivate:[AuthguardService,AuthguardAdminService] },
+  { path: "**",redirectTo:"login"}
+
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

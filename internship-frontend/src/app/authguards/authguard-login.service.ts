@@ -8,23 +8,23 @@ import {UserType} from "../shared/data-type/User";
 @Injectable({
   providedIn: 'root'
 })
-export class AuthguardAdminService implements CanActivate{
-
+export class AuthguardLoginService  implements CanActivate {
   constructor(private cookieService: CookieService, private router:Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const token = this.cookieService.get("Token")
-    const role = parseJwt(token).type;
-    if(role === UserType.ADMIN){
-      console.log("ADMIN")
+    if(!token) {
       return true;
+    } else {
+      const role = parseJwt(token).type;
+      if (role == UserType.ADMIN) {
+        this.router.navigate(["../admin"]);
+      }  else if (role == UserType.EMPLOYEE) {
+        this.router.navigate(["../employee"]);
+      }  else if (role == UserType.TEAMLEAD) {
+        this.router.navigate(["../teamlead"]);
+      }            
     }
-    else if(role === UserType.EMPLOYEE){
-      this.router.navigate(["../employee"]);
-    } else if(role === UserType.TEAMLEAD){
-      this.router.navigate(["../teamlead"]);
-    }
-
     return false;
   }
 }

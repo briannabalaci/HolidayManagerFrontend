@@ -32,10 +32,14 @@ import { EditUserFormComponent } from './admin/admin-page/edit-user/edit-user-fo
 import { EditUserComponent } from './admin/admin-page/edit-user/edit-user.component';
 import { UserListComponent } from './admin/admin-page/user-list/user-list.component';
 import { AdminComponent } from './admin/admin.component';
+<<<<<<< HEAD
 import { AdminModule } from './admin/admin.module';
 import { AdminPageComponent } from './admin/admin-page/admin-page.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
+=======
+import { NavBarComponent } from './landing/nav-bar/nav-bar.component';
+>>>>>>> development
 
 @NgModule({
   declarations: [
@@ -51,6 +55,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     CreateTeamComponent,
     TeamleadHomeComponent,
     LoginFormComponent,
+<<<<<<< HEAD
 
     AdminPageComponent,
     UserListComponent,
@@ -59,6 +64,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     CreateUserComponent,
     CreateUserFormComponent,
     AdminComponent
+=======
+    AdminComponent,
+    NavBarComponent
+>>>>>>> development
   ],
   imports: [
     BrowserModule,
