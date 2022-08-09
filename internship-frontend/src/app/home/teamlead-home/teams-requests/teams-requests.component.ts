@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {Holiday} from "../../../employee/employeedash/employeedash.component";
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatSort, Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 
 export class RequestsTeamMembers {
@@ -20,14 +22,23 @@ const ELEMENT_DATA: RequestsTeamMembers[] = [
   templateUrl: './teams-requests.component.html',
   styleUrls: ['./teams-requests.component.scss']
 })
-export class TeamsRequestsComponent implements OnInit {
+export class TeamsRequestsComponent implements AfterViewInit {
 
-  displayedColumns: string[] = ['Name', 'Start date', 'End date', 'Type', 'Edit'];
-  dataSource = ELEMENT_DATA;
+  displayedColumns: string[] = ['name', 'startDate', 'endDate', 'type', 'edit'];
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
 
-  constructor() { }
+  constructor(private _liveAnnouncer: LiveAnnouncer) {}
 
-  ngOnInit(): void {
+  @ViewChild(MatSort) sort!: MatSort;
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
   }
-
+  announceSortChange(sortState: Sort) {
+    if (sortState.direction) {
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+    } else {
+      this._liveAnnouncer.announce('Sorting cleared');
+    }
+  }
 }
