@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
 import {Observable} from "rxjs";
-import { UserType } from '../shared/data-type/User';
-import { parseJwt } from '../utils/JWTParser';
 
 @Injectable({
   providedIn: 'root'
