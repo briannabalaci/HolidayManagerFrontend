@@ -29,14 +29,4 @@ export class User {
   type?:UserType;
   team?:Team;
 }
-export class UpdateUser {
-
-  email?: string;
-  password?: string;
-  forname?: string;
-  surname?: string;
-  department?: Department;
-  role?: Role;
-  nrHolidays?: number;
-}
 
