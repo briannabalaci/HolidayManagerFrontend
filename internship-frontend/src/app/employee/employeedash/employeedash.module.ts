@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import {MatButtonModule} from '@angular/material/button';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatTableModule} from '@angular/material/table';
@@ -33,9 +33,10 @@ const routes: Routes = [
     MatIconModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
     
 
+    MatInputModule
   ],
   exports:[
   ],

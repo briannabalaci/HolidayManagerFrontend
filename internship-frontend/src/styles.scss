@@ -23,7 +23,7 @@ $workshop-warn: mat-palette($mat-red);
 $workshop-theme: mat-light-theme((
   color: (
     primary: $workshop-primary,
-    accent: $workshop-accent,
+    accent: mat-palette($mat-orange),
     warn: $workshop-warn,
   )
 ));
@@ -38,6 +38,18 @@ $workshop-theme: mat-light-theme((
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
