@@ -1,7 +1,7 @@
 <app-nav-bar></app-nav-bar>
 <section>
-    <app-create-user></app-create-user>
+    <app-create-user (createSignal)="updateTable()"></app-create-user>
 </section>
 <section>
-    <app-user-list></app-user-list>
+    <app-user-list [someInput]="inputValue"></app-user-list>
 </section>

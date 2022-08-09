@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
@@ -14,7 +14,8 @@ import { __param } from 'tslib';
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss']
 })
-export class UserListComponent implements OnInit {
+export class UserListComponent implements OnInit,OnChanges {
+  @Input() someInput?: string;
   users?: User[];
   dataSource: any;
   constructor(private adminService:AdminService,private router: Router){}
@@ -34,6 +35,14 @@ export class UserListComponent implements OnInit {
     });
     
   }
+  ngOnChanges() {
+    console.log("RELOAD");
+    this.adminService.getAllUsers().subscribe(data => {
+    
+      this.users = data;
+      this.dataSource = new MatTableDataSource<User>(this.users);
+      this.dataSource.paginator = this.paginator;
+    });  } 
   getRecord(user:User)
   {
     let param = "";

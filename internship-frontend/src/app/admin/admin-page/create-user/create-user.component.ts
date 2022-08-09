@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { AdminService } from 'src/app/service/admin.service';
 
 import { User } from 'src/app/shared/data-type/User';
+import { EventEmitter } from '@angular/core';
 
 
 
@@ -11,6 +12,8 @@ import { User } from 'src/app/shared/data-type/User';
   styleUrls: ['./create-user.component.scss']
 })
 export class CreateUserComponent implements OnInit {
+  @Output()
+  public createSignal = new EventEmitter<void>();
 
   constructor(private adminService: AdminService) { }
 
@@ -19,7 +22,7 @@ export class CreateUserComponent implements OnInit {
   }
   createUser(newUser: User): void{
     console.log(newUser);
-    this.adminService.createUser(newUser).subscribe(result=>console.log(result));
+    this.adminService.createUser(newUser).subscribe(result=>this.createSignal.emit());
   }
 
 }

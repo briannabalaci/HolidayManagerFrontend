@@ -6,10 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin-page.component.scss']
 })
 export class AdminPageComponent implements OnInit {
-
+  inputValue =" ";
   constructor() { }
 
   ngOnInit(): void {
   }
-
+  updateTable() { this.inputValue += "a"; }
 }
