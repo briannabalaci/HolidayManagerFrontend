@@ -1,5 +1,5 @@
 <section class="section-home-teamlead">
-  <mat-label class="section-label">Vacation days left: {{leftDays}}</mat-label>
+  <mat-label class="section-label">Vacation days left: {{nrHolidays}}</mat-label>
 
   <br>
 
@@ -17,7 +17,7 @@
 
   <mat-list class="section-list-requests" role="list">
     <mat-list-item
-      *ngFor = "let request of teamLeadRequests">{{request.startDate}} - {{request.endDate}} - {{request.type}}
+      *ngFor = "let request of teamLeadRequests">{{request.startDate | date:'longDate' }} - {{request.endDate | date: 'longDate'}} - {{request.type}}
       <button mat-icon-button aria-label="Edit icon" class="section-button--edit">
         <mat-icon class="section-mat-icon">remove_red_eye</mat-icon>
       </button>

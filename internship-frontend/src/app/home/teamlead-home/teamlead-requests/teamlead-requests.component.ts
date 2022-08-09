@@ -1,32 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import {User} from "../../../shared/data-type/User";
+import {TeamleadService} from "../../../service/teamlead.service";
+import {Holiday, HolidayType} from "../../../shared/data-type/Holiday";
+
 
 class RequestsUser {
-  startDate?: string;
-  endDate?: string;
-  type?: string;
+  startDate?: Date;
+  endDate?: Date;
+  type?: HolidayType;
 }
 
 const ELEMENT_DATA: RequestsUser[] = [
-  {
-    startDate: '11.08.2022',
-    endDate: '12.09.2022',
-    type: 'Rest holiday'
-  },
-  {
-    startDate: '11.08.2022',
-    endDate: '12.09.2022',
-    type: 'Rest holiday'
-  },
-  {
-    startDate: '11.08.2022',
-    endDate: '12.09.2022',
-    type: 'Rest holiday'
-  },
-  {
-    startDate: '11.08.2022',
-    endDate: '12.09.2022',
-    type: 'Rest holiday'
-  }
 ]
 
 @Component({
@@ -36,13 +20,31 @@ const ELEMENT_DATA: RequestsUser[] = [
 })
 export class TeamleadRequestsComponent implements OnInit {
 
-  leftDays = 0;
+
+  nrHolidays: number = 0;
+  user!: User;
   requestsTypes: string[] = ['All request', 'Rest holiday', 'Special holiday', 'Unpaid holiday']
-  // teamLeadRequests?: RequestsUser[];
+
+  requests!: Holiday[];
   teamLeadRequests = ELEMENT_DATA;
-  constructor() { }
+  constructor(private teamLeadService: TeamleadService) { }
 
   ngOnInit(): void {
+    this.teamLeadService.getUser().subscribe(data => {
+      this.user = data;
+      this.nrHolidays = +data.nrHolidays!;
+      console.log(data);
+    })
+
+    this.teamLeadService.getTeamLeadsRequests().subscribe( data => {
+      this.requests = data;
+      this.convertData();
+      console.log(data);
+    })
+  }
+
+  convertData(){
+    this.teamLeadRequests = this.requests.map(obj => {return {startDate: obj.startDate, endDate: obj.endDate, type: obj.type}});
   }
 
 }
