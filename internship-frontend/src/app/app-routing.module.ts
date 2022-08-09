@@ -16,6 +16,8 @@ import {TeamManagementComponent} from "./team-management/team-management.compone
 import {AuthguardService} from "./authguards/authguard.service";
 import {AdminComponent} from "./admin/admin.component";
 import {AuthguardAdminService} from "./authguards/authguard-admin.service";
+import { EditUserComponent } from './admin/admin-page/edit-user/edit-user.component';
+import { AdminPageComponent } from './admin/admin-page/admin-page.component';
 /*
 const routes: Routes = [
   {path: 'register', loadChildren: () => import('./landing/register-panel/register-panel.module').then(n => RegisterPanelModule)},
@@ -39,7 +41,8 @@ const routes: Routes = [
   { path: 'teamlead-home', component: TeamleadHomeComponent, canActivate:[AuthguardService]},
   { path: 'employee', component: EmployeedashComponent, canActivate:[AuthguardService] },
   { path: 'admin', component: AdminComponent, canActivate:[AuthguardService,AuthguardAdminService] },
-
+  { path: 'update-user/:param', component: EditUserComponent, canActivate: [AuthguardService, AuthguardAdminService] },
+  { path: 'user-panel', component: AdminPageComponent, canActivate:[AuthguardService,AuthguardAdminService] },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

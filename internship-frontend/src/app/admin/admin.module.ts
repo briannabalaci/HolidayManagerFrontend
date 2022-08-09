@@ -4,25 +4,20 @@ import { AdminPageComponent } from "./admin-page/admin-page.component";
 import { CreateUserFormComponent } from "./admin-page/create-user/create-user-form/create-user-form.component";
 import { CreateUserComponent } from "./admin-page/create-user/create-user.component";
 import { UserListComponent } from "./admin-page/user-list/user-list.component";
+import { EditUserComponent } from './admin-page/edit-user/edit-user.component';
+import { EditUserFormComponent } from './admin-page/edit-user/edit-user-form/edit-user-form.component';
+import { AdminComponent } from "./admin.component";
 
 
 
-const routes: Routes = [
-  {
-    path: 'admin', component: AdminPageComponent
- }
-]
 
 @NgModule({
 
   declarations: [
-  
-  
+   
   ],
   imports: [
-    CreateUserComponent,
-    UserListComponent,
-    CreateUserFormComponent
+ 
   ]
 })
 export class AdminModule { }

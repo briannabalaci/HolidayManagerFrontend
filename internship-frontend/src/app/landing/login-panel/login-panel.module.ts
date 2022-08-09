@@ -7,12 +7,9 @@ import {MatInputModule} from '@angular/material/input';
 import {MatTableModule} from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
-import { MatCardModule } from '@angular/material/card';
 
 import { LoginPanelComponent } from './login-panel.component';
 import { Routes } from '@angular/router';
-import { LoginFormComponent } from './login-form/login-form.component';
-
 const routes: Routes = [
   {
     path: 'login', component: LoginPanelComponent
@@ -20,8 +17,7 @@ const routes: Routes = [
 ]
 @NgModule({
   declarations: [
-    LoginFormComponent
-    
+
   ],
   imports: [
     MatButtonModule,
@@ -31,7 +27,6 @@ const routes: Routes = [
     MatInputModule,
     MatTableModule,
     MatIconModule,
-    
   ],
   providers: [],
 })

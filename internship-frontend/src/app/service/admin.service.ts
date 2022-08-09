@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from '../shared/data-type/User';
+import { UpdateUser, User } from '../shared/data-type/User';
 
 const ADD_USER = "http://localhost:8090/user/add-user"
-const GET_ALL="http://localhost:8090/user/get-all-users"
+const GET_ALL = "http://localhost:8090/user/get-all-users"
+const UPDATE_USER="http://localhost:8090/user/update-user"
 @Injectable({
   providedIn: 'root'
 })
@@ -19,4 +20,8 @@ export class AdminService {
     return this.httpClient.get<User[]>(GET_ALL);
 
   }
+  public updateUser(updUser: UpdateUser): Observable<User> {
+    return this.httpClient.put<User>(UPDATE_USER, updUser);
+  }
+
 }
