@@ -74,11 +74,11 @@ export class EditUserFormComponent implements OnInit {
 
   createUserForm = this.formBuilder.group({
     
-    email: ['', Validators.required],
-    password: ['', Validators.required],
-    forName: ['', Validators.required],
-    surName: ['', Validators.required],
-    nrHolidays: ['', Validators.required],
+
+    password: [''],
+    forName: [''],
+    surName: [''],
+    nrHolidays: [''],
    
     
   })
@@ -104,7 +104,7 @@ export class EditUserFormComponent implements OnInit {
 updateUser(): void {
     const valuesFromForm = this.createUserForm.value;
     const updUser = {
-      email: valuesFromForm.email,
+      email: this.email_d,
       password: valuesFromForm.password,
       forname: valuesFromForm.forName,
       surname: valuesFromForm.surName,
