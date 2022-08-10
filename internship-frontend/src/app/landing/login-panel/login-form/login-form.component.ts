@@ -47,6 +47,7 @@ export class LoginFormComponent implements OnInit {
         this.cookieService.set('Token', result['token']);
         // @ts-ignore
         const type: UserType = parseJwt(result.token).type;
+        const email: String = parseJwt(result.token).username;
         if(type == UserType.ADMIN){
           this.router.navigate(['/admin']);
         }

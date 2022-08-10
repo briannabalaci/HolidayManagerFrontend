@@ -3,7 +3,7 @@ import { FormBuilder, NgForm, Validators } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
 import { MatInput } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
-import { HolidayType } from 'src/app/employee/employeedash/employeedash.component';
+import { HolidayType } from '../data-type/Holiday';
 
 @Component({
   selector: 'app-create-request',

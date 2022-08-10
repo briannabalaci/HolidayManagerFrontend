@@ -1,31 +1,23 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Type, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-export class HolidayType {
-  value?: string;
-  viewValue?: string;
-  constructor(value: string, viewvalue: string) { }
-}
-export class Holiday{
-  startDate?: Date;
-  endDate?: Date;
-  status?: string;
-  substitute?:string;
-  type?:Type;
-}
-enum Type {
-  REST,
-  SPECIAL,
-  UNPAID
-}
+import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { CookieService } from 'ngx-cookie-service';
+import { HolidayService } from 'src/app/service/holiday.service';
+import { UserService } from 'src/app/service/user.service';
+import { Holiday, HolidayType, RequestType } from 'src/app/shared/data-type/Holiday';
+import { User } from 'src/app/shared/data-type/User';
+import { parseJwt } from 'src/app/utils/JWTParser';
+
 
 // TO DO: move new data type in a separate folder
 const HOLIDAY_DATA: Holiday[] =[ 
-  {startDate: new Date(1995, 11, 17),endDate: new Date(1995, 11, 17), status: 'Pending', type: Type.REST, substitute: 'Andor' },
-  {startDate: new Date(2010, 12, 17),endDate: new Date(2010, 12, 27), status: 'Rejected', type: Type.SPECIAL, substitute: 'Brianna'},
-  {startDate: new Date(2022, 8, 17),endDate: new Date(2022, 8, 25), status: 'Approved', type: Type.UNPAID, substitute: 'Tara'},
-  {startDate: new Date(2021, 1, 13),endDate: new Date(2021, 2, 1), status: 'Pending', type: Type.REST, substitute: 'Alexandra'}
+  {startDate: new Date(1995, 11, 17),endDate: new Date(1995, 11, 17), status: 'Pending', type: RequestType.REST, substitute: 'Andor' },
+  {startDate: new Date(2010, 12, 17),endDate: new Date(2010, 12, 27), status: 'Rejected', type: RequestType.SPECIAL, substitute: 'Brianna'},
+  {startDate: new Date(2022, 8, 17),endDate: new Date(2022, 8, 25), status: 'Approved', type: RequestType.UNPAID, substitute: 'Tara'},
+  {startDate: new Date(2021, 1, 13),endDate: new Date(2021, 2, 1), status: 'Pending', type: RequestType.REST, substitute: 'Alexandra'}
 ];
 
 @Component({
@@ -39,12 +31,20 @@ export class EmployeedashComponent implements AfterViewInit {
   endDate = 'Angular';
   startDate = 'Angular';
   substitute = '';
-  constructor(private _liveAnnouncer: LiveAnnouncer) {}
+  constructor(private _liveAnnouncer: LiveAnnouncer, private holidayService:HolidayService, private cookieService: CookieService, private userService: UserService) {}
+
+  holidays?: Holiday[];
 
   @ViewChild(MatSort) sort!: MatSort;
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+    const tk = this.cookieService.get('Token');
+
+    const email: String = parseJwt(tk).username;
+    const id: number = parseJwt(tk).id;
+    console.log(email);
+    this.holidayService.getAllHolidaysById(id).forEach(x => console.log(x));
   }
   announceSortChange(sortState: Sort) {
     if (sortState.direction) {
@@ -82,17 +82,17 @@ export class EmployeedashComponent implements AfterViewInit {
         break;
       }
       case 'rest-holiday':{
-        this.dataSource = new MatTableDataSource(HOLIDAY_DATA.filter(holiday => holiday.type === Type.REST));
+        this.dataSource = new MatTableDataSource(HOLIDAY_DATA.filter(holiday => holiday.type === RequestType.REST));
         this.dataSource.sort = this.sort;
         break;
       }
       case 'special-holiday':{
-        this.dataSource = new MatTableDataSource(HOLIDAY_DATA.filter(holiday => holiday.type === Type.SPECIAL));
+        this.dataSource = new MatTableDataSource(HOLIDAY_DATA.filter(holiday => holiday.type === RequestType.SPECIAL));
         this.dataSource.sort = this.sort;
         break;
       }
       case 'unpaid-holiday':{
-        this.dataSource = new MatTableDataSource(HOLIDAY_DATA.filter(holiday => holiday.type === Type.UNPAID));
+        this.dataSource = new MatTableDataSource(HOLIDAY_DATA.filter(holiday => holiday.type === RequestType.UNPAID));
         this.dataSource.sort = this.sort;
         break;
       }
