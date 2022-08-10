@@ -1,6 +1,6 @@
 
 <h2>Send new request</h2>
-<form id="login-form" [formGroup]="holidayRequestFormGroup" (ngSubmit) = "sendHolidayRequest()" #formDirective="ngForm">
+<form id="login-form" [formGroup]="holidayRequestFormGroup" (ngSubmit) = "verifyHolidayRequest()" #formDirective="ngForm">
 
 <mat-form-field appearance="outline" color="accent">
     <mat-select (selectionChange)="onChange($event.value)" placeholder="Select holiday type"  (click)="resetWarnings()" #matRef>
@@ -11,15 +11,16 @@
 
 <mat-form-field *ngIf="showFieldForStartDate" appearance="outline" color="accent">
     <input matInput [matDatepicker]="pickerStart" name="startDate" placeholder="Select start date" formControlName="startDate" (click)="resetWarnings()">
-    <mat-hint>MM/DD/YYYY</mat-hint>
-    <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+    <mat-datepicker-toggle matSuffix [for]="pickerStart">
+        <mat-icon matDatepickerToggleIcon color="accent">calendar_month</mat-icon>
+    </mat-datepicker-toggle>
     <mat-datepicker #pickerStart></mat-datepicker>
 </mat-form-field><br *ngIf="showFieldForStartDate">
 
 <mat-form-field *ngIf="showFieldForEndDate" appearance="outline" color="accent">
     <input matInput [matDatepicker]="pickerEnd" name="endDate" placeholder="Select end date" formControlName="endDate" (click)="resetWarnings()">
-    <mat-hint>MM/DD/YYYY</mat-hint>
-    <mat-datepicker-toggle matSuffix [for]="pickerEnd" ></mat-datepicker-toggle>
+    <mat-datepicker-toggle matSuffix [for]="pickerEnd" >    
+        <mat-icon matDatepickerToggleIcon color="accent">calendar_month</mat-icon></mat-datepicker-toggle>
     <mat-datepicker #pickerEnd></mat-datepicker>
 </mat-form-field><br *ngIf="showFieldForEndDate">
 

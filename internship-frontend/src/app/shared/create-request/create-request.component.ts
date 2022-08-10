@@ -115,15 +115,15 @@ export class CreateRequestComponent implements OnInit {
     let anyFieldIsEmpty = false;
     switch (this.deviceValue) {
       case 'rest-holiday': {
-        anyFieldIsEmpty = (valuesFromForm.startDate == '' || valuesFromForm.endDate == '' || valuesFromForm.substitute == '');
+        anyFieldIsEmpty = (valuesFromForm.startDate == '' || valuesFromForm.startDate == null || valuesFromForm.endDate == '' || valuesFromForm.endDate == null || valuesFromForm.substitute == '');
         break;
       }
       case 'special-holiday': {
-        anyFieldIsEmpty = (valuesFromForm.startDate == '' || valuesFromForm.endDate == '' || valuesFromForm.substitute == '' || valuesFromForm.document == '');
+        anyFieldIsEmpty = (valuesFromForm.startDate == '' || valuesFromForm.startDate == null || valuesFromForm.endDate == '' || valuesFromForm.endDate == null  || valuesFromForm.substitute == '' || valuesFromForm.document == '');
         break;
       }
       case 'unpaid-holiday': {
-        anyFieldIsEmpty =  (valuesFromForm.startDate == '' || valuesFromForm.endDate == '');
+        anyFieldIsEmpty =  (valuesFromForm.startDate == '' || valuesFromForm.startDate == null || valuesFromForm.endDate == '' || valuesFromForm.endDate == null );
         break;
       }
     }
