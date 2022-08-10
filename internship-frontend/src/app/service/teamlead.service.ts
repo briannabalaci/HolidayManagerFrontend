@@ -7,7 +7,8 @@ import {parseJwt} from "../utils/JWTParser";
 import {Holiday} from "../shared/data-type/Holiday";
 
 const GET_USER = "http://localhost:8090/teamlead/get-user?email=";
-const GET_REQUESTS = "http://localhost:8090/teamlead/get-requests";
+const GET_REQUESTS = "http://localhost:8090/teamlead/get-requests?id=";
+const GET_TEAM_REQUESTS = "http://localhost:8090/teamlead/get-team-requests?id=";
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,14 @@ export class TeamleadService {
     return this.httpClient.get(url)
   }
 
-  public getTeamLeadsRequests(): Observable<Holiday[]>{
-    return this.httpClient.get<Holiday[]>(GET_REQUESTS);
+  public getTeamLeadsRequests(id: number): Observable<Holiday[]>{
+    let url = `${GET_REQUESTS}${id}`
+    return this.httpClient.get<Holiday[]>(url);
+  }
+
+  public getTeamRequests(id: number): Observable<Holiday[]>{
+    let url = `${GET_TEAM_REQUESTS}${id}`
+    return this.httpClient.get<Holiday[]>(url);
   }
 
 }

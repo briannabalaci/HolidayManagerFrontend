@@ -1,3 +1,5 @@
+import {User} from "./User";
+
 export enum HolidayType {
   UNPAID_HOLIDAY = 'UNPAID_HOLIDAY',
   REST_HOLIDAY = 'REST_HOLIDAY',
@@ -21,5 +23,5 @@ export class Holiday{
   type?:HolidayType;
   status?:HolidayStatus;
   details?:string;
-  userId?:number;
+  user!:User;
 }

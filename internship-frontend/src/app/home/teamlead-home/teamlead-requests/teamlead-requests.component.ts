@@ -32,15 +32,16 @@ export class TeamleadRequestsComponent implements OnInit {
   ngOnInit(): void {
     this.teamLeadService.getUser().subscribe(data => {
       this.user = data;
+
       this.nrHolidays = +data.nrHolidays!;
-      console.log(data);
+
+      this.teamLeadService.getTeamLeadsRequests(this.user!.id!).subscribe( data => {
+        this.requests = data;
+        this.convertData();
+      })
     })
 
-    this.teamLeadService.getTeamLeadsRequests().subscribe( data => {
-      this.requests = data;
-      this.convertData();
-      console.log(data);
-    })
+
   }
 
   convertData(){
