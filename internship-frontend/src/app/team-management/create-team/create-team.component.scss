@@ -11,3 +11,41 @@ input{
 }
 
 
+.usersTable{
+  text-align: center;
+  margin: 20px;
+  //padding: 20px;
+}
+
+.mat-table {
+  overflow-x: scroll;
+  max-width: 99%;
+}
+
+.mat-cell,
+.mat-header-cell {
+  word-wrap: initial;
+  display: table-cell;
+  padding: 0px 10px;
+  line-break: unset;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+.mat-row,
+.mat-header-row {
+  display: table-row;
+}
+
+.foundUsers{
+  text-align: center;
+  margin: 0 120px 0 120px;
+}
+
+
+mat-select{
+  max-height: 20px;
+  overflow: auto;
+}

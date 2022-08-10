@@ -1,87 +1,151 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {Team} from "../../shared/data-type/Team";
-import {FormBuilder, Validators} from "@angular/forms";
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {Team, TeamAdd} from "../../shared/data-type/Team";
+import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import {Department, Role, User, UserType} from "../../shared/data-type/User";
 import {UserService} from "../../service/user.service";
 import {AuthguardService} from "../../authguards/authguard.service";
+import {MatTable} from "@angular/material/table";
+import {TeamService} from "../../service/team.service";
+import {Observable, ReplaySubject, Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-create-team',
   templateUrl: './create-team.component.html',
   styleUrls: ['./create-team.component.scss']
 })
-export class CreateTeamComponent implements OnInit {
+export class CreateTeamComponent implements OnInit,OnChanges {
 
-  @Output() clickCreate = new EventEmitter<Team>();
-
-  teamFormGroup = this.formBuilder.group({
-    name:['',Validators.required],
-    teamLead:['',Validators.required],
-    members:['',Validators.required]
-  })
-
-  typedName:String=""
-  teamLeader:String=""
-  foundUsers: User[] = [];
+  teamLeader:User;
+  teamName:string = ""
   addedMembers: User[] = []
   displayedColumns: string[] = ['User','Delete']
 
+  public userControl: FormControl = new FormControl();
+  public userFilteredControl: FormControl = new FormControl();
+  public filteredUsers: User[]
 
-
-  constructor(private formBuilder: FormBuilder, private userService:UserService) { }
-
-  ngOnInit(): void {
-  }
-
-
-  saveTeamLeader(teamLeader:String){
-    this.teamLeader = teamLeader;
-  }
-  createTeam():void{
-    const valuesFromForm = this.teamFormGroup.value;
-    const newTeam ={
-      name : valuesFromForm.name,
-      teamLeader : this.teamLeader
-    }
-
-    console.log("In create")
-    console.log("Members: "+this.addedMembers)
-    console.log("Name: "+newTeam.name)
-    console.log("Teamleader: "+newTeam.teamLeader)
-    // this.clickCreate.emit(newTeam)
-  }
+  public teamLeadControl: FormControl = new FormControl();
 
   typed:Boolean = false;
-  t:Team={id:1,name:'Team 1',teamLeader:"Teamleader"}
-  users : User[] = [
-    {id:1, email:'a',password:'a',forname:'A',surname:'B',department:Department.JAVA,role:Role.DEVELOPER,nrHolidays:30,type:UserType.TEAMLEAD,team:this.t},
-    {id:2, email:'b',password:'a',forname:'C',surname:'E',department:Department.JAVA,role:Role.DEVELOPER,nrHolidays:30,type:UserType.TEAMLEAD,team:this.t},
-    {id:3, email:'c',password:'a',forname:'E',surname:'F',department:Department.JAVA,role:Role.DEVELOPER,nrHolidays:30,type:UserType.TEAMLEAD,team:this.t},
-  ]
-  addToTeam(user: User) {
-    console.log(user)
-    this.addedMembers.push(user)
-    this.foundUsers.forEach((element,index)=>{
+  protected _onDestroy = new Subject();
+  isDisabled = false;
 
-      if(element.id===user.id) this.foundUsers.splice(index, 1);
+
+  @ViewChild(MatTable) table: MatTable<User>
+  @Output() clickCreate = new EventEmitter<Team>();
+  @Input() teamToView:Team //the team that we want to view
+  @Input() usersWithoutTeam:User[] = []
+  @Input() safeForView:boolean = false
+
+  teamFormGroup = this.formBuilder.group({name:['',Validators.required],})
+  constructor(private formBuilder: FormBuilder, private userService:UserService, private teamService:TeamService) { }
+
+  ngOnInit(): void {
+
+    this.filteredUsers = this.usersWithoutTeam.slice()
+    this.userFilteredControl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterUsers();
+      });
+
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(this.safeForView == true){
+      this.teamService.getTeamMembers(this.teamToView.id!).subscribe(
+        members => {
+          this.addedMembers = members
+          this.teamFormGroup.controls['name'].setValue(this.teamToView.name!)
+          // this.teamFormGroup.controls['name'].disable()
+          this.isDisabled = true
+          this.teamLeader = this.teamToView.teamLeader!;
+          this.addedMembers.forEach((el, idx) => {
+            if (el.id == this.teamToView.teamLeader?.id) {
+              this.teamLeader = el;
+            }
+          })
+        }
+      )
+
+      // this.teamService.getById(this.teamToView.id!).subscribe(
+      //
+      //   result => {
+      //     this.teamLeader = result.teamLeader
+      //     this.teamLeader.forname = result.teamLeader.forname
+      //     this.teamLeader.surname = result.teamLeader.forname
+      //   }
+      // )
+      // this.teamToView =
+    }
+  }
+
+  createTeam():void{
+    const valuesFromForm = this.teamFormGroup.value;
+    const memb: number[] = []
+    this.addedMembers.forEach((element, index) => {
+      memb.push(element.id!)
     });
+    const newTeam : TeamAdd = {
+      name : valuesFromForm.name!,
+      teamLeaderId : this.teamLeader.id,
+      membersId:memb!,
+    }
+
+    this.clickCreate.emit(newTeam)
+    this.addedMembers =[]
+    this.table.renderRows()
+    this.teamFormGroup.reset()
   }
 
-  public searchUser(): any {
-    this.typed = true
-    // this.userService.filterUsersByName(this.typedName).subscribe(
-    //   response => {
-    // this.foundUsers = response;
-    this.foundUsers =  [
-      {id:2, email:'b',password:'a',forname:'C',surname:'E',department:Department.JAVA,role:Role.DEVELOPER,nrHolidays:30,type:UserType.TEAMLEAD,team:this.t},
-      {id:3, email:'c',password:'a',forname:'E',surname:'F',department:Department.JAVA,role:Role.DEVELOPER,nrHolidays:30,type:UserType.TEAMLEAD,team:this.t}]
-    // },
-    // error => {
-    //   console.log(error);
-    // });
+
+  protected filterUsers() {
+    if (!this.usersWithoutTeam) return
+
+    let search = this.userFilteredControl.value;
+    if (!search) {
+      this.filteredUsers = this.usersWithoutTeam.slice()
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+
+    this.filteredUsers =
+      this.usersWithoutTeam.filter(user => (user.forname + " " + user.surname).toLowerCase().indexOf(search) > -1)
+
   }
 
+
+  addUserToTeam(user: User) {
+    console.log("Before add")
+    console.log(this.addedMembers)
+    if (!this.addedMembers.includes(user)) {
+      console.log("In add")
+      console.log(this.addedMembers)
+
+      this.addedMembers.push(user)
+      this.table.renderRows();
+
+      this.usersWithoutTeam.forEach((element, index) => {
+        if (element.id === user.id) this.usersWithoutTeam.splice(index, 1);
+      });
+    }
+
+  }
+
+  deleteUserFromTeam(user:User){
+    this.addedMembers.forEach((element,index)=>{
+      if(element.id===user.id) {
+        this.addedMembers.splice(index, 1);
+        console.log("After delete")
+        console.log(this.addedMembers)
+        this.usersWithoutTeam.push(user)
+      }
+    });
+    this.table.renderRows();
+  }
 
 
 
 }
+

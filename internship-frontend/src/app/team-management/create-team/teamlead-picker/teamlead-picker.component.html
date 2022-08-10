@@ -1,8 +1,8 @@
 <div>
   <mat-form-field>
-    <mat-select [formControl]="websiteCtrl" placeholder="Team leader" #singleSelect (selectionChange)="changeClient($event.value)">
+    <mat-select [formControl]="userControl" placeholder="Team leader" #singleSelect (selectionChange)="changeClient($event.value)">
       <mat-option>
-        <ngx-mat-select-search [formControl]="websiteFilterCtrl"></ngx-mat-select-search>
+        <ngx-mat-select-search [formControl]="userFilteredControl"></ngx-mat-select-search>
       </mat-option>
 
       <mat-option *ngFor="let user of filteredUsers | async" [value]="user" >

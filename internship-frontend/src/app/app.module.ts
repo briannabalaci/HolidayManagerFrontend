@@ -31,7 +31,6 @@ import { EditUserFormComponent } from './admin/admin-page/edit-user/edit-user-fo
 import { EditUserComponent } from './admin/admin-page/edit-user/edit-user.component';
 import { UserListComponent } from './admin/admin-page/user-list/user-list.component';
 import { AdminComponent } from './admin/admin.component';
-import { UserSearchBarComponent } from './team-management/create-team/user-search-bar/user-search-bar.component';
 import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
 import { TeamleadPickerComponent } from './team-management/create-team/teamlead-picker/teamlead-picker.component';
 import { AdminModule } from './admin/admin.module';
@@ -40,15 +39,15 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { NavBarComponent } from './landing/nav-bar/nav-bar.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import {ScrollingModule} from '@angular/cdk/scrolling';
+
 @NgModule({
+
   declarations: [
     AppComponent,
     EmployeedashComponent,
     LoginPanelComponent,
-
     LoginResetFormComponent,
-
-
     TeamManagementComponent,
     TeamsTableComponent,
     CreateTeamComponent,
@@ -61,7 +60,6 @@ import { MatNativeDateModule } from '@angular/material/core';
     CreateUserComponent,
     CreateUserFormComponent,
     AdminComponent,
-    UserSearchBarComponent,
     TeamleadPickerComponent,
     NavBarComponent
   ],
@@ -86,7 +84,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatCardModule,
     NgxMatSelectSearchModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    ScrollingModule,
+
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthentificationInterceptor, multi:true}],
   bootstrap: [AppComponent]

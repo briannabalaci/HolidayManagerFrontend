@@ -23,20 +23,19 @@ export class TeamleadPickerComponent implements OnInit {
   @Input() users: User[];
   @Output() chooseTeamLeader = new EventEmitter<String>();
 
-
-  public websiteCtrl: FormControl = new FormControl();
-  public websiteFilterCtrl: FormControl = new FormControl();
+  public userControl: FormControl = new FormControl();
+  public userFilteredControl: FormControl = new FormControl();
   public filteredUsers: ReplaySubject<any> = new ReplaySubject(1);
 
   protected _onDestroy = new Subject();
 
 
   ngOnInit() {
-    this.websiteCtrl.setValue(this.users[1]);
+    this.userControl.setValue(this.users[1]);
 
     this.filteredUsers.next(this.users.slice());
 
-    this.websiteFilterCtrl.valueChanges
+    this.userFilteredControl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
         this.filterUsers();
@@ -49,7 +48,7 @@ export class TeamleadPickerComponent implements OnInit {
       return;
     }
 
-    let search = this.websiteFilterCtrl.value;
+    let search = this.userFilteredControl.value;
     if (!search) {
       this.filteredUsers.next(this.users.slice());
       return;
@@ -65,6 +64,5 @@ export class TeamleadPickerComponent implements OnInit {
   changeClient(value: User) {
     this.chooseTeamLeader.emit(value.forname + " " + value.surname)
     console.log("Here")
-
   }
 }
