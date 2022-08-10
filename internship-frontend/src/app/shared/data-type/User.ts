@@ -20,7 +20,6 @@ export enum Department{
 export class User {
   id?:number;
   email?:string;
-  password?:string;
   forname?:string;
   surname?:string;
   department?:Department;
@@ -39,4 +38,3 @@ export class UpdateUser {
   role?: Role;
   nrHolidays?: number;
 }
-

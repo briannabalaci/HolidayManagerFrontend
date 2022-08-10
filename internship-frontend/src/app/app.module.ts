@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EmployeedashComponent } from './employee/employeedash/employeedash.component';
@@ -27,16 +28,21 @@ import {MatCardModule} from '@angular/material/card';
 import { AuthentificationInterceptor } from './service/authentification.interceptor';
 import { CreateUserFormComponent } from './admin/admin-page/create-user/create-user-form/create-user-form.component';
 import { CreateUserComponent } from './admin/admin-page/create-user/create-user.component';
-import { EditUserFormComponent } from './admin/admin-page/edit-user/edit-user-form/edit-user-form.component';
-import { EditUserComponent } from './admin/admin-page/edit-user/edit-user.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { UserListComponent } from './admin/admin-page/user-list/user-list.component';
 import { AdminComponent } from './admin/admin.component';
+
 import { AdminModule } from './admin/admin.module';
 import { AdminPageComponent } from './admin/admin-page/admin-page.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+
 import { NavBarComponent } from './landing/nav-bar/nav-bar.component';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import { EditUserFormComponent } from './admin/admin-page/create-user/edit-user-form/edit-user-form.component';
+
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,23 +51,29 @@ import { MatNativeDateModule } from '@angular/material/core';
    
     LoginResetFormComponent,
  
-   
+    
     TeamManagementComponent,
     TeamsTableComponent,
     CreateTeamComponent,
     TeamleadHomeComponent,
     LoginFormComponent,
+
+
     AdminPageComponent,
     UserListComponent,
-    EditUserComponent,
+
     EditUserFormComponent,
     CreateUserComponent,
     CreateUserFormComponent,
     AdminComponent,
-   
+    
  NavBarComponent
+
   ],
   imports: [
+    MatNativeDateModule,
+    MatDatepickerModule,
+
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -81,8 +93,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatListModule,
     TeamleadHomeModule,
     MatCardModule,
-    MatDatepickerModule,
-    MatNativeDateModule 
+    MatCheckboxModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthentificationInterceptor, multi:true}],
   bootstrap: [AppComponent]

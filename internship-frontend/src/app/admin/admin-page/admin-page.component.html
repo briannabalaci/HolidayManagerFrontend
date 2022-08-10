@@ -1,7 +1,8 @@
 <app-nav-bar></app-nav-bar>
 <section>
-    <app-create-user (createSignal)="updateTable()"></app-create-user>
+    <app-user-list [someInput]="inputValue" (createSignal)="updateTable()" (updateUserSignal)="updateUser($any($event))"></app-user-list>
 </section>
+<br>
 <section>
-    <app-user-list [someInput]="inputValue"></app-user-list>
+    <app-create-user (createSignal)="updateTable()" [editUserDto]="userUpdateDto" ></app-create-user>
 </section>

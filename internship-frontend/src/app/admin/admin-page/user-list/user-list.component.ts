@@ -1,10 +1,10 @@
-import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { stringify } from 'querystring';
 import { AdminService } from 'src/app/service/admin.service';
-import { User } from 'src/app/shared/data-type/User';
+import { UpdateUser, User } from 'src/app/shared/data-type/User';
 import { __param } from 'tslib';
 
 
@@ -16,6 +16,8 @@ import { __param } from 'tslib';
 })
 export class UserListComponent implements OnInit,OnChanges {
   @Input() someInput?: string;
+
+  @Output() updateUserSignal = new EventEmitter<User>();
   users?: User[];
   dataSource: any;
   constructor(private adminService:AdminService,private router: Router){}
@@ -45,10 +47,8 @@ export class UserListComponent implements OnInit,OnChanges {
     });  } 
   getRecord(user:User)
   {
-    let param = "";
-     param = JSON.stringify(user);
-    console.log(param.toString());
-    this.router.navigate(['/update-user', param ]);
+    this.updateUserSignal.emit(user);
+   console.log("user-list.component")
     //EDIT USER
   }
 }

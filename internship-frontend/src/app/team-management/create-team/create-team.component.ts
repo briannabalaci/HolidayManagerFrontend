@@ -25,9 +25,9 @@ export class CreateTeamComponent implements OnInit {
 
   t:Team={id:1,name:'Team 1',teamLeader:"Teamleader"}
   users : User[] = [
-    {id:1, email:'a',password:'a',forname:'A',surname:'B',department:Department.JAVA,role:Role.DEVELOPER,nrHolidays:30,type:UserType.TEAMLEAD,team:this.t},
-    {id:2, email:'b',password:'a',forname:'C',surname:'E',department:Department.JAVA,role:Role.DEVELOPER,nrHolidays:30,type:UserType.TEAMLEAD,team:this.t},
-    {id:3, email:'c',password:'a',forname:'E',surname:'F',department:Department.JAVA,role:Role.DEVELOPER,nrHolidays:30,type:UserType.TEAMLEAD,team:this.t},
+    {id:1, email:'a',forname:'A',surname:'B',department:Department.JAVA,role:Role.DEVELOPER,nrHolidays:30,type:UserType.TEAMLEAD,team:this.t},
+    {id:2, email:'b',forname:'C',surname:'E',department:Department.JAVA,role:Role.DEVELOPER,nrHolidays:30,type:UserType.TEAMLEAD,team:this.t},
+    {id:3, email:'c',forname:'E',surname:'F',department:Department.JAVA,role:Role.DEVELOPER,nrHolidays:30,type:UserType.TEAMLEAD,team:this.t},
   ]
 
   constructor(private formBuilder: FormBuilder, private userService:UserService) { }
@@ -48,8 +48,8 @@ export class CreateTeamComponent implements OnInit {
     //   response => {
         // this.foundUsers = response;
         this.foundUsers =  [
-          {id:2, email:'b',password:'a',forname:'C',surname:'E',department:Department.JAVA,role:Role.DEVELOPER,nrHolidays:30,type:UserType.TEAMLEAD,team:this.t},
-          {id:3, email:'c',password:'a',forname:'E',surname:'F',department:Department.JAVA,role:Role.DEVELOPER,nrHolidays:30,type:UserType.TEAMLEAD,team:this.t}]
+          {id:2, email:'b',forname:'C',surname:'E',department:Department.JAVA,role:Role.DEVELOPER,nrHolidays:30,type:UserType.TEAMLEAD,team:this.t},
+          {id:3, email:'c',forname:'E',surname:'F',department:Department.JAVA,role:Role.DEVELOPER,nrHolidays:30,type:UserType.TEAMLEAD,team:this.t}]
       // },
       // error => {
       //   console.log(error);

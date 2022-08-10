@@ -1,4 +1,30 @@
-h2 {
+#edit-form {
+    padding-top: 28px;
+    padding-bottom: 28px;
+}
+
+
+::ng-deep .mat-form-field {
+    width: 320px;
+ }
+ 
+@media screen and ( max-width: 500px ) {
+    ::ng-deep .mat-form-field {
+        width: 80%;
+     }
+  }
+
+
+@media screen and ( max-width: 500px ) {
+    ::ng-deep .mat-form-field {
+        width: 80%;
+     }
+  }
+
+  .mat-raised-button{
+    color: white !important;
+  }
+  h2 {
     text-align: center;
     font-size: 26px;
     margin-bottom: 16px;
@@ -12,18 +38,12 @@ div{
   text-align: center;
   display: block;
 }
-#div-create-panel{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%)
-}
 #div-edit-panel
 {
-    position: absolute;
+    position: relative;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%)
+    transform: translate(-50%)
 }
 .bg-card {
     width: 360px;

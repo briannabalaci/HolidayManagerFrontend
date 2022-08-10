@@ -1,7 +1,7 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { AdminService } from 'src/app/service/admin.service';
 
-import { User } from 'src/app/shared/data-type/User';
+import { UpdateUser, User } from 'src/app/shared/data-type/User';
 import { EventEmitter } from '@angular/core';
 
 
@@ -11,18 +11,39 @@ import { EventEmitter } from '@angular/core';
   templateUrl: './create-user.component.html',
   styleUrls: ['./create-user.component.scss']
 })
-export class CreateUserComponent implements OnInit {
+export class CreateUserComponent implements OnInit,OnChanges {
   @Output()
   public createSignal = new EventEmitter<void>();
+  @Input() editUserDto!: User;
+  
+  displayUpdate=false;
 
-  constructor(private adminService: AdminService) { }
+  constructor(private adminService: AdminService) {
+    
+   }
 
   ngOnInit(): void {
- 
+    if (this.editUserDto == null) {
+      this.displayUpdate = false;
+
+    }
+    else {this.displayUpdate = true; }
   }
+  ngOnChanges() {
+    if (this.editUserDto == null) {
+      this.displayUpdate = false;
+
+    }
+    else {this.displayUpdate = true; }
+      } 
   createUser(newUser: User): void{
+    
     console.log(newUser);
     this.adminService.createUser(newUser).subscribe(result=>this.createSignal.emit());
   }
-
+  updateUser(updUser: UpdateUser): void{
+    console.log(updUser);
+    this.adminService.updateUser(updUser).subscribe(result =>this.createSignal.emit());
+    
+  }
 }
