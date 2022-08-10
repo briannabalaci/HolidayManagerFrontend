@@ -25,6 +25,7 @@ $workshop-theme: mat-light-theme((
     primary: $workshop-primary,
     accent: mat-palette($mat-orange),
     warn: $workshop-warn,
+    red: mat-palette($mat-red)
   )
 ));
 
