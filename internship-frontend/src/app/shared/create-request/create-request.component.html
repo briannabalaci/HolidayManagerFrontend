@@ -1,35 +1,35 @@
 
 <h2>Send new request</h2>
-<form id="login-form" [formGroup]="holidayRequestFormGroup" (ngSubmit) = "sendHolidayRequest()">
+<form id="login-form" [formGroup]="holidayRequestFormGroup" (ngSubmit) = "sendHolidayRequest()" #formDirective="ngForm">
 
 <mat-form-field appearance="outline" color="accent">
-    <mat-select (selectionChange)="onChange($event.value)" placeholder="Select holiday type">
-    <mat-option *ngFor="let holiday of holidayList" [value]="holiday.value">
+    <mat-select (selectionChange)="onChange($event.value)" placeholder="Select holiday type"  (click)="resetWarnings()" #matRef>
+    <mat-option *ngFor="let holiday of holidayList" [value]="holiday.value" (click)="resetWarnings()">
         {{holiday.viewValue}}</mat-option>
     </mat-select>
 </mat-form-field><br>
 
 <mat-form-field *ngIf="showFieldForStartDate" appearance="outline" color="accent">
-    <input matInput [matDatepicker]="pickerStart" name="startDate" placeholder="Select start date" formControlName="startDate">
+    <input matInput [matDatepicker]="pickerStart" name="startDate" placeholder="Select start date" formControlName="startDate" (click)="resetWarnings()">
     <mat-hint>MM/DD/YYYY</mat-hint>
     <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
     <mat-datepicker #pickerStart></mat-datepicker>
 </mat-form-field><br *ngIf="showFieldForStartDate">
 
 <mat-form-field *ngIf="showFieldForEndDate" appearance="outline" color="accent">
-    <input matInput [matDatepicker]="pickerEnd" name="endDate" placeholder="Select end date" formControlName="endDate">
+    <input matInput [matDatepicker]="pickerEnd" name="endDate" placeholder="Select end date" formControlName="endDate" (click)="resetWarnings()">
     <mat-hint>MM/DD/YYYY</mat-hint>
     <mat-datepicker-toggle matSuffix [for]="pickerEnd" ></mat-datepicker-toggle>
     <mat-datepicker #pickerEnd></mat-datepicker>
 </mat-form-field><br *ngIf="showFieldForEndDate">
 
 <mat-form-field *ngIf="showFieldForSubstitute" appearance="outline" color="accent">
-    <input matInput name="substitute" formControlName="substitute" placeholder="Substitute">
+    <input matInput name="substitute" formControlName="substitute" placeholder="Substitute" (click)="resetWarnings()">
     </mat-form-field><br *ngIf="showFieldForSubstitute">
 
 <!-- <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload> -->
 <div *ngIf="showFieldForDocument">
-    <input type="file" class="file-input" #fileUpload>
+    <input type="file" class="file-input" #fileUpload (click)="resetWarnings()">
     <div class="file-upload">
 
     {{fileName || "Upload your document:"}}
@@ -40,6 +40,7 @@
     </button>
     </div>
 </div>
-
+<mat-card class="password-hint" *ngIf="showFillErrorMessage">Please fill out all fields correctly.</mat-card> 
+<mat-card class="password-hint-green" *ngIf="showSuccessfulMessage">Request sent successfully.</mat-card> 
 <button mat-raised-button type="submit" id="create-button" color="accent" *ngIf="showFieldForStartDate" >Create request</button>
 </form>
