@@ -18,6 +18,7 @@ export class CreateRequestComponent implements OnInit {
   showFieldForEndDate = false;
   showFieldForSubstitute = false;
   showFieldForDocument = false;
+  fileName = '';
   holidayList: HolidayType[] = [
     {value: 'rest-holiday', viewValue: 'Rest holiday'},
     {value: 'special-holiday', viewValue: 'Special holiday'},

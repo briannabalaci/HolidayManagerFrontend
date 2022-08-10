@@ -1,13 +1,17 @@
 nav {
     position:sticky;
     top: 0;
-    background-color: white;
+    background-color: #f19d38;
     padding-top: 8px;
     padding-bottom: 8px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
     z-index: 99;
     text-align: right;
+    margin-bottom: 18px;
 }
 #nav-bar-button {
     margin-right: 8px;
+}
+.mat-white {
+    color: white;
 }
