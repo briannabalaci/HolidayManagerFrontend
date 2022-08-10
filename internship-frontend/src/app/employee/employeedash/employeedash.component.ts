@@ -3,18 +3,19 @@ import { MatTableDataSource } from '@angular/material/table';
 import { CookieService } from 'ngx-cookie-service';
 import { HolidayService } from 'src/app/service/holiday.service';
 import { UserService } from 'src/app/service/user.service';
-import { Holiday, HolidayType, RequestType } from 'src/app/shared/data-type/Holiday';
+import { Holiday, HolidayStatus, HolidayType, RequestType } from 'src/app/shared/data-type/Holiday';
 import { User } from 'src/app/shared/data-type/User';
 import { parseJwt } from 'src/app/utils/JWTParser';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort } from '@angular/material/sort';
 
 // TO DO: move new data type in a separate folder
-const HOLIDAY_DATA: Holiday[] =[ 
-  {startDate: new Date(1995, 11, 17),endDate: new Date(1995, 11, 17), status: 'Pending', type: RequestType.REST, substitute: 'Andor' },
-  {startDate: new Date(2010, 12, 17),endDate: new Date(2010, 12, 27), status: 'Rejected', type: RequestType.SPECIAL, substitute: 'Brianna'},
-  {startDate: new Date(2022, 8, 17),endDate: new Date(2022, 8, 25), status: 'Approved', type: RequestType.UNPAID, substitute: 'Tara'},
-  {startDate: new Date(2021, 1, 13),endDate: new Date(2021, 2, 1), status: 'Pending', type: RequestType.REST, substitute: 'Alexandra'}
+const HOLIDAY_DATA: Holiday[] =[ /*
+  {startDate: new Date(1995, 11, 17),endDate: new Date(1995, 11, 17), status: HolidayStatus.PENDING, type: RequestType.REST, substitute: 'Andor' },
+  {startDate: new Date(2010, 12, 17),endDate: new Date(2010, 12, 27), status: HolidayStatus.PENDING, type: RequestType.SPECIAL, substitute: 'Brianna'},
+  {startDate: new Date(2022, 8, 17),endDate: new Date(2022, 8, 25), status: HolidayStatus.PENDING, type: RequestType.UNPAID, substitute: 'Tara'},
+  {startDate: new Date(2021, 1, 13),endDate: new Date(2021, 2, 1), status: HolidayStatus.PENDING, type: RequestType.REST, substitute: 'Alexandra'}
+*/
 ];
 
 @Component({

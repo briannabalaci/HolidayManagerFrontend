@@ -3,7 +3,11 @@ import { FormBuilder, NgForm, Validators } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
 import { MatInput } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
-import { HolidayType } from '../data-type/Holiday';
+import { CookieService } from 'ngx-cookie-service';
+import { HolidayService } from 'src/app/service/holiday.service';
+import { parseJwt } from 'src/app/utils/JWTParser';
+import { Holiday, HolidayStatus, HolidayType, RequestType } from '../data-type/Holiday';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-create-request',
@@ -35,7 +39,7 @@ export class CreateRequestComponent implements OnInit {
     {value: 'special-holiday', viewValue: 'Special holiday'},
     {value: 'unpaid-holiday', viewValue: 'Unpaid holiday'}
   ];
-  constructor(private formBuilder:FormBuilder) { }
+  constructor(private formBuilder:FormBuilder, private cookieService: CookieService, private holidayService: HolidayService) { }
 
   ngOnInit(): void {
   }
@@ -68,6 +72,46 @@ export class CreateRequestComponent implements OnInit {
   }
   sendHolidayRequest() {
     const valuesFromForm = this.holidayRequestFormGroup.value;
+    let hType = RequestType.REST;
+    const token = this.cookieService.get('Token');
+    const uID = parseJwt(token).id;
+    switch (this.deviceValue) {
+      case 'rest-holiday': {
+        hType = RequestType.REST;
+        break;
+      }
+      case 'special-holiday': {
+        hType = RequestType.SPECIAL;
+        break;
+      }
+      case 'unpaid-holiday': {
+        hType = RequestType.UNPAID;
+        break;
+      }
+    }
+    console.log(valuesFromForm.startDate);
+    const datePipe = new DatePipe('en-US');
+    const holidayData:Holiday = {
+     // startDate: new Date(valuesFromForm.startDate!),
+     // endDate:  new Date(valuesFromForm.endDate!),
+    
+
+      start_date: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
+      end_date: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!,
+      status: HolidayStatus.PENDING!,
+      substitute: valuesFromForm.substitute!,
+      type: hType,
+      user: {
+        id: uID
+      }
+    }
+    this.holidayService.createHoliday(holidayData).subscribe(result => {
+      console.log('Holiday created');
+      console.log(result);
+    });
+  }
+  verifyHolidayRequest() {
+    const valuesFromForm = this.holidayRequestFormGroup.value;
     let anyFieldIsEmpty = false;
     switch (this.deviceValue) {
       case 'rest-holiday': {
@@ -86,6 +130,7 @@ export class CreateRequestComponent implements OnInit {
     if (anyFieldIsEmpty) {
       this.showFillErrorMessage = true;
     } else {
+      this.sendHolidayRequest();
       this.showSuccessfulMessage = true;
       this.showFieldForStartDate = false;
       this.showFieldForEndDate = false;

@@ -15,7 +15,9 @@ export class HolidayService {
   constructor(private httpClient: HttpClient) { }
 
   public getAllHolidaysById(id: number): Observable<Holiday[]> {
-
     return this.httpClient.get<Holiday[]>(GET_USERS_HOLIDAYS+'/'+id.toString());
-}
+  }
+  public createHoliday(holiday: Holiday): Observable<Holiday>{
+    return this.httpClient.post<Holiday>(CREATE_HOLIDAY, holiday);
+  }
 }
