@@ -1,8 +1,4 @@
-import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { AfterViewInit, Component, Type, ViewChild } from '@angular/core';
-import { MatSort, Sort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , ViewChild, AfterViewInit} from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { CookieService } from 'ngx-cookie-service';
 import { HolidayService } from 'src/app/service/holiday.service';
@@ -10,7 +6,8 @@ import { UserService } from 'src/app/service/user.service';
 import { Holiday, HolidayType, RequestType } from 'src/app/shared/data-type/Holiday';
 import { User } from 'src/app/shared/data-type/User';
 import { parseJwt } from 'src/app/utils/JWTParser';
-
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { MatSort, Sort } from '@angular/material/sort';
 
 // TO DO: move new data type in a separate folder
 const HOLIDAY_DATA: Holiday[] =[ 
