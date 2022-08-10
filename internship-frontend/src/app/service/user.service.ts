@@ -8,6 +8,7 @@ const LOGIN = "http://localhost:8090/login/auth"
 const GET_USERS_FROM_TEAM = "http://localhost:8090/team/users"
 const GET_ALL_USERS = "http://localhost:8090/user/get-all"
 const FILTER_USERS_BY_NAME = "http://localhost:8090/user/filter-name"
+const GET_USER_BY_ID = "http://localhost:8090/user/find-user-by-id/{id}"
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,7 @@ export class UserService {
       return this.httpClient.get<User[]>(GET_ALL_USERS);
     }
   }
+  
 
 
 }
