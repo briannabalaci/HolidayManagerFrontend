@@ -34,6 +34,7 @@ const HOLIDAY_DATA: Holiday[] =[
   styleUrls: ['./employeedash.component.scss']
 })
 export class EmployeedashComponent implements AfterViewInit {
+  showFormCreateRequest = false;
   public vacationdays = 2;
   endDate = 'Angular';
   startDate = 'Angular';

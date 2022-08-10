@@ -38,6 +38,7 @@ import { NavBarComponent } from './landing/nav-bar/nav-bar.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSortModule } from '@angular/material/sort';
+import { CreateRequestComponent } from './shared/create-request/create-request.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,7 +61,8 @@ import { MatSortModule } from '@angular/material/sort';
     CreateUserFormComponent,
     AdminComponent,
    
- NavBarComponent
+ NavBarComponent,
+     CreateRequestComponent
   ],
   imports: [
     BrowserModule,

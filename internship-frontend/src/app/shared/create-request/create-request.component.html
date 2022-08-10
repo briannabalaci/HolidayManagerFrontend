@@ -1,0 +1,37 @@
+
+<h2>Send new request</h2>
+<form id="login-form" [formGroup]="holidayRequestFormGroup" (ngSubmit) = "sendHolidayRequest()">
+
+<mat-form-field appearance="fill">
+    <mat-label>Select type</mat-label>
+    <mat-select (selectionChange)="onChange($event.value)" >
+    <mat-option *ngFor="let holiday of holidayList" [value]="holiday.value">
+        {{holiday.viewValue}}</mat-option>
+    </mat-select>
+</mat-form-field><br>
+
+<mat-form-field *ngIf="showFieldForStartDate" appearance="fill">
+    <mat-label>Start date</mat-label>
+    <input matInput [matDatepicker]="pickerStart" name="startDate" placeholder="Start Date" formControlName="startDate">
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+    <mat-datepicker #pickerStart></mat-datepicker>
+</mat-form-field><br *ngIf="showFieldForStartDate">
+
+<mat-form-field *ngIf="showFieldForEndDate" appearance="fill">
+    <mat-label>End date</mat-label>
+    <input matInput [matDatepicker]="pickerEnd" name="endDate" placeholder="End Date" formControlName="endDate">
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matSuffix [for]="pickerEnd" ></mat-datepicker-toggle>
+    <mat-datepicker #pickerEnd></mat-datepicker>
+</mat-form-field><br *ngIf="showFieldForEndDate">
+
+<mat-form-field *ngIf="showFieldForSubstitute" appearance="fill" >
+    <mat-label>Substitute</mat-label>
+    <input matInput name="substitute" formControlName="substitute">
+    </mat-form-field><br *ngIf="showFieldForSubstitute">
+
+<input type="file" *ngIf="showFieldForDocument" formControlName="document" placeholder="Upload file" accept=".pdf,.doc,.docx"><br *ngIf="showFieldForDocument">
+
+<button mat-flat-button type="submit" id="create-button" color="accent">Create request</button>
+</form>
