@@ -22,11 +22,7 @@ export class TeamsTableComponent implements OnInit,OnChanges {
 
   ngOnInit(): void {}
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log("Changeees")
-    console.log(changes)
-    console.log(this.teams)
-  }
+  ngOnChanges(changes: SimpleChanges): void {}
   deleteTeam(team:Team){
     this.clickDeleteTeam.emit(team.id)
   }

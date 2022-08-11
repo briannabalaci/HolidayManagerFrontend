@@ -44,8 +44,8 @@ export class TeamManagementComponent implements OnInit {
       if(element.id===teamID)
       {
         this.teamService.deleteTeam(element.id!).subscribe( result => {
-          this.teamService.getAllTeams().subscribe( x => {this.teams = x})
-          this.userService.getAllUsersWithoutTeam().subscribe(x => this.usersWithoutTeam = x)
+              this.teamService.getAllTeams().subscribe( x => {this.teams = x})
+              this.userService.getAllUsersWithoutTeam().subscribe(x => this.usersWithoutTeam = x)
         })
 
       }
@@ -55,7 +55,22 @@ export class TeamManagementComponent implements OnInit {
   viewTeamDetails(team:Team){
     this.showForm = true;
     this.safeForView = true
-    this.teamToView = team
+    this.teamToView = {
+      id:team.id,
+      name:team.name,
+      teamLeader:team.teamLeader
+    }
+  }
+
+  addUserToTeam(user:User){
+    this.usersWithoutTeam.forEach((element, index) => {
+      if (element.id === user.id) this.usersWithoutTeam.splice(index, 1);
+    });
+  }
+
+  deleteUserFromTeam(user:User){
+    if(!this.usersWithoutTeam.includes(user))
+      this.usersWithoutTeam.push(user)
   }
 
 

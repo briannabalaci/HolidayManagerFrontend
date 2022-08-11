@@ -6,11 +6,6 @@ import {Department, Role, User, UserType} from "../../../shared/data-type/User";
 import {UserService} from "../../../service/user.service";
 import {Team} from "../../../shared/data-type/Team";
 
-interface Website {
-  id: string;
-  name: string;
-}
-
 @Component({
   selector: 'app-teamlead-picker',
   templateUrl: './teamlead-picker.component.html',

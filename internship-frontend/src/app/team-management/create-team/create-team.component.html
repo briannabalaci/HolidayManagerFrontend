@@ -22,7 +22,6 @@
       </mat-select>
     </mat-form-field>
   </div>
-  <!--  <app-teamlead-picker [users]="this.users" ></app-teamlead-picker>-->
 
 
   <!--  show the users that have already been added to the team-->
@@ -53,6 +52,6 @@
     </mat-form-field>
   </div>
 
-  <button mat-raised-button color="accent" type="submit" [disabled]="isDisabled"> ADD </button>
+  <button mat-raised-button color="accent" type="submit" > {{addUpdate? 'ADD TEAM':'UPDATE TEAM'}} </button>
 
 </form>
