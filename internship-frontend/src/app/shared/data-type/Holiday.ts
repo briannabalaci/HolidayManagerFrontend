@@ -16,8 +16,8 @@ export class HolidayType {
   }
   export enum RequestType {
     REST,
-    SPECIAL,
-    UNPAID
+    UNPAID,
+    SPECIAL
   }
 export enum HolidayStatus {
   PENDING,
