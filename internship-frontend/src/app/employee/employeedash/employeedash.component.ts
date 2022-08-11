@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { MatSort, Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 export class HolidayType {
   value?: string;
   viewValue?: string;
@@ -30,23 +33,33 @@ const HOLIDAY_DATA: Holiday[] =[
   templateUrl: './employeedash.component.html',
   styleUrls: ['./employeedash.component.scss']
 })
-export class EmployeedashComponent implements OnInit {
+export class EmployeedashComponent implements AfterViewInit {
   public vacationdays = 2;
   endDate = 'Angular';
   startDate = 'Angular';
   substitute = '';
+  constructor(private _liveAnnouncer: LiveAnnouncer) {}
 
-  displayedColumns: string[] = ['Start date', 'End date',  'Status', 'Edit'];
-  dataSource = HOLIDAY_DATA;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
+  announceSortChange(sortState: Sort) {
+    if (sortState.direction) {
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+    } else {
+      this._liveAnnouncer.announce('Sorting cleared');
+    }
+  }
+  displayedColumns: string[] = ['startDate', 'endDate',  'status', 'Edit'];
+  dataSource = new MatTableDataSource(HOLIDAY_DATA);
   holidayList: HolidayType[] = [
     {value: 'all-requests', viewValue: 'All requests'},
     {value: 'rest-holiday', viewValue: 'Rest holidays'},
     {value: 'special-holiday', viewValue: 'Special holiday'},
     {value: 'unpaid-holiday', viewValue: 'Unpaid holiday'}
   ];
-  constructor() { }
-  ngOnInit(): void {
-  }
 
   clearData(): void{
   this.endDate = '';
@@ -63,19 +76,23 @@ export class EmployeedashComponent implements OnInit {
   onChange(deviceValue: any): void{
     switch(deviceValue){
       case 'all-requests': {
-        this.dataSource = HOLIDAY_DATA;
+        this.dataSource = new MatTableDataSource(HOLIDAY_DATA);
+        this.dataSource.sort = this.sort;
         break;
       }
       case 'rest-holiday':{
-        this.dataSource = HOLIDAY_DATA.filter(holiday=>holiday.type ===Type.REST);
+        this.dataSource = new MatTableDataSource(HOLIDAY_DATA.filter(holiday => holiday.type === Type.REST));
+        this.dataSource.sort = this.sort;
         break;
       }
       case 'special-holiday':{
-        this.dataSource = HOLIDAY_DATA.filter(holiday=>holiday.type ===Type.SPECIAL);
+        this.dataSource = new MatTableDataSource(HOLIDAY_DATA.filter(holiday => holiday.type === Type.SPECIAL));
+        this.dataSource.sort = this.sort;
         break;
       }
       case 'unpaid-holiday':{
-        this.dataSource = HOLIDAY_DATA.filter(holiday=>holiday.type ===Type.UNPAID);
+        this.dataSource = new MatTableDataSource(HOLIDAY_DATA.filter(holiday => holiday.type === Type.UNPAID));
+        this.dataSource.sort = this.sort;
         break;
       }
     }

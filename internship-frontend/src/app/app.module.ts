@@ -40,7 +40,7 @@ import { NavBarComponent } from './landing/nav-bar/nav-bar.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {ScrollingModule} from '@angular/cdk/scrolling';
-
+import { MatSortModule } from '@angular/material/sort';
 @NgModule({
 
   declarations: [
@@ -86,7 +86,7 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
     MatDatepickerModule,
     MatNativeDateModule,
     ScrollingModule,
-
+    MatSortModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthentificationInterceptor, multi:true}],
   bootstrap: [AppComponent]

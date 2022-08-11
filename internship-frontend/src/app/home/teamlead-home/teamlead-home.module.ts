@@ -13,6 +13,7 @@ import {Routes} from "@angular/router";
 
 import {TeamleadHomeComponent} from "./teamlead-home.component";
 import { TeamsRequestsComponent } from './teams-requests/teams-requests.component';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 
 const routes: Routes = [
   {
@@ -38,7 +39,8 @@ const routes: Routes = [
     MatTableModule,
     MatIconModule,
     MatListModule,
-    CommonModule
+    CommonModule,
+    MatSortModule
   ]
 })
 export class TeamleadHomeModule { }
