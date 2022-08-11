@@ -39,11 +39,14 @@ export class CreateUserComponent implements OnInit,OnChanges {
   createUser(newUser: User): void{
     
     console.log(newUser);
-    this.adminService.createUser(newUser).subscribe(result=>this.createSignal.emit());
+    this.createSignal.emit();
   }
   updateUser(updUser: UpdateUser): void{
     console.log(updUser);
-    this.adminService.updateUser(updUser).subscribe(result =>this.createSignal.emit());
+    this.adminService.updateUser(updUser).subscribe(result =>console.log(typeof result));
     
+  }
+  cancelUpdate() {
+    this.displayUpdate = false;
   }
 }

@@ -7,7 +7,9 @@
 ::ng-deep .mat-form-field {
     width: 320px;
  }
- 
+ ::ng-deep .mat-checkbox {
+    width: 320px;
+ }
 @media screen and ( max-width: 500px ) {
     ::ng-deep .mat-form-field {
         width: 80%;
@@ -17,6 +19,11 @@
 
 @media screen and ( max-width: 500px ) {
     ::ng-deep .mat-form-field {
+        width: 80%;
+     }
+  }
+  @media screen and ( max-width: 500px ) {
+    ::ng-deep .mat-checkbox {
         width: 80%;
      }
   }

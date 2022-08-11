@@ -25,6 +25,7 @@ interface RoleInt {
   
 export class EditUserFormComponent implements OnInit , OnChanges{
   @Output() clickUpdate = new EventEmitter<UpdateUser>();
+  @Output() cancelUpdate = new EventEmitter<void>();
   @Input()
   userDto!: User;
   boolEditPassword= false;
@@ -129,4 +130,6 @@ updateUser(): void {
     //@ts-ignore
     this.clickUpdate.emit(updUser);
   }
+
+  cancelEdit() {this.cancelUpdate.emit(); };
 }

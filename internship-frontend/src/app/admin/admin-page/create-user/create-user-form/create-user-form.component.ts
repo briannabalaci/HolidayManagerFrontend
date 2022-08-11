@@ -1,5 +1,7 @@
 import { Component,EventEmitter, OnInit,Output, } from '@angular/core';
 import { FormBuilder,Validators } from '@angular/forms';
+import { catchError, map } from 'rxjs';
+import { AdminService } from 'src/app/service/admin.service';
 import { User } from 'src/app/shared/data-type/User';
 
 interface DepartmentInt {
@@ -29,9 +31,7 @@ export class CreateUserFormComponent implements OnInit {
   type_d = "";
   role_d = "";
   department_d = "";
-
-
-
+  showEmailErrorMessage = false;
   departments: DepartmentInt[] = [
     {value: 'JAVA', viewValue: 'Java'},
     {value: 'ABAP', viewValue: 'ABAP'},
@@ -61,16 +61,15 @@ changeType(value: string) {
 }
   createUserForm = this.formBuilder.group({
     
-    email:['',Validators.required],
     password: ['', Validators.required],
-    forName:['',Validators.required],
-    surName:['',Validators.required],
-    
-    nrHolidays:['',Validators.required],
+    email: ['', Validators.required],
+    forName: ['', Validators.required],
+    surName: ['', Validators.required],
+    nrHolidays: ['', Validators.required],
    
     
-  })
-  constructor(private formBuilder:FormBuilder) { 
+  });
+  constructor(private formBuilder:FormBuilder,private adminService: AdminService) { 
  
   }
 
@@ -78,20 +77,44 @@ changeType(value: string) {
   }
   createUser(): void{
     const valuesFromForm = this.createUserForm.value;
+   
     const newUser = {
-      email:valuesFromForm.email,
-    password:valuesFromForm.password,
-    forname:valuesFromForm.forName,
-    surname:valuesFromForm.surName,
-    department: this.department_d,
+      
+    password:valuesFromForm.password||"",
+    forname: valuesFromForm.forName||"",
+    email: valuesFromForm.email||"",
+    surname:valuesFromForm.surName||"",
+    department: this.department_d||"",
     role:this.role_d,
-    nrHolidays:valuesFromForm.nrHolidays,
+    nrHolidays:valuesFromForm.nrHolidays||"",
     type:this.type_d,
 
     }
    
     console.log("ok",newUser);
      //@ts-ignore
-    this.clickCreate.emit(newUser);
+    
+   
+let u:User= Object.assign({}, newUser);
+    this.sendAddUserRequest(u);
+    this.createUserForm.reset();
+    
   }
-}
+  sendAddUserRequest(userDto: User) {
+
+ this.adminService.createUser(userDto).subscribe(results => console.log(results));
+  }
+      /*subscribe(result => {
+      console.log(result);
+      if (result == "The user already exists!") {
+        this.showEmailErrorMessage = true;
+    } });*/
+  /*    map((res: any) => {
+        const events = res.eventList;
+        return events.map(e => new EventLogModel(e));
+      }),
+      catchError(this.handleError);
+    )*/
+     
+  }
+
