@@ -6,8 +6,8 @@ export class HolidayType {
     constructor(value: string, viewvalue: string) { }
   }
   export class Holiday{
-    start_date?: string;
-    end_date?: string;
+    startDate?: string;
+    endDate?: string;
     status?: HolidayStatus;
     document?: number[];
     substitute?:string;

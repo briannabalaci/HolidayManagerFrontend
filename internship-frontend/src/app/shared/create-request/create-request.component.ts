@@ -102,8 +102,9 @@ export class CreateRequestComponent implements OnInit {
         let x = new Uint8Array(buff); 
         const datePipe = new DatePipe('en-US');
         const holidayData:Holiday = {
-          start_date: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
-          end_date: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!,
+          startDate: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
+         // startDate: 'sfsdgsdgsg',
+          endDate: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!,
           status: HolidayStatus.PENDING!,
           substitute: valuesFromForm.substitute!,
           type: hType,
@@ -119,8 +120,8 @@ export class CreateRequestComponent implements OnInit {
     } else {
       const datePipe = new DatePipe('en-US');
         const holidayData:Holiday = {
-          start_date: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
-          end_date: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!,
+          startDate: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
+          endDate: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!,
           status: HolidayStatus.PENDING!,
           substitute: valuesFromForm.substitute!,
           type: hType,
@@ -128,7 +129,7 @@ export class CreateRequestComponent implements OnInit {
             id: uID
           }
         }
-        this.holidayService.createHoliday(holidayData).subscribe(result => {
+      this.holidayService.createHoliday(holidayData).subscribe(result => {
           console.log(result);
         });
     }
