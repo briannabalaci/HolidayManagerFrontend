@@ -9,6 +9,7 @@ export class HolidayType {
     start_date?: string;
     end_date?: string;
     status?: HolidayStatus;
+    document?: number[];
     substitute?:string;
     type?: RequestType;
     user?: User;

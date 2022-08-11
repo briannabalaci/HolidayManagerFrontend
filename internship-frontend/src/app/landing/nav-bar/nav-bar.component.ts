@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {  CookieService } from 'ngx-cookie-service';
+import { parseJwt } from 'src/app/utils/JWTParser';
 
 @Component({
   selector: 'app-nav-bar',
@@ -8,10 +9,14 @@ import {  CookieService } from 'ngx-cookie-service';
   styleUrls: ['./nav-bar.component.scss']
 })
 export class NavBarComponent implements OnInit {
-
+  name = '';
   constructor(private router: Router, private cookieService: CookieService) { }
 
   ngOnInit(): void {
+    const token = this.cookieService.get('Token');
+    if (token) {
+      this.name = parseJwt(token).username;
+    }
   }
   logoutUser(){
     this.cookieService.delete('Token');

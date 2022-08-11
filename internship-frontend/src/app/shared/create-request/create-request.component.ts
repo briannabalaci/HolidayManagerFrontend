@@ -23,8 +23,6 @@ export class CreateRequestComponent implements OnInit {
   })
   @ViewChild('matRef') matRef!: MatSelect;
   @ViewChild('formDirective') private formDirective!: NgForm;
-  @ViewChild('pickerStart', { read: MatInput }) pickerStart!: MatInput;
-  @ViewChild('pickerEnd', { read: MatInput }) pickerEnd!: MatInput;
 
   showFillErrorMessage = false;
   showSuccessfulMessage = false;
@@ -70,6 +68,16 @@ export class CreateRequestComponent implements OnInit {
       }
     }
   }
+  file: File | null = null;
+  onFileInput(files: FileList | null): void {
+    if (files) {
+      this.file = files.item(0);
+      this.fileName = files.item(0)!.name;
+      if (this.file) {
+        console.log("File added!");
+      }
+    }
+  }
   sendHolidayRequest() {
     const valuesFromForm = this.holidayRequestFormGroup.value;
     let hType = RequestType.REST;
@@ -89,26 +97,41 @@ export class CreateRequestComponent implements OnInit {
         break;
       }
     }
-    console.log(valuesFromForm.startDate);
-    const datePipe = new DatePipe('en-US');
-    const holidayData:Holiday = {
-     // startDate: new Date(valuesFromForm.startDate!),
-     // endDate:  new Date(valuesFromForm.endDate!),
-    
-
-      start_date: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
-      end_date: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!,
-      status: HolidayStatus.PENDING!,
-      substitute: valuesFromForm.substitute!,
-      type: hType,
-      user: {
-        id: uID
-      }
+    if (this.file && this.deviceValue == 'special-holiday') {
+      this.file.arrayBuffer().then(buff => {
+        let x = new Uint8Array(buff); 
+        const datePipe = new DatePipe('en-US');
+        const holidayData:Holiday = {
+          start_date: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
+          end_date: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!,
+          status: HolidayStatus.PENDING!,
+          substitute: valuesFromForm.substitute!,
+          type: hType,
+          document: Array.from(x),
+          user: {
+            id: uID
+          }
+        }
+        this.holidayService.createHoliday(holidayData).subscribe(result => {
+          console.log(result);
+        });
+      });
+    } else {
+      const datePipe = new DatePipe('en-US');
+        const holidayData:Holiday = {
+          start_date: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
+          end_date: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!,
+          status: HolidayStatus.PENDING!,
+          substitute: valuesFromForm.substitute!,
+          type: hType,
+          user: {
+            id: uID
+          }
+        }
+        this.holidayService.createHoliday(holidayData).subscribe(result => {
+          console.log(result);
+        });
     }
-    this.holidayService.createHoliday(holidayData).subscribe(result => {
-      console.log('Holiday created');
-      console.log(result);
-    });
   }
   verifyHolidayRequest() {
     const valuesFromForm = this.holidayRequestFormGroup.value;
@@ -119,7 +142,7 @@ export class CreateRequestComponent implements OnInit {
         break;
       }
       case 'special-holiday': {
-        anyFieldIsEmpty = (valuesFromForm.startDate == '' || valuesFromForm.startDate == null || valuesFromForm.endDate == '' || valuesFromForm.endDate == null  || valuesFromForm.substitute == '' || valuesFromForm.document == '');
+        anyFieldIsEmpty = (valuesFromForm.startDate == '' || valuesFromForm.startDate == null || valuesFromForm.endDate == '' || valuesFromForm.endDate == null  || valuesFromForm.substitute == '');
         break;
       }
       case 'unpaid-holiday': {
@@ -130,6 +153,7 @@ export class CreateRequestComponent implements OnInit {
     if (anyFieldIsEmpty) {
       this.showFillErrorMessage = true;
     } else {
+      this.resetWarnings();
       this.sendHolidayRequest();
       this.showSuccessfulMessage = true;
       this.showFieldForStartDate = false;
@@ -137,7 +161,6 @@ export class CreateRequestComponent implements OnInit {
       this.showFieldForSubstitute = false;
       this.showFieldForDocument = false;
       this.clearSelect();
-      this.clearFields();
     }
   }
   resetWarnings(){
@@ -148,8 +171,4 @@ export class CreateRequestComponent implements OnInit {
   clearSelect() {
     this.matRef.options.forEach((data: MatOption) => data.deselect());
   }
-  clearFields() {
-    this.pickerEnd.value = '';
-    this.pickerStart.value = '';
-}
 }

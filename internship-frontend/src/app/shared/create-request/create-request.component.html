@@ -11,7 +11,7 @@
 
 <mat-form-field *ngIf="showFieldForStartDate" appearance="outline" color="accent">
     <input matInput [matDatepicker]="pickerStart" name="startDate" placeholder="Select start date" formControlName="startDate" (click)="resetWarnings()">
-    <mat-datepicker-toggle matSuffix [for]="pickerStart">
+    <mat-datepicker-toggle matSuffix [for]="pickerStart" (click)="resetWarnings()">
         <mat-icon matDatepickerToggleIcon color="accent">calendar_month</mat-icon>
     </mat-datepicker-toggle>
     <mat-datepicker #pickerStart></mat-datepicker>
@@ -19,7 +19,7 @@
 
 <mat-form-field *ngIf="showFieldForEndDate" appearance="outline" color="accent">
     <input matInput [matDatepicker]="pickerEnd" name="endDate" placeholder="Select end date" formControlName="endDate" (click)="resetWarnings()">
-    <mat-datepicker-toggle matSuffix [for]="pickerEnd" >    
+    <mat-datepicker-toggle matSuffix [for]="pickerEnd" (click)="resetWarnings()">   
         <mat-icon matDatepickerToggleIcon color="accent">calendar_month</mat-icon></mat-datepicker-toggle>
     <mat-datepicker #pickerEnd></mat-datepicker>
 </mat-form-field><br *ngIf="showFieldForEndDate">
@@ -30,16 +30,23 @@
 
 <!-- <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload> -->
 <div *ngIf="showFieldForDocument">
-    <input type="file" class="file-input" #fileUpload (click)="resetWarnings()">
+        <!--<input type="file" #fileInput (change)="onFileInput(fileInput.files)" /> -->
+
+    <input type="file" id="file" class="file-input" accept="application/pdf" #fileInput (click)="resetWarnings()" (change)="onFileInput(fileInput.files)"  required>
     <div class="file-upload">
 
-    {{fileName || "Upload your document:"}}
+        {{fileName || "Attach your document."}}
 
-    <button mat-mini-fab color="primary" class="upload-btn"
-    (click)="fileUpload.click()">
+    <button mat-mini-fab *ngIf="!fileName" type="button" color="primary" class="upload-btn"
+    (click)="fileInput.click()">
+        <mat-icon>attach_file</mat-icon>
+    </button>
+    <button mat-mini-fab *ngIf="fileName" type="button" color="green" class="upload-btn"
+    (click)="fileInput.click()">
         <mat-icon>attach_file</mat-icon>
     </button>
     </div>
+
 </div>
 <mat-card class="password-hint" *ngIf="showFillErrorMessage">Please fill out all fields correctly.</mat-card> 
 <mat-card class="password-hint-green" *ngIf="showSuccessfulMessage">Request sent successfully.</mat-card> 
