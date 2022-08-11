@@ -40,8 +40,13 @@ import { NavBarComponent } from './landing/nav-bar/nav-bar.component';
 import { EditUserFormComponent } from './admin/admin-page/create-user/edit-user-form/edit-user-form.component';
 
 import { MatNativeDateModule } from '@angular/material/core';
+<<<<<<< HEAD
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
+=======
+import { MatSortModule } from '@angular/material/sort';
+import { CreateRequestComponent } from './shared/create-request/create-request.component';
+>>>>>>> development
 
 @NgModule({
   declarations: [
@@ -66,9 +71,15 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     CreateUserComponent,
     CreateUserFormComponent,
     AdminComponent,
+<<<<<<< HEAD
     
  NavBarComponent
 
+=======
+   
+ NavBarComponent,
+     CreateRequestComponent
+>>>>>>> development
   ],
   imports: [
     MatNativeDateModule,
@@ -93,7 +104,13 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatListModule,
     TeamleadHomeModule,
     MatCardModule,
+<<<<<<< HEAD
     MatCheckboxModule
+=======
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSortModule
+>>>>>>> development
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthentificationInterceptor, multi:true}],
   bootstrap: [AppComponent]

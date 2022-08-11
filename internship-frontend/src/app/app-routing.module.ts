@@ -12,6 +12,9 @@ import { AdminPageComponent } from './admin/admin-page/admin-page.component';
 import { AuthguardTeamleadService } from './authguards/authguard-teamlead.service';
 import { AuthguardEmployeeService } from './authguards/authguard-employee.service';
 import { AuthguardLoginService } from './authguards/authguard-login.service';
+import {
+  DetailedRequestComponent
+} from "./home/teamlead-home/teams-requests/detailed-request/detailed-request.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -22,6 +25,7 @@ const routes: Routes = [
   { path: 'employee', component: EmployeedashComponent, canActivate:[AuthguardService, AuthguardEmployeeService] },
   { path: 'team-management', component: TeamManagementComponent, canActivate:[AuthguardService, AuthguardAdminService] },
   { path: 'teamlead', component: TeamleadHomeComponent, canActivate:[AuthguardService, AuthguardTeamleadService]},
+  { path: 'teamlead/request-view', component: DetailedRequestComponent, canActivate:[AuthguardService, AuthguardTeamleadService]},
   { path: "**",redirectTo:"login"}
 
 ];

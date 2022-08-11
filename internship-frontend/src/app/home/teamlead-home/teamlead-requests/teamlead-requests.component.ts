@@ -1,33 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {User} from "../../../shared/data-type/User";
+import {TeamleadService} from "../../../service/teamlead.service";
+import {HolidayDto, HolidayTypeDto} from "../../../shared/data-type/HolidayDto";
 
-class RequestsUser {
-  startDate?: string;
-  endDate?: string;
-  type?: string;
+
+export class HolidayTypeView {
+  value?: string;
+  viewValue?: string;
+  constructor(value: string, viewvalue: string) { }
 }
-
-const ELEMENT_DATA: RequestsUser[] = [
-  {
-    startDate: '11.08.2022',
-    endDate: '12.09.2022',
-    type: 'Rest holiday'
-  },
-  {
-    startDate: '11.08.2022',
-    endDate: '12.09.2022',
-    type: 'Rest holiday'
-  },
-  {
-    startDate: '11.08.2022',
-    endDate: '12.09.2022',
-    type: 'Rest holiday'
-  },
-  {
-    startDate: '11.08.2022',
-    endDate: '12.09.2022',
-    type: 'Rest holiday'
-  }
-]
 
 @Component({
   selector: 'app-teamlead-requests',
@@ -36,13 +17,61 @@ const ELEMENT_DATA: RequestsUser[] = [
 })
 export class TeamleadRequestsComponent implements OnInit {
 
-  leftDays = 0;
+
+  nrHolidays: number = 0;
+  user!: User;
   requestsTypes: string[] = ['All request', 'Rest holiday', 'Special holiday', 'Unpaid holiday']
-  // teamLeadRequests?: RequestsUser[];
-  teamLeadRequests = ELEMENT_DATA;
-  constructor() { }
+
+
+  requests!: HolidayDto[];
+  constructor(private teamLeadService: TeamleadService) { }
 
   ngOnInit(): void {
+    this.getAndSetTeamLeadData();
   }
+
+  getAndSetTeamLeadData(){
+    this.teamLeadService.getUser().subscribe(data => {
+      this.user = data;
+
+      this.nrHolidays = +data.nrHolidays!;
+
+      this.populateTeamLeadRequests();
+    })
+  }
+
+  populateTeamLeadRequests(){
+    this.teamLeadService.getTeamLeadsRequests(this.user!.id!).subscribe( data => {
+      this.requests = data;
+    })
+  }
+
+  getFilteredRequests(type: HolidayTypeDto){
+    this.teamLeadService.getRequestsFilteredByType(type, this.user!.id!).subscribe(data => {
+      this.requests = data;
+    })
+  }
+
+  onChange(value: any): void {
+    switch (value){
+      case 'All request': {
+        this.populateTeamLeadRequests();
+        break;
+      }
+      case 'Rest holiday': {
+        this.getFilteredRequests(HolidayTypeDto.REST_HOLIDAY);
+        break;
+      }
+      case 'Special holiday': {
+        this.getFilteredRequests(HolidayTypeDto.SPECIAL_HOLIDAY);
+        break;
+      }
+      case 'Unpaid holiday': {
+        this.getFilteredRequests(HolidayTypeDto.UNPAID_HOLIDAY);
+        break;
+      }
+    }
+  }
+
 
 }

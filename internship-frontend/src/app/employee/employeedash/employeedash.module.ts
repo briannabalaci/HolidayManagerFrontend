@@ -12,6 +12,7 @@ import { Routes } from '@angular/router';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import { EmployeedashComponent } from './employeedash.component';
+import { MatSortModule } from '@angular/material/sort';
 
 const routes: Routes = [
   {
@@ -34,8 +35,7 @@ const routes: Routes = [
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    
-
+    MatSortModule,
     MatInputModule
   ],
   exports:[

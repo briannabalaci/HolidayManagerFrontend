@@ -28,6 +28,20 @@ export class User {
   type?:UserType;
   team?:Team;
 }
+
+export class UserWithTeamId {
+  id?:number;
+  email?:string;
+  password?:string;
+  forname?:string;
+  surname?:string;
+  department?:Department;
+  role?:Role;
+  nrHolidays?:number;
+  type?:UserType;
+  teamId?:number;
+}
+
 export class UpdateUser {
 
   email?: string;

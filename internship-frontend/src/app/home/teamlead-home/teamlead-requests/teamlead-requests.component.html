@@ -1,10 +1,10 @@
 <section class="section-home-teamlead">
-  <mat-label class="section-label">Vacation days left: {{leftDays}}</mat-label>
+  <mat-label class="section-label">Vacation days left: {{nrHolidays}}</mat-label>
 
   <br>
 
   <mat-form-field class="section-dropdown-requests" appearance="fill">
-    <mat-select>
+    <mat-select (selectionChange)="onChange($event.value)">
       <mat-option *ngFor="let request of requestsTypes" [value]="request">
         {{request}}
       </mat-option>
@@ -15,15 +15,16 @@
     <h2 class="section-title">Requests</h2>
   </header>
 
-  <mat-list class="section-list-requests" role="list">
-    <mat-list-item
-      *ngFor = "let request of teamLeadRequests">{{request.startDate}} - {{request.endDate}} - {{request.type}}
-      <button mat-icon-button aria-label="Edit icon" class="section-button--edit">
-        <mat-icon class="section-mat-icon">remove_red_eye</mat-icon>
-      </button>
-    </mat-list-item>
-  </mat-list>
-
+  <div class="section-home-teamlead-container">
+    <mat-list class="section-list-requests" role="list">
+      <mat-list-item
+        *ngFor = "let request of requests">{{request.startDate | date:'longDate' }} - {{request.endDate | date: 'longDate'}} - {{request.type}}
+        <button mat-icon-button aria-label="Edit icon" class="section-button--edit">
+          <mat-icon class="section-mat-icon">remove_red_eye</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </div>
 
   <button class="section-button--create--request" mat-raised-button color="primary">
     Create request
