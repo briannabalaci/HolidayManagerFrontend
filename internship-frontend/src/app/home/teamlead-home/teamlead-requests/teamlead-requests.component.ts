@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from "../../../shared/data-type/User";
 import {TeamleadService} from "../../../service/teamlead.service";
-import {Holiday, HolidayType} from "../../../shared/data-type/Holiday";
+import {HolidayDto, HolidayTypeDto} from "../../../shared/data-type/HolidayDto";
 
 
 export class HolidayTypeView {
@@ -23,7 +23,7 @@ export class TeamleadRequestsComponent implements OnInit {
   requestsTypes: string[] = ['All request', 'Rest holiday', 'Special holiday', 'Unpaid holiday']
 
 
-  requests!: Holiday[];
+  requests!: HolidayDto[];
   constructor(private teamLeadService: TeamleadService) { }
 
   ngOnInit(): void {
@@ -46,7 +46,7 @@ export class TeamleadRequestsComponent implements OnInit {
     })
   }
 
-  getFilteredRequests(type: HolidayType){
+  getFilteredRequests(type: HolidayTypeDto){
     this.teamLeadService.getRequestsFilteredByType(type, this.user!.id!).subscribe(data => {
       this.requests = data;
     })
@@ -59,15 +59,15 @@ export class TeamleadRequestsComponent implements OnInit {
         break;
       }
       case 'Rest holiday': {
-        this.getFilteredRequests(HolidayType.REST_HOLIDAY);
+        this.getFilteredRequests(HolidayTypeDto.REST_HOLIDAY);
         break;
       }
       case 'Special holiday': {
-        this.getFilteredRequests(HolidayType.SPECIAL_HOLIDAY);
+        this.getFilteredRequests(HolidayTypeDto.SPECIAL_HOLIDAY);
         break;
       }
       case 'Unpaid holiday': {
-        this.getFilteredRequests(HolidayType.UNPAID_HOLIDAY);
+        this.getFilteredRequests(HolidayTypeDto.UNPAID_HOLIDAY);
         break;
       }
     }

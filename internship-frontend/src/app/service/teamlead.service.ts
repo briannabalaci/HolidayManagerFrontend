@@ -4,7 +4,7 @@ import {Observable} from "rxjs";
 import {User} from "../shared/data-type/User";
 import {CookieService} from "ngx-cookie-service";
 import {parseJwt} from "../utils/JWTParser";
-import {Holiday, HolidayType} from "../shared/data-type/Holiday";
+import {HolidayDto, HolidayTypeDto} from "../shared/data-type/HolidayDto";
 
 const URL = "http://localhost:8090/teamlead/";
 
@@ -25,19 +25,19 @@ export class TeamleadService {
     return this.httpClient.get(url)
   }
 
-  public getTeamLeadsRequests(id: number): Observable<Holiday[]>{
+  public getTeamLeadsRequests(id: number): Observable<HolidayDto[]>{
     let url = `${GET_REQUESTS}${id}`
-    return this.httpClient.get<Holiday[]>(url);
+    return this.httpClient.get<HolidayDto[]>(url);
   }
 
-  public getTeamRequests(id: number): Observable<Holiday[]>{
+  public getTeamRequests(id: number): Observable<HolidayDto[]>{
     let url = `${GET_TEAM_REQUESTS}${id}`
-    return this.httpClient.get<Holiday[]>(url);
+    return this.httpClient.get<HolidayDto[]>(url);
   }
 
-  public getRequestsFilteredByType(type: HolidayType, id: number): Observable<Holiday[]>{
+  public getRequestsFilteredByType(type: HolidayTypeDto, id: number): Observable<HolidayDto[]>{
     let url = `${GET_REQUESTS_FILTERED}?type=${type}&id=${id}`
-    return this.httpClient.get<Holiday[]>(url);
+    return this.httpClient.get<HolidayDto[]>(url);
   }
 
 }

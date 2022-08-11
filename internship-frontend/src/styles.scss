@@ -25,6 +25,7 @@ $workshop-theme: mat-light-theme((
     primary: $workshop-primary,
     accent: mat-palette($mat-orange),
     warn: $workshop-warn,
+    red: mat-palette($mat-red)
   )
 ));
 
@@ -36,20 +37,8 @@ $workshop-theme: mat-light-theme((
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; background-color: rgb(245, 245, 245); font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.mat-raised-button{
+  color: white !important;
+}

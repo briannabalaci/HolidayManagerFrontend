@@ -1,26 +1,33 @@
 import {User} from "./User";
 
-export enum HolidayType {
-  UNPAID_HOLIDAY = 'UNPAID',
-  REST_HOLIDAY = 'REST',
-  SPECIAL_HOLIDAY = 'SPECIAL'
-}
-
-export enum HolidayStatus {
-  DENIED = 'DENIED',
-  PENDING = 'PENDING',
-  APPROVED = 'APPROVED'
-}
-
-
 export class Holiday{
-  id?:number;
-  startDate?:Date;
-  endDate?:Date;
+  startDate?: string;
+  endDate?: string;
+  status?: HolidayStatus;
+  document?: number[];
   substitute?:string;
-  document?:string;
-  type?:HolidayType;
-  status?:HolidayStatus;
-  details?:string;
-  user!:User;
+  type?: RequestType;
+  user?: User;
+}
+
+export enum RequestType {
+  REST,
+  UNPAID,
+  SPECIAL
+}
+export enum HolidayStatus {
+  PENDING,
+  APPROVED,
+  DENIED
+}
+
+export class HolidayTypeView {
+    value?: string;
+    viewValue?: string;
+    constructor(value: string, viewvalue: string) { }
+}
+export class ReqestStatusView {
+  value?: string;
+  viewValue?: string;
+  constructor(value: string, viewvalue: string) { }
 }

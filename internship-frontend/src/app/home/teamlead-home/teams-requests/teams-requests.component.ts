@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {TeamleadService} from "../../../service/teamlead.service";
-import {Holiday, HolidayStatus, HolidayType} from "../../../shared/data-type/Holiday";
+import {HolidayDto, HolidayStatusDto, HolidayTypeDto} from "../../../shared/data-type/HolidayDto";
 import {User} from "../../../shared/data-type/User";
 import {Team} from "../../../shared/data-type/Team";
 import {LiveAnnouncer} from '@angular/cdk/a11y';
@@ -10,7 +10,8 @@ import {FormControl} from "@angular/forms";
 import {MatPaginator} from "@angular/material/paginator";
 
 
-const ELEMENT_DATA: Holiday[] = []
+const ELEMENT_DATA: HolidayDto[] = []
+
 @Component({
   selector: 'app-teams-requests',
   templateUrl: './teams-requests.component.html',
@@ -39,7 +40,7 @@ export class TeamsRequestsComponent implements AfterViewInit {
 
   }
 
-  createFilter(): (data: Holiday, filter: string) => boolean {
+  createFilter(): (data: HolidayDto, filter: string) => boolean {
     return function (data, filter): boolean {
       let searchTerms = JSON.parse(filter);
       return (data.user.surname + " " + data.user.forname).toLowerCase().indexOf(searchTerms.name) !== -1
@@ -51,30 +52,26 @@ export class TeamsRequestsComponent implements AfterViewInit {
 
     this.getTeamLeaderData();
 
-    this.typeFilter.valueChanges.
-      subscribe(
-        typeFilterValue => {
-                // @ts-ignore
-                this.filteredValues.type = typeFilterValue;
-                this.dataSource.filter = JSON.stringify(this.filteredValues);
-             }
-         );
+    this.typeFilter.valueChanges.subscribe(
+      typeFilterValue => {
+        // @ts-ignore
+        this.filteredValues.type = typeFilterValue;
+        this.dataSource.filter = JSON.stringify(this.filteredValues);
+      }
+    );
 
-    this.nameFilter.valueChanges.
-      subscribe(
-        nameFilterValue => {
-                  // @ts-ignore
-                this.filteredValues.name = nameFilterValue;
-                this.dataSource.filter = JSON.stringify(this.filteredValues);
-            }
-        );
+    this.nameFilter.valueChanges.subscribe(
+      nameFilterValue => {
+        // @ts-ignore
+        this.filteredValues.name = nameFilterValue;
+        this.dataSource.filter = JSON.stringify(this.filteredValues);
+      }
+    );
 
   }
 
 
-
-
-  getTeamLeaderData(){
+  getTeamLeaderData() {
     this.teamLeadService.getUser().subscribe(data => {
 
       this.user = data;
@@ -82,10 +79,10 @@ export class TeamsRequestsComponent implements AfterViewInit {
     })
   }
 
-  populateTeamRequests(){
+  populateTeamRequests() {
     this.teamLeadService.getTeamRequests(this.user!.team!.id!).subscribe(data => {
 
-      this.dataSource = new MatTableDataSource<Holiday>(data);
+      this.dataSource = new MatTableDataSource<HolidayDto>(data);
       this.dataSource.sort = this.sort;
 
       this.dataSource.filterPredicate = this.createFilter();
