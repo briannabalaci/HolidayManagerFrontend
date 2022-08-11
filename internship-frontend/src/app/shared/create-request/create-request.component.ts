@@ -6,7 +6,7 @@ import { MatSelect } from '@angular/material/select';
 import { CookieService } from 'ngx-cookie-service';
 import { HolidayService } from 'src/app/service/holiday.service';
 import { parseJwt } from 'src/app/utils/JWTParser';
-import { Holiday, HolidayStatus, HolidayType, RequestType } from '../data-type/Holiday';
+import { Holiday, HolidayStatus, HolidayTypeView, RequestType } from '../data-type/Holiday';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -34,7 +34,7 @@ export class CreateRequestComponent implements OnInit {
   showFieldForDocument = false;
   deviceValue = '';
   fileName = '';
-  holidayList: HolidayType[] = [
+  holidayList: HolidayTypeView[] = [
     {value: 'rest-holiday', viewValue: 'Rest holiday'},
     {value: 'special-holiday', viewValue: 'Special holiday'},
     {value: 'unpaid-holiday', viewValue: 'Unpaid holiday'}
@@ -96,8 +96,8 @@ export class CreateRequestComponent implements OnInit {
      // endDate:  new Date(valuesFromForm.endDate!),
     
 
-      start_date: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
-      end_date: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!,
+      startDate: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
+      endDate: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!,
       status: HolidayStatus.PENDING!,
       substitute: valuesFromForm.substitute!,
       type: hType,

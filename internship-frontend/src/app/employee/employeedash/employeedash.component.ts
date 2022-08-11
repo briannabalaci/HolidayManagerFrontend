@@ -3,19 +3,14 @@ import { MatTableDataSource } from '@angular/material/table';
 import { CookieService } from 'ngx-cookie-service';
 import { HolidayService } from 'src/app/service/holiday.service';
 import { UserService } from 'src/app/service/user.service';
-import { Holiday, HolidayStatus, HolidayType, RequestType } from 'src/app/shared/data-type/Holiday';
-import { User } from 'src/app/shared/data-type/User';
 import { parseJwt } from 'src/app/utils/JWTParser';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort } from '@angular/material/sort';
+import { Holiday,  HolidayStatus,  HolidayTypeView, ReqestStatusView } from 'src/app/shared/data-type/Holiday';
+import { DatePipe } from '@angular/common';
 
 // TO DO: move new data type in a separate folder
-const HOLIDAY_DATA: Holiday[] =[ /*
-  {startDate: new Date(1995, 11, 17),endDate: new Date(1995, 11, 17), status: HolidayStatus.PENDING, type: RequestType.REST, substitute: 'Andor' },
-  {startDate: new Date(2010, 12, 17),endDate: new Date(2010, 12, 27), status: HolidayStatus.PENDING, type: RequestType.SPECIAL, substitute: 'Brianna'},
-  {startDate: new Date(2022, 8, 17),endDate: new Date(2022, 8, 25), status: HolidayStatus.PENDING, type: RequestType.UNPAID, substitute: 'Tara'},
-  {startDate: new Date(2021, 1, 13),endDate: new Date(2021, 2, 1), status: HolidayStatus.PENDING, type: RequestType.REST, substitute: 'Alexandra'}
-*/
+const HOLIDAY_DATA: Holiday[] =[ 
 ];
 
 @Component({
@@ -24,25 +19,48 @@ const HOLIDAY_DATA: Holiday[] =[ /*
   styleUrls: ['./employeedash.component.scss']
 })
 export class EmployeedashComponent implements AfterViewInit {
+  
   showFormCreateRequest = false;
   public vacationdays = 2;
   endDate = 'Angular';
   startDate = 'Angular';
   substitute = '';
+  displayedColumns: string[] = ['startDate', 'endDate',  'status', 'Edit'];
+  dataSource = new MatTableDataSource(HOLIDAY_DATA);
+  holidayList: HolidayTypeView[] = [
+    {value: 'all-requests', viewValue: 'All requests'},
+    {value: 'rest-holiday', viewValue: 'Rest holidays'},
+    {value: 'special-holiday', viewValue: 'Special holiday'},
+    {value: 'unpaid-holiday', viewValue: 'Unpaid holiday'}
+  ];
+  statusList: ReqestStatusView[] = [
+    {value: 'ALL', viewValue: 'All statuses'},
+    {value: 'PENDING', viewValue: 'Pending'},
+    {value: 'APPROVED', viewValue: 'Approved'},
+    {value: 'DENIED', viewValue: 'Denied'}
+  ]
+  selected = this.holidayList[0].value;
+  selected2 = this.statusList[0].value;
   constructor(private _liveAnnouncer: LiveAnnouncer, private holidayService:HolidayService, private cookieService: CookieService, private userService: UserService) {}
 
-  holidays?: Holiday[];
-
+  holidays?: Holiday[] = HOLIDAY_DATA;
+  sortedTable?: Holiday[];
   @ViewChild(MatSort) sort!: MatSort;
 
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
     const tk = this.cookieService.get('Token');
 
     const email: String = parseJwt(tk).username;
     const id: number = parseJwt(tk).id;
-    console.log(email);
     this.holidayService.getAllHolidaysById(id).forEach(x => console.log(x));
+    var datePipe = new DatePipe('en-US');
+    this.holidayService.getAllHolidaysById(id).subscribe(data => {
+      this.holidays = data;
+      console.log(this.holidays);
+      this.dataSource = new MatTableDataSource(this.holidays);
+      this.dataSource.sort = this.sort;
+    });
+    console.log(this.holidays?.filter(holiday => holiday.status === HolidayStatus.PENDING))
   }
   announceSortChange(sortState: Sort) {
     if (sortState.direction) {
@@ -51,14 +69,7 @@ export class EmployeedashComponent implements AfterViewInit {
       this._liveAnnouncer.announce('Sorting cleared');
     }
   }
-  displayedColumns: string[] = ['startDate', 'endDate',  'status', 'Edit'];
-  dataSource = new MatTableDataSource(HOLIDAY_DATA);
-  holidayList: HolidayType[] = [
-    {value: 'all-requests', viewValue: 'All requests'},
-    {value: 'rest-holiday', viewValue: 'Rest holidays'},
-    {value: 'special-holiday', viewValue: 'Special holiday'},
-    {value: 'unpaid-holiday', viewValue: 'Unpaid holiday'}
-  ];
+
 
   clearData(): void{
   this.endDate = '';
@@ -72,30 +83,68 @@ export class EmployeedashComponent implements AfterViewInit {
     this.substitute = row.substitute;
   }
 
-  onChange(deviceValue: any): void{
+  filterByType(deviceValue: any, table: Holiday[] | undefined): Holiday[] | undefined{
     switch(deviceValue){
       case 'all-requests': {
-        this.dataSource = new MatTableDataSource(HOLIDAY_DATA);
-        this.dataSource.sort = this.sort;
-        break;
+        return table;
       }
-      case 'rest-holiday':{
-        this.dataSource = new MatTableDataSource(HOLIDAY_DATA.filter(holiday => holiday.type === RequestType.REST));
+      case 'rest-holiday': {
+        table = table?.filter(holiday => holiday.type?.toString() === "REST");
         this.dataSource.sort = this.sort;
-        break;
+        return table;
       }
-      case 'special-holiday':{
-        this.dataSource = new MatTableDataSource(HOLIDAY_DATA.filter(holiday => holiday.type === RequestType.SPECIAL));
-        this.dataSource.sort = this.sort;
-        break;
+      case 'special-holiday': {
+        table = table?.filter(holiday => holiday.type?.toString() === "SPECIAL");
+        return table;
       }
-      case 'unpaid-holiday':{
-        this.dataSource = new MatTableDataSource(HOLIDAY_DATA.filter(holiday => holiday.type === RequestType.UNPAID));
-        this.dataSource.sort = this.sort;
-        break;
+      case 'unpaid-holiday': {
+        table = table?.filter(holiday => holiday.type?.toString() === "UNPAID");
+        return table;
+      }
+        
+    }
+    return table;
+  }
+
+
+  filterByStatus(deviceValue: any, table: Holiday[] | undefined): Holiday[] | undefined{
+    switch(deviceValue){
+      case 'ALL': {
+        return table;
+      }
+      case 'PENDING': {
+        table = table?.filter(holiday => holiday.status?.toString() === 'PENDING');
+        return table;
+      }
+      case 'APPROVED': {
+        table = table?.filter(holiday => holiday.status?.toString() === 'APPROVED');
+        return table;
+      }
+      case 'DENIED': {
+        table = table?.filter(holiday => holiday.status?.toString() === 'DENIED');
+        return table;
       }
     }
+    return table;
   }
+  changefilterStatus(filterstat: any): void {
+    this.selected2 = filterstat;
+    this.applyFilters(this.selected2, this.selected);
+    
+  }
+  changefilterType(filterstat: any): void {
+    this.selected = filterstat;
+    this.applyFilters(this.selected2, this.selected);
+  }
+  applyFilters(filterStatus: any, filterType: any): void{
+    this.sortedTable = this.holidays;
+    this.sortedTable = this.filterByStatus(filterStatus, this.sortedTable);
+    this.sortedTable = this.filterByType(filterType, this.sortedTable);
+    this.dataSource = new MatTableDataSource(this.sortedTable);
+    this.dataSource.sort = this.sort;
+  }
+
+  
 }
 
 

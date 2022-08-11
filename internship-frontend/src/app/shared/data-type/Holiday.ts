@@ -1,13 +1,18 @@
 import { User } from "./User";
 
-export class HolidayType {
+export class HolidayTypeView {
     value?: string;
     viewValue?: string;
     constructor(value: string, viewvalue: string) { }
-  }
+}
+export class ReqestStatusView {
+  value?: string;
+  viewValue?: string;
+  constructor(value: string, viewvalue: string) { }
+}
   export class Holiday{
-    start_date?: string;
-    end_date?: string;
+    startDate?: string;
+    endDate?: string;
     status?: HolidayStatus;
     substitute?:string;
     type?: RequestType;
