@@ -1,11 +1,10 @@
 import {User} from "./User";
 
 export enum HolidayType {
-  UNPAID_HOLIDAY = 'UNPAID_HOLIDAY',
-  REST_HOLIDAY = 'REST_HOLIDAY',
-  SPECIAL_HOLIDAY = 'SPECIAL_HOLIDAY'
+  UNPAID_HOLIDAY = 'UNPAID',
+  REST_HOLIDAY = 'REST',
+  SPECIAL_HOLIDAY = 'SPECIAL'
 }
-
 
 export enum HolidayStatus {
   DENIED = 'DENIED',

@@ -15,3 +15,34 @@
   text-align: left;
 }
 
+
+.mat-header-cell {
+  flex-direction: column;
+  justify-content: center;
+}
+
+.mat-cell {
+  text-align: center;
+  justify-content:center;
+}
+
+.mat-form-field {
+  //font-size: 14px;
+  width: 40%;
+}
+
+/* Structure */
+table {
+  width: 100%;
+}
+
+.mat-column-name {
+  max-width: 100px;
+}
+
+//
+//.filter{
+//  padding-top: 50px;
+//  margin-left: -50px;
+//}
+

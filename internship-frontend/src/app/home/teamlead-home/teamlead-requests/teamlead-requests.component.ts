@@ -1,17 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {User} from "../../../shared/data-type/User";
 import {TeamleadService} from "../../../service/teamlead.service";
 import {Holiday, HolidayType} from "../../../shared/data-type/Holiday";
 
 
-class RequestsUser {
-  startDate?: Date;
-  endDate?: Date;
-  type?: HolidayType;
+export class HolidayTypeView {
+  value?: string;
+  viewValue?: string;
+  constructor(value: string, viewvalue: string) { }
 }
-
-const ELEMENT_DATA: RequestsUser[] = [
-]
 
 @Component({
   selector: 'app-teamlead-requests',
@@ -25,27 +22,56 @@ export class TeamleadRequestsComponent implements OnInit {
   user!: User;
   requestsTypes: string[] = ['All request', 'Rest holiday', 'Special holiday', 'Unpaid holiday']
 
+
   requests!: Holiday[];
-  teamLeadRequests = ELEMENT_DATA;
   constructor(private teamLeadService: TeamleadService) { }
 
   ngOnInit(): void {
+    this.getAndSetTeamLeadData();
+  }
+
+  getAndSetTeamLeadData(){
     this.teamLeadService.getUser().subscribe(data => {
       this.user = data;
 
       this.nrHolidays = +data.nrHolidays!;
 
-      this.teamLeadService.getTeamLeadsRequests(this.user!.id!).subscribe( data => {
-        this.requests = data;
-        this.convertData();
-      })
+      this.populateTeamLeadRequests();
     })
-
-
   }
 
-  convertData(){
-    this.teamLeadRequests = this.requests.map(obj => {return {startDate: obj.startDate, endDate: obj.endDate, type: obj.type}});
+  populateTeamLeadRequests(){
+    this.teamLeadService.getTeamLeadsRequests(this.user!.id!).subscribe( data => {
+      this.requests = data;
+    })
   }
+
+  getFilteredRequests(type: HolidayType){
+    this.teamLeadService.getRequestsFilteredByType(type, this.user!.id!).subscribe(data => {
+      this.requests = data;
+    })
+  }
+
+  onChange(value: any): void {
+    switch (value){
+      case 'All request': {
+        this.populateTeamLeadRequests();
+        break;
+      }
+      case 'Rest holiday': {
+        this.getFilteredRequests(HolidayType.REST_HOLIDAY);
+        break;
+      }
+      case 'Special holiday': {
+        this.getFilteredRequests(HolidayType.SPECIAL_HOLIDAY);
+        break;
+      }
+      case 'Unpaid holiday': {
+        this.getFilteredRequests(HolidayType.UNPAID_HOLIDAY);
+        break;
+      }
+    }
+  }
+
 
 }

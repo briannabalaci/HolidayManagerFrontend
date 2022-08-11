@@ -13,9 +13,7 @@
 .section-dropdown-requests{
   display: block;
   margin-left: 20px;
-  //text-align: left;
   width: 40%;
-  //height: 40%;
 }
 
 .section-title{
@@ -39,6 +37,12 @@
   margin-left: 20px;
 }
 
+.section-home-teamlead-container .section-list-requests{
+  overflow-y: auto;
+  overflow-x: hidden;
+  height:200px;
+  width:100%;
+}
 
 h2{
   font-size: 20px;

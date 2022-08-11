@@ -1,0 +1,66 @@
+<section class="section-detailed-request">
+
+  <header>
+    <h2 class="section-title">Request View</h2>
+  </header>
+
+  <div class="input-container">
+    <mat-label>Name: </mat-label>
+
+    <mat-form-field class="example-full-width" appearance="fill">
+      <input matInput placeholder="Ex. John Doe" value="">
+    </mat-form-field>
+  </div>
+
+  <div class="input-container">
+    <mat-label>Type: </mat-label>
+
+    <mat-form-field class="example-full-width" appearance="fill">
+      <input matInput placeholder="Ex. Special" value="">
+    </mat-form-field>
+  </div>
+
+  <div class="input-container">
+    <mat-label>Start date: </mat-label>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Choose a date</mat-label>
+      <input matInput [matDatepicker]="pickerStart">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+      <mat-datepicker #pickerStart></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+
+  <div class="input-container">
+    <mat-label>End date: </mat-label>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Choose a date</mat-label>
+      <input matInput [matDatepicker]="pickerEnd">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+      <mat-datepicker #pickerEnd></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div class="input-container">
+    <mat-label>Substitute: </mat-label>
+
+    <mat-form-field class="example-full-width" appearance="fill">
+      <input matInput placeholder="Ex. John Doe" value="">
+    </mat-form-field>
+  </div>
+
+  <div class="button-container">
+    <button class="btn-mat" mat-raised-button color="primary">Approve</button>
+
+    <button class="btn-mat" mat-raised-button color="primary">Back</button>
+
+    <button class="btn-mat" mat-raised-button color="primary">Decline</button>
+
+    <button class="btn-mat" mat-raised-button color="primary">More details</button>
+  </div>
+
+</section>

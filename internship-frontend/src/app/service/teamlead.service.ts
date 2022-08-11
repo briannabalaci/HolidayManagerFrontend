@@ -4,11 +4,14 @@ import {Observable} from "rxjs";
 import {User} from "../shared/data-type/User";
 import {CookieService} from "ngx-cookie-service";
 import {parseJwt} from "../utils/JWTParser";
-import {Holiday} from "../shared/data-type/Holiday";
+import {Holiday, HolidayType} from "../shared/data-type/Holiday";
 
-const GET_USER = "http://localhost:8090/teamlead/get-user?email=";
-const GET_REQUESTS = "http://localhost:8090/teamlead/get-requests?id=";
-const GET_TEAM_REQUESTS = "http://localhost:8090/teamlead/get-team-requests?id=";
+const URL = "http://localhost:8090/teamlead/";
+
+const GET_USER = `${URL}user?email=`;
+const GET_REQUESTS = `${URL}requests?id=`;
+const GET_TEAM_REQUESTS = `${URL}team-requests?id=`;
+const GET_REQUESTS_FILTERED = `${URL}requests-filtered-by`;
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +32,11 @@ export class TeamleadService {
 
   public getTeamRequests(id: number): Observable<Holiday[]>{
     let url = `${GET_TEAM_REQUESTS}${id}`
+    return this.httpClient.get<Holiday[]>(url);
+  }
+
+  public getRequestsFilteredByType(type: HolidayType, id: number): Observable<Holiday[]>{
+    let url = `${GET_REQUESTS_FILTERED}?type=${type}&id=${id}`
     return this.httpClient.get<Holiday[]>(url);
   }
 
