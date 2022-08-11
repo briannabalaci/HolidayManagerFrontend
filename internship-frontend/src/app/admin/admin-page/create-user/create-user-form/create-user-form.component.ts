@@ -23,7 +23,7 @@ interface UserTypeInt {
   templateUrl: './create-user-form.component.html',
   styleUrls: ['./create-user-form.component.scss']
 })
-  
+
 export class CreateUserFormComponent implements OnInit {
   @Output() clickCreate =new EventEmitter<User>();
   hide = true;
@@ -32,6 +32,7 @@ export class CreateUserFormComponent implements OnInit {
   role_d = "";
   department_d = "";
   showEmailErrorMessage = false;
+  showEmailOkMessage = false;
   departments: DepartmentInt[] = [
     {value: 'JAVA', viewValue: 'Java'},
     {value: 'ABAP', viewValue: 'ABAP'},
@@ -80,13 +81,13 @@ changeType(value: string) {
    
     const newUser = {
       
-    password:valuesFromForm.password||"",
-    forname: valuesFromForm.forName||"",
-    email: valuesFromForm.email||"",
-    surname:valuesFromForm.surName||"",
-    department: this.department_d||"",
+    password:valuesFromForm.password,
+    forname: valuesFromForm.forName,
+    email: valuesFromForm.email,
+    surname:valuesFromForm.surName,
+    department: this.department_d,
     role:this.role_d,
-    nrHolidays:valuesFromForm.nrHolidays||"",
+    nrHolidays:valuesFromForm.nrHolidays,
     type:this.type_d,
 
     }
@@ -97,12 +98,20 @@ changeType(value: string) {
    
 let u:User= Object.assign({}, newUser);
     this.sendAddUserRequest(u);
+    
     this.createUserForm.reset();
     
   }
+  resetWarnings() {
+    this.showEmailErrorMessage = false;
+    this.showEmailOkMessage=false
+  }
   sendAddUserRequest(userDto: User) {
 
- this.adminService.createUser(userDto).subscribe(results => console.log(results));
+    this.adminService.createUser(userDto).subscribe(results => {
+      console.log(JSON.stringify(results));
+      if (JSON.stringify(results) === "User created succesfully!") { this.showEmailOkMessage = true; }
+      if(JSON.stringify(results)==="The user already exists!"){ this.showEmailErrorMessage = true; }  });
   }
       /*subscribe(result => {
       console.log(result);
