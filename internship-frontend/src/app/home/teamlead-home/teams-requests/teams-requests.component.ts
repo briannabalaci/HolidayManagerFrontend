@@ -3,7 +3,6 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
-
 export class RequestsTeamMembers {
   name?: string;
   startDate?: string;

@@ -32,7 +32,6 @@ import { EditUserComponent } from './admin/admin-page/edit-user/edit-user.compon
 import { UserListComponent } from './admin/admin-page/user-list/user-list.component';
 import { AdminComponent } from './admin/admin.component';
 import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
-import { TeamleadPickerComponent } from './team-management/create-team/teamlead-picker/teamlead-picker.component';
 import { AdminModule } from './admin/admin.module';
 import { AdminPageComponent } from './admin/admin-page/admin-page.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -41,6 +40,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import { MatSortModule } from '@angular/material/sort';
+import { CreateRequestComponent } from './shared/create-request/create-request.component';
+import {TeamleadPickerComponent} from "./team-management/create-team/teamlead-picker/teamlead-picker.component";
+
 @NgModule({
 
   declarations: [
@@ -61,7 +63,8 @@ import { MatSortModule } from '@angular/material/sort';
     CreateUserFormComponent,
     AdminComponent,
     TeamleadPickerComponent,
-    NavBarComponent
+    NavBarComponent,
+    CreateRequestComponent
   ],
   imports: [
     BrowserModule,

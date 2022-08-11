@@ -1,3 +1,5 @@
 <nav>
-    <button mat-button type="submit" id="form-button" (click)="logoutUser()" color="accent">Logout</button>
+    <button mat-button type="button" id="nav-bar-profile-button" (click)="redirectUser()" color="white"><mat-icon matPrefix id="nav-bar-profile">home</mat-icon></button>
+    <p id="username">{{name}}</p>
+    <button mat-button type="submit" id="nav-bar-button" (click)="logoutUser()" color="white"><mat-icon matPrefix id="nav-bar-logout">logout</mat-icon></button>
 </nav>
