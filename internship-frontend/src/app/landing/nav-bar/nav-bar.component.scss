@@ -6,12 +6,31 @@ nav {
     padding-bottom: 8px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
     z-index: 99;
-    text-align: right;
+    display: flex;
     margin-bottom: 18px;
+    justify-content: space-between;
+    
 }
 #nav-bar-button {
     margin-right: 8px;
+    vertical-align:middle;
 }
+#nav-bar-profile-button {
+    margin-left: 8px;
+    vertical-align:middle;
+}
+
 .mat-white {
     color: white;
+}
+#username {
+    margin-top: 14px;
+    color:white;
+    font-weight: bold;
+}
+#username-icon {
+    margin-top: 8px;
+    margin-left: 14px;
+    color:white;
+    vertical-align:middle;
 }

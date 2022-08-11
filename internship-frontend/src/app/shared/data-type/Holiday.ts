@@ -14,14 +14,15 @@ export class ReqestStatusView {
     startDate?: string;
     endDate?: string;
     status?: HolidayStatus;
+    document?: number[];
     substitute?:string;
     type?: RequestType;
     user?: User;
   }
   export enum RequestType {
     REST,
-    SPECIAL,
-    UNPAID
+    UNPAID,
+    SPECIAL
   }
 export enum HolidayStatus {
   PENDING,
