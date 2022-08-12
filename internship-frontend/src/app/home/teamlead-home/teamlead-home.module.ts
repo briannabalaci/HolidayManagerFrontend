@@ -26,15 +26,11 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    TeamleadRequestsComponent,
-    TeamsRequestsComponent,
-    DetailedRequestComponent
+    // TeamleadRequestsComponent,
+    // TeamsRequestsComponent,
+    // DetailedRequestComponent
   ],
   exports: [
-    TeamleadRequestsComponent,
-    TeamsRequestsComponent,
-    MatFormFieldModule,
-    MatInputModule
   ],
   imports: [
     MatButtonModule,

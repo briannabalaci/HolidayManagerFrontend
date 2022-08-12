@@ -4,12 +4,6 @@ import {TeamleadService} from "../../../service/teamlead.service";
 import {HolidayDto, HolidayTypeDto} from "../../../shared/data-type/HolidayDto";
 
 
-export class HolidayTypeView {
-  value?: string;
-  viewValue?: string;
-  constructor(value: string, viewvalue: string) { }
-}
-
 @Component({
   selector: 'app-teamlead-requests',
   templateUrl: './teamlead-requests.component.html',
@@ -17,7 +11,7 @@ export class HolidayTypeView {
 })
 export class TeamleadRequestsComponent implements OnInit {
 
-
+  showFormCreateRequest = false;
   nrHolidays: number = 0;
   user!: User;
   requestsTypes: string[] = ['All request', 'Rest holiday', 'Special holiday', 'Unpaid holiday']

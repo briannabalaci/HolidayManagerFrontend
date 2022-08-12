@@ -39,16 +39,21 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSortModule } from '@angular/material/sort';
 import { CreateRequestComponent } from './shared/create-request/create-request.component';
+import {TeamleadRequestsComponent} from "./home/teamlead-home/teamlead-requests/teamlead-requests.component";
+import {TeamsRequestsComponent} from "./home/teamlead-home/teams-requests/teams-requests.component";
+import {
+  DetailedRequestComponent
+} from "./home/teamlead-home/teams-requests/detailed-request/detailed-request.component";
 
 @NgModule({
   declarations: [
+    TeamsRequestsComponent,
+    DetailedRequestComponent,
+    TeamleadRequestsComponent,
     AppComponent,
     EmployeedashComponent,
     LoginPanelComponent,
-   
     LoginResetFormComponent,
- 
-   
     TeamManagementComponent,
     TeamsTableComponent,
     CreateTeamComponent,
@@ -61,9 +66,8 @@ import { CreateRequestComponent } from './shared/create-request/create-request.c
     CreateUserComponent,
     CreateUserFormComponent,
     AdminComponent,
-   
- NavBarComponent,
-     CreateRequestComponent
+    NavBarComponent,
+    CreateRequestComponent
   ],
   imports: [
     BrowserModule,
@@ -83,13 +87,15 @@ import { CreateRequestComponent } from './shared/create-request/create-request.c
     LoginPanelModule,
     HttpClientModule,
     MatListModule,
-    TeamleadHomeModule,
     MatCardModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSortModule
+    MatSortModule,
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthentificationInterceptor, multi:true}],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthentificationInterceptor, multi: true}],
+  exports: [
+    CreateRequestComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
