@@ -29,7 +29,7 @@ export class CreateRequestComponent implements OnInit {
   @ViewChild('formDirective') private formDirective!: NgForm;
   @Input() refreshData!: Function;
 
-  updating = true;
+  updating = false;
 
   showFillErrorMessage = false;
   showSuccessfulMessage = false;
