@@ -48,7 +48,6 @@ export class CreateTeamComponent implements OnInit,OnChanges {
   constructor(private formBuilder: FormBuilder, private teamService:TeamService) { }
 
   ngOnInit(): void {
-
     this.filteredUsers = this.usersWithoutTeam.slice()
     this.userFilteredControl.valueChanges
       .pipe(takeUntil(this._onDestroy))
@@ -124,7 +123,6 @@ export class CreateTeamComponent implements OnInit,OnChanges {
     }
   }
 
-
   protected filterUsers() {
     if (!this.usersWithoutTeam) return
 
@@ -138,7 +136,6 @@ export class CreateTeamComponent implements OnInit,OnChanges {
 
     this.filteredUsers =
       this.usersWithoutTeam.filter(user => (user.forname + " " + user.surname).toLowerCase().indexOf(search) > -1)
-
   }
 
 

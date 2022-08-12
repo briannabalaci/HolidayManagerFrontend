@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EmployeedashComponent } from './employee/employeedash/employeedash.component';
@@ -27,24 +28,23 @@ import {MatCardModule} from '@angular/material/card';
 import { AuthentificationInterceptor } from './service/authentification.interceptor';
 import { CreateUserFormComponent } from './admin/admin-page/create-user/create-user-form/create-user-form.component';
 import { CreateUserComponent } from './admin/admin-page/create-user/create-user.component';
-import { EditUserFormComponent } from './admin/admin-page/edit-user/edit-user-form/edit-user-form.component';
-import { EditUserComponent } from './admin/admin-page/edit-user/edit-user.component';
-import { UserListComponent } from './admin/admin-page/user-list/user-list.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { DialogOverviewExampleDialog, UserListComponent } from './admin/admin-page/user-list/user-list.component';
 import { AdminComponent } from './admin/admin.component';
 import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
 import { AdminModule } from './admin/admin.module';
 import { AdminPageComponent } from './admin/admin-page/admin-page.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NavBarComponent } from './landing/nav-bar/nav-bar.component';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import { EditUserFormComponent } from './admin/admin-page/create-user/edit-user-form/edit-user-form.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import { MatSortModule } from '@angular/material/sort';
 import { CreateRequestComponent } from './shared/create-request/create-request.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import {TeamleadPickerComponent} from "./team-management/create-team/teamlead-picker/teamlead-picker.component";
-import { ConfirmationDialogBoxComponent } from './confirmation-dialog-box/confirmation-dialog-box.component';
-import {MatDialog, MatDialogModule} from "@angular/material/dialog";
-
+import {ConfirmationDialogBoxComponent} from "./confirmation-dialog-box/confirmation-dialog-box.component";
 @NgModule({
 
   declarations: [
@@ -59,7 +59,6 @@ import {MatDialog, MatDialogModule} from "@angular/material/dialog";
     LoginFormComponent,
     AdminPageComponent,
     UserListComponent,
-    EditUserComponent,
     EditUserFormComponent,
     CreateUserComponent,
     CreateUserFormComponent,
@@ -67,9 +66,12 @@ import {MatDialog, MatDialogModule} from "@angular/material/dialog";
     TeamleadPickerComponent,
     NavBarComponent,
     CreateRequestComponent,
-    ConfirmationDialogBoxComponent
+    ConfirmationDialogBoxComponent,
+    DialogOverviewExampleDialog
   ],
   imports: [
+    MatNativeDateModule,
+    MatDialogModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -88,12 +90,18 @@ import {MatDialog, MatDialogModule} from "@angular/material/dialog";
     MatListModule,
     TeamleadHomeModule,
     MatCardModule,
-    NgxMatSelectSearchModule,
-    MatDatepickerModule,
+    MatCheckboxModule,
     MatNativeDateModule,
-    ScrollingModule,
     MatSortModule,
-    MatDialogModule,
+    BrowserAnimationsModule,
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    MatNativeDateModule,
+    ReactiveFormsModule,
+    NgxMatSelectSearchModule,
+    ScrollingModule,
+    MatDatepickerModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthentificationInterceptor, multi:true}],
   bootstrap: [AppComponent]
