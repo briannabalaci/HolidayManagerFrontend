@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, NgForm, Validators } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
 import { MatInput } from '@angular/material/input';
@@ -9,6 +9,7 @@ import { parseJwt } from 'src/app/utils/JWTParser';
 import {HolidayTypeView, RequestType, HolidayStatus, Holiday} from '../data-type/Holiday';
 import { DatePipe } from '@angular/common';
 import {User} from "../data-type/User";
+import { EventEmitter } from 'stream';
 
 
 @Component({
@@ -26,6 +27,9 @@ export class CreateRequestComponent implements OnInit {
   })
   @ViewChild('matRef') matRef!: MatSelect;
   @ViewChild('formDirective') private formDirective!: NgForm;
+  @Input() refreshData!: Function;
+
+  updating = true;
 
   showFillErrorMessage = false;
   showSuccessfulMessage = false;
@@ -117,6 +121,8 @@ export class CreateRequestComponent implements OnInit {
           }
         }
         this.holidayService.createHoliday(holidayData).subscribe(result => {
+          // Call parent's function to refresh table.
+          this.refreshData();
           console.log(result);
         });
       });
@@ -133,6 +139,8 @@ export class CreateRequestComponent implements OnInit {
           }
         }
       this.holidayService.createHoliday(holidayData).subscribe(result => {
+          // Call parent's function to refresh table.
+          this.refreshData();
           console.log(result);
         });
     }

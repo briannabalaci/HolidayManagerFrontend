@@ -43,35 +43,16 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
 <br>
+
 <div class="div-holiday-request">
   <mat-card class="bg-card">
-    <app-create-request *ngIf="showFormCreateRequest"></app-create-request>
+    <app-create-request *ngIf="showFormCreateRequest" [refreshData]="refreshDataFunc"></app-create-request>
     <button mat-button color="accent" type="button" (click)="showFormCreateRequest = !showFormCreateRequest" id="form-button">{{showFormCreateRequest? "Close" : "Create new request"}}</button>
   </mat-card>
 </div>
 <br><br>
+<footer>
+  
+</footer>
 
 
-<!-- TO DO TO DO TO DO -->
-<!-- inlocuieste break urile cu display flex -->
-<mat-form-field  appearance="fill">
-    <mat-label>Start date</mat-label>
-    <input matInput [matDatepicker]="pickerStart" [(ngModel)]="startDate" name="startDate"  placeholder="Start Date">
-    <mat-hint>MM/DD/YYYY</mat-hint>
-    <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
-    <mat-datepicker #pickerStart></mat-datepicker>
-</mat-form-field><br>
-<mat-form-field appearance="fill">
-  <mat-label>End date</mat-label>
-  <input matInput [matDatepicker]="pickerEnd" [(ngModel)]="endDate" name="endDate" placeholder="End Date">
-  <mat-hint>MM/DD/YYYY</mat-hint>
-  <mat-datepicker-toggle matSuffix [for]="pickerEnd" ></mat-datepicker-toggle>
-  <mat-datepicker #pickerEnd></mat-datepicker>
-</mat-form-field><br>
-<mat-form-field appearance="fill" >
-  <mat-label>Substitute</mat-label>
-  <input matInput [(ngModel)]="substitute" name="substitute" >
-</mat-form-field><br>
-<button mat-flat-button color="accent" (click)="clearData()">Cancel</button>
-<button mat-flat-button color="accent">Send/Update</button><br>
-<button mat-flat-button color="accent">Send to HR</button>
