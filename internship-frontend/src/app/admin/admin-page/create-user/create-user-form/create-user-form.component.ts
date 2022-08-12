@@ -63,7 +63,7 @@ changeType(value: string) {
   createUserForm = this.formBuilder.group({
     
     password: ['', Validators.required],
-    email: ['', Validators.required],
+    email: ['', Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")],
     forName: ['', Validators.required],
     surName: ['', Validators.required],
     nrHolidays: ['', Validators.required],
@@ -78,7 +78,7 @@ changeType(value: string) {
   }
   createUser(): void{
     const valuesFromForm = this.createUserForm.value;
-   
+  
     const newUser = {
       
     password:valuesFromForm.password,
@@ -96,11 +96,13 @@ changeType(value: string) {
      //@ts-ignore
     
    
-let u:User= Object.assign({}, newUser);
-    this.sendAddUserRequest(u);
+    let u: User = Object.assign({}, newUser);
+    if (!this.createUserForm.invalid) {
+      this.sendAddUserRequest(u);
     
-    this.createUserForm.reset();
-    
+      this.createUserForm.reset();
+    }
+    else { console.log("DATE INVALIDE"); }
   }
   resetWarnings() {
     this.showEmailErrorMessage = false;
@@ -109,21 +111,12 @@ let u:User= Object.assign({}, newUser);
   sendAddUserRequest(userDto: User) {
 
     this.adminService.createUser(userDto).subscribe(results => {
-      console.log(JSON.stringify(results));
-      if (JSON.stringify(results) === "User created succesfully!") { this.showEmailOkMessage = true; }
-      if(JSON.stringify(results)==="The user already exists!"){ this.showEmailErrorMessage = true; }  });
+      let resp = JSON.stringify(results);
+      console.log(resp);
+      if (resp == '"User created succesfully!"') { this.showEmailOkMessage = true; console.log("aici"); }
+      if(resp=='"The user already exists!"'){ this.showEmailErrorMessage = true; }  });
   }
-      /*subscribe(result => {
-      console.log(result);
-      if (result == "The user already exists!") {
-        this.showEmailErrorMessage = true;
-    } });*/
-  /*    map((res: any) => {
-        const events = res.eventList;
-        return events.map(e => new EventLogModel(e));
-      }),
-      catchError(this.handleError);
-    )*/
+
      
   }
 

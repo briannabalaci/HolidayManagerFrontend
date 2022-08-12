@@ -16,7 +16,7 @@
       </mat-form-field><br>
       <mat-form-field appearance="fill">
         <mat-label>Email</mat-label>
-        <input matInput placeholder="myemail@gmail.com" formControlName="email" (click)="resetWarnings()">
+        <input matInput placeholder="myemail@gmail.com" formControlName="email" (click)="resetWarnings()" type="email"  ngModel email="true" [email]="true">
       </mat-form-field><br>
     <mat-form-field appearance="fill">
         <mat-label>Password</mat-label>

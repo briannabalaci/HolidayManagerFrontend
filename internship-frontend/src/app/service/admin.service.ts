@@ -8,7 +8,7 @@ import { UpdateUser, User } from '../shared/data-type/User';
 const ADD_USER = "http://localhost:8090/user/add-user"
 const GET_ALL = "http://localhost:8090/user/get-all-users"
 const UPDATE_USER="http://localhost:8090/user/update-user"
-
+const DELETE_USER="http://localhost:8090/user/delete-user/"
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/text'
@@ -26,7 +26,10 @@ export class AdminService {
  
   }
     
-
+  public deleteUser(email: string): Observable<any>{
+    let path = DELETE_USER + email;
+    return this.httpClient.delete(path);
+  }
   
   public getAllUsers(): Observable<User[]>{
     

@@ -29,7 +29,7 @@ import { AuthentificationInterceptor } from './service/authentification.intercep
 import { CreateUserFormComponent } from './admin/admin-page/create-user/create-user-form/create-user-form.component';
 import { CreateUserComponent } from './admin/admin-page/create-user/create-user.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { UserListComponent } from './admin/admin-page/user-list/user-list.component';
+import { DialogOverviewExampleDialog, UserListComponent } from './admin/admin-page/user-list/user-list.component';
 import { AdminComponent } from './admin/admin.component';
 
 import { AdminModule } from './admin/admin.module';
@@ -40,13 +40,13 @@ import { NavBarComponent } from './landing/nav-bar/nav-bar.component';
 import { EditUserFormComponent } from './admin/admin-page/create-user/edit-user-form/edit-user-form.component';
 
 import { MatNativeDateModule } from '@angular/material/core';
-<<<<<<< HEAD
+
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
-=======
+
 import { MatSortModule } from '@angular/material/sort';
 import { CreateRequestComponent } from './shared/create-request/create-request.component';
->>>>>>> development
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -71,20 +71,16 @@ import { CreateRequestComponent } from './shared/create-request/create-request.c
     CreateUserComponent,
     CreateUserFormComponent,
     AdminComponent,
-<<<<<<< HEAD
-    
- NavBarComponent
-
-=======
    
- NavBarComponent,
-     CreateRequestComponent
->>>>>>> development
+    NavBarComponent,
+    CreateRequestComponent,
+    DialogOverviewExampleDialog
+
   ],
   imports: [
     MatNativeDateModule,
     MatDatepickerModule,
-
+    MatDialogModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -104,13 +100,20 @@ import { CreateRequestComponent } from './shared/create-request/create-request.c
     MatListModule,
     TeamleadHomeModule,
     MatCardModule,
-<<<<<<< HEAD
-    MatCheckboxModule
-=======
+
+    MatCheckboxModule,
+
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSortModule
->>>>>>> development
+    MatSortModule,
+    BrowserAnimationsModule,
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    MatNativeDateModule,
+  
+    ReactiveFormsModule,
+
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthentificationInterceptor, multi:true}],
   bootstrap: [AppComponent]
