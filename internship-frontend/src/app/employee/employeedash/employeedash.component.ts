@@ -25,6 +25,7 @@ export class EmployeedashComponent implements AfterViewInit {
   endDate = 'Angular';
   startDate = 'Angular';
   substitute = '';
+  holidayType = 'rest-holiday';
   displayedColumns: string[] = ['startDate', 'endDate',  'status', 'Edit'];
   dataSource = new MatTableDataSource(HOLIDAY_DATA);
   holidayList: HolidayTypeView[] = [
@@ -78,6 +79,7 @@ export class EmployeedashComponent implements AfterViewInit {
   }
 
   completeData(row: any): void{
+    this.showFormCreateRequest = true;
     this.endDate = row.endDate;
     this.startDate = row.startDate;
     this.substitute = row.substitute;
@@ -143,7 +145,21 @@ export class EmployeedashComponent implements AfterViewInit {
     this.dataSource = new MatTableDataSource(this.sortedTable);
     this.dataSource.sort = this.sort;
   }
-
+  get refreshDataFunc() {
+    return this.refreshData.bind(this);
+  }
+  refreshData() {
+    const tk = this.cookieService.get('Token');
+    const email: String = parseJwt(tk).username;
+    const id: number = parseJwt(tk).id;
+    var datePipe = new DatePipe('en-US');
+    this.holidayService.getAllHolidaysById(id).subscribe(data => {
+      this.holidays = data;
+      this.dataSource = new MatTableDataSource(this.holidays);
+      this.dataSource.sort = this.sort;
+      this.applyFilters(this.selected2, this.selected);
+    });
+  }
   
 }
 
