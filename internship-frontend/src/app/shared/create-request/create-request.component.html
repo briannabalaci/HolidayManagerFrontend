@@ -1,5 +1,5 @@
 
-<h2>Send new request</h2>
+<h2> {{updating ? "Update request" : "Send new request" }}</h2>
 <form id="login-form" [formGroup]="holidayRequestFormGroup" (ngSubmit) = "verifyHolidayRequest()" #formDirective="ngForm">
 
 <mat-form-field appearance="outline" color="accent">
@@ -34,9 +34,7 @@
 
     <input type="file" id="file" class="file-input" accept="application/pdf" #fileInput (click)="resetWarnings()" (change)="onFileInput(fileInput.files)"  required>
     <div class="file-upload">
-
         {{fileName || "Attach your document."}}
-
     <button mat-mini-fab *ngIf="!fileName" type="button" color="primary" class="upload-btn"
     (click)="fileInput.click()">
         <mat-icon>attach_file</mat-icon>
@@ -50,5 +48,5 @@
 </div>
 <mat-card class="password-hint" *ngIf="showFillErrorMessage">Please fill out all fields correctly.</mat-card> 
 <mat-card class="password-hint-green" *ngIf="showSuccessfulMessage">Request sent successfully.</mat-card> 
-<button mat-raised-button type="submit" id="create-button" color="accent" *ngIf="showFieldForStartDate" >Create request</button>
+<button mat-raised-button type="submit" id="create-button" color="accent" *ngIf="showFieldForStartDate" >{{ updating ? "Update request" : "Create request" }}</button>
 </form>

@@ -7,15 +7,11 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
-import { TeamleadRequestsComponent } from './teamlead-requests/teamlead-requests.component';
 import {MatListModule} from "@angular/material/list";
 import {Routes} from "@angular/router";
-
 import {TeamleadHomeComponent} from "./teamlead-home.component";
-import { TeamsRequestsComponent } from './teams-requests/teams-requests.component';
-import { MatSort, MatSortModule } from '@angular/material/sort';
+import {MatSortModule } from '@angular/material/sort';
 import {MatPaginatorModule} from "@angular/material/paginator";
-import { DetailedRequestComponent } from './teams-requests/detailed-request/detailed-request.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 
 const routes: Routes = [
@@ -26,15 +22,11 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    TeamleadRequestsComponent,
-    TeamsRequestsComponent,
-    DetailedRequestComponent
+    // TeamleadRequestsComponent,
+    // TeamsRequestsComponent,
+    // DetailedRequestComponent
   ],
   exports: [
-    TeamleadRequestsComponent,
-    TeamsRequestsComponent,
-    MatFormFieldModule,
-    MatInputModule
   ],
   imports: [
     MatButtonModule,

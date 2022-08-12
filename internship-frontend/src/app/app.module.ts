@@ -21,7 +21,6 @@ import { TeamsTableComponent } from './team-management/teams-table/teams-table.c
 import { CreateTeamComponent } from './team-management/create-team/create-team.component';
 import {MatListModule} from "@angular/material/list";
 import { TeamleadHomeComponent } from './home/teamlead-home/teamlead-home.component';
-import {TeamleadHomeModule} from "./home/teamlead-home/teamlead-home.module";
 import {HttpClientModule, HTTP_INTERCEPTORS} from "@angular/common/http";
 import { LoginResetFormComponent } from './landing/login-panel/login-reset-form/login-reset-form.component';
 import {MatCardModule} from '@angular/material/card';
@@ -45,9 +44,18 @@ import {MatDialogModule} from "@angular/material/dialog";
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {TeamleadPickerComponent} from "./team-management/create-team/teamlead-picker/teamlead-picker.component";
 import {ConfirmationDialogBoxComponent} from "./confirmation-dialog-box/confirmation-dialog-box.component";
+import {TeamleadRequestsComponent} from "./home/teamlead-home/teamlead-requests/teamlead-requests.component";
+import {TeamsRequestsComponent} from "./home/teamlead-home/teams-requests/teams-requests.component";
+import {
+  DetailedRequestComponent
+} from "./home/teamlead-home/teams-requests/detailed-request/detailed-request.component";
+
 @NgModule({
 
   declarations: [
+    TeamsRequestsComponent,
+    DetailedRequestComponent,
+    TeamleadRequestsComponent,
     AppComponent,
     EmployeedashComponent,
     LoginPanelComponent,
@@ -88,11 +96,14 @@ import {ConfirmationDialogBoxComponent} from "./confirmation-dialog-box/confirma
     LoginPanelModule,
     HttpClientModule,
     MatListModule,
-    TeamleadHomeModule,
     MatCardModule,
     MatCheckboxModule,
-    MatNativeDateModule,
+    MatDatepickerModule,
     MatSortModule,
+  ],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthentificationInterceptor, multi: true}],
+  exports: [
+    CreateRequestComponent,
     BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
@@ -103,7 +114,6 @@ import {ConfirmationDialogBoxComponent} from "./confirmation-dialog-box/confirma
     ScrollingModule,
     MatDatepickerModule
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthentificationInterceptor, multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

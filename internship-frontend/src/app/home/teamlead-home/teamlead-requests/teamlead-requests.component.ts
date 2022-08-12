@@ -4,12 +4,6 @@ import {TeamleadService} from "../../../service/teamlead.service";
 import {HolidayDto, HolidayTypeDto} from "../../../shared/data-type/HolidayDto";
 
 
-export class HolidayTypeView {
-  value?: string;
-  viewValue?: string;
-  constructor(value: string, viewvalue: string) { }
-}
-
 @Component({
   selector: 'app-teamlead-requests',
   templateUrl: './teamlead-requests.component.html',
@@ -17,13 +11,14 @@ export class HolidayTypeView {
 })
 export class TeamleadRequestsComponent implements OnInit {
 
-
+  showFormCreateRequest = false;
   nrHolidays: number = 0;
   user!: User;
   requestsTypes: string[] = ['All request', 'Rest holiday', 'Special holiday', 'Unpaid holiday']
 
 
   requests!: HolidayDto[];
+  selectedValue: any;
   constructor(private teamLeadService: TeamleadService) { }
 
   ngOnInit(): void {
@@ -53,25 +48,50 @@ export class TeamleadRequestsComponent implements OnInit {
   }
 
   onChange(value: any): void {
-    switch (value){
+    switch (value) {
       case 'All request': {
         this.populateTeamLeadRequests();
+        this.selectedValue = null;
         break;
       }
       case 'Rest holiday': {
         this.getFilteredRequests(HolidayTypeDto.REST_HOLIDAY);
+        this.selectedValue = HolidayTypeDto.REST_HOLIDAY;
         break;
       }
       case 'Special holiday': {
         this.getFilteredRequests(HolidayTypeDto.SPECIAL_HOLIDAY);
+        this.selectedValue = HolidayTypeDto.SPECIAL_HOLIDAY;
         break;
       }
       case 'Unpaid holiday': {
         this.getFilteredRequests(HolidayTypeDto.UNPAID_HOLIDAY);
+        this.selectedValue = HolidayTypeDto.UNPAID_HOLIDAY;
         break;
       }
     }
   }
 
+  get refreshDataFunc() {
+    return this.refreshData.bind(this);
+  }
+
+  refreshData() {
+    if(this.selectedValue === HolidayTypeDto.SPECIAL_HOLIDAY)
+    {
+      this.getFilteredRequests(HolidayTypeDto.SPECIAL_HOLIDAY)
+    }
+    else if(this.selectedValue === HolidayTypeDto.UNPAID_HOLIDAY){
+      this.getFilteredRequests(HolidayTypeDto.UNPAID_HOLIDAY)
+    }
+    else if(this.selectedValue === HolidayTypeDto.REST_HOLIDAY) {
+      this.getFilteredRequests(HolidayTypeDto.REST_HOLIDAY)
+    }
+    else {
+      this.populateTeamLeadRequests();
+    }
+  }
 
 }
+
+
