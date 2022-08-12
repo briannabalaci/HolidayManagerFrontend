@@ -1,5 +1,7 @@
 import { Component,EventEmitter, OnInit,Output, } from '@angular/core';
 import { FormBuilder,Validators } from '@angular/forms';
+import { catchError, map } from 'rxjs';
+import { AdminService } from 'src/app/service/admin.service';
 import { User } from 'src/app/shared/data-type/User';
 
 interface DepartmentInt {
@@ -21,7 +23,7 @@ interface UserTypeInt {
   templateUrl: './create-user-form.component.html',
   styleUrls: ['./create-user-form.component.scss']
 })
-  
+
 export class CreateUserFormComponent implements OnInit {
   @Output() clickCreate =new EventEmitter<User>();
   hide = true;
@@ -29,9 +31,8 @@ export class CreateUserFormComponent implements OnInit {
   type_d = "";
   role_d = "";
   department_d = "";
-
-
-
+  showEmailErrorMessage = false;
+  showEmailOkMessage = false;
   departments: DepartmentInt[] = [
     {value: 'JAVA', viewValue: 'Java'},
     {value: 'ABAP', viewValue: 'ABAP'},
@@ -61,16 +62,15 @@ changeType(value: string) {
 }
   createUserForm = this.formBuilder.group({
     
-    email:['',Validators.required],
     password: ['', Validators.required],
-    forName:['',Validators.required],
-    surName:['',Validators.required],
-    
-    nrHolidays:['',Validators.required],
+    email: ['', Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")],
+    forName: ['', Validators.required],
+    surName: ['', Validators.required],
+    nrHolidays: ['', Validators.required],
    
     
-  })
-  constructor(private formBuilder:FormBuilder) { 
+  });
+  constructor(private formBuilder:FormBuilder,private adminService: AdminService) { 
  
   }
 
@@ -78,10 +78,12 @@ changeType(value: string) {
   }
   createUser(): void{
     const valuesFromForm = this.createUserForm.value;
+  
     const newUser = {
-      email:valuesFromForm.email,
+      
     password:valuesFromForm.password,
-    forname:valuesFromForm.forName,
+    forname: valuesFromForm.forName,
+    email: valuesFromForm.email,
     surname:valuesFromForm.surName,
     department: this.department_d,
     role:this.role_d,
@@ -92,6 +94,29 @@ changeType(value: string) {
    
     console.log("ok",newUser);
      //@ts-ignore
-    this.clickCreate.emit(newUser);
+    
+   
+    let u: User = Object.assign({}, newUser);
+    if (!this.createUserForm.invalid) {
+      this.sendAddUserRequest(u);
+    
+      this.createUserForm.reset();
+    }
+    else { console.log("DATE INVALIDE"); }
   }
-}
+  resetWarnings() {
+    this.showEmailErrorMessage = false;
+    this.showEmailOkMessage=false
+  }
+  sendAddUserRequest(userDto: User) {
+
+    this.adminService.createUser(userDto).subscribe(results => {
+      let resp = JSON.stringify(results);
+      console.log(resp);
+      if (resp == '"User created succesfully!"') { this.showEmailOkMessage = true; console.log("aici"); }
+      if(resp=='"The user already exists!"'){ this.showEmailErrorMessage = true; }  });
+  }
+
+     
+  }
+
