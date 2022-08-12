@@ -6,6 +6,7 @@ import { User } from '../shared/data-type/User';
 
 const GET_USERS_HOLIDAYS = "http://localhost:8090/holiday/get-users-holidays"
 const CREATE_HOLIDAY = "http://localhost:8090/holiday/add-holiday"
+const DELETE_HOLIDAY = "http://localhost:8090/holiday/delete-holiday"
 
 
 @Injectable({
@@ -20,5 +21,9 @@ export class HolidayService {
   }
   public createHoliday(holiday: Holiday): Observable<Holiday>{
     return this.httpClient.post<Holiday>(CREATE_HOLIDAY, holiday);
+  }
+  public deleteHoliday(id?: number): Observable<Holiday>{
+    console.log(DELETE_HOLIDAY+'/'+id?.toString())
+    return this.httpClient.delete<Holiday>(DELETE_HOLIDAY+'/'+id?.toString());
   }
 }

@@ -104,7 +104,7 @@ export class CreateRequestComponent implements OnInit {
       this.file.arrayBuffer().then(buff => {
         let x = new Uint8Array(buff);
         const datePipe = new DatePipe('en-US');
-        const holidayData:Holiday = {
+        const holidayData: Holiday = {
           startDate: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
          // startDate: 'sfsdgsdgsg',
           endDate: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!,
@@ -122,7 +122,7 @@ export class CreateRequestComponent implements OnInit {
       });
     } else {
       const datePipe = new DatePipe('en-US');
-        const holidayData:Holiday = {
+      const holidayData: Holiday = {
           startDate: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
           endDate: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!,
           status: HolidayStatus.PENDING!,

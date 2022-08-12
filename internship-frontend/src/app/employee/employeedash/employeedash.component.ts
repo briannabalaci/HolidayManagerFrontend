@@ -25,7 +25,7 @@ export class EmployeedashComponent implements AfterViewInit {
   endDate = 'Angular';
   startDate = 'Angular';
   substitute = '';
-  displayedColumns: string[] = ['startDate', 'endDate',  'status', 'Edit'];
+  displayedColumns: string[] = ['startDate', 'endDate',  'status', 'Edit', 'Delete'];
   dataSource = new MatTableDataSource(HOLIDAY_DATA);
   holidayList: HolidayTypeView[] = [
     {value: 'all-requests', viewValue: 'All requests'},
@@ -70,7 +70,16 @@ export class EmployeedashComponent implements AfterViewInit {
     }
   }
 
-
+  deleteHoliday(row: Holiday) {
+    console.log("pff");
+    this.holidayService.deleteHoliday(row.id).subscribe(data => {
+      this.holidays?.forEach( (item, index) => {
+        if(item.id === row.id) this.holidays?.splice(index,1);
+      });
+      this.dataSource = new MatTableDataSource(this.holidays);
+      this.applyFilters(this.selected2, this.selected);
+    });
+  }
   clearData(): void{
   this.endDate = '';
   this.startDate = '';
