@@ -18,6 +18,7 @@ export class TeamleadRequestsComponent implements OnInit {
 
 
   requests!: HolidayDto[];
+  selectedValue: any;
   constructor(private teamLeadService: TeamleadService) { }
 
   ngOnInit(): void {
@@ -47,25 +48,50 @@ export class TeamleadRequestsComponent implements OnInit {
   }
 
   onChange(value: any): void {
-    switch (value){
+    switch (value) {
       case 'All request': {
         this.populateTeamLeadRequests();
+        this.selectedValue = null;
         break;
       }
       case 'Rest holiday': {
         this.getFilteredRequests(HolidayTypeDto.REST_HOLIDAY);
+        this.selectedValue = HolidayTypeDto.REST_HOLIDAY;
         break;
       }
       case 'Special holiday': {
         this.getFilteredRequests(HolidayTypeDto.SPECIAL_HOLIDAY);
+        this.selectedValue = HolidayTypeDto.SPECIAL_HOLIDAY;
         break;
       }
       case 'Unpaid holiday': {
         this.getFilteredRequests(HolidayTypeDto.UNPAID_HOLIDAY);
+        this.selectedValue = HolidayTypeDto.UNPAID_HOLIDAY;
         break;
       }
     }
   }
 
+  get refreshDataFunc() {
+    return this.refreshData.bind(this);
+  }
+
+  refreshData() {
+    if(this.selectedValue === HolidayTypeDto.SPECIAL_HOLIDAY)
+    {
+      this.getFilteredRequests(HolidayTypeDto.SPECIAL_HOLIDAY)
+    }
+    else if(this.selectedValue === HolidayTypeDto.UNPAID_HOLIDAY){
+      this.getFilteredRequests(HolidayTypeDto.UNPAID_HOLIDAY)
+    }
+    else if(this.selectedValue === HolidayTypeDto.REST_HOLIDAY) {
+      this.getFilteredRequests(HolidayTypeDto.REST_HOLIDAY)
+    }
+    else {
+      this.populateTeamLeadRequests();
+    }
+  }
 
 }
+
+
