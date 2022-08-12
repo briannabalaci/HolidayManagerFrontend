@@ -6,14 +6,17 @@ import { MatSelect } from '@angular/material/select';
 import { CookieService } from 'ngx-cookie-service';
 import { HolidayService } from 'src/app/service/holiday.service';
 import { parseJwt } from 'src/app/utils/JWTParser';
-import { Holiday, HolidayStatus, HolidayType, RequestType } from '../data-type/Holiday';
+import {HolidayTypeView, RequestType, HolidayStatus, Holiday} from '../data-type/Holiday';
 import { DatePipe } from '@angular/common';
+import {User} from "../data-type/User";
+
 
 @Component({
   selector: 'app-create-request',
   templateUrl: './create-request.component.html',
   styleUrls: ['./create-request.component.scss']
 })
+
 export class CreateRequestComponent implements OnInit {
   holidayRequestFormGroup = this.formBuilder.group({
     startDate:["",Validators.required],
@@ -32,7 +35,7 @@ export class CreateRequestComponent implements OnInit {
   showFieldForDocument = false;
   deviceValue = '';
   fileName = '';
-  holidayList: HolidayType[] = [
+  holidayList: HolidayTypeView[] = [
     {value: 'rest-holiday', viewValue: 'Rest holiday'},
     {value: 'special-holiday', viewValue: 'Special holiday'},
     {value: 'unpaid-holiday', viewValue: 'Unpaid holiday'}
@@ -41,7 +44,7 @@ export class CreateRequestComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  
+
   onChange(deviceValue: any): void{
     this.deviceValue = deviceValue;
     switch(deviceValue){
@@ -99,7 +102,7 @@ export class CreateRequestComponent implements OnInit {
     }
     if (this.file && this.deviceValue == 'special-holiday') {
       this.file.arrayBuffer().then(buff => {
-        let x = new Uint8Array(buff); 
+        let x = new Uint8Array(buff);
         const datePipe = new DatePipe('en-US');
         const holidayData:Holiday = {
           startDate: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
@@ -168,7 +171,7 @@ export class CreateRequestComponent implements OnInit {
     this.showFillErrorMessage = false;
     this.showSuccessfulMessage = false;
   }
-  
+
   clearSelect() {
     this.matRef.options.forEach((data: MatOption) => data.deselect());
   }

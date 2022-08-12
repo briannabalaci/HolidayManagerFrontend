@@ -7,6 +7,7 @@ import { User } from '../shared/data-type/User';
 const GET_USERS_HOLIDAYS = "http://localhost:8090/holiday/get-users-holidays"
 const CREATE_HOLIDAY = "http://localhost:8090/holiday/add-holiday"
 
+
 @Injectable({
   providedIn: 'root'
 })
