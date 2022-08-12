@@ -52,6 +52,8 @@
     </mat-form-field>
   </div>
 
-  <button mat-raised-button color="accent" type="submit" > {{addUpdate? 'ADD TEAM':'UPDATE TEAM'}} </button>
+  <button (click)="resetWarnings()" mat-raised-button color="accent" type="submit" > {{addUpdate? 'ADD TEAM':'UPDATE TEAM'}} </button>
+
+  <mat-card class="error-message" *ngIf="isErrorMessage">{{this.errorString}}</mat-card>
 
 </form>

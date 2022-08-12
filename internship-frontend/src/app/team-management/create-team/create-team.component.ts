@@ -27,6 +27,8 @@ export class CreateTeamComponent implements OnInit,OnChanges {
   public teamLeadControl: FormControl = new FormControl();
 
   typed:Boolean = false;
+  isErrorMessage:Boolean = false;
+  errorString=""
   protected _onDestroy = new Subject();
   isDisabled = false;
 
@@ -76,6 +78,10 @@ export class CreateTeamComponent implements OnInit,OnChanges {
     }
   }
 
+  resetWarnings(){
+    this.isErrorMessage = false
+    this.errorString = ""
+  }
   onlySpaces(str:string) {
     return /^\s*$/.test(str);
   }
@@ -86,17 +92,14 @@ export class CreateTeamComponent implements OnInit,OnChanges {
       memb.push(element.id!)
     });
 
-    let errorString=""
-
-    if(valuesFromForm.name == "" || this.onlySpaces(valuesFromForm.name!)) errorString+="Name field must not be null! \n"
-    if(this.addedMembers.length == 0 ) errorString+="You must add at least one member!\n"
-    if(this.teamLeader == null) errorString+="The team must have a team leader!\n"
-    if(errorString!="") {
+    if(valuesFromForm.name == "" || this.onlySpaces(valuesFromForm.name!)) this.errorString+="Name field must not be null! \n"
+    if(this.addedMembers.length == 0 ) this.errorString+="You must add at least one member!\n"
+    if(this.teamLeader == null) this.errorString+="The team must have a team leader!\n"
+    if(this.errorString!="") {
       // this.errorMessageEmitter.emit(errorString)
-      alert(errorString)
+      this.isErrorMessage=true
     }
     else {
-      errorString=""
       if (this.addUpdate) {
         const newTeam: TeamAdd = {
           name: valuesFromForm.name!,
