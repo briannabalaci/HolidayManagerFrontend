@@ -55,7 +55,7 @@ import {
   declarations: [
     TeamsRequestsComponent,
     DetailedRequestComponent,
-    TeamleadRequestsComponent,
+    TeamleadRequestsComponent, /// astea 3
     AppComponent,
     EmployeedashComponent,
     LoginPanelComponent,
@@ -75,7 +75,7 @@ import {
     NavBarComponent,
     CreateRequestComponent,
     ConfirmationDialogBoxComponent,
-    DialogOverviewExampleDialog
+    DialogOverviewExampleDialog // asta difera
   ],
   imports: [
     MatNativeDateModule,
@@ -100,20 +100,11 @@ import {
     MatCheckboxModule,
     MatDatepickerModule,
     MatSortModule,
-  ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthentificationInterceptor, multi: true}],
-  exports: [
-    CreateRequestComponent,
-    BrowserAnimationsModule,
-    BrowserModule,
-    FormsModule,
-    HttpClientModule,
-    MatNativeDateModule,
-    ReactiveFormsModule,
     NgxMatSelectSearchModule,
     ScrollingModule,
-    MatDatepickerModule
   ],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthentificationInterceptor, multi: true}],
+  exports: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
