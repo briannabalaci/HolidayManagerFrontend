@@ -42,6 +42,8 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
 import { MatSortModule } from '@angular/material/sort';
 import { CreateRequestComponent } from './shared/create-request/create-request.component';
 import {TeamleadPickerComponent} from "./team-management/create-team/teamlead-picker/teamlead-picker.component";
+import { ConfirmationDialogBoxComponent } from './confirmation-dialog-box/confirmation-dialog-box.component';
+import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
 
@@ -64,7 +66,8 @@ import {TeamleadPickerComponent} from "./team-management/create-team/teamlead-pi
     AdminComponent,
     TeamleadPickerComponent,
     NavBarComponent,
-    CreateRequestComponent
+    CreateRequestComponent,
+    ConfirmationDialogBoxComponent
   ],
   imports: [
     BrowserModule,
@@ -89,7 +92,8 @@ import {TeamleadPickerComponent} from "./team-management/create-team/teamlead-pi
     MatDatepickerModule,
     MatNativeDateModule,
     ScrollingModule,
-    MatSortModule
+    MatSortModule,
+    MatDialogModule,
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthentificationInterceptor, multi:true}],
   bootstrap: [AppComponent]

@@ -11,3 +11,10 @@ export class TeamAdd{
   teamLeaderId?:number;
   membersId?:number[];
 }
+
+export class TeamUpdate{
+  id?:number;
+  name?:string;
+  teamLeaderId?:number;
+  membersId?:number[];
+}

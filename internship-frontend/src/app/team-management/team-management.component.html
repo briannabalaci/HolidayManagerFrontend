@@ -5,7 +5,9 @@
   </header>
   <app-teams-table [teams]="this.teams"  (clickDeleteTeam)="deleteTeam($event)" (clickViewTeamDetails) = "viewTeamDetails($event)"></app-teams-table>
 
-  <app-create-team [teamToView]="this.teamToView" [usersWithoutTeam]="this.usersWithoutTeam" [safeForView]="this.safeForView" (clickCreate)="createTeam($event)" (clickAddUserToTeam)="addUserToTeam($event)" (clickDeleteUserFromTeam)="deleteUserFromTeam($event)" *ngIf = "showForm"> </app-create-team>
+  <app-create-team [teamToView]="this.teamToView" [usersWithoutTeam]="this.usersWithoutTeam" [safeForView]="this.safeForView"
+                   (clickCreate)="createTeam($event)" (clickUpdate)="updateTeam($event)" (clickAddUserToTeam)="addUserToTeam($event)"
+                   (clickDeleteUserFromTeam)="deleteUserFromTeam($event)"  *ngIf = "showForm"> </app-create-team>
 
   <button class="btn" mat-raised-button color="accent" (click)="toggleShowAddForm()">{{showForm? 'Cancel':'Create team'}}  </button>
 

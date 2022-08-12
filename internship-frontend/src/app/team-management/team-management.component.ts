@@ -1,5 +1,5 @@
 import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {Team, TeamAdd} from "../shared/data-type/Team";
+import {Team, TeamAdd, TeamUpdate} from "../shared/data-type/Team";
 import {TeamService} from "../service/team.service";
 import {delay, Observable} from "rxjs";
 import {User} from "../shared/data-type/User";
@@ -19,6 +19,7 @@ export class TeamManagementComponent implements OnInit {
   teamToView:Team = new Team();
   usersWithoutTeam:User[] = []
   safeForView:boolean = false
+  errorMessageGeneral:string = ""
 
   constructor(private teamService:TeamService, private userService:UserService) { }
 
@@ -33,9 +34,25 @@ export class TeamManagementComponent implements OnInit {
   }
 
   createTeam(newTeam : TeamAdd){
-    this.showForm=!this.showForm;
+
     this.teamService.addTeam(newTeam).subscribe( result => {
-        this.teamService.getAllTeams().subscribe( x => {this.teams = x})
+      console.log(result)
+      if(result.name == null) this.errorMessageGeneral+=this.errorMessageGeneral + "A team with the same name already exists!\n"
+      else {
+        this.teamService.getAllTeams().subscribe(x => {
+          this.teams = x
+        })
+        this.showForm=!this.showForm;
+
+      }
+    })
+  }
+
+
+  updateTeam(updatedTeam : TeamUpdate){
+    this.showForm=!this.showForm;
+    this.teamService.updateTeam(updatedTeam).subscribe( result => {
+      this.teamService.getAllTeams().subscribe( x => {this.teams = x})
     })
   }
 

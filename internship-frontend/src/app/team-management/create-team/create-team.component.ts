@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {Team, TeamAdd} from "../../shared/data-type/Team";
+import {Team, TeamAdd, TeamUpdate} from "../../shared/data-type/Team";
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import {Department, Role, User, UserType} from "../../shared/data-type/User";
 import {MatTable} from "@angular/material/table";
@@ -33,8 +33,10 @@ export class CreateTeamComponent implements OnInit,OnChanges {
 
   @ViewChild(MatTable) table: MatTable<User>
   @Output() clickCreate = new EventEmitter<Team>();
+  @Output() clickUpdate = new EventEmitter<Team>();
   @Output() clickDeleteUserFromTeam = new EventEmitter<User>()
   @Output() clickAddUserToTeam = new EventEmitter<User>()
+  @Output() errorMessageEmitter =new EventEmitter<string>()
 
   @Input() teamToView:Team //the team that we want to view
   @Input() usersWithoutTeam:User[] = []
@@ -74,22 +76,49 @@ export class CreateTeamComponent implements OnInit,OnChanges {
     }
   }
 
+  onlySpaces(str:string) {
+    return /^\s*$/.test(str);
+  }
   createTeam():void{
     const valuesFromForm = this.teamFormGroup.value;
     const memb: number[] = []
     this.addedMembers.forEach((element, index) => {
       memb.push(element.id!)
     });
-    const newTeam : TeamAdd = {
-      name : valuesFromForm.name!,
-      teamLeaderId : this.teamLeader.id,
-      membersId:memb!,
-    }
 
-    this.clickCreate.emit(newTeam)
-    this.addedMembers =[]
-    this.table.renderRows()
-    this.teamFormGroup.reset()
+    let errorString=""
+
+    if(valuesFromForm.name == "" || this.onlySpaces(valuesFromForm.name!)) errorString+="Name field must not be null! \n"
+    if(this.addedMembers.length == 0 ) errorString+="You must add at least one member!\n"
+    if(this.teamLeader == null) errorString+="The team must have a team leader!\n"
+    if(errorString!="") {
+      // this.errorMessageEmitter.emit(errorString)
+      alert(errorString)
+    }
+    else {
+      errorString=""
+      if (this.addUpdate) {
+        const newTeam: TeamAdd = {
+          name: valuesFromForm.name!,
+          teamLeaderId: this.teamLeader.id,
+          membersId: memb!,
+        }
+        this.clickCreate.emit(newTeam)
+
+      } else {
+        const updatedTeam: TeamUpdate = {
+          id: this.teamToView.id!,
+          name: valuesFromForm.name!,
+          teamLeaderId: this.teamLeader.id,
+          membersId: memb!,
+        }
+        this.clickUpdate.emit(updatedTeam)
+      }
+      this.addedMembers =[]
+      this.table.renderRows()
+      this.teamFormGroup.reset()
+
+    }
   }
 
 

@@ -1,4 +1,4 @@
-<h2> Create new team </h2>
+<h2> {{addUpdate? 'Create new team':'Update team'}} </h2>
 <form [formGroup]="teamFormGroup" (ngSubmit)="createTeam()" >
 
   <mat-form-field appearance="legacy">

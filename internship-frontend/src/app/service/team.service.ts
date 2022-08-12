@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Team, TeamAdd} from "../shared/data-type/Team";
+import {Team, TeamAdd, TeamUpdate} from "../shared/data-type/Team";
 import {coerceStringArray} from "@angular/cdk/coercion";
 
 const URL_BASE = "http://localhost:8090/team"
 const GET_ALL_TEAMS = URL_BASE+"/all"
 const GET_TEAM_MEMBERS = URL_BASE+"/members"
 const ADD_TEAM = URL_BASE+"/add"
+const UPDATE_TEAM = URL_BASE+"/update"
 const DELETE_TEAM = URL_BASE+"/delete"
 const GET_BY_ID = URL_BASE+"/get-by-id"
 
@@ -28,6 +29,10 @@ export class TeamService {
 
   public addTeam(team:TeamAdd):Observable<TeamAdd> {
     return this.httpClient.post<TeamAdd>(ADD_TEAM,team);
+  }
+
+  public updateTeam(team:TeamUpdate):Observable<TeamUpdate> {
+    return this.httpClient.put<TeamUpdate>(UPDATE_TEAM,team);
   }
 
   public deleteTeam(teamId:number):Observable<Team> {
