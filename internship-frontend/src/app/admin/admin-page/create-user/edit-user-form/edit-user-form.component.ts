@@ -66,7 +66,7 @@ export class EditUserFormComponent implements OnInit , OnChanges{
   createUserForm = this.formBuilder.group({
     
 
-    password: ['',Validators.required],
+    password: [''],
     forName: ['',Validators.required],
     surName: ['',Validators.required],
     nrHolidays: ['',Validators.required],
@@ -109,7 +109,7 @@ export class EditUserFormComponent implements OnInit , OnChanges{
     
     console.log(this.nrHolidays_d);
   }
-updateUser(): void {
+  updateUser(): void {
     const valuesFromForm = this.createUserForm.value;
     const updUser = {
       email: this.email_d,
@@ -122,14 +122,22 @@ updateUser(): void {
      
 
     }
-  if (this.boolEditPassword) { 
-    updUser.password = valuesFromForm.password;
-  }
-  else { updUser.password = null; }
+    if (this.boolEditPassword) {
+      this.createUserForm.controls["password"].addValidators([Validators.required]);
+      this.createUserForm.controls["password"].updateValueAndValidity();
+      updUser.password = valuesFromForm.password;
+    }
+    else {
+      updUser.password = null;
+      this.createUserForm.controls["password"].clearValidators();
+      this.createUserForm.controls["password"].updateValueAndValidity();}
     console.log("ok", updUser);
-    //@ts-ignore
-    this.clickUpdate.emit(updUser);
+   
+    if (!this.createUserForm.invalid) {
+       //@ts-ignore
+      this.clickUpdate.emit(updUser);
+    }
+    else { console.log("DATE INVALIDE"); }
   }
-
   cancelEdit() {this.cancelUpdate.emit(); };
 }
