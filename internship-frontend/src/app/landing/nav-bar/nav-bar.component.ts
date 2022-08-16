@@ -11,6 +11,7 @@ import { parseJwt } from 'src/app/utils/JWTParser';
 })
 export class NavBarComponent implements OnInit {
   name = '';
+  notificationNum = 1;
   constructor(private router: Router, private cookieService: CookieService) { }
 
   ngOnInit(): void {
