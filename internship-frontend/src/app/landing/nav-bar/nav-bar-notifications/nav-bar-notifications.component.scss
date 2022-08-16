@@ -1,0 +1,96 @@
+@use "../../../../_variables" as v;
+hr{
+    border: none;
+    height: 2px;
+    border-radius: 2px;
+    background: v.$grey-secondary;
+    margin-bottom: 24px;
+ }
+.notificationContainer {
+    display: flex;
+    justify-content: center;
+    
+}
+.notificationCard {
+    z-index: 2;
+    margin: auto;
+    position: fixed;
+    top: 88px;
+    overflow-y:auto;
+    width: 80%;
+    height: 80%;
+    border-radius: 38px;
+    background-color: v.$white;
+  }
+  .notificationItem{
+    background-color: v.$orange;
+    color: white;
+    border-radius: 38px;
+    margin-bottom: 24px;
+    border: 4px;
+  }
+  .notificationItemRead{
+    background-color: v.$grey-secondary;
+    border-radius: 38px;
+    margin-bottom: 18px;
+  }
+  .bold {
+    font-weight: bold;
+  }
+  .notificationHeader{
+    font-size: 18px;
+    margin-bottom: 0px;
+  }
+  .notificationText{
+    font-size: 12px;
+  }
+  .notificationDate {
+    margin-right: 4px;
+    float: right;
+    text-align: center;
+    font-size: 12px;
+    padding: 3px;
+    height: 22px;
+    border-radius: 50%;
+    color: v.$orange-secondary;
+    background-color: v.$white;
+  }
+  .notificationDateRead {
+    margin-right: 4px;
+    float: right;
+    text-align: center;
+    font-size: 12px;
+    padding: 3px;
+    height: 22px;
+    border-radius: 50%;
+    color: v.$grey-dark;
+    background-color: v.$white;
+  }
+  .notificationInfo {
+    text-align: center;
+    font-size: 12px;
+    color: v.$orange;
+  }
+.triangle-up {
+    z-index: 2;
+    position: fixed;
+    top: 48px;
+    right: 52px;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 100px solid v.$white;
+  }
+  @media only screen and (min-width: 768px) {
+    .notificationCard {
+        z-index: 2;
+        margin: auto;
+        position: fixed;
+        top: 88px;
+        right: 24px;
+        overflow-y:auto;
+        width: 30%;
+        height: 80%;
+        border-radius: 38px;
+        background-color: v.$white;
+      }
+  }

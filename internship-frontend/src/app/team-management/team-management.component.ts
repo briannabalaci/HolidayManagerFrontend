@@ -19,7 +19,7 @@ export class TeamManagementComponent implements OnInit {
   teamToView:Team = new Team();
   usersWithoutTeam:User[] = []
   safeForView:boolean = false
-  errorMessageGeneral:string = ""
+  errorMessageFromAdd:string = ""
 
   constructor(private teamService:TeamService, private userService:UserService) { }
 
@@ -37,29 +37,42 @@ export class TeamManagementComponent implements OnInit {
 
     this.teamService.addTeam(newTeam).subscribe( result => {
       console.log(result)
-      if(result.name == null) this.errorMessageGeneral+=this.errorMessageGeneral + "A team with the same name already exists!\n"
+      if(result.name == null) {
+        this.errorMessageFromAdd = ""
+        this.errorMessageFromAdd ="A team with the same name already exists!\n"}
       else {
+        this.errorMessageFromAdd = ""
         this.teamService.getAllTeams().subscribe(x => {
           this.teams = x
         })
         this.showForm=!this.showForm;
-
       }
     })
   }
 
 
   updateTeam(updatedTeam : TeamUpdate){
-    this.showForm=!this.showForm;
     this.teamService.updateTeam(updatedTeam).subscribe( result => {
-      this.teamService.getAllTeams().subscribe( x => {this.teams = x})
+      console.log(result)
+      if(result.name == null) {
+        this.errorMessageFromAdd = ""
+        this.errorMessageFromAdd ="A team with the same name already exists!\n"}
+      else {
+        this.errorMessageFromAdd = ""
+        this.teamService.getAllTeams().subscribe(x => {
+          this.teams = x
+        })
+        this.showForm=!this.showForm;
+      }
     })
+
   }
 
   deleteTeam(teamID:number){
     this.teams.forEach((element,index)=>{
       if(element.id===teamID)
       {
+        this.showForm = false
         this.teamService.deleteTeam(element.id!).subscribe( result => {
               this.teamService.getAllTeams().subscribe( x => {this.teams = x})
               this.userService.getAllUsersWithoutTeam().subscribe(x => this.usersWithoutTeam = x)
