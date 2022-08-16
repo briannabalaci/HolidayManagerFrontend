@@ -66,10 +66,10 @@ export class EditUserFormComponent implements OnInit , OnChanges{
   createUserForm = this.formBuilder.group({
     
 
-    password: [''],
-    forName: [''],
-    surName: [''],
-    nrHolidays: [''],
+    password: ['',Validators.required],
+    forName: ['',Validators.required],
+    surName: ['',Validators.required],
+    nrHolidays: ['',Validators.required],
     boolEditPassword:['']
     
   })
@@ -87,7 +87,7 @@ export class EditUserFormComponent implements OnInit , OnChanges{
    
     this.forname_d = this.userDto.forname||"";
     this.surname_d = this.userDto.surname||"";
-    this.nrHolidays_d = this.userDto.nrHolidays || 0;
+    this.nrHolidays_d = this.userDto.nrHolidays||0;
     this.email_d = this.userDto.email||"";
     
     console.log(this.nrHolidays_d);
