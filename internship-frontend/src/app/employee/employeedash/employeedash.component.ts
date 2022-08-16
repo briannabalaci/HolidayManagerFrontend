@@ -81,11 +81,20 @@ export class EmployeedashComponent implements AfterViewInit {
   }
 
   completeData(row: any): void{
-    this.showFormCreateRequest = true;
     this.holidayUpdating = true;
-    this.endDate = row.endDate;
-    this.startDate = row.startDate;
-    this.substitute = row.substitute;
+    this.showFormCreateRequest = true;
+    switch (row.type) {
+      case 'UNPAID':
+        this.holidayType = 'unpaid-holiday';
+        break;
+        case 'SPECIAL':
+          this.holidayType = 'special-holiday';
+        break;
+        case 'REST':
+          this.holidayType = 'rest-holiday';
+        break;
+    }
+    console.log(this.holidayType);
   }
 
   filterByType(deviceValue: any, table: Holiday[] | undefined): Holiday[] | undefined{
