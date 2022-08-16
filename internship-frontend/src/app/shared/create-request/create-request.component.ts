@@ -210,7 +210,7 @@ export class CreateRequestComponent implements OnInit {
       } else {
         const datePipe = new DatePipe('en-US');
         let holidayData: HolidayForUpdate;
-        if (this.deviceValue == 'rest-holiday') {
+        if (this.deviceValue == 'rest-holiday' || this.deviceValue == 'special-holiday') {
           holidayData = {
             id: this.updatingId,
             startDate: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
