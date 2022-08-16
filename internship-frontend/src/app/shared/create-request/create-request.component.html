@@ -2,8 +2,8 @@
 <h2> {{updating ? "Update request" : "Send new request" }}</h2>
 <form id="login-form" [formGroup]="holidayRequestFormGroup" (ngSubmit) = "verifyHolidayRequest()" #formDirective="ngForm">
 
-<mat-form-field appearance="outline" color="accent">
-    <mat-select (selectionChange)="onChange($event.value)" placeholder="Select holiday type"  (click)="resetWarnings()" #matRef>
+<mat-form-field appearance="outline" color="accent"  *ngIf="!updating" >
+    <mat-select (selectionChange)="onChange($event.value)" placeholder="Select holiday type" (click)="resetWarnings()" #matRef>
     <mat-option *ngFor="let holiday of holidayList" [value]="holiday.value" (click)="resetWarnings()">
         {{holiday.viewValue}}</mat-option>
     </mat-select>
@@ -47,6 +47,7 @@
 
 </div>
 <mat-card class="password-hint" *ngIf="showFillErrorMessage">Please fill out all fields correctly.</mat-card> 
+<mat-card class="password-hint" *ngIf="showDateErrorMessage">Invalid date interval.</mat-card> 
 <mat-card class="password-hint-green" *ngIf="showSuccessfulMessage">Request sent successfully.</mat-card> 
 <button mat-raised-button type="submit" id="create-button" color="accent" *ngIf="showFieldForStartDate" >{{ updating ? "Update request" : "Create request" }}</button>
 </form>

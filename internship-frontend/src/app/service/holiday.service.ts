@@ -6,6 +6,7 @@ import { User } from '../shared/data-type/User';
 
 const GET_USERS_HOLIDAYS = "http://localhost:8090/holiday/get-users-holidays"
 const CREATE_HOLIDAY = "http://localhost:8090/holiday/add-holiday"
+const UPDATE_HOLIDAY = "http://localhost:8090/holiday/update-holiday"
 
 
 @Injectable({
@@ -20,5 +21,8 @@ export class HolidayService {
   }
   public createHoliday(holiday: Holiday): Observable<Holiday>{
     return this.httpClient.post<Holiday>(CREATE_HOLIDAY, holiday);
+  }
+  public updateHoliday(holiday: Holiday): Observable<Holiday>{
+    return this.httpClient.put<Holiday>(UPDATE_HOLIDAY, holiday);
   }
 }

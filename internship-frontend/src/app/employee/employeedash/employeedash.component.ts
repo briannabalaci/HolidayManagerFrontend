@@ -27,6 +27,11 @@ export class EmployeedashComponent implements AfterViewInit {
   substitute = '';
   holidayType = 'rest-holiday';
   holidayUpdating = false;
+  holidayUpdatingId = -1;
+  holidayUpdatingStartDate = '';
+  holidayUpdatingEndDate = '';
+  holidayUpdatingSubstitute = '';
+
 
   displayedColumns: string[] = ['startDate', 'endDate',  'status', 'Edit'];
   dataSource = new MatTableDataSource(HOLIDAY_DATA);
@@ -83,6 +88,10 @@ export class EmployeedashComponent implements AfterViewInit {
   completeData(row: any): void{
     this.holidayUpdating = true;
     this.showFormCreateRequest = true;
+    this.holidayUpdatingId = row.id;
+    this.holidayUpdatingStartDate = row.startDate;
+    this.holidayUpdatingEndDate = row.endDate;
+    this.holidayUpdatingSubstitute = row.substitute;
     switch (row.type) {
       case 'UNPAID':
         this.holidayType = 'unpaid-holiday';
@@ -94,7 +103,6 @@ export class EmployeedashComponent implements AfterViewInit {
           this.holidayType = 'rest-holiday';
         break;
     }
-    console.log(this.holidayType);
   }
 
   filterByType(deviceValue: any, table: Holiday[] | undefined): Holiday[] | undefined{
@@ -171,6 +179,10 @@ export class EmployeedashComponent implements AfterViewInit {
       this.dataSource.sort = this.sort;
       this.applyFilters(this.selected2, this.selected);
     });
+  }
+  showForm() {
+    this.showFormCreateRequest = !this.showFormCreateRequest;
+    this.holidayUpdating = false;
   }
   
 }
