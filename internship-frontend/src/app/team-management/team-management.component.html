@@ -6,6 +6,7 @@
   <app-teams-table [teams]="this.teams"  (clickDeleteTeam)="deleteTeam($event)" (clickViewTeamDetails) = "viewTeamDetails($event)"></app-teams-table>
 
   <app-create-team [teamToView]="this.teamToView" [usersWithoutTeam]="this.usersWithoutTeam" [safeForView]="this.safeForView"
+                   [errorMessageFromAdd]="this.errorMessageFromAdd"
                    (clickCreate)="createTeam($event)" (clickUpdate)="updateTeam($event)" (clickAddUserToTeam)="addUserToTeam($event)"
                    (clickDeleteUserFromTeam)="deleteUserFromTeam($event)"  *ngIf = "showForm"> </app-create-team>
 
