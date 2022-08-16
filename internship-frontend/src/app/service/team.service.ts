@@ -1,10 +1,16 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Team} from "../shared/data-type/Team";
+import {Team, TeamAdd, TeamUpdate} from "../shared/data-type/Team";
+import {coerceStringArray} from "@angular/cdk/coercion";
 
-const GET_ALL_TEAMS = "http://localhost:8090/team/get-all"
-const ADD_TEAM = "http://localhost:8090/team/add"
+const URL_BASE = "http://localhost:8090/team"
+const GET_ALL_TEAMS = URL_BASE+"/all"
+const GET_TEAM_MEMBERS = URL_BASE+"/members"
+const ADD_TEAM = URL_BASE+"/add"
+const UPDATE_TEAM = URL_BASE+"/update"
+const DELETE_TEAM = URL_BASE+"/delete"
+const GET_BY_ID = URL_BASE+"/get-by-id"
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +23,24 @@ export class TeamService {
     return this.httpClient.get<Team[]>(GET_ALL_TEAMS);
   }
 
-  public createTeam(team:Team):Observable<Team> {
-    return this.httpClient.post<Team>(ADD_TEAM,team);
+  public getTeamMembers(teamID:number):Observable<Team[]>{
+    return this.httpClient.get<Team[]>(GET_TEAM_MEMBERS + "/" +teamID.toString());
   }
+
+  public addTeam(team:TeamAdd):Observable<TeamAdd> {
+    return this.httpClient.post<TeamAdd>(ADD_TEAM,team);
+  }
+
+  public updateTeam(team:TeamUpdate):Observable<TeamUpdate> {
+    return this.httpClient.put<TeamUpdate>(UPDATE_TEAM,team);
+  }
+
+  public deleteTeam(teamId:number):Observable<Team> {
+    return this.httpClient.delete<Team>(DELETE_TEAM + "/"+teamId.toString())
+  }
+
+  public getById(teamId:number):Observable<Team>{
+    return this.httpClient.get<Team>(GET_BY_ID+"/"+teamId)
+  }
+
 }

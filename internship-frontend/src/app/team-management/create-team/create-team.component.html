@@ -1,37 +1,59 @@
+<h2> {{addUpdate? 'Create new team':'Update team'}} </h2>
 <form [formGroup]="teamFormGroup" (ngSubmit)="createTeam()" >
+
   <mat-form-field appearance="legacy">
     <mat-label> Name</mat-label>
-    <input matInput placeholder="Name of the team" formControlName="name">
+    <input matInput placeholder="Name of the team" formControlName="name" >
     <mat-hint>Type the name of the team</mat-hint>
   </mat-form-field>
 
 
+  <!-- search users to add them to the team -->
   <div>
-    <mat-form-field class="search-field" appearance="legacy">
-      <mat-label>Search User</mat-label>
-      <input matInput (keyup)="searchUser()"
-             type="text"
-             autocomplete="off"
-             placeholder="Search user"
-             [(ngModel)]="typedName"
-             name="typedName"/>
+    <mat-form-field >
+      <mat-select msInfiniteScroll [formControl]="userControl" placeholder="Team members"  (selectionChange)="addUserToTeam($event.value)">
+        <mat-option >
+          <ngx-mat-select-search [formControl]="userFilteredControl"></ngx-mat-select-search>
+        </mat-option>
+
+        <mat-option *ngFor="let user of filteredUsers " [value]="user" >
+          {{user.forname + " " + user.surname}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
-
-    <nav>
-      <mat-action-list id="list-users" class="list" *ngIf="foundUsers.length!=0">
-        <button mat-list-item id="{{user.id}}" *ngFor="let user of foundUsers;index as i;">{{user.forname + ' ' + user.surname}}
-<!--        <button mat-list-item id="{{user.id}}" class="item-list"  (click)="clickOnUser(user.id)" *ngFor="let user of foundUsers;index as i;">{{user.first_name + ' ' + user.last_name}}-->
-          <mat-icon matListIcon>person</mat-icon>
-        </button>
-      </mat-action-list>
-    </nav>
-
-    <ul *ngIf="foundUsers.length==0">
-      <li> No results</li>
-    </ul>
-
   </div>
 
 
-  <button mat-raised-button color="accent" type="submit"> ADD </button>
+  <!--  show the users that have already been added to the team-->
+  <h3 *ngIf = "this.addedMembers.length"> Team members </h3>
+  <table mat-table [dataSource]="this.addedMembers" class="usersTable">
+    <ng-container matColumnDef="User">
+      <td mat-cell  *matCellDef="let element"> {{element.forname + " "+element.surname}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Delete">
+      <td mat-cell *matCellDef="let row" >
+        <button mat-button (click)="deleteUserFromTeam(row)"><mat-icon>delete_forever</mat-icon></button>
+      </td>
+    </ng-container>
+
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+
+  <!--  pick a team leader from the users that have already been added to the team-->
+  <div>
+    <mat-form-field>
+      <mat-select  [formControl]="teamLeadControl" placeholder="Team leader" [(value)]="this.teamLeader">
+        <mat-option *ngFor="let user of addedMembers"  [value]="user">
+          {{user.forname + " " + user.surname}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <button (click)="resetWarnings()" mat-raised-button color="accent" type="submit" > {{addUpdate? 'ADD TEAM':'UPDATE TEAM'}} </button>
+
+  <mat-card class="error-message" *ngIf="isErrorMessage">{{this.errorString}}</mat-card>
+
 </form>

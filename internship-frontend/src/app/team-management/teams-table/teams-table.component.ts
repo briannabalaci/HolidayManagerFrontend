@@ -1,13 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {Team} from "../../shared/data-type/Team";
 import {TeamService} from "../../service/team.service";
-
-
-const TEAMS:Team[]=[
-  {id:1,name:"Team 1",teamLeader:"a"},
-  {id:2,name:"Team 2",teamLeader:"a"},
-  {id:3,name:"Team 3",teamLeader:"a"},
-]
+import {MatTable} from "@angular/material/table";
+import {User} from "../../shared/data-type/User";
+import {ConfirmationDialogBoxComponent} from "../../confirmation-dialog-box/confirmation-dialog-box.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-teams-table',
@@ -15,17 +12,35 @@ const TEAMS:Team[]=[
   styleUrls: ['./teams-table.component.scss']
 })
 
-export class TeamsTableComponent implements OnInit {
+export class TeamsTableComponent implements OnInit,OnChanges {
 
-  // const DATA_SOURCE = this.teams
   displayedColumns: string[] = ['Team','View','Delete']
-  dataSource = TEAMS;
-  teams:Team[] = []
+  @Input() teams:Team[] = [] //get the teams from team-management
+  @Output() clickDeleteTeam = new EventEmitter<number>() //send de deleted team ID to team-management
+  @Output() clickViewTeamDetails = new EventEmitter<Team>() //send the Id of the team we want to view
 
-  constructor(private teamService:TeamService) { }
+  constructor(private teamService:TeamService, private dialogBox:MatDialog) { }
+  @ViewChild(MatTable) table: MatTable<User>
 
-  ngOnInit(): void {
-     this.teamService.getAllTeams().subscribe(data => {this.teams = data;})
+  ngOnInit(): void {}
+
+  ngOnChanges(changes: SimpleChanges): void {}
+  deleteTeam(team:Team){
+    const dialogResponse = this.dialogBox.open(ConfirmationDialogBoxComponent,{
+      data:"Are you sure you want to delete this team?"
+    });
+
+    dialogResponse.afterClosed().subscribe( response => {
+      if(response){
+        this.clickDeleteTeam.emit(team.id)
+      }
+    })
+
   }
+
+  viewTeamDetails(team:Team){
+    this.clickViewTeamDetails.emit(team)
+  }
+
 
 }

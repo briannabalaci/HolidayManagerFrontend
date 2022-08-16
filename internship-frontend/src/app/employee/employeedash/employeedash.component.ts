@@ -8,6 +8,8 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort } from '@angular/material/sort';
 import { Holiday,  HolidayStatus,  HolidayTypeView, ReqestStatusView } from 'src/app/shared/data-type/Holiday';
 import { DatePipe } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogBoxComponent } from 'src/app/confirmation-dialog-box/confirmation-dialog-box.component';
 
 // TO DO: move new data type in a separate folder
 const HOLIDAY_DATA: Holiday[] =[ 
@@ -26,6 +28,7 @@ export class EmployeedashComponent implements AfterViewInit {
   startDate = 'Angular';
   substitute = '';
   displayedColumns: string[] = ['startDate', 'endDate',  'status', 'Edit', 'Delete'];
+  holidayType = 'rest-holiday';
   dataSource = new MatTableDataSource(HOLIDAY_DATA);
   holidayList: HolidayTypeView[] = [
     {value: 'all-requests', viewValue: 'All requests'},
@@ -41,7 +44,7 @@ export class EmployeedashComponent implements AfterViewInit {
   ]
   selected = this.holidayList[0].value;
   selected2 = this.statusList[0].value;
-  constructor(private _liveAnnouncer: LiveAnnouncer, private holidayService:HolidayService, private cookieService: CookieService, private userService: UserService) {}
+  constructor(private _liveAnnouncer: LiveAnnouncer, private holidayService:HolidayService, private cookieService: CookieService, private userService: UserService, private dialogBox:MatDialog) {}
 
   holidays?: Holiday[] = HOLIDAY_DATA;
   sortedTable?: Holiday[];
@@ -71,14 +74,21 @@ export class EmployeedashComponent implements AfterViewInit {
   }
 
   deleteHoliday(row: Holiday) {
-    console.log("pff");
-    this.holidayService.deleteHoliday(row.id).subscribe(data => {
-      this.holidays?.forEach( (item, index) => {
-        if(item.id === row.id) this.holidays?.splice(index,1);
-      });
-      this.dataSource = new MatTableDataSource(this.holidays);
-      this.applyFilters(this.selected2, this.selected);
+    const dialogResponse = this.dialogBox.open(ConfirmationDialogBoxComponent,{
+      data:"Are you sure you want to delete this holiday request?"
     });
+    dialogResponse.afterClosed().subscribe( response => {
+      if(response){
+        this.holidayService.deleteHoliday(row.id).subscribe(data => {
+          this.holidays?.forEach( (item, index) => {
+            if(item.id === row.id) this.holidays?.splice(index,1);
+          });
+          this.dataSource = new MatTableDataSource(this.holidays);
+          this.applyFilters(this.selected2, this.selected);
+        });
+      }
+    })
+    
   }
   clearData(): void{
   this.endDate = '';
@@ -87,6 +97,7 @@ export class EmployeedashComponent implements AfterViewInit {
   }
 
   completeData(row: any): void{
+    this.showFormCreateRequest = true;
     this.endDate = row.endDate;
     this.startDate = row.startDate;
     this.substitute = row.substitute;
@@ -152,7 +163,21 @@ export class EmployeedashComponent implements AfterViewInit {
     this.dataSource = new MatTableDataSource(this.sortedTable);
     this.dataSource.sort = this.sort;
   }
-
+  get refreshDataFunc() {
+    return this.refreshData.bind(this);
+  }
+  refreshData() {
+    const tk = this.cookieService.get('Token');
+    const email: String = parseJwt(tk).username;
+    const id: number = parseJwt(tk).id;
+    var datePipe = new DatePipe('en-US');
+    this.holidayService.getAllHolidaysById(id).subscribe(data => {
+      this.holidays = data;
+      this.dataSource = new MatTableDataSource(this.holidays);
+      this.dataSource.sort = this.sort;
+      this.applyFilters(this.selected2, this.selected);
+    });
+  }
   
 }
 

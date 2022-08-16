@@ -1,3 +1,6 @@
 <section>
-    <app-create-user-form (clickCreate)="createUser($event)"></app-create-user-form>
+    <app-create-user-form (clickCreate)="createUser($event)" *ngIf="!displayUpdate"></app-create-user-form>
+</section>
+<section>
+      <app-edit-user-form   [userDto] ="editUserDto"  (clickUpdate)="updateUser($event)" (cancelUpdate)="cancelUpdate()"  *ngIf="displayUpdate"></app-edit-user-form>
 </section>
