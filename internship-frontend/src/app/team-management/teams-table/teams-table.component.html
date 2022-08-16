@@ -2,7 +2,7 @@
   <header>
   </header>
 
-  <table mat-table [dataSource]="this.teams">
+  <table mat-table [dataSource]="this.dataSource">
     <ng-container matColumnDef="Team">
       <td mat-cell  class="teamName" *matCellDef="let element"> {{element.name }} </td>
     </ng-container>
@@ -21,6 +21,12 @@
 
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+
+  <mat-paginator [length]="100"
+                 [pageSize]="5"
+                 [pageSizeOptions]="[5, 10, 25, 100]"
+                 aria-label="Select page">
+  </mat-paginator>
 
   <footer>
   </footer>
