@@ -49,6 +49,7 @@ import {TeamsRequestsComponent} from "./home/teamlead-home/teams-requests/teams-
 import {
   DetailedRequestComponent
 } from "./home/teamlead-home/teams-requests/detailed-request/detailed-request.component";
+import { RequestsTableComponent } from './shared/requests-table/requests-table.component';
 
 @NgModule({
 
@@ -75,7 +76,8 @@ import {
     NavBarComponent,
     CreateRequestComponent,
     ConfirmationDialogBoxComponent,
-    DialogOverviewExampleDialog // asta difera
+    DialogOverviewExampleDialog,
+    RequestsTableComponent // asta difera
   ],
   imports: [
     MatNativeDateModule,

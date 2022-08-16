@@ -1,58 +1,53 @@
 <app-nav-bar></app-nav-bar>
 <h1>Employee Dashboard</h1>
-<p>Vacations days left: {{vacationdays}}</p>
-<mat-form-field appearance="fill">
-  <mat-label>Requests</mat-label>
-  <mat-select [(ngModel)]="selected" (selectionChange)="changefilterType($event.value)" >
-    <mat-option *ngFor="let holiday of holidayList" [value]="holiday.value" >
-      {{holiday.viewValue}}</mat-option>
+<p>Vacations days left: {{vacationDays}}</p>
+<!--<mat-form-field appearance="fill">-->
+<!--  <mat-label>Requests</mat-label>-->
+<!--  <mat-select [(ngModel)]="selectedType" (selectionChange)="changefilterType($event.value)">-->
+<!--    <mat-option *ngFor="let holiday of holidayList" [value]="holiday.value">-->
+<!--      {{holiday.viewValue}}</mat-option>-->
+<!--  </mat-select>-->
+<!--</mat-form-field>-->
+<mat-form-field class="section-dropdown-requests" appearance="fill">
+  <mat-select (selectionChange)="onTypeChange($event.value)">
+    <mat-option *ngFor="let request of requestsTypes" [value]="request">
+      {{request}}
+    </mat-option>
   </mat-select>
 </mat-form-field>
-<br>
-<mat-form-field appearance="fill">
-  <mat-label>Statuses</mat-label>
-  <mat-select [(ngModel)]="selected2" (selectionChange)="changefilterStatus($event.value)" >
-    <mat-option *ngFor="let status of statusList" [value]="status.value" >
-      {{status.viewValue}}</mat-option>
-  </mat-select>
-</mat-form-field>
-<br>
-<table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
-  <ng-container matColumnDef="startDate">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by start date"> Start date </th>
-      <td mat-cell *matCellDef="let element"> {{element.startDate | date: 'longDate'}} </td>
-  </ng-container>
-  <ng-container matColumnDef="endDate">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by end date"> End date </th>
-      <td mat-cell *matCellDef="let element"> {{element.endDate | date: 'longDate'}} </td>
-  </ng-container>
-  <ng-container matColumnDef="status">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by status"> Status </th>
-      <td mat-cell *matCellDef="let element"> {{element.status}} </td>
-  </ng-container>
-  <ng-container matColumnDef="Edit">
-    <th mat-header-cell  *matHeaderCellDef > Edit </th>
-    <td mat-cell *matCellDef="let row" >
-         <button mat-button (click)="completeData(row)" >
-          <mat-icon>visibility</mat-icon>
-         </button>
-    </td>
-  </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-</table>
+<br>
+<!--<mat-form-field appearance="fill">-->
+<!--  <mat-label>Statuses</mat-label>-->
+<!--  <mat-select [(ngModel)]="selectedStatus" (selectionChange)="changefilterStatus($event.value)">-->
+<!--    <mat-option *ngFor="let status of statusList" [value]="status.value">-->
+<!--      {{status.viewValue}}</mat-option>-->
+<!--  </mat-select>-->
+<!--</mat-form-field>-->
+
+<mat-form-field class="section-dropdown-requests" appearance="fill">
+  <mat-select (selectionChange)="onStatusChange($event.value)">
+    <mat-option *ngFor="let request of requestsStatus" [value]="request">
+      {{request}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<br>
+
+<app-requests-table></app-requests-table>
 <br>
 
 <div class="div-holiday-request">
   <mat-card class="bg-card">
     <app-create-request *ngIf="showFormCreateRequest" [refreshData]="refreshDataFunc"></app-create-request>
-    <button mat-button color="accent" type="button" (click)="showFormCreateRequest = !showFormCreateRequest" id="form-button">{{showFormCreateRequest? "Close" : "Create new request"}}</button>
+    <button mat-button color="accent" type="button" (click)="showFormCreateRequest = !showFormCreateRequest"
+            id="form-button">{{showFormCreateRequest ? "Close" : "Create new request"}}</button>
   </mat-card>
 </div>
 <br><br>
 <footer>
-  
+
 </footer>
 
 
