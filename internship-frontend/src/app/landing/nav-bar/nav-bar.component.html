@@ -1,9 +1,10 @@
 <nav>
     <button mat-button type="button" id="nav-bar-profile-button" (click)="redirectUser()" color="white"><mat-icon matPrefix id="nav-bar-profile">home</mat-icon></button>
     <p id="username">{{name}}</p>
-    <button mat-button type="button" id="nav-bar-notification-button" color="white">
-        <span id="notification-number" *ngIf="notificationNum > 0">{{notificationNum}}</span>
-        <mat-icon matPrefix id="nav-bar-notification">notifications</mat-icon>
+    <button *ngIf="canShowNotification" mat-button type="button" id="nav-bar-notification-button" (click)="showNotifications()" color="white">
+       <mat-icon *ngIf="notificationNum > 0" matBadge="{{notificationNum}}" matBadgeColor="warn">notifications</mat-icon>
+       <mat-icon matPrefix *ngIf="notificationNum <= 0" id="nav-bar-notification">notifications</mat-icon>
     </button>
     <button mat-button type="submit" id="nav-bar-button" (click)="logoutUser()" color="white"><mat-icon matPrefix id="nav-bar-logout">logout</mat-icon></button>
 </nav>
+<app-nav-bar-notifications *ngIf="notificationsVisible"></app-nav-bar-notifications>
