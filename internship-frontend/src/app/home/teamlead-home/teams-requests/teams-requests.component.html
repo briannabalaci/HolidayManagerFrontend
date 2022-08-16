@@ -4,10 +4,6 @@
     <h2 class="section-title">Team's Requests</h2>
   </header>
 
-<!--  <mat-form-field>-->
-<!--    <input matInput [ngModel]="globalFilter" (ngModelChange)="applyFilter($event)" placeholder="Filter">-->
-<!--  </mat-form-field>-->
-
   <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
 
     <ng-container matColumnDef="name">
