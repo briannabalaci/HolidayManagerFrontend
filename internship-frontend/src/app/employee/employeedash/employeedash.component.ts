@@ -26,6 +26,8 @@ export class EmployeedashComponent implements AfterViewInit {
   startDate = 'Angular';
   substitute = '';
   holidayType = 'rest-holiday';
+  holidayUpdating = false;
+
   displayedColumns: string[] = ['startDate', 'endDate',  'status', 'Edit'];
   dataSource = new MatTableDataSource(HOLIDAY_DATA);
   holidayList: HolidayTypeView[] = [
@@ -80,6 +82,7 @@ export class EmployeedashComponent implements AfterViewInit {
 
   completeData(row: any): void{
     this.showFormCreateRequest = true;
+    this.holidayUpdating = true;
     this.endDate = row.endDate;
     this.startDate = row.startDate;
     this.substitute = row.substitute;

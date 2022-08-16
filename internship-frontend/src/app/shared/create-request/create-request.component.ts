@@ -28,8 +28,7 @@ export class CreateRequestComponent implements OnInit {
   @ViewChild('matRef') matRef!: MatSelect;
   @ViewChild('formDirective') private formDirective!: NgForm;
   @Input() refreshData!: Function;
-
-  updating = false;
+  @Input() updating!: boolean;
 
   showFillErrorMessage = false;
   showSuccessfulMessage = false;
