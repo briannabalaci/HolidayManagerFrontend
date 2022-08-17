@@ -23,7 +23,7 @@ const HOLIDAY_DATA: Holiday[] =[
 export class EmployeedashComponent implements OnInit {
 
   showFormCreateRequest = false;
-  public vacationdays = 2;
+
   endDate = 'Angular';
   startDate = 'Angular';
   substitute = '';
@@ -34,23 +34,9 @@ export class EmployeedashComponent implements OnInit {
   holidayUpdatingEndDate = '';
   holidayUpdatingSubstitute = '';
 
-
   displayedColumns: string[] = ['startDate', 'endDate',  'status', 'Edit'];
   dataSource = new MatTableDataSource(HOLIDAY_DATA);
-  holidayList: HolidayTypeView[] = [
-    {value: 'all-requests', viewValue: 'All requests'},
-    {value: 'rest-holiday', viewValue: 'Rest holidays'},
-    {value: 'special-holiday', viewValue: 'Special holiday'},
-    {value: 'unpaid-holiday', viewValue: 'Unpaid holiday'}
-  ];
-  statusList: ReqestStatusView[] = [
-    {value: 'ALL', viewValue: 'All statuses'},
-    {value: 'PENDING', viewValue: 'Pending'},
-    {value: 'APPROVED', viewValue: 'Approved'},
-    {value: 'DENIED', viewValue: 'Denied'}
-  ]
-  selected = this.holidayList[0].value;
-  selected2 = this.statusList[0].value;
+
   constructor(private _liveAnnouncer: LiveAnnouncer, private holidayService:HolidayService, private cookieService: CookieService, private userService: UserService) {}
   vacationDays: number = 0;
   user!: User;
@@ -63,25 +49,6 @@ export class EmployeedashComponent implements OnInit {
 
   @ViewChild(RequestsTableComponent) requests: RequestsTableComponent;
 
-  completeData(row: any): void {
-    this.holidayUpdating = true;
-    this.showFormCreateRequest = true;
-    this.holidayUpdatingId = row.id;
-    this.holidayUpdatingStartDate = row.startDate;
-    this.holidayUpdatingEndDate = row.endDate;
-    this.holidayUpdatingSubstitute = row.substitute;
-    switch (row.type) {
-      case 'UNPAID':
-        this.holidayType = 'unpaid-holiday';
-        break;
-      case 'SPECIAL':
-        this.holidayType = 'special-holiday';
-        break;
-      case 'REST':
-        this.holidayType = 'rest-holiday';
-        break;
-    }
-  }
   ngOnInit() {
     this.getAndSetEmployeeData();
   }

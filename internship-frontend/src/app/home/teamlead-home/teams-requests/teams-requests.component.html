@@ -43,8 +43,8 @@
 
       <ng-container matColumnDef="edit">
         <th mat-header-cell *matHeaderCellDef> Edit </th>
-        <td mat-cell *matCellDef>
-          <button mat-icon-button aria-label="Edit icon" class="section-button--edit">
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button aria-label="Edit icon" class="section-button--edit" type="button" id="form-button" (click)="fillFields(element)">
             <mat-icon class="section-mat-icon">remove_red_eye</mat-icon>
           </button>
         </td>
@@ -58,10 +58,11 @@
                  showFirstLastButtons></mat-paginator>
 
 
+
   <div class="div-holiday-request">
     <mat-card class="bg-card">
-      <app-detailed-request *ngIf="showFormApproveRequest"></app-detailed-request>
-      <button mat-button color="accent" type="button" (click)="showFormApproveRequest = !showFormApproveRequest" id="form-button">{{showFormApproveRequest? "Close" : "Approve/Decline new request"}}</button>
+      <app-detailed-request [parent]="this" *ngIf="showFormApproveRequest" [refreshData]="refreshDataFunc" [deciding] ="holidayDeciding" [decidingId]="holidayDecidingId" [decidingStartDate]="holidayDecidingStartDate" [decidingEndDate]="holidayDecidingEndDate" [decidingSubstitute]="holidayDecidingSubstitute" [decidingType]="holidayType" [decidingName]="holidayDecidingName" [decidingDocumentName] = "holidayDecidingDocumentName"></app-detailed-request>
+      <button mat-raised-button *ngIf="showFormApproveRequest" type="button" id="close-button" color="accent" (click)="closeForm()">Close</button>
     </mat-card>
   </div>
 

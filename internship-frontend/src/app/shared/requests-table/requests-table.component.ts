@@ -181,6 +181,7 @@ export class RequestsTableComponent implements AfterViewInit {
       this.getFilteredByStatusAndType(this.selectedStatusChild, this.selectedTypeChild)
     }
   }
+
   fillFields(element: HolidayDto) {
     console.log(element);
     this.parent.showFormCreateRequest = true;
@@ -200,7 +201,7 @@ export class RequestsTableComponent implements AfterViewInit {
           this.parent.holidayType = 'special-holiday';
           break;
     }
-    
+
   }
 
 }

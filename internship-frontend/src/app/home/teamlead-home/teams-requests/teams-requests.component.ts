@@ -1,6 +1,6 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {TeamleadService} from "../../../service/teamlead.service";
-import {HolidayDto} from "../../../shared/data-type/HolidayDto";
+import {HolidayDto, HolidayTypeDto} from "../../../shared/data-type/HolidayDto";
 import {User} from "../../../shared/data-type/User";
 import {Team} from "../../../shared/data-type/Team";
 import {LiveAnnouncer} from '@angular/cdk/a11y';
@@ -9,6 +9,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {FormControl} from "@angular/forms";
 import {MatPaginator} from "@angular/material/paginator";
 import {UserService} from "../../../service/user.service";
+import {DetailedRequestComponent} from "./detailed-request/detailed-request.component";
 
 
 const ELEMENT_DATA: HolidayDto[] = []
@@ -18,7 +19,20 @@ const ELEMENT_DATA: HolidayDto[] = []
   templateUrl: './teams-requests.component.html',
   styleUrls: ['./teams-requests.component.scss']
 })
-export class TeamsRequestsComponent implements AfterViewInit {
+export class TeamsRequestsComponent implements OnInit {
+
+
+  endDate = 'Angular';
+  startDate = 'Angular';
+  substitute = '';
+  holidayType = HolidayTypeDto.REST_HOLIDAY;
+  holidayDeciding = false;
+  holidayDecidingId = -1;
+  holidayDecidingName = '';
+  holidayDecidingDocumentName = '';
+  holidayDecidingStartDate = new Date();
+  holidayDecidingEndDate = new Date();
+  holidayDecidingSubstitute = '';
 
   displayedColumns: string[] = ['name', 'startDate', 'endDate', 'type', 'edit']
   dataSource = new MatTableDataSource(ELEMENT_DATA);
@@ -34,12 +48,22 @@ export class TeamsRequestsComponent implements AfterViewInit {
     name: '', type: ''
   };
 
+  @ViewChild(DetailedRequestComponent) detailsRequest: DetailedRequestComponent;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild('paginator') paginator!: MatPaginator;
 
   constructor(private userService: UserService, private teamLeadService: TeamleadService, private _liveAnnouncer: LiveAnnouncer) {
 
   }
+
+  refreshData(){
+    this.populateTeamRequests();
+  }
+
+  get refreshDataFunc() {
+    return this.refreshData.bind(this);
+  }
+
 
   createFilter(): (data: HolidayDto, filter: string) => boolean {
     return function (data, filter): boolean {
@@ -49,7 +73,7 @@ export class TeamsRequestsComponent implements AfterViewInit {
     };
   }
 
-  ngAfterViewInit() {
+  ngOnInit() {
 
     this.getTeamLeaderData();
 
@@ -99,6 +123,31 @@ export class TeamsRequestsComponent implements AfterViewInit {
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
     }
+  }
+
+  fillFields(element: HolidayDto){
+    if(!this.showFormApproveRequest)
+    {
+      this.showFormApproveRequest = true;
+    }
+    this.holidayType = element.type!;
+    this.holidayDecidingId = element.id!;
+    this.holidayDecidingName = element.user.surname + " " + element.user.forname;
+    this.holidayDeciding = true;
+    this.holidayDecidingStartDate = element.startDate!;
+    this.holidayDecidingEndDate = element.endDate!;
+
+    if(element.type == HolidayTypeDto.SPECIAL_HOLIDAY){
+      this.holidayDecidingDocumentName = 'Este ok!';
+      this.holidayDecidingSubstitute = element.substitute!;
+    } else if(element.type == HolidayTypeDto.REST_HOLIDAY){
+      this.holidayDecidingSubstitute = element.substitute!;
+    }
+
+  }
+
+  closeForm(){
+    this.showFormApproveRequest = !this.showFormApproveRequest
   }
 
 }
