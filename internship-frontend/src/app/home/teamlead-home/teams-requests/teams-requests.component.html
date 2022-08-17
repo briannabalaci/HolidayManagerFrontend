@@ -56,4 +56,14 @@
   </div>
   <mat-paginator #paginator [pageSizeOptions]="[2, 4, 6]"
                  showFirstLastButtons></mat-paginator>
+
+
+  <div class="div-holiday-request">
+    <mat-card class="bg-card">
+      <app-detailed-request *ngIf="showFormApproveRequest"></app-detailed-request>
+      <button mat-button color="accent" type="button" (click)="showFormApproveRequest = !showFormApproveRequest" id="form-button">{{showFormApproveRequest? "Close" : "Approve/Decline new request"}}</button>
+    </mat-card>
+  </div>
+
+
 </section>

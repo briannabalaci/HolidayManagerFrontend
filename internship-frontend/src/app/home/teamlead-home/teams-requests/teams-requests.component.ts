@@ -25,6 +25,7 @@ export class TeamsRequestsComponent implements AfterViewInit {
   user!: User;
   team!: Team;
 
+  showFormApproveRequest = false;
 
   typeFilter = new FormControl('');
   nameFilter = new FormControl('');

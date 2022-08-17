@@ -9,7 +9,7 @@
 <!--  </mat-select>-->
 <!--</mat-form-field>-->
 <mat-form-field class="section-dropdown-requests" appearance="fill">
-  <mat-select (selectionChange)="onTypeChange($event.value)">
+  <mat-select [(ngModel)]="selectedTypeValue" (selectionChange)="onTypeChange($event.value)">
     <mat-option *ngFor="let request of requestsTypes" [value]="request">
       {{request}}
     </mat-option>
@@ -26,7 +26,7 @@
 <!--</mat-form-field>-->
 
 <mat-form-field class="section-dropdown-requests" appearance="fill">
-  <mat-select (selectionChange)="onStatusChange($event.value)">
+  <mat-select [(ngModel)]="selectedStatusValue" (selectionChange)="onStatusChange($event.value)">
     <mat-option *ngFor="let request of requestsStatus" [value]="request">
       {{request}}
     </mat-option>
