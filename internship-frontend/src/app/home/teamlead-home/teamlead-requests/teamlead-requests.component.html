@@ -1,19 +1,22 @@
 <section class="section-home-teamlead">
-  <mat-label class="section-label">Vacation days left: {{nrHolidays}}</mat-label>
+  <div class="centered">
+    <h1 class="title">Teamlead Dashboard</h1>
+    <div class="vacation-days-div">
+      <span class="vacation-days-field">Vacations days left: {{nrHolidays}}</span>
+    </div>
+    <br>
+  </div>
 
-  <br>
-
-  <mat-form-field class="section-dropdown-requests" appearance="fill">
+  <mat-card class="bg-card">
+  <mat-form-field class="section-dropdown-requests" appearance="outline" color="accent">
     <mat-select (selectionChange)="onTypeChange($event.value)">
       <mat-option *ngFor="let request of requestsTypes" [value]="request">
         {{request}}
       </mat-option>
     </mat-select>
   </mat-form-field>
-
-  <header>
-    <h2 class="section-title">Requests</h2>
-  </header>
+</mat-card>
+    <h2>Requests</h2>
 
   <app-requests-table [parent]="this"></app-requests-table>
 

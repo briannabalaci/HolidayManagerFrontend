@@ -44,13 +44,105 @@ body { margin: 0; background-color: rgb(245, 245, 245); font-family: Roboto, "He
 .centered {
   text-align: center;
 }
-.title {
-  font-size: 42px;
-}
 .vacation-days-field {
-  padding: 4px;
+  padding: 8px;
   text-align: center;
-  border-radius: 4px;
+  border-radius: 22px;
   background-color: v.$orange;
   color: v.$white;
 }
+
+h1 {
+  font-weight: bold !important;
+}
+h2 {
+  padding-top: 12px;
+  font-weight: bold !important;
+  margin-left: 20px !important;
+}
+
+.bg-card {
+  width: 360px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  border-radius: 30px !important;
+  box-shadow: 20px!important;
+  text-align: center;
+}
+
+@media screen and ( max-width: 500px ) {
+   .bg-card {
+      width: 80% !important;
+  }
+}
+// TABLE CSS
+.mat-table {
+  width: 100%;
+}
+.mat-row:nth-child(2n) {
+  background-color: v.$grey-light;
+}
+.mat-header-cell:not(:first-child) {
+  padding-left: 0;
+}
+.mat-header-cell:first-child {
+  border-top-left-radius: 10px;
+}
+.mat-header-cell:last-child {
+  border-top-right-radius: 10px;
+}
+
+.mat-column-name {
+  max-width: 100px;
+}
+
+.mat-header-cell {
+  border: none !important; 
+  flex-direction: column;
+  padding-top: 10px !important;
+  font-size: 14px;
+  text-align: center;
+  font-weight: bold;
+  color: v.$orange-secondary;
+  background-color: v.$orange-light;
+}
+.mat-cell {
+  text-align: left !important;
+}
+
+.mat-header-cell:not(:first-child) {
+  padding-left: 0;
+}
+
+.mat-header-cell:first-child {
+  border-top-left-radius: 12px;
+}
+.mat-header-row {
+  height: 3em !important;
+}
+
+.mat-row:nth-child(2n) {
+  background-color: #f2f2f2;
+}
+.state-cell {
+  text-align: right;
+}
+.mat-cell {
+  white-space: normal;
+  word-wrap: break-word;
+  border: none !important;
+}
+.table-card {
+  border-radius: 24px !important;
+  margin: 12px;
+  display: block;
+  text-align: center !important;
+}
+.edit-cell {
+  text-align: center !important;
+}
+.delete-cell {
+  text-align: center !important;
+}
+
+/// END OF TABLE CSS

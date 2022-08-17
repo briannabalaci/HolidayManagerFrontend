@@ -1,29 +1,26 @@
-<section class="section-teams-requests">
-
-  <header>
-  </header>
+<mat-card class="table-card">
 
   <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
 
     <ng-container matColumnDef="startDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by start date"> Start date </th>
+      <th class="start-date-column" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by start date"> Start date </th>
       <td mat-cell *matCellDef="let element"> {{element.startDate | date: 'shortDate'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="endDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by end date"> End Date </th>
+      <th class="end-date-column" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by end date"> End Date </th>
       <td mat-cell *matCellDef="let element"> {{element.endDate | date: 'shortDate'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="type">
 
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by type"> Type </th>
+      <th class="type-column" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by type"> Type </th>
       <td mat-cell *matCellDef="let element"> {{element.type}} </td>
     </ng-container>
 
     <ng-container matColumnDef="edit">
-      <th mat-header-cell *matHeaderCellDef> Edit </th>
-      <td mat-cell *matCellDef="let element">
+      <th class="edit-cell" mat-header-cell *matHeaderCellDef> Edit </th>
+      <td mat-cell class="edit-cell" *matCellDef="let element">
         <button mat-icon-button aria-label="Edit icon" class="section-button--edit" (click)="fillFields(element)">
           <mat-icon class="section-mat-icon">remove_red_eye</mat-icon>
         </button>
@@ -31,8 +28,8 @@
     </ng-container>
 
     <ng-container matColumnDef="delete">
-      <th mat-header-cell *matHeaderCellDef> Delete </th>
-      <td mat-cell *matCellDef>
+      <th class="edit-cell" mat-header-cell *matHeaderCellDef> Delete </th>
+      <td mat-cell class="delete-cell" *matCellDef>
         <button mat-icon-button aria-label="Edit icon" class="section-button--edit">
           <mat-icon class="section-mat-icon">delete_forever</mat-icon>
         </button>
@@ -49,4 +46,4 @@
   <footer>
   </footer>
 
-</section>
+</mat-card>

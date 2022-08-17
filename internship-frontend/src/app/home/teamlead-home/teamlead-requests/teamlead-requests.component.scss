@@ -1,7 +1,6 @@
 @use "../../../../variables" as v;
 .section-home-teamlead{
   display: block;
-  text-align: center;
 }
 
 .section-label{
@@ -11,17 +10,7 @@
   margin-right: 20px;
 }
 
-.section-dropdown-requests{
-  display: block;
-  margin-left: 20px;
-  width: 40%;
-}
 
-.section-title{
-  font-size: 20px;
-  text-align: left;
-  margin-left: 20px;
-}
 
 .section-button--edit{
   display: block;
@@ -45,11 +34,13 @@
   width:100%;
 }
 
-h2{
-  font-size: 20px;
-}
 ::ng-deep .mat-form-field {
   width: 320px;
+}
+@media screen and (max-width: 500px) {
+  ::ng-deep .mat-form-field {
+    width: 80%;
+ }
 }
 .div-holiday-request {
   background-color: v.$grey-secondary;
@@ -64,20 +55,5 @@ h2{
   overflow-y: scroll;
   z-index: 1;
 }
-.bg-card {
-  width: 360px;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 30px;
-  box-shadow: 20px;
-}
 
-@media screen and ( max-width: 500px ) {
-  ::ng-deep .mat-form-field {
-      width: 80%;
-   }
-   .bg-card {
-      width: 80%;
-  }
-}
 

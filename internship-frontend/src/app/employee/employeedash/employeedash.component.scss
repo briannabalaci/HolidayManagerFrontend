@@ -4,9 +4,7 @@
   font-size: 0.75em;
 }
 // These are for the create request form --> same as in teamlead dashboard
-::ng-deep .mat-form-field {
-  width: 320px;
-}
+
 .div-holiday-request {
   background-color: v.$grey-secondary;
   width: 100%;
@@ -22,23 +20,17 @@
   overflow-y: scroll;
   z-index: 1;
 }
-.bg-card {
-  width: 360px;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 30px;
-  box-shadow: 20px;
-}
 
-@media screen and ( max-width: 500px ) {
-  ::ng-deep .mat-form-field {
-      width: 80%;
-   }
-   .bg-card {
-      width: 80%;
-  }
-}
 // Until here
 footer {
   height: 128px;
+}
+
+::ng-deep .mat-form-field {
+  width: 320px;
+}
+@media screen and (max-width: 500px) {
+  ::ng-deep .mat-form-field {
+    width: 80%;
+ }
 }
