@@ -23,7 +23,8 @@ export class DetailedRequestComponent implements OnInit {
     startDate:[new Date(),Validators.required],
     endDate: [new Date(), Validators.required],
     substitute: [""],
-    document:[""]
+    document:[""],
+    documentPdf:[""]
   })
 
 
@@ -44,8 +45,8 @@ export class DetailedRequestComponent implements OnInit {
 
   modifiedRequest: HolidayDto;
 
-  showFillErrorMessage = false;
-  showSuccessfulMessage = false;
+  documentExists = false;
+
   showFieldForName = true;
   showFieldForType = true;
   showFieldForStartDate = true;
@@ -73,6 +74,7 @@ export class DetailedRequestComponent implements OnInit {
 
     if(this.decidingType == HolidayTypeDto.SPECIAL_HOLIDAY){
       this.holidayRequestFormGroup.controls['substitute'].setValue(this.decidingSubstitute.toString())
+
       this.holidayRequestFormGroup.controls['document'].setValue(this.decidingDocumentName.toString())
     } else if(this.decidingType == HolidayTypeDto.REST_HOLIDAY){
       this.holidayRequestFormGroup.controls['substitute'].setValue(this.decidingSubstitute.toString())
@@ -92,6 +94,7 @@ export class DetailedRequestComponent implements OnInit {
         break;
       }
       case HolidayTypeDto.SPECIAL_HOLIDAY: {
+        this.documentExists = this.decidingDocumentName !== null;
         this.showFieldForName = true;
         this.showFieldForType = true;
         this.showFieldForStartDate = true;
@@ -144,5 +147,22 @@ export class DetailedRequestComponent implements OnInit {
     dialogResponse.afterClosed().subscribe(    result => {
       this.parent.refreshData()
     });
+  }
+
+  downloadDocument() {
+
+    let binary_string = window.atob(this.decidingDocumentName)
+    let len = binary_string.length;
+    let bytes = new Uint8Array(len);
+
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binary_string.charCodeAt(i);
+    }
+
+    let blob = new Blob([bytes.buffer], { type: 'application/pdf' })
+    let url = URL.createObjectURL(blob);
+
+    window.open(url);
+
   }
 }

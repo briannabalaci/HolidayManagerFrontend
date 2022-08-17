@@ -178,7 +178,7 @@ export class CreateRequestComponent implements OnInit {
             } else {
               this.updating = false;
             }
-          });         
+          });
         }
       });
     } else {
@@ -205,7 +205,7 @@ export class CreateRequestComponent implements OnInit {
             user: {
               id: uID
             }
-          }         
+          }
       }
         this.holidayService.createHoliday(holidayData).subscribe(result => {
           // Call parent's function to refresh table.
@@ -238,7 +238,7 @@ export class CreateRequestComponent implements OnInit {
             } else {
               this.updating = false;
             }
-          });         
+          });
         }
     }
   }

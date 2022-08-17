@@ -38,10 +38,14 @@
       <input readonly matInput name="substitute" formControlName="substitute" placeholder="Substitute">
     </mat-form-field><br *ngIf="showFieldForSubstitute">
 
+
     <label *ngIf="showFieldForDocument">Extra information: </label>
-    <mat-form-field *ngIf="showFieldForDocument" appearance="outline" color="accent">
+    <mat-form-field *ngIf="showFieldForDocument && !documentExists" appearance="outline" color="accent">
       <input readonly matInput name="document" formControlName="document" placeholder="Extra information">
     </mat-form-field><br *ngIf="showFieldForDocument">
+    <button *ngIf="documentExists" mat-icon-button aria-label="Download icon" id="download-button" (click)="downloadDocument()">
+      <mat-icon class="section-mat-icon">picture_as_pdf</mat-icon>
+    </button>
 
     <mat-card class="error-message" *ngIf="isErrorMessage">{{this.errorString}}</mat-card>
     <mat-card class="success-message" *ngIf="isSuccessMessage">{{this.successString}}</mat-card>

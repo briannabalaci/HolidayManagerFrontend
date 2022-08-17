@@ -112,7 +112,8 @@ import {
     MatSortModule,
     NgxMatSelectSearchModule,
     ScrollingModule,
-    MatBadgeModule
+    MatBadgeModule,
+    
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthentificationInterceptor, multi: true},StompService],
   exports: [],
