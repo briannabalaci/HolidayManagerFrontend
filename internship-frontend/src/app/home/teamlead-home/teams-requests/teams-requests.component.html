@@ -59,10 +59,10 @@
 
 
 
-  <div class="div-holiday-request">
+  <div class="div-holiday-request" *ngIf="showFormApproveRequest">
     <mat-card class="bg-card">
-      <app-detailed-request [parent]="this" *ngIf="showFormApproveRequest" [refreshData]="refreshDataFunc" [deciding] ="holidayDeciding" [decidingId]="holidayDecidingId" [decidingStartDate]="holidayDecidingStartDate" [decidingEndDate]="holidayDecidingEndDate" [decidingSubstitute]="holidayDecidingSubstitute" [decidingType]="holidayType" [decidingName]="holidayDecidingName" [decidingDocumentName] = "holidayDecidingDocumentName" [decidingStatus] = "holidayDecidingStatus"></app-detailed-request>
-      <button mat-raised-button *ngIf="showFormApproveRequest" type="button" id="close-button" color="accent" (click)="closeForm()">Close</button>
+      <app-detailed-request [parent]="this"  [refreshData]="refreshDataFunc" [deciding] ="holidayDeciding" [decidingId]="holidayDecidingId" [decidingStartDate]="holidayDecidingStartDate" [decidingEndDate]="holidayDecidingEndDate" [decidingSubstitute]="holidayDecidingSubstitute" [decidingType]="holidayType" [decidingName]="holidayDecidingName" [decidingDocumentName] = "holidayDecidingDocumentName" [decidingStatus] = "holidayDecidingStatus"></app-detailed-request>
+      <button mat-raised-button type="button" id="close-button" color="accent" (click)="closeForm()">Close</button>
     </mat-card>
   </div>
 
