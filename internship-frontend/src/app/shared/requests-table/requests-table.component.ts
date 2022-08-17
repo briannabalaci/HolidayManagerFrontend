@@ -2,14 +2,12 @@ import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core'
 import {MatTableDataSource} from "@angular/material/table";
 import {HolidayDto, HolidayStatusDto, HolidayTypeDto} from "../data-type/HolidayDto";
 import {User} from "../data-type/User";
-import {Team} from "../data-type/Team";
 import {MatSort, Sort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {TeamleadService} from "../../service/teamlead.service";
 import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {UserService} from "../../service/user.service";
 import {HolidayService} from "../../service/holiday.service";
-import {Holiday, HolidayStatus, RequestType} from "../data-type/Holiday";
 import { CreateRequestComponent } from '../create-request/create-request.component';
 
 

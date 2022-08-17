@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {CookieService} from "ngx-cookie-service";
 import {HolidayService} from "../../../../service/holiday.service";
