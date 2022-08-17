@@ -109,27 +109,16 @@ export class EmployeedashComponent implements OnInit {
     this.requests.filterByTypeAndStatus(this.requests.selectedTypeChild, this.requests.selectedStatusChild)
   }
 
-  get refreshDataFunc() {
-    return this.requests.refreshData.bind(this);
-  }
-  refreshData() {
-    /*
-    const tk = this.cookieService.get('Token');
-    const email: String = parseJwt(tk).username;
-    const id: number = parseJwt(tk).id;
-    var datePipe = new DatePipe('en-US');
-    this.holidayService.getAllHolidaysById(id).subscribe(data => {
-      this.holidays = data;
-      this.dataSource = new MatTableDataSource(this.holidays);
-      this.dataSource.sort = this.sort;
-      this.applyFilters(this.selected2, this.selected);
-    });
-    */
-  }
   showForm() {
     this.showFormCreateRequest = !this.showFormCreateRequest;
     this.holidayUpdating = false;
   }
+  refreshData() {
+    this.requests.refreshData();
+  }
+  get refreshDataFunc() {
+    return this.refreshData.bind(this);
+}
 
 }
 
