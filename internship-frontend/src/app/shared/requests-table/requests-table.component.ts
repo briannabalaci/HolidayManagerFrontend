@@ -9,7 +9,8 @@ import {TeamleadService} from "../../service/teamlead.service";
 import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {UserService} from "../../service/user.service";
 import {HolidayService} from "../../service/holiday.service";
-import {HolidayStatus} from "../data-type/Holiday";
+import {Holiday, HolidayStatus, RequestType} from "../data-type/Holiday";
+import { CreateRequestComponent } from '../create-request/create-request.component';
 
 
 const ELEMENT_DATA: HolidayDto[] = []
@@ -32,6 +33,9 @@ export class RequestsTableComponent implements AfterViewInit {
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild('paginator') paginator!: MatPaginator;
+  @ViewChild(CreateRequestComponent) requestComponent: CreateRequestComponent;
+  @Input()
+    parent: any;
 
   constructor(private holidayService: HolidayService, private userService: UserService, private teamLeadService: TeamleadService, private _liveAnnouncer: LiveAnnouncer) {}
 
@@ -176,6 +180,27 @@ export class RequestsTableComponent implements AfterViewInit {
     } else {
       this.getFilteredByStatusAndType(this.selectedStatusChild, this.selectedTypeChild)
     }
+  }
+  fillFields(element: HolidayDto) {
+    console.log(element);
+    this.parent.showFormCreateRequest = true;
+    this.parent.holidayUpdating = true;
+    this.parent.holidayUpdatingId = element.id;
+    this.parent.holidayUpdatingStartDate = element.startDate;
+    this.parent.holidayUpdatingEndDate = element.endDate;
+    this.parent.holidayUpdatingSubstitute = element.substitute;
+    switch (element.type) {
+      case HolidayTypeDto.UNPAID_HOLIDAY:
+        this.parent.holidayType = 'unpaid-holiday';
+        break;
+        case HolidayTypeDto.REST_HOLIDAY:
+          this.parent.holidayType = 'rest-holiday';
+        break;
+        case HolidayTypeDto.SPECIAL_HOLIDAY:
+          this.parent.holidayType = 'special-holiday';
+          break;
+    }
+    
   }
 
 }

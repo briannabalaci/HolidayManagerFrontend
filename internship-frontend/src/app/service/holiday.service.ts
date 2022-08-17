@@ -7,6 +7,7 @@ import {HolidayDto, HolidayStatusDto, HolidayTypeDto} from "../shared/data-type/
 
 const GET_USERS_HOLIDAYS = "http://localhost:8090/holiday/get-users-holidays"
 const CREATE_HOLIDAY = "http://localhost:8090/holiday/add-holiday"
+const UPDATE_HOLIDAY = "http://localhost:8090/holiday/update-holiday"
 const URL = "http://localhost:8090/holiday";
 const GET_REQUESTS_FILTERED = `${URL}/requests-filtered-by`;
 
@@ -24,6 +25,10 @@ export class HolidayService {
     return this.httpClient.post<Holiday>(CREATE_HOLIDAY, holiday);
   }
 
+  public updateHoliday(holiday: Holiday): Observable<Holiday>{
+    return this.httpClient.put<Holiday>(UPDATE_HOLIDAY, holiday);
+  }
+
   public getRequestsFilteredByType(type: HolidayTypeDto, id: number): Observable<HolidayDto[]>{
     let url = `${GET_REQUESTS_FILTERED}?type=${type}&id=${id}`
     return this.httpClient.get<HolidayDto[]>(url);
@@ -38,5 +43,4 @@ export class HolidayService {
     let url = `${GET_REQUESTS_FILTERED}?status=${status}&type=${type}&id=${id}`
     return this.httpClient.get<HolidayDto[]>(url);
   }
-
 }

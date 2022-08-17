@@ -35,19 +35,15 @@
 
 <br>
 
-<app-requests-table></app-requests-table>
+<app-requests-table [parent]="this"></app-requests-table>
 <br>
 
 <div class="div-holiday-request">
   <mat-card class="bg-card">
-    <app-create-request *ngIf="showFormCreateRequest" [refreshData]="refreshDataFunc"></app-create-request>
-    <button mat-button color="accent" type="button" (click)="showFormCreateRequest = !showFormCreateRequest"
-            id="form-button">{{showFormCreateRequest ? "Close" : "Create new request"}}</button>
+    <app-create-request *ngIf="showFormCreateRequest" [refreshData]="refreshDataFunc" [updating] ="holidayUpdating" [updatingId]="holidayUpdatingId" [updatingStartDate]="holidayUpdatingStartDate" [updatingEndDate]="holidayUpdatingEndDate" [updatingSubstitute]="holidayUpdatingSubstitute" [deviceValue]="holidayType"></app-create-request>
+    <button mat-button color="accent" type="button" (click)="showForm()" id="form-button">{{showFormCreateRequest? "Close" : "Create new request"}}</button>
   </mat-card>
 </div>
-<br><br>
-<footer>
-
-</footer>
+<footer></footer>
 
 

@@ -10,6 +10,14 @@ export class Holiday{
   user?: User;
 }
 
+export class HolidayForUpdate{
+  id!: number;
+  startDate?: string;
+  endDate?: string;
+  document?: number[];
+  substitute?:string;
+}
+
 export enum RequestType {
   REST,
   UNPAID,
