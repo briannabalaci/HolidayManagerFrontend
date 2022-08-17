@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import {  CookieService } from 'ngx-cookie-service';
 import { UserType } from 'src/app/shared/data-type/User';
 import { parseJwt } from 'src/app/utils/JWTParser';
+import {StompService} from "../../service/stomp/stomp.service";
 
 @Component({
   selector: 'app-nav-bar',
@@ -14,9 +15,13 @@ export class NavBarComponent implements OnInit {
   notificationNum = 12;
   notificationsVisible = false;
   canShowNotification = true;
-  constructor(private router: Router, private cookieService: CookieService) { }
+  constructor(private router: Router, private cookieService: CookieService, private stompService:StompService) { }
 
   ngOnInit(): void {
+    this.stompService.subscribe('/topic/notification', (): void => {
+      this.notificationNum ++;
+    })
+
     const token = this.cookieService.get('Token');
     if (token) {
       const parsed = parseJwt(token);
