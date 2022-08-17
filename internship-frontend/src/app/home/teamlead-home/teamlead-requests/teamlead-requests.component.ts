@@ -14,6 +14,15 @@ import {UserService} from "../../../service/user.service";
 export class TeamleadRequestsComponent implements OnInit {
 
   showFormCreateRequest = false;
+  endDate = 'Angular';
+  startDate = 'Angular';
+  substitute = '';
+  holidayType = 'rest-holiday';
+  holidayUpdating = false;
+  holidayUpdatingId = -1;
+  holidayUpdatingStartDate = '';
+  holidayUpdatingEndDate = '';
+  holidayUpdatingSubstitute = '';
   nrHolidays: number = 0;
   user!: User;
   requestsTypes: string[] = ['All request', 'Rest holiday', 'Special holiday', 'Unpaid holiday']
@@ -45,9 +54,11 @@ export class TeamleadRequestsComponent implements OnInit {
     this.requests.filterByTypeAndStatus(this.requests.selectedTypeChild, this.requests.selectedStatusChild)
   }
 
-
+  refreshData() {
+    this.requests.refreshData();
+  }
   get refreshDataFunc() {
-    return this.requests.refreshData.bind(this);
+    return this.refreshData.bind(this);
   }
 
 }

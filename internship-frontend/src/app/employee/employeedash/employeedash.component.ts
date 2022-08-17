@@ -118,7 +118,7 @@ export class EmployeedashComponent implements OnInit {
   }
   get refreshDataFunc() {
     return this.refreshData.bind(this);
-}
+  }
 
 }
 
