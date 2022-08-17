@@ -13,7 +13,8 @@
     <mat-form-field >
       <mat-select msInfiniteScroll [formControl]="userControl" placeholder="Team members"  (selectionChange)="addUserToTeam($event.value)">
         <mat-option >
-          <ngx-mat-select-search [formControl]="userFilteredControl"></ngx-mat-select-search>
+          <ngx-mat-select-search [formControl]="userFilteredControl" [placeholderLabel]="'Search'"
+                                 [noEntriesFoundLabel]="'Not found'"></ngx-mat-select-search>
         </mat-option>
 
         <mat-option *ngFor="let user of filteredUsers " [value]="user" >

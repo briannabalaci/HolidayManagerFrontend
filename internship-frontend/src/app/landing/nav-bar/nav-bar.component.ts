@@ -11,12 +11,19 @@ import { parseJwt } from 'src/app/utils/JWTParser';
 })
 export class NavBarComponent implements OnInit {
   name = '';
+  notificationNum = 12;
+  notificationsVisible = false;
+  canShowNotification = true;
   constructor(private router: Router, private cookieService: CookieService) { }
 
   ngOnInit(): void {
     const token = this.cookieService.get('Token');
     if (token) {
-      this.name = parseJwt(token).username;
+      const parsed = parseJwt(token);
+      this.name = parsed.username;
+      if (parsed.type == UserType.ADMIN) {
+        this.canShowNotification = false;
+      }
     }
   }
   logoutUser(){
@@ -37,5 +44,9 @@ export class NavBarComponent implements OnInit {
     else if(type == UserType.TEAMLEAD){
       this.router.navigate(['/teamlead']);
     }
+  }
+  showNotifications() {
+    this.notificationsVisible = !this.notificationsVisible;
+    this.notificationNum = 0;
   }
 }
