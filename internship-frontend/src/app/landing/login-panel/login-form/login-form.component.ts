@@ -37,28 +37,29 @@ export class LoginFormComponent implements OnInit {
       email:valuesFromForm.email!,
       password:valuesFromForm.password!
     }
-    console.log(loginData.email+" "+loginData.password)
-    this.userService.login(loginData).subscribe(result => {
-    console.log("Result:");
-      console.log(result);
-      if(result['token'] == '') this.showPasswordErrorMessage = true;
-      else
-      {
-        this.cookieService.set('Token', result['token']);
-        // @ts-ignore
-        const type: UserType = parseJwt(result.token).type;
-        const email: String = parseJwt(result.token).username;
-        if(type == UserType.ADMIN){
-          this.router.navigate(['/admin']);
+    console.log(loginData.email + " " + loginData.password)
+    if (!this.loginUserDataFormGroup.invalid) {
+      this.userService.login(loginData).subscribe(result => {
+        console.log("Result:");
+        console.log(result);
+        if (result['token'] == '') this.showPasswordErrorMessage = true;
+        else {
+          this.cookieService.set('Token', result['token']);
+          // @ts-ignore
+          const type: UserType = parseJwt(result.token).type;
+          const email: String = parseJwt(result.token).username;
+          if (type == UserType.ADMIN) {
+            this.router.navigate(['/admin']);
+          }
+          else if (type == UserType.EMPLOYEE) {
+            this.router.navigate(['/employee']);
+          }
+          else if (type == UserType.TEAMLEAD) {
+            this.router.navigate(['/teamlead']);
+          }
         }
-        else if(type == UserType.EMPLOYEE){
-          this.router.navigate(['/employee']);
-        }
-        else if(type == UserType.TEAMLEAD){
-          this.router.navigate(['/teamlead']);
-        }
-      }
-    })
+      })
+    }
   }
 
 }

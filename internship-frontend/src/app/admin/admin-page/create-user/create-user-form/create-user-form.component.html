@@ -48,15 +48,7 @@
     </mat-select>
   </mat-form-field>
   <br>
-  <mat-form-field appearance="fill">
-    <mat-label>User Type</mat-label>
-    <mat-select (selectionChange)="changeType($event.value)" (click)="resetWarnings()">
-      <mat-option *ngFor="let userType of userTypes" [value]="userType.value" >
-        {{userType.viewValue}}
-      </mat-option>
-    </mat-select>
-     </mat-form-field>
-  <br>
+ 
       <button mat-raised-button color="accent" type="submit" id="form-button">Add User</button>
       <br>
 
