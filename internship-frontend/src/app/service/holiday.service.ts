@@ -55,4 +55,5 @@ export class HolidayService {
     return this.httpClient.get<HolidayDto[]>(url);
 
   }
+
 }

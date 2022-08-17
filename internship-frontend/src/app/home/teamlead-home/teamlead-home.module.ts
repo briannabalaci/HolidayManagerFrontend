@@ -13,6 +13,8 @@ import {TeamleadHomeComponent} from "./teamlead-home.component";
 import {MatSortModule } from '@angular/material/sort';
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatDatepickerModule} from "@angular/material/datepicker";
+import { MoreDetailsDialogBoxComponent } from './teams-requests/more-details-dialog-box/more-details-dialog-box.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 const routes: Routes = [
   {
@@ -25,23 +27,25 @@ const routes: Routes = [
     // TeamleadRequestsComponent,
     // TeamsRequestsComponent,
     // DetailedRequestComponent
+
   ],
   exports: [
   ],
-  imports: [
-    MatButtonModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatTableModule,
-    MatIconModule,
-    MatListModule,
-    CommonModule,
-    MatSortModule,
-    FormsModule,
-    MatPaginatorModule,
-    MatDatepickerModule
-  ]
+    imports: [
+        MatButtonModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatTableModule,
+        MatIconModule,
+        MatListModule,
+        CommonModule,
+        MatSortModule,
+        FormsModule,
+        MatPaginatorModule,
+        MatDatepickerModule,
+        MatDialogModule
+    ]
 })
 export class TeamleadHomeModule { }

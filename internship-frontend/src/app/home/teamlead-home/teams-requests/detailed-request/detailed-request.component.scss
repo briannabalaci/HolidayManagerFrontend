@@ -51,11 +51,15 @@
   }
 }
 
-.mat-red {
+
+.error-message {
   color: white;
-  background-color: red;
+  background: red;
+  margin-top: 12px;
 }
-.mat-green {
+
+.success-message {
   color: white;
-  background-color: green;
+  background: green;
+  margin-top: 12px;
 }
