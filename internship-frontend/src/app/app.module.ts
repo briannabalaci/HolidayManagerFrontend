@@ -53,6 +53,10 @@ import { RequestsTableComponent } from './shared/requests-table/requests-table.c
 import { MatBadgeModule } from '@angular/material/badge';
 import { NavBarNotificationsComponent } from './landing/nav-bar/nav-bar-notifications/nav-bar-notifications.component';
 import {StompService} from "./service/stomp/stomp.service";
+import {CommonModule} from "@angular/common";
+import {
+  MoreDetailsDialogBoxComponent
+} from "./home/teamlead-home/teams-requests/more-details-dialog-box/more-details-dialog-box.component";
 @NgModule({
 
   declarations: [
@@ -80,7 +84,8 @@ import {StompService} from "./service/stomp/stomp.service";
     ConfirmationDialogBoxComponent,
     DialogOverviewExampleDialog,
     RequestsTableComponent,
-    NavBarNotificationsComponent
+    NavBarNotificationsComponent,
+    MoreDetailsDialogBoxComponent
   ],
   imports: [
     MatNativeDateModule,
