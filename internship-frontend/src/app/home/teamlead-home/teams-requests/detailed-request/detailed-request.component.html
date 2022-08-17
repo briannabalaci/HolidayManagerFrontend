@@ -4,63 +4,55 @@
     <h2 class="section-title">Request View</h2>
   </header>
 
-  <div class="input-container">
-    <mat-label>Name: </mat-label>
+  <form id="login-form" [formGroup]="holidayRequestFormGroup" #formDirective="ngForm">
+    <label *ngIf="showFieldForName">Name: </label>
+    <mat-form-field *ngIf="showFieldForName" appearance="outline" color="accent">
+      <input readonly matInput name="name" formControlName="name" placeholder="Name" (click)="resetWarnings()">
+    </mat-form-field><br *ngIf="showFieldForName">
 
-    <mat-form-field class="example-full-width" appearance="fill">
-      <input matInput placeholder="Ex. John Doe" value="">
-    </mat-form-field>
-  </div>
+    <label *ngIf="showFieldForType">Type: </label>
+    <mat-form-field *ngIf="showFieldForType" appearance="outline" color="accent">
+      <input readonly matInput name="type" formControlName="type" placeholder="Type" (click)="resetWarnings()">
+    </mat-form-field><br *ngIf="showFieldForType">
 
-  <div class="input-container">
-    <mat-label>Type: </mat-label>
 
-    <mat-form-field class="example-full-width" appearance="fill">
-      <input matInput placeholder="Ex. Special" value="">
-    </mat-form-field>
-  </div>
-
-  <div class="input-container">
-    <mat-label>Start date: </mat-label>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Choose a date</mat-label>
-      <input matInput [matDatepicker]="pickerStart">
-      <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+    <label *ngIf="showFieldForStartDate">Start date: </label>
+    <mat-form-field *ngIf="showFieldForStartDate" appearance="outline" color="accent">
+      <input readonly matInput [matDatepicker]="pickerStart" name="startDate" placeholder="Select start date" formControlName="startDate" (click)="resetWarnings()">
+      <mat-datepicker-toggle matSuffix [for]="pickerStart" (click)="resetWarnings()">
+        <mat-icon matDatepickerToggleIcon color="accent">calendar_month</mat-icon>
+      </mat-datepicker-toggle>
       <mat-datepicker #pickerStart></mat-datepicker>
-    </mat-form-field>
-  </div>
+    </mat-form-field><br *ngIf="showFieldForStartDate">
 
-
-  <div class="input-container">
-    <mat-label>End date: </mat-label>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Choose a date</mat-label>
-      <input matInput [matDatepicker]="pickerEnd">
-      <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+    <label *ngIf="showFieldForEndDate">End date: </label>
+    <mat-form-field *ngIf="showFieldForEndDate" appearance="outline" color="accent">
+      <input readonly matInput [matDatepicker]="pickerEnd" name="endDate" placeholder="Select end date" formControlName="endDate" (click)="resetWarnings()">
+      <mat-datepicker-toggle matSuffix [for]="pickerEnd" (click)="resetWarnings()">
+        <mat-icon matDatepickerToggleIcon color="accent">calendar_month</mat-icon></mat-datepicker-toggle>
       <mat-datepicker #pickerEnd></mat-datepicker>
-    </mat-form-field>
-  </div>
+    </mat-form-field><br *ngIf="showFieldForEndDate">
 
-  <div class="input-container">
-    <mat-label>Substitute: </mat-label>
+    <label *ngIf="showFieldForSubstitute">Substitute: </label>
+    <mat-form-field *ngIf="showFieldForSubstitute" appearance="outline" color="accent">
+      <input readonly matInput name="substitute" formControlName="substitute" placeholder="Substitute" (click)="resetWarnings()">
+    </mat-form-field><br *ngIf="showFieldForSubstitute">
 
-    <mat-form-field class="example-full-width" appearance="fill">
-      <input matInput placeholder="Ex. John Doe" value="">
-    </mat-form-field>
-  </div>
+    <label *ngIf="showFieldForDocument">Extra information: </label>
+    <mat-form-field *ngIf="showFieldForDocument" appearance="outline" color="accent">
+      <input readonly matInput name="document" formControlName="document" placeholder="Extra information" (click)="resetWarnings()">
+    </mat-form-field><br *ngIf="showFieldForDocument">
 
-  <div class="button-container">
-    <button class="btn-mat" mat-raised-button color="primary">Approve</button>
 
-    <button class="btn-mat" mat-raised-button color="primary">Back</button>
+    <mat-card class="password-hint" *ngIf="showFillErrorMessage">Please fill out all fields correctly.</mat-card>
+    <mat-card class="password-hint-green" *ngIf="showSuccessfulMessage">Request sent successfully.</mat-card>
 
-    <button class="btn-mat" mat-raised-button color="primary">Decline</button>
+    <div class="button-container">
+      <button mat-raised-button type="button" id="approve-button" color="accent">Approve</button>
+      <button mat-raised-button type="button" id="decline-button" color="accent">Decline</button>
+      <button mat-raised-button type="button" id="details-button" color="accent">More details</button>
+    </div>
 
-    <button class="btn-mat" mat-raised-button color="primary">More details</button>
-  </div>
+  </form>
 
 </section>
