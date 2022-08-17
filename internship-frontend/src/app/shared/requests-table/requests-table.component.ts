@@ -9,7 +9,7 @@ import {TeamleadService} from "../../service/teamlead.service";
 import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {UserService} from "../../service/user.service";
 import {HolidayService} from "../../service/holiday.service";
-import {HolidayStatus} from "../data-type/Holiday";
+import {Holiday, HolidayStatus} from "../data-type/Holiday";
 
 
 const ELEMENT_DATA: HolidayDto[] = []
@@ -176,6 +176,9 @@ export class RequestsTableComponent implements AfterViewInit {
     } else {
       this.getFilteredByStatusAndType(this.selectedStatusChild, this.selectedTypeChild)
     }
+  }
+  fillFields(element: HolidayDto) {
+    console.log(element.id);
   }
 
 }
