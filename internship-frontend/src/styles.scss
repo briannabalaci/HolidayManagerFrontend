@@ -1,4 +1,4 @@
-
+@use '_variables' as v;
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @import '~@angular/material/theming';
@@ -40,4 +40,17 @@ body { margin: 0; background-color: rgb(245, 245, 245); font-family: Roboto, "He
 
 .mat-raised-button{
   color: white !important;
+}
+.centered {
+  text-align: center;
+}
+.title {
+  font-size: 42px;
+}
+.vacation-days-field {
+  padding: 4px;
+  text-align: center;
+  border-radius: 4px;
+  background-color: v.$orange;
+  color: v.$white;
 }

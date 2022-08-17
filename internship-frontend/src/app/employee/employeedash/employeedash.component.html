@@ -1,6 +1,7 @@
 <app-nav-bar></app-nav-bar>
-<h1>Employee Dashboard</h1>
-<p>Vacations days left: {{vacationDays}}</p>
+<div class="centered">
+<h1 class="title">Employee Dashboard</h1>
+<span class="vacation-days-field">Vacations days left: {{vacationDays}}</span>
 <!--<mat-form-field appearance="fill">-->
 <!--  <mat-label>Requests</mat-label>-->
 <!--  <mat-select [(ngModel)]="selectedType" (selectionChange)="changefilterType($event.value)">-->
@@ -34,7 +35,7 @@
 </mat-form-field>
 
 <br>
-
+</div>
 <app-requests-table [parent]="this"></app-requests-table>
 <br>
 
