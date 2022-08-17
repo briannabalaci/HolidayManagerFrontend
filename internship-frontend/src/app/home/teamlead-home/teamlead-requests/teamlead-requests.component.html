@@ -4,12 +4,13 @@
   <br>
 
   <mat-form-field class="section-dropdown-requests" appearance="fill">
-    <mat-select (selectionChange)="onTypeChange($event.value)">
+    <mat-select [(ngModel)]="selectedTypeValue" (selectionChange)="onTypeChange($event.value)">
       <mat-option *ngFor="let request of requestsTypes" [value]="request">
         {{request}}
       </mat-option>
     </mat-select>
   </mat-form-field>
+
 
   <header>
     <h2 class="section-title">Requests</h2>

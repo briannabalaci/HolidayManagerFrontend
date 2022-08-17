@@ -43,12 +43,7 @@ export class CreateUserFormComponent implements OnInit {
     {value: 'DEVELOPER', viewValue: 'Developer'},
   
   ];
-  userTypes: UserTypeInt[] = [
-    {value: 'ADMIN', viewValue: 'Admin'},
-    {value: 'TEAMLEAD', viewValue: 'Teamlead'},
-    {value: 'EMPLOYEE', viewValue: 'Employee'},
-  ];
-
+  
 
 
   changeDepartment(value: string) {
@@ -88,7 +83,7 @@ changeType(value: string) {
     department: this.department_d,
     role:this.role_d,
     nrHolidays:valuesFromForm.nrHolidays,
-    type:this.type_d,
+    type:"EMPLOYEE",
 
     }
    

@@ -2,14 +2,12 @@ import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core'
 import {MatTableDataSource} from "@angular/material/table";
 import {HolidayDto, HolidayStatusDto, HolidayTypeDto} from "../data-type/HolidayDto";
 import {User} from "../data-type/User";
-import {Team} from "../data-type/Team";
 import {MatSort, Sort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {TeamleadService} from "../../service/teamlead.service";
 import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {UserService} from "../../service/user.service";
 import {HolidayService} from "../../service/holiday.service";
-import {Holiday, HolidayStatus, RequestType} from "../data-type/Holiday";
 import { CreateRequestComponent } from '../create-request/create-request.component';
 import { ConfirmationDialogBoxComponent } from 'src/app/confirmation-dialog-box/confirmation-dialog-box.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -184,6 +182,7 @@ export class RequestsTableComponent implements AfterViewInit {
       this.getFilteredByStatusAndType(this.selectedStatusChild, this.selectedTypeChild)
     }
   }
+
   fillFields(element: HolidayDto) {
     console.log(element);
     this.parent.showFormCreateRequest = true;
@@ -203,7 +202,7 @@ export class RequestsTableComponent implements AfterViewInit {
           this.parent.holidayType = 'special-holiday';
           break;
     }
-    
+
   }
   deleteHoliday(element: HolidayDto) {
     const dialogResponse = this.dialogBox.open(ConfirmationDialogBoxComponent,{

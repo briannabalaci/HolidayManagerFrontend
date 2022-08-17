@@ -1,15 +1,9 @@
 <app-nav-bar></app-nav-bar>
 <h1>Employee Dashboard</h1>
 <p>Vacations days left: {{vacationDays}}</p>
-<!--<mat-form-field appearance="fill">-->
-<!--  <mat-label>Requests</mat-label>-->
-<!--  <mat-select [(ngModel)]="selectedType" (selectionChange)="changefilterType($event.value)">-->
-<!--    <mat-option *ngFor="let holiday of holidayList" [value]="holiday.value">-->
-<!--      {{holiday.viewValue}}</mat-option>-->
-<!--  </mat-select>-->
-<!--</mat-form-field>-->
+
 <mat-form-field class="section-dropdown-requests" appearance="fill">
-  <mat-select (selectionChange)="onTypeChange($event.value)">
+  <mat-select [(ngModel)]="selectedTypeValue" (selectionChange)="onTypeChange($event.value)">
     <mat-option *ngFor="let request of requestsTypes" [value]="request">
       {{request}}
     </mat-option>
@@ -17,16 +11,9 @@
 </mat-form-field>
 
 <br>
-<!--<mat-form-field appearance="fill">-->
-<!--  <mat-label>Statuses</mat-label>-->
-<!--  <mat-select [(ngModel)]="selectedStatus" (selectionChange)="changefilterStatus($event.value)">-->
-<!--    <mat-option *ngFor="let status of statusList" [value]="status.value">-->
-<!--      {{status.viewValue}}</mat-option>-->
-<!--  </mat-select>-->
-<!--</mat-form-field>-->
 
 <mat-form-field class="section-dropdown-requests" appearance="fill">
-  <mat-select (selectionChange)="onStatusChange($event.value)">
+  <mat-select [(ngModel)]="selectedStatusValue" (selectionChange)="onStatusChange($event.value)">
     <mat-option *ngFor="let request of requestsStatus" [value]="request">
       {{request}}
     </mat-option>
