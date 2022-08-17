@@ -1,3 +1,4 @@
+@use "../../../_variables" as v;
 nav {
     position:sticky;
     top: 0;
@@ -33,4 +34,16 @@ nav {
     margin-left: 14px;
     color:white;
     vertical-align:middle;
+}
+#nav-bar-notification-button {
+    margin-left: auto;
+}
+#notification-number {
+    border-radius: 4px;
+    padding: 2px;
+    color: v.$orange;
+    background-color: v.$white;
+}
+#icon-orange {
+    color: v.$orange;
 }

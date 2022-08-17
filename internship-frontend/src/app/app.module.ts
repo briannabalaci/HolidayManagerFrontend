@@ -49,7 +49,9 @@ import {TeamsRequestsComponent} from "./home/teamlead-home/teams-requests/teams-
 import {
   DetailedRequestComponent
 } from "./home/teamlead-home/teams-requests/detailed-request/detailed-request.component";
-
+import { RequestsTableComponent } from './shared/requests-table/requests-table.component';
+import { MatBadgeModule } from '@angular/material/badge';
+import { NavBarNotificationsComponent } from './landing/nav-bar/nav-bar-notifications/nav-bar-notifications.component';
 @NgModule({
 
   declarations: [
@@ -75,7 +77,9 @@ import {
     NavBarComponent,
     CreateRequestComponent,
     ConfirmationDialogBoxComponent,
-    DialogOverviewExampleDialog // asta difera
+    DialogOverviewExampleDialog,
+    RequestsTableComponent, // asta difera
+    NavBarNotificationsComponent
   ],
   imports: [
     MatNativeDateModule,
@@ -102,6 +106,7 @@ import {
     MatSortModule,
     NgxMatSelectSearchModule,
     ScrollingModule,
+    MatBadgeModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthentificationInterceptor, multi: true}],
   exports: [],
