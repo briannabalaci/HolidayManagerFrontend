@@ -8,6 +8,7 @@ import {MatSort, Sort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {FormControl} from "@angular/forms";
 import {MatPaginator} from "@angular/material/paginator";
+import {UserService} from "../../../service/user.service";
 
 
 const ELEMENT_DATA: HolidayDto[] = []
@@ -32,11 +33,10 @@ export class TeamsRequestsComponent implements AfterViewInit {
     name: '', type: ''
   };
 
-
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild('paginator') paginator!: MatPaginator;
 
-  constructor(private teamLeadService: TeamleadService, private _liveAnnouncer: LiveAnnouncer) {
+  constructor(private userService: UserService, private teamLeadService: TeamleadService, private _liveAnnouncer: LiveAnnouncer) {
 
   }
 
@@ -72,7 +72,7 @@ export class TeamsRequestsComponent implements AfterViewInit {
 
 
   getTeamLeaderData() {
-    this.teamLeadService.getUser().subscribe(data => {
+    this.userService.getUser().subscribe(data => {
 
       this.user = data;
       this.populateTeamRequests();

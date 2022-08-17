@@ -1,4 +1,4 @@
-
+@use '../../../variables' as v;
 .example-additional-selection {
   opacity: 0.75;
   font-size: 0.75em;
@@ -8,7 +8,19 @@
   width: 320px;
 }
 .div-holiday-request {
+  background-color: v.$grey-secondary;
+  width: 100%;
+  padding-top: 24px;
+  padding-bottom: 24px;
   text-align: center;
+
+  position: fixed;
+  bottom:0;
+
+  max-width: 100vw; /* viewport width */
+  max-height: 80vh; /* viewport height */
+  overflow-y: scroll;
+  z-index: 1;
 }
 .bg-card {
   width: 360px;
@@ -27,6 +39,6 @@
   }
 }
 // Until here
-footer{ 
-  height: 80px;
+footer {
+  height: 128px;
 }
