@@ -51,11 +51,18 @@
   }
 }
 
-.mat-red {
-  color: white;
-  background-color: red;
+#download-button{
+  width: 100%;
 }
-.mat-green {
+
+.error-message {
   color: white;
-  background-color: green;
+  background: red;
+  margin-top: 12px;
+}
+
+.success-message {
+  color: white;
+  background: green;
+  margin-top: 12px;
 }

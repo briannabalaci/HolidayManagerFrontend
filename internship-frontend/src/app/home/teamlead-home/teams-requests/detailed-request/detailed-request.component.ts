@@ -1,8 +1,12 @@
-import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {CookieService} from "ngx-cookie-service";
 import {HolidayService} from "../../../../service/holiday.service";
-import {HolidayTypeDto} from "../../../../shared/data-type/HolidayDto";
+import {HolidayDto, HolidayStatusDto, HolidayTypeDto} from "../../../../shared/data-type/HolidayDto";
+import {TeamleadService} from "../../../../service/teamlead.service";
+import {ConfirmationDialogBoxComponent} from "../../../../confirmation-dialog-box/confirmation-dialog-box.component";
+import {MatDialog} from "@angular/material/dialog";
+import {MoreDetailsDialogBoxComponent} from "../more-details-dialog-box/more-details-dialog-box.component";
 
 @Component({
   selector: 'app-detailed-request',
@@ -11,7 +15,7 @@ import {HolidayTypeDto} from "../../../../shared/data-type/HolidayDto";
 })
 export class DetailedRequestComponent implements OnInit {
 
-  constructor(private formBuilder:FormBuilder, private cookieService: CookieService, private holidayService: HolidayService) { }
+  constructor(private dialogBox:MatDialog, private teamLeadService: TeamleadService, private formBuilder:FormBuilder, private cookieService: CookieService, private holidayService: HolidayService) { }
 
   holidayRequestFormGroup = this.formBuilder.group({
     name:[""],
@@ -19,8 +23,10 @@ export class DetailedRequestComponent implements OnInit {
     startDate:[new Date(),Validators.required],
     endDate: [new Date(), Validators.required],
     substitute: [""],
-    document:[""]
+    document:[""],
+    documentPdf:[""]
   })
+
 
   @Input()
   parent: any;
@@ -34,23 +40,30 @@ export class DetailedRequestComponent implements OnInit {
   @Input() decidingType: HolidayTypeDto;
   @Input() decidingName: string;
   @Input() decidingDocumentName: string;
+  @Input() decidingStatus: HolidayStatusDto;
 
 
+  modifiedRequest: HolidayDto;
 
-  showFillErrorMessage = false;
-  showSuccessfulMessage = false;
+  documentExists = false;
+
   showFieldForName = true;
   showFieldForType = true;
   showFieldForStartDate = true;
   showFieldForEndDate = true;
   showFieldForSubstitute = true;
   showFieldForDocument = true;
+  isErrorMessage = false;
+  successString: string;
+  errorString: string;
+  isSuccessMessage = false;
 
   ngOnInit(): void {
 
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.resetWarnings();
     this.loadFields()
     this.holidayRequestFormGroup.patchValue({
       startDate: new Date(this.decidingStartDate),
@@ -61,28 +74,13 @@ export class DetailedRequestComponent implements OnInit {
 
     if(this.decidingType == HolidayTypeDto.SPECIAL_HOLIDAY){
       this.holidayRequestFormGroup.controls['substitute'].setValue(this.decidingSubstitute.toString())
+
       this.holidayRequestFormGroup.controls['document'].setValue(this.decidingDocumentName.toString())
     } else if(this.decidingType == HolidayTypeDto.REST_HOLIDAY){
       this.holidayRequestFormGroup.controls['substitute'].setValue(this.decidingSubstitute.toString())
     }
   }
 
-  loadInformation(){
-        this.loadFields()
-        this.holidayRequestFormGroup.patchValue({
-          startDate: this.decidingStartDate,
-          endDate: this.decidingEndDate,
-          name: this.decidingName,
-          type: this.decidingType
-        })
-
-        if(this.decidingType == HolidayTypeDto.SPECIAL_HOLIDAY){
-          this.holidayRequestFormGroup.controls['substitute'].setValue(this.decidingSubstitute.toString())
-          this.holidayRequestFormGroup.controls['document'].setValue(this.decidingDocumentName.toString())
-        } else if(this.decidingType == HolidayTypeDto.REST_HOLIDAY){
-          this.holidayRequestFormGroup.controls['substitute'].setValue(this.decidingSubstitute.toString())
-        }
-  }
 
   loadFields() {
     switch(this.decidingType){
@@ -96,6 +94,7 @@ export class DetailedRequestComponent implements OnInit {
         break;
       }
       case HolidayTypeDto.SPECIAL_HOLIDAY: {
+        this.documentExists = this.decidingDocumentName !== null;
         this.showFieldForName = true;
         this.showFieldForType = true;
         this.showFieldForStartDate = true;
@@ -117,7 +116,53 @@ export class DetailedRequestComponent implements OnInit {
   }
 
   resetWarnings(){
-    this.showFillErrorMessage = false;
-    this.showSuccessfulMessage = false;
+    this.isSuccessMessage = false;
+    this.isErrorMessage = false;
+  }
+
+  declineRequest(){
+    if(this.decidingStatus == HolidayStatusDto.DENIED){
+      this.isErrorMessage = true;
+      this.isSuccessMessage = false;
+      this.errorString = "Request already declined!";
+      return;
+    }
+    this.teamLeadService.declineRequest(this.decidingId).subscribe(result => {
+      this.modifiedRequest = result
+      this.decidingStatus = this.modifiedRequest.status!
+      if(this.modifiedRequest.status == HolidayStatusDto.DENIED){
+        this.isSuccessMessage = true;
+        this.isErrorMessage = false;
+        this.successString = "Request declined successfully!";
+      }
+    })
+    this.parent.refreshData();
+  }
+
+  moreDetails(){
+    const dialogResponse = this.dialogBox.open(MoreDetailsDialogBoxComponent, {
+        data: this.decidingId
+      }
+    );
+    dialogResponse.afterClosed().subscribe(    result => {
+      this.parent.refreshData()
+    });
+  }
+
+  downloadDocument() {
+
+    let binary_string = window.atob(this.decidingDocumentName)
+    let len = binary_string.length;
+    let bytes = new Uint8Array(len);
+
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binary_string.charCodeAt(i);
+    }
+
+    let blob = new Blob([bytes.buffer], { type: 'application/pdf' })
+    let url = URL.createObjectURL(blob);
+
+    window.open(url);
+
   }
 }

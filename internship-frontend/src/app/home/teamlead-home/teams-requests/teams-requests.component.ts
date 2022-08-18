@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {TeamleadService} from "../../../service/teamlead.service";
-import {HolidayDto, HolidayTypeDto} from "../../../shared/data-type/HolidayDto";
+import {HolidayDto, HolidayStatusDto, HolidayTypeDto} from "../../../shared/data-type/HolidayDto";
 import {User} from "../../../shared/data-type/User";
 import {Team} from "../../../shared/data-type/Team";
 import {LiveAnnouncer} from '@angular/cdk/a11y';
@@ -10,6 +10,7 @@ import {FormControl} from "@angular/forms";
 import {MatPaginator} from "@angular/material/paginator";
 import {UserService} from "../../../service/user.service";
 import {DetailedRequestComponent} from "./detailed-request/detailed-request.component";
+import {MoreDetailsDialogBoxComponent} from "./more-details-dialog-box/more-details-dialog-box.component";
 
 
 const ELEMENT_DATA: HolidayDto[] = []
@@ -33,6 +34,7 @@ export class TeamsRequestsComponent implements OnInit {
   holidayDecidingStartDate = new Date();
   holidayDecidingEndDate = new Date();
   holidayDecidingSubstitute = '';
+  holidayDecidingStatus = HolidayStatusDto.PENDING;
 
   displayedColumns: string[] = ['name', 'startDate', 'endDate', 'type', 'edit']
   dataSource = new MatTableDataSource(ELEMENT_DATA);
@@ -136,9 +138,10 @@ export class TeamsRequestsComponent implements OnInit {
     this.holidayDeciding = true;
     this.holidayDecidingStartDate = element.startDate!;
     this.holidayDecidingEndDate = element.endDate!;
+    this.holidayDecidingStatus = element.status!;
 
     if(element.type == HolidayTypeDto.SPECIAL_HOLIDAY){
-      this.holidayDecidingDocumentName = 'Este ok!';
+      this.holidayDecidingDocumentName = element.document!;
       this.holidayDecidingSubstitute = element.substitute!;
     } else if(element.type == HolidayTypeDto.REST_HOLIDAY){
       this.holidayDecidingSubstitute = element.substitute!;
