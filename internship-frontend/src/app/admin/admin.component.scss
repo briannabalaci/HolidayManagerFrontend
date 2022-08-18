@@ -5,12 +5,6 @@ h2 {
     font-weight: bold;
 
 }
-
-
-    
-
-​​​​​​​
-
 #form-button {
     margin-top: 26px;
 }
@@ -49,14 +43,13 @@ div{
     color: black !important;
 }
 
-.div-buttons{
-  text-align: center;
-  padding-top: 300px;
+.div-buttons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%)
 }
 
-.div-buttons .admin-button{
-  margin: 20px;
-  font-size: 25px;
-  width: 60%;
+.bg-card{
+    margin: 24px;
 }
-

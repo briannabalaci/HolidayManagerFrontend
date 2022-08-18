@@ -1,7 +1,11 @@
 
 <app-nav-bar></app-nav-bar>
 <div class="div-buttons">
-  <section class="div-buttons-section"><button class="admin-button" mat-raised-button color="primary" (click)="getRecord()">Users Panel</button></section>
-  <section class="div-buttons-section"><button class="admin-button" mat-raised-button color="primary" (click)="getRecord2()">Team Panel</button></section>
+  <mat-card class="bg-card">
+    <button class="admin-button" mat-button color="accent" (click)="getRecord()">Users Panel</button>
+  </mat-card>
+  <mat-card class="bg-card">
+    <button class="admin-button" mat-button color="accent" (click)="getRecord2()">Team Panel</button>
+  </mat-card>
 </div>
 

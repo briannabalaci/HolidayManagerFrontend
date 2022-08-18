@@ -1,40 +1,11 @@
+@use '../../../variables' as v;
+
 .section-teams-requests{
   display: block;
   text-align: center;
 }
-
-.section-title{
-  font-size: 20px;
-  text-align: left;
-  margin-left: 20px;
-  margin-top: 30px;
-}
-
 .section-button--create--request{
   display: block;
   text-align: left;
-}
-
-
-.mat-header-cell {
-  flex-direction: column;
-  justify-content: center;
-}
-
-.mat-cell {
-  text-align: center;
-  justify-content:center;
-}
-
-.mat-form-field {
-  width: 40%;
-}
-
-table {
-  width: 100%;
-}
-
-.mat-column-name {
-  max-width: 100px;
 }
 

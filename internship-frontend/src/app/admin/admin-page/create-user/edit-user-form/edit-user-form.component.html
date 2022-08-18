@@ -1,26 +1,25 @@
 
-<div id="div-edit-panel">
+<mat-card id="div-create-panel" class="bg-card">
   <br>
-  <mat-card-title>EDIT {{email_d}}</mat-card-title>
+  <mat-card-title>Edit {{email_d}}</mat-card-title>
 <br>
 <form id="edit-form" [formGroup]="createUserForm" (ngSubmit)="updateUser()">
-    <mat-form-field appearance="fill" >
-      <mat-label>First name</mat-label>
+  <p>First name</p>
+    <mat-form-field appearance="outline" color="accent" >
       <input matInput [placeholder]="surname_d" [(ngModel)]="surname_d" formControlName="surName">
     </mat-form-field><br>
-    <mat-form-field appearance="fill" >
-        <mat-label>Last name</mat-label>
+    <p>Last name</p>
+    <mat-form-field appearance="outline" color="accent" >
         <input matInput [placeholder]="forname_d" [(ngModel)]="forname_d" formControlName="forName">
       </mat-form-field><br>
     
      <!-- -->
-     
-          <mat-form-field appearance="fill">
-        <mat-label>Holydays nr  .</mat-label>
+           <p>Holiday days</p>
+          <mat-form-field appearance="outline" color="accent" >
         <input matInput type="number" [placeholder]=$any(nrHolidays_d)  [(ngModel)]=nrHolidays_d  formControlName="nrHolidays">
       </mat-form-field><br>
-<mat-form-field appearance="fill">
-  <mat-label>Department</mat-label>
+      <p>Department</p>
+<mat-form-field appearance="outline" color="accent" >
   <mat-select (selectionChange)="changeDepartment($event.value)"  [(value)]="department_d" placeholder="Mode">
     <mat-option *ngFor="let department of departments" [value]="department.value"  >
       {{department.viewValue}}
@@ -28,8 +27,9 @@
   </mat-select>
 </mat-form-field>
 <br>
-<mat-form-field appearance="fill">
-    <mat-label >Role</mat-label>
+<p>Role</p>
+<mat-form-field appearance="outline" color="accent" >
+
     <mat-select (selectionChange)="changeRole($event.value)" [(value)]="role_d" placeholder="Mode">
       <mat-option *ngFor="let role of roles" [value]="role.value" >
         {{role.viewValue}}
@@ -37,20 +37,20 @@
     </mat-select>
   </mat-form-field>
 <br>
-    <mat-checkbox formControlName="boolEditPassword"   [(ngModel)]="boolEditPassword">Edit User Password</mat-checkbox>
+    <mat-checkbox formControlName="boolEditPassword" [(ngModel)]="boolEditPassword">Edit User Password</mat-checkbox>
     <br>
-    <mat-form-field appearance="fill" *ngIf="boolEditPassword">
-      <mat-label>Password</mat-label>
-      <input matInput [placeholder]="password_d"  [(ngModel)]="password_d" [type]="hide ? 'password' : 'text'" formControlName="password">
+    <mat-form-field appearance="outline" color="accent" *ngIf="boolEditPassword">
+      <input matInput [placeholder]="password_d" placeholder="Password" [(ngModel)]="password_d" [type]="hide ? 'password' : 'text'" formControlName="password">
       <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
     </mat-form-field><br>
+
   
-  <br>
-  <button mat-raised-button color="accent" type="submit" id="form-button">Edit User</button>
-  <button mat-raised-button color="accent" (click)="cancelEdit()" >Cancel Edit</button>
+  <button mat-raised-button class="edit-buttons"  color="accent" type="submit" id="form-button">Edit user</button><br>
+  <button mat-button class="edit-buttons" color="accent" (click)="cancelEdit()" >Cancel</button>
 </form>
 
 
-</div>
+</mat-card>
+<footer></footer>
