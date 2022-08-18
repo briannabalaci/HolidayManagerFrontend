@@ -22,6 +22,7 @@ export class NavBarComponent implements OnInit {
       this.notificationNum ++;
     })
 
+
     const token = this.cookieService.get('Token');
     if (token) {
       const parsed = parseJwt(token);
@@ -31,6 +32,11 @@ export class NavBarComponent implements OnInit {
       }
     }
   }
+
+  ngOnDestroy(){
+    this.stompService.disconnectWebSocket()
+  }
+
   logoutUser(){
     this.cookieService.delete('Token');
     // document.cookie = 'Token=; expires=Thu, 01-Jan-1970 00:00:01 GMT;';
