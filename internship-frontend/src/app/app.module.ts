@@ -52,6 +52,11 @@ import {
 import { RequestsTableComponent } from './shared/requests-table/requests-table.component';
 import { MatBadgeModule } from '@angular/material/badge';
 import { NavBarNotificationsComponent } from './landing/nav-bar/nav-bar-notifications/nav-bar-notifications.component';
+import {StompService} from "./service/stomp/stomp.service";
+import {CommonModule} from "@angular/common";
+import {
+  MoreDetailsDialogBoxComponent
+} from "./home/teamlead-home/teams-requests/more-details-dialog-box/more-details-dialog-box.component";
 @NgModule({
 
   declarations: [
@@ -78,8 +83,9 @@ import { NavBarNotificationsComponent } from './landing/nav-bar/nav-bar-notifica
     CreateRequestComponent,
     ConfirmationDialogBoxComponent,
     DialogOverviewExampleDialog,
-    RequestsTableComponent, // asta difera
-    NavBarNotificationsComponent
+    RequestsTableComponent,
+    NavBarNotificationsComponent,
+    MoreDetailsDialogBoxComponent
   ],
   imports: [
     MatNativeDateModule,
@@ -108,7 +114,7 @@ import { NavBarNotificationsComponent } from './landing/nav-bar/nav-bar-notifica
     ScrollingModule,
     MatBadgeModule
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthentificationInterceptor, multi: true}],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthentificationInterceptor, multi: true},StompService],
   exports: [],
   bootstrap: [AppComponent]
 })

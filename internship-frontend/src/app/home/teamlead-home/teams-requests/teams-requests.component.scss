@@ -1,6 +1,7 @@
 .section-teams-requests{
   display: block;
   text-align: center;
+  overflow-y: auto;
 }
 
 .section-title{
@@ -42,3 +43,13 @@ table {
   max-width: 100px;
 }
 
+.div-holiday-request {
+  text-align: center;
+}
+.bg-card {
+  width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 30px;
+  box-shadow: 20px;
+}

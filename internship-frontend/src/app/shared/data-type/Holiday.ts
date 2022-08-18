@@ -1,6 +1,8 @@
 import {User} from "./User";
 
 export class Holiday{
+  
+  id?: number;
   startDate?: string;
   endDate?: string;
   status?: HolidayStatus;
@@ -8,6 +10,7 @@ export class Holiday{
   substitute?:string;
   type?: RequestType;
   user?: User;
+
 }
 
 export class HolidayForUpdate{

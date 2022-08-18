@@ -2,15 +2,15 @@ import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core'
 import {MatTableDataSource} from "@angular/material/table";
 import {HolidayDto, HolidayStatusDto, HolidayTypeDto} from "../data-type/HolidayDto";
 import {User} from "../data-type/User";
-import {Team} from "../data-type/Team";
 import {MatSort, Sort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {TeamleadService} from "../../service/teamlead.service";
 import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {UserService} from "../../service/user.service";
 import {HolidayService} from "../../service/holiday.service";
-import {Holiday, HolidayStatus, RequestType} from "../data-type/Holiday";
 import { CreateRequestComponent } from '../create-request/create-request.component';
+import { ConfirmationDialogBoxComponent } from 'src/app/confirmation-dialog-box/confirmation-dialog-box.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 const ELEMENT_DATA: HolidayDto[] = []
@@ -36,8 +36,9 @@ export class RequestsTableComponent implements AfterViewInit {
   @ViewChild(CreateRequestComponent) requestComponent: CreateRequestComponent;
   @Input()
     parent: any;
+  holidays: any;
 
-  constructor(private holidayService: HolidayService, private userService: UserService, private teamLeadService: TeamleadService, private _liveAnnouncer: LiveAnnouncer) {}
+  constructor(private holidayService: HolidayService, private userService: UserService, private teamLeadService: TeamleadService, private _liveAnnouncer: LiveAnnouncer, private dialogBox:MatDialog) {}
 
   ngAfterViewInit() {
 
@@ -181,6 +182,7 @@ export class RequestsTableComponent implements AfterViewInit {
       this.getFilteredByStatusAndType(this.selectedStatusChild, this.selectedTypeChild)
     }
   }
+
   fillFields(element: HolidayDto) {
     console.log(element);
     this.parent.showFormCreateRequest = true;
@@ -200,7 +202,32 @@ export class RequestsTableComponent implements AfterViewInit {
           this.parent.holidayType = 'special-holiday';
           break;
     }
+
+  }
+  deleteHoliday(element: HolidayDto) {
+    const dialogResponse = this.dialogBox.open(ConfirmationDialogBoxComponent,{
+      data:"Are you sure you want to delete this holiday request?"
+    });
+    dialogResponse.afterClosed().subscribe( (response: any) => {
+      if (response) {
+        this.holidayService.deleteHoliday(element.id).subscribe(data => {
+          this.holidays?.forEach( (item: { id: number | undefined; }, index: any) => {
+            if(item.id === element.id) this.holidays?.splice(index,1);
+          });
+          this.refreshData();
+        });
+      }
+    })
     
+  }
+  applyFilters(selected2: any, selected: any) {
+    throw new Error('Method not implemented.');
+  }
+  selected2(selected2: any, selected: any) {
+    throw new Error('Method not implemented.');
+  }
+  selected(selected2: any, selected: any) {
+    throw new Error('Method not implemented.');
   }
 
 }
