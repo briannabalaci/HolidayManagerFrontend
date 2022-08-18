@@ -2,7 +2,16 @@
 <div class="triangle-up"></div>
 <mat-card class="notificationCard">
     <p class="notificationInfo">New notifications</p>
-    <mat-card class="notificationItem">
+    <mat-card class="notificationItem" *ngFor="let notif of unseenNotif1">
+        <mat-card-title class="notificationHeader">{{notif.header}}<p class="notificationDate">{{notif.time}}</p></mat-card-title>
+        <p class="notificationText">{{notif.message}}<span class="bold">{{notif.sender}}</span>.</p>
+    </mat-card>
+    <hr>
+    <mat-card class="notificationItemRead" *ngFor="let notif of seenNotif1">
+        <mat-card-title class="notificationHeader">{{notif.header}}<p class="notificationDateRead">{{notif.time}}</p></mat-card-title>
+        <p class="notificationText">{{notif.message}}<span class="bold">{{notif.sender}}</span>.</p>
+    </mat-card>
+    <!-- <mat-card class="notificationItem">
         <mat-card-title class="notificationHeader">Approved request<p class="notificationDate">22m</p></mat-card-title>
         <p class="notificationText">Your request has been approved by <span class="bold">Admin</span>.</p>
     </mat-card>
@@ -34,6 +43,6 @@
     <mat-card class="notificationItemRead">
         <mat-card-title class="notificationHeader">Approved request<p class="notificationDateRead">1w+</p></mat-card-title>
         <p class="notificationText">Your request has been approved by <span class="bold">Admin</span>.</p>
-    </mat-card>
+    </mat-card> -->
 </mat-card>
 </div>
