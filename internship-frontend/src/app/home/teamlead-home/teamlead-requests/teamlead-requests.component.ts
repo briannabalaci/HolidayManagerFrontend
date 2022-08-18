@@ -54,6 +54,11 @@ export class TeamleadRequestsComponent implements OnInit {
     this.requests.filterByTypeAndStatus(this.requests.selectedTypeChild, this.requests.selectedStatusChild)
   }
 
+  showForm() {
+    this.showFormCreateRequest = !this.showFormCreateRequest;
+    this.holidayUpdating = false;
+  }
+
   refreshData() {
     this.requests.refreshData();
   }
