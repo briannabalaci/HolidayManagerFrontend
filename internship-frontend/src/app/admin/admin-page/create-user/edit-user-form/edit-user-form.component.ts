@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
+import { AdminService } from 'src/app/service/admin.service';
 import { Team } from 'src/app/shared/data-type/Team';
 import { Department, Role, UpdateUser, User, UserType } from 'src/app/shared/data-type/User';
 
@@ -32,8 +33,8 @@ export class EditUserFormComponent implements OnInit , OnChanges{
   hide = true;
   hide_confirm = true;
 
-
-
+  showEditErrorMessage = false;
+  showEditOkMessage = false;
   role_d="";
   department_d = "";
   forname_d="";
@@ -73,7 +74,7 @@ export class EditUserFormComponent implements OnInit , OnChanges{
     boolEditPassword:['']
     
   })
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,private adminService: AdminService) {
    ;  
   }
 
@@ -134,10 +135,29 @@ export class EditUserFormComponent implements OnInit , OnChanges{
     console.log("ok", updUser);
    
     if (!this.createUserForm.invalid) {
-       //@ts-ignore
-      this.clickUpdate.emit(updUser);
+      //@ts-ignore
+      
+    
+      
     }
-    else { console.log("DATE INVALIDE"); }
+    else {
+      this.showEditErrorMessage = true;
+      this.showEditOkMessage = false;
+    }
+  }
+  updUser(updUser: UpdateUser): void{
+    this.adminService.updateUser(updUser).subscribe(result => {
+
+      this.clickUpdate.emit(updUser);
+      this.showEditErrorMessage = false;
+      this.showEditOkMessage = true;
+    
+    });
+
+  }
+  resetWarnings() {
+    this.showEditErrorMessage = false;
+    this.showEditOkMessage=false
   }
   cancelEdit() {this.cancelUpdate.emit(); };
 }

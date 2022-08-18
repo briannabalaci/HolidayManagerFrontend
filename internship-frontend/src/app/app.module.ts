@@ -28,7 +28,7 @@ import { AuthentificationInterceptor } from './service/authentification.intercep
 import { CreateUserFormComponent } from './admin/admin-page/create-user/create-user-form/create-user-form.component';
 import { CreateUserComponent } from './admin/admin-page/create-user/create-user.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { DialogOverviewExampleDialog, UserListComponent } from './admin/admin-page/user-list/user-list.component';
+import {UserListComponent } from './admin/admin-page/user-list/user-list.component';
 import { AdminComponent } from './admin/admin.component';
 import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
 import { AdminModule } from './admin/admin.module';
@@ -77,7 +77,6 @@ import { NavBarNotificationsComponent } from './landing/nav-bar/nav-bar-notifica
     NavBarComponent,
     CreateRequestComponent,
     ConfirmationDialogBoxComponent,
-    DialogOverviewExampleDialog,
     RequestsTableComponent, // asta difera
     NavBarNotificationsComponent
   ],
