@@ -14,18 +14,18 @@ import {StompService} from "../../service/stomp/stomp.service";
 export class NavBarComponent implements OnInit {
   name = '';
   id = 0;
-  notificationNum = 10;
+  notificationNum = 0;
   notificationsVisible = false;
   canShowNotification = true;
 
   constructor(private router: Router, private cookieService: CookieService, private notificationService: NotificationService, private stompService:StompService) { }
 
   ngOnInit(): void {
-    console.log("nr notif" + this.notificationNum)
-    console.log(this.notificationService.getAllUnseenNotifications)
-    
+
     this.stompService.subscribe('/topic/notification', (): void => {
-      this.notificationNum ++;
+      this.notificationService.getAllUnseenNotifications(this.id).subscribe(data => {
+        this.notificationNum = data.length;
+      })
     })
 
 
@@ -38,10 +38,7 @@ export class NavBarComponent implements OnInit {
         this.canShowNotification = false;
       }
     }
-    this.notificationService.getAllUnseenNotifications(this.id).subscribe(data => {
-      this.notificationNum = data.length;
-      console.log("nr notif " + this.notificationNum)
-    })
+
   }
 
   ngOnDestroy(){

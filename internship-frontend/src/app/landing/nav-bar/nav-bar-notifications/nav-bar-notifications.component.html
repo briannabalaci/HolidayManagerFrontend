@@ -1,7 +1,7 @@
 <div class="notificationContainer">
 <div class="triangle-up"></div>
 <mat-card class="notificationCard">
-    <p class="notificationInfo">New notifications</p>
+    <p class="notificationInfo" >{{this.notificationMessage? 'New notifications':'No new notifications'}}</p>
     <mat-card class="notificationItem" *ngFor="let notif of unseenNotif1">
         <mat-card-title class="notificationHeader">{{notif.header}}<p class="notificationDate">{{notif.time}}</p></mat-card-title>
         <p class="notificationText">{{notif.message}}<span class="bold">{{notif.sender}}</span>.</p>

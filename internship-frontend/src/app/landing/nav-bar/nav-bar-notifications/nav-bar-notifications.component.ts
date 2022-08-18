@@ -22,6 +22,7 @@ export class NavBarNotificationsComponent implements OnInit {
   seenNotif!: MyNotification[];
   unseenNotif1!: NotificationDTO[];
   seenNotif1!: NotificationDTO[];
+  notificationMessage:boolean = false
   ngOnInit(): void {
     this.getAndSetNotificationData()
 
@@ -44,6 +45,8 @@ export class NavBarNotificationsComponent implements OnInit {
     })
     this.notificationService.getAllUnseenNotifications(this.id).subscribe(data => {
       console.log(data)
+      if(data.length!==0) this.notificationMessage = true
+      else this.notificationMessage = false
       this.unseenNotif1 = data.map(x => <NotificationDTO>{
         sender: x.sender.forname + " " + x.sender.surname,
         message: this.get_message(x.type),
@@ -66,7 +69,7 @@ export class NavBarNotificationsComponent implements OnInit {
       default:
         return "You got sent a notification by  "
     }
-    
+
   }
 
   get_header(type: NotificationType) {
@@ -83,13 +86,13 @@ export class NavBarNotificationsComponent implements OnInit {
       default:
         return "NOTIFICATION"
     }
-    
+
   }
   timeSince(date: Date) {
     var newDate = new Date(date.valueOf())
     var seconds = Math.floor((new Date().getTime() - newDate.getTime()) / 1000);
     var interval = seconds / 31536000;
-  
+
     if (interval > 1) {
       return Math.floor(interval) + " yrs";
     }
@@ -112,7 +115,7 @@ export class NavBarNotificationsComponent implements OnInit {
     return Math.floor(seconds) + " sec";
   }
 
-    
+
   }
 
 
