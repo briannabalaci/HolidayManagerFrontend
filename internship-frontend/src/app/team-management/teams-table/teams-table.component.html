@@ -1,24 +1,25 @@
 <section class="teamsTable">
-  <header>
-  </header>
-
+  <mat-card class="table-card">
   <table mat-table [dataSource]="this.dataSource">
     <ng-container matColumnDef="Team">
+      <th mat-header-cell *matHeaderCellDef> Team name </th>
       <td mat-cell  class="teamName" *matCellDef="let element"> {{element.name }} </td>
     </ng-container>
 
     <ng-container matColumnDef="View">
-      <td mat-cell *matCellDef="let row" >
+      <th mat-header-cell class="edit-cell" *matHeaderCellDef> View </th>
+      <td mat-cell class="edit-cell" *matCellDef="let row" >
         <button mat-button (click)="viewTeamDetails(row)"><mat-icon>visibility</mat-icon></button>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="Delete">
-      <td mat-cell *matCellDef="let row" >
+      <th mat-header-cell class="edit-cell" *matHeaderCellDef> Delete </th>
+      <td mat-cell class="delete-cell" *matCellDef="let row" >
         <button mat-button (click)="deleteTeam(row)" ><mat-icon>delete_forever</mat-icon></button>
       </td>
     </ng-container>
-
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
@@ -27,7 +28,7 @@
                  [pageSizeOptions]="[5, 10, 25, 100]"
                  aria-label="Select page">
   </mat-paginator>
-
+</mat-card>
   <footer>
   </footer>
 </section>

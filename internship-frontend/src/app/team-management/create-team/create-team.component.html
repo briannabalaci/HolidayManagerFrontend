@@ -1,17 +1,15 @@
 <h2> {{addUpdate? 'Create new team':'Update team'}} </h2>
 <form [formGroup]="teamFormGroup" (ngSubmit)="createTeam()" >
 
-  <mat-form-field appearance="legacy">
-    <mat-label> Name</mat-label>
-    <input matInput placeholder="Name of the team" formControlName="name" >
-    <mat-hint>Type the name of the team</mat-hint>
+  <mat-form-field appearance="outline" color="accent">
+    <input matInput placeholder="Team name" formControlName="name">
   </mat-form-field>
 
 
   <!-- search users to add them to the team -->
   <div>
-    <mat-form-field >
-      <mat-select msInfiniteScroll [formControl]="userControl" placeholder="Team members"  (selectionChange)="addUserToTeam($event.value)">
+    <mat-form-field appearance="outline" color="accent">
+      <mat-select msInfiniteScroll [formControl]="userControl" placeholder="Add team members"  (selectionChange)="addUserToTeam($event.value)">
         <mat-option >
           <ngx-mat-select-search [formControl]="userFilteredControl" [placeholderLabel]="'Search'"
                                  [noEntriesFoundLabel]="'Not found'"></ngx-mat-select-search>
@@ -29,12 +27,12 @@
   <h3 *ngIf = "this.addedMembers.length"> Team members </h3>
   <table mat-table [dataSource]="this.addedMembers" class="usersTable">
     <ng-container matColumnDef="User">
-      <td mat-cell  *matCellDef="let element"> {{element.forname + " "+element.surname}} </td>
+      <td mat-cell class="user-name-cell" *matCellDef="let element"> {{element.forname + " "+element.surname}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Delete">
-      <td mat-cell *matCellDef="let row" >
-        <button mat-button (click)="deleteUserFromTeam(row)"><mat-icon>delete_forever</mat-icon></button>
+      <td mat-cell class="edit-cell" *matCellDef="let row" >
+        <button mat-button class="delete-row" (click)="deleteUserFromTeam(row)"><mat-icon>delete_forever</mat-icon></button>
       </td>
     </ng-container>
 
@@ -44,7 +42,7 @@
 
   <!--  pick a team leader from the users that have already been added to the team-->
   <div>
-    <mat-form-field>
+    <mat-form-field appearance="outline" color="accent">
       <mat-select  [formControl]="teamLeadControl" placeholder="Team leader" [(value)]="this.teamLeader">
         <mat-option *ngFor="let user of addedMembers"  [value]="user">
           {{user.forname + " " + user.surname}}
@@ -53,7 +51,7 @@
     </mat-form-field>
   </div>
 
-  <button (click)="resetWarnings()" mat-raised-button color="accent" type="submit" > {{addUpdate? 'ADD TEAM':'UPDATE TEAM'}} </button>
+  <button (click)="resetWarnings()" mat-raised-button color="accent" type="submit" > {{addUpdate? 'Add team':'Update team'}} </button>
 
   <mat-card class="error-message" *ngIf="isErrorMessage">{{this.errorString}}</mat-card>
 

@@ -4,14 +4,15 @@
     <h1>Team management </h1>
   </header>
   <app-teams-table [teams]="this.teams"  (clickDeleteTeam)="deleteTeam($event)" (clickViewTeamDetails) = "viewTeamDetails($event)"></app-teams-table>
-
-  <app-create-team [teamToView]="this.teamToView" [usersWithoutTeam]="this.usersWithoutTeam" [safeForView]="this.safeForView"
-                   [errorMessageFromBackend]="this.errorMessageFromBackend"
-                   (clickCreate)="createTeam($event)" (clickUpdate)="updateTeam($event)" (clickAddUserToTeam)="addUserToTeam($event)"
-                   (clickDeleteUserFromTeam)="deleteUserFromTeam($event)"  *ngIf = "showForm"> </app-create-team>
-
-  <button class="btn" mat-raised-button color="accent" (click)="toggleShowAddForm()">{{showForm? 'Cancel':'Create team'}}  </button>
-
+  <div class="div-create-team">
+    <mat-card class="bg-card">
+    <app-create-team [teamToView]="this.teamToView" [usersWithoutTeam]="this.usersWithoutTeam" [safeForView]="this.safeForView"
+                    [errorMessageFromBackend]="this.errorMessageFromBackend"
+                    (clickCreate)="createTeam($event)" (clickUpdate)="updateTeam($event)" (clickAddUserToTeam)="addUserToTeam($event)"
+                    (clickDeleteUserFromTeam)="deleteUserFromTeam($event)"  *ngIf = "showForm"> </app-create-team>
+      <button class="btn" mat-button color="accent" (click)="toggleShowAddForm()">{{showForm? 'Cancel':'Create team'}}  </button>
+    </mat-card>
+  </div>
   <footer>
 
   </footer>
