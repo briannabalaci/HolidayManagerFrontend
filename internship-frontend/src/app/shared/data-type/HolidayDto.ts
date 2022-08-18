@@ -18,7 +18,7 @@ export class HolidayDto{
   startDate?:Date;
   endDate?:Date;
   substitute?:string;
-  document?:string;
+  document?: string;
   type?:HolidayTypeDto;
   status?:HolidayStatusDto;
   details?:string;

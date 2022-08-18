@@ -1,13 +1,14 @@
+@use '../../../../variables' as v;
 .section-teams-requests{
   display: block;
   text-align: center;
+  overflow-y: auto;
 }
 
 .section-title{
   font-size: 20px;
   text-align: left;
   margin-left: 20px;
-  margin-top: 30px;
 }
 
 .section-button--create--request{
@@ -15,30 +16,19 @@
   text-align: left;
 }
 
-
-.mat-header-cell {
-  flex-direction: column;
-  justify-content: center;
-}
-
-.mat-cell {
-  text-align: center;
-  justify-content:center;
-}
-
 .mat-form-field {
-  width: 40%;
+  margin-left: 12px;
+  margin-right: 12px;
 }
-
-table {
-  width: 100%;
-  overflow-x: scroll;
+.div-member-request {
+  padding-top: 24px;
+  padding-bottom: 24px;
+  text-align: center;
 }
-.table-container{
-  overflow-x: scroll;
+.bg-card {
+  width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 30px;
+  box-shadow: 20px;
 }
-
-.mat-column-name {
-  max-width: 100px;
-}
-

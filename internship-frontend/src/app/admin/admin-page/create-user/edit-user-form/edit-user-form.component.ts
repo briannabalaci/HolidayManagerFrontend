@@ -110,6 +110,16 @@ export class EditUserFormComponent implements OnInit , OnChanges{
     
     console.log(this.nrHolidays_d);
   }
+  updtUser(updUser: UpdateUser): void{
+    this.adminService.updateUser(updUser).subscribe(result => {
+
+      this.clickUpdate.emit(updUser);
+     
+    
+    });
+    this.showEditErrorMessage = false;
+    this.showEditOkMessage = true;
+  }
   updateUser(): void {
     const valuesFromForm = this.createUserForm.value;
     const updUser = {
@@ -137,7 +147,7 @@ export class EditUserFormComponent implements OnInit , OnChanges{
     if (!this.createUserForm.invalid) {
       //@ts-ignore
       
-    
+      this.updtUser(updUser);
       
     }
     else {
@@ -145,16 +155,7 @@ export class EditUserFormComponent implements OnInit , OnChanges{
       this.showEditOkMessage = false;
     }
   }
-  updUser(updUser: UpdateUser): void{
-    this.adminService.updateUser(updUser).subscribe(result => {
 
-      this.clickUpdate.emit(updUser);
-      this.showEditErrorMessage = false;
-      this.showEditOkMessage = true;
-    
-    });
-
-  }
   resetWarnings() {
     this.showEditErrorMessage = false;
     this.showEditOkMessage=false

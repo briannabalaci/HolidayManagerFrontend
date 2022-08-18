@@ -25,7 +25,7 @@ export class TeamleadRequestsComponent implements OnInit {
   holidayUpdatingSubstitute = '';
   nrHolidays: number = 0;
   user!: User;
-  requestsTypes: string[] = ['All request', 'Rest holiday', 'Special holiday', 'Unpaid holiday']
+  requestsTypes: string[] = ['All requests', 'Rest holiday', 'Special holiday', 'Unpaid holiday']
 
   selectedTypeValue = this.requestsTypes[0].valueOf();
   selectedStatusValue = 'All'

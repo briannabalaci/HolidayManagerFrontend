@@ -11,6 +11,8 @@ import { DatePipe } from '@angular/common';
 import {User} from "../data-type/User";
 import { EventEmitter } from 'stream';
 import { stringify } from 'querystring';
+import { ConfirmationDialogBoxComponent } from 'src/app/confirmation-dialog-box/confirmation-dialog-box.component';
+import { MatTableDataSource } from '@angular/material/table';
 
 
 @Component({
@@ -51,6 +53,9 @@ export class CreateRequestComponent implements OnInit {
     {value: 'special-holiday', viewValue: 'Special holiday'},
     {value: 'unpaid-holiday', viewValue: 'Unpaid holiday'}
   ];
+  dialogBox: any;
+  holidays: any;
+  dataSource: any;
   constructor(private formBuilder:FormBuilder, private cookieService: CookieService, private holidayService: HolidayService) { }
 
   ngOnInit(): void {
@@ -173,7 +178,7 @@ export class CreateRequestComponent implements OnInit {
             } else {
               this.updating = false;
             }
-          });         
+          });
         }
       });
     } else {
@@ -200,7 +205,7 @@ export class CreateRequestComponent implements OnInit {
             user: {
               id: uID
             }
-          }         
+          }
       }
         this.holidayService.createHoliday(holidayData).subscribe(result => {
           // Call parent's function to refresh table.
@@ -233,7 +238,7 @@ export class CreateRequestComponent implements OnInit {
             } else {
               this.updating = false;
             }
-          });         
+          });
         }
     }
   }
@@ -278,5 +283,16 @@ export class CreateRequestComponent implements OnInit {
   clearSelect() {
     this.matRef.options.forEach((data: MatOption) => data.deselect());
     this.updating = false;
+  }
+
+
+  applyFilters(selected2: any, selected: any) {
+    throw new Error('Method not implemented.');
+  }
+  selected2(selected2: any, selected: any) {
+    throw new Error('Method not implemented.');
+  }
+  selected(selected2: any, selected: any) {
+    throw new Error('Method not implemented.');
   }
 }

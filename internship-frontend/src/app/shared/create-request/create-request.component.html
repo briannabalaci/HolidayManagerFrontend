@@ -35,13 +35,13 @@
     <input type="file" id="file" class="file-input" accept="application/pdf" #fileInput (click)="resetWarnings()" (change)="onFileInput(fileInput.files)"  required>
     <div class="file-upload">
         {{fileName || "Attach your document."}}
-    <button mat-mini-fab *ngIf="!fileName" type="button" color="primary" class="upload-btn"
+    <button mat-mini-fab *ngIf="!fileName" type="button" color="blue-bg" class="upload-btn"
     (click)="fileInput.click()">
-        <mat-icon>attach_file</mat-icon>
+        <mat-icon color="blue-bg">attach_file</mat-icon>
     </button>
-    <button mat-mini-fab *ngIf="fileName" type="button" color="green" class="upload-btn"
+    <button mat-mini-fab *ngIf="fileName" type="button" color="green-bg" class="upload-btn"
     (click)="fileInput.click()">
-        <mat-icon>attach_file</mat-icon>
+        <mat-icon color="green-bg">attach_file</mat-icon>
     </button>
     </div>
 

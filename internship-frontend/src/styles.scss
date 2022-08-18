@@ -24,7 +24,6 @@ $workshop-theme: mat-light-theme((
   color: (
     primary: $workshop-primary,
     accent: mat-palette($mat-orange),
-    warn: $workshop-warn,
     red: mat-palette($mat-red)
   )
 ));
@@ -44,11 +43,14 @@ body { margin: 0; background-color: rgb(245, 245, 245); font-family: Roboto, "He
 .centered {
   text-align: center;
 }
+.mat-card {
+  overflow-x: scroll;
+}
 .vacation-days-field {
   padding: 8px;
   text-align: center;
   border-radius: 22px;
-  background-color: v.$orange;
+  background-color: v.$green;
   color: v.$white;
 }
 
@@ -59,6 +61,9 @@ h2 {
   padding-top: 12px;
   font-weight: bold !important;
   margin-left: 20px !important;
+}
+h3 {
+  font-weight: bold !important;
 }
 
 .bg-card {
@@ -74,6 +79,37 @@ h2 {
    .bg-card {
       width: 80% !important;
   }
+}
+
+.mat-raised-button.mat-green {
+  background-color: v.$green;
+}
+.mat-raised-button.mat-red {
+  background-color: v.$red;
+}
+
+.mat-icon.mat-green {
+  color: v.$green;
+}
+.mat-icon.mat-red {
+  color: v.$red;
+}
+.mat-icon.mat-blue {
+  color: v.$blue;
+}
+.mat-icon.mat-blue-bg {
+  background-color: v.$blue;
+  color: v.$white;
+}
+.mat-icon.mat-green-bg {
+  background-color: v.$green;
+  color: v.$white;
+}
+.mat-mini-fab.mat-blue-bg {
+  background-color: v.$blue;
+}
+.mat-mini-fab.mat-green-bg {
+  background-color: v.$green;
 }
 // TABLE CSS
 .mat-table {

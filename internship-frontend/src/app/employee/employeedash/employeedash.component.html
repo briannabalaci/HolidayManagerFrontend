@@ -1,4 +1,5 @@
 <app-nav-bar></app-nav-bar>
+
 <div class="centered">
 <h1 class="title">Employee Dashboard</h1>
 <div class="vacation-days-div">
@@ -14,7 +15,8 @@
 <!--</mat-form-field>-->
 <mat-card class="bg-card">
 <mat-form-field class="section-dropdown-requests" appearance="outline" color="accent">
-  <mat-select (selectionChange)="onTypeChange($event.value)">
+  <mat-select [(ngModel)]="selectedTypeValue"  (selectionChange)="onTypeChange($event.value)">
+
     <mat-option *ngFor="let request of requestsTypes" [value]="request">
       {{request}}
     </mat-option>
@@ -22,16 +24,10 @@
 </mat-form-field>
 
 <br>
-<!--<mat-form-field appearance="fill">-->
-<!--  <mat-label>Statuses</mat-label>-->
-<!--  <mat-select [(ngModel)]="selectedStatus" (selectionChange)="changefilterStatus($event.value)">-->
-<!--    <mat-option *ngFor="let status of statusList" [value]="status.value">-->
-<!--      {{status.viewValue}}</mat-option>-->
-<!--  </mat-select>-->
-<!--</mat-form-field>-->
 
 <mat-form-field class="section-dropdown-requests" appearance="outline" color="accent">
-  <mat-select (selectionChange)="onStatusChange($event.value)">
+  <mat-select [(ngModel)]="selectedStatusValue"  (selectionChange)="onStatusChange($event.value)">
+
     <mat-option *ngFor="let request of requestsStatus" [value]="request">
       {{request}}
     </mat-option>

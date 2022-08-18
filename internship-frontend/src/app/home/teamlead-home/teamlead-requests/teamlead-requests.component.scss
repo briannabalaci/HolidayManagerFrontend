@@ -51,7 +51,7 @@
   position: fixed;
   bottom:0;
   max-width: 100vw; 
-  max-height: 80vh;
+  max-height: calc(100vh - 100px); 
   overflow-y: scroll;
   z-index: 1;
 }

@@ -10,6 +10,7 @@ nav {
     display: flex;
     margin-bottom: 18px;
     justify-content: space-between;
+    overflow-x: scroll;
     
 }
 #nav-bar-button {
@@ -46,4 +47,9 @@ nav {
 }
 #icon-orange {
     color: v.$orange;
+}
+
+::ng-deep .mat-badge-content { 
+    background: v.$red !important; 
+    color: v.$white !important 
 }
