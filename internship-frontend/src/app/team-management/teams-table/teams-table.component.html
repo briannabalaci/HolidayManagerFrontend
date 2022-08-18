@@ -9,14 +9,14 @@
     <ng-container matColumnDef="View">
       <th mat-header-cell class="edit-cell" *matHeaderCellDef> View </th>
       <td mat-cell class="edit-cell" *matCellDef="let row" >
-        <button mat-button (click)="viewTeamDetails(row)"><mat-icon>visibility</mat-icon></button>
+        <button mat-button (click)="viewTeamDetails(row)"><mat-icon color="blue">visibility</mat-icon></button>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="Delete">
       <th mat-header-cell class="edit-cell" *matHeaderCellDef> Delete </th>
       <td mat-cell class="delete-cell" *matCellDef="let row" >
-        <button mat-button (click)="deleteTeam(row)" ><mat-icon>delete_forever</mat-icon></button>
+        <button mat-button (click)="deleteTeam(row)" ><mat-icon color="red">delete_forever</mat-icon></button>
       </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

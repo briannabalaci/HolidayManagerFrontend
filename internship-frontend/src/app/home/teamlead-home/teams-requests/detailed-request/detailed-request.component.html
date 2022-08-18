@@ -4,19 +4,19 @@
     <h2 class="section-title">Request View</h2>
   </header>
 
-  <form id="login-form" [formGroup]="holidayRequestFormGroup" #formDirective="ngForm">
-    <label *ngIf="showFieldForName">Name: </label>
+  <form [formGroup]="holidayRequestFormGroup" #formDirective="ngForm">
+    <p *ngIf="showFieldForName">Name: </p>
     <mat-form-field *ngIf="showFieldForName" appearance="outline" color="accent">
       <input readonly matInput name="name" formControlName="name" placeholder="Name">
     </mat-form-field><br *ngIf="showFieldForName">
 
-    <label *ngIf="showFieldForType">Type: </label>
+    <p *ngIf="showFieldForType">Type: </p>
     <mat-form-field *ngIf="showFieldForType" appearance="outline" color="accent">
       <input readonly matInput name="type" formControlName="type" placeholder="Type">
     </mat-form-field><br *ngIf="showFieldForType">
 
 
-    <label *ngIf="showFieldForStartDate">Start date: </label>
+    <p *ngIf="showFieldForStartDate">Start date: </p>
     <mat-form-field *ngIf="showFieldForStartDate" appearance="outline" color="accent">
       <input readonly matInput [matDatepicker]="pickerStart" name="startDate" placeholder="Select start date" formControlName="startDate">
       <mat-datepicker-toggle matSuffix [for]="pickerStart">
@@ -25,7 +25,7 @@
       <mat-datepicker #pickerStart></mat-datepicker>
     </mat-form-field><br *ngIf="showFieldForStartDate">
 
-    <label *ngIf="showFieldForEndDate">End date: </label>
+    <p *ngIf="showFieldForEndDate">End date: </p>
     <mat-form-field *ngIf="showFieldForEndDate" appearance="outline" color="accent">
       <input readonly matInput [matDatepicker]="pickerEnd" name="endDate" placeholder="Select end date" formControlName="endDate">
       <mat-datepicker-toggle matSuffix [for]="pickerEnd">
@@ -33,22 +33,26 @@
       <mat-datepicker #pickerEnd></mat-datepicker>
     </mat-form-field><br *ngIf="showFieldForEndDate">
 
-    <label *ngIf="showFieldForSubstitute">Substitute: </label>
+    <p *ngIf="showFieldForSubstitute">Substitute: </p>
     <mat-form-field *ngIf="showFieldForSubstitute" appearance="outline" color="accent">
       <input readonly matInput name="substitute" formControlName="substitute" placeholder="Substitute">
     </mat-form-field><br *ngIf="showFieldForSubstitute">
 
-    <label *ngIf="showFieldForDocument">Extra information: </label>
-    <mat-form-field *ngIf="showFieldForDocument" appearance="outline" color="accent">
+
+    <p *ngIf="showFieldForDocument">Extra information: </p>
+    <mat-form-field *ngIf="showFieldForDocument && !documentExists" appearance="outline" color="accent">
       <input readonly matInput name="document" formControlName="document" placeholder="Extra information">
     </mat-form-field><br *ngIf="showFieldForDocument">
+    <button *ngIf="documentExists" mat-icon-button aria-label="Download icon" id="download-button" (click)="downloadDocument()">
+      <mat-icon class="section-mat-icon">picture_as_pdf</mat-icon>
+    </button>
 
     <mat-card class="error-message" *ngIf="isErrorMessage">{{this.errorString}}</mat-card>
     <mat-card class="success-message" *ngIf="isSuccessMessage">{{this.successString}}</mat-card>
 
     <div class="button-container">
-      <button mat-raised-button type="button" id="approve-button" color="accent">Approve</button>
-      <button mat-raised-button type="button" id="decline-button" color="accent" (click) = "declineRequest()">Decline</button>
+      <button mat-raised-button type="button" id="approve-button" color="green">Approve</button>
+      <button mat-raised-button type="button" id="decline-button" color="red" (click) = "declineRequest()">Decline</button>
       <button mat-raised-button type="button" id="details-button" color="accent" (click) = "moreDetails()">More details</button>
     </div>
 

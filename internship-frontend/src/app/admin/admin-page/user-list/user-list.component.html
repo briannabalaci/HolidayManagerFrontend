@@ -16,11 +16,11 @@
    
       <ng-container matColumnDef="edituser">
         <th mat-header-cell class="edit-cell" *matHeaderCellDef>Edit</th>
-        <td mat-cell class="edit-cell" *matCellDef="let element"> <button mat-button (click)="getRecord(element)"><mat-icon>edit</mat-icon></button> </td>
+        <td mat-cell class="edit-cell" *matCellDef="let element"> <button mat-button (click)="getRecord(element)"><mat-icon color="blue">edit</mat-icon></button> </td>
       </ng-container>
       <ng-container matColumnDef="deleteuser">
         <th mat-header-cell class="edit-cell" *matHeaderCellDef> Delete</th>
-        <td mat-cell class="delete-cell" *matCellDef="let element"> <button mat-button (click)="getRecordDelete(element)"><mat-icon>delete_forever</mat-icon></button> </td>
+        <td mat-cell class="delete-cell" *matCellDef="let element"> <button mat-button (click)="getRecordDelete(element)"><mat-icon color="red">delete_forever</mat-icon></button> </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

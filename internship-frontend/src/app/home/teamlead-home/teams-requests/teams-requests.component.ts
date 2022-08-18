@@ -141,7 +141,7 @@ export class TeamsRequestsComponent implements OnInit {
     this.holidayDecidingStatus = element.status!;
 
     if(element.type == HolidayTypeDto.SPECIAL_HOLIDAY){
-      this.holidayDecidingDocumentName = 'Este ok!';
+      this.holidayDecidingDocumentName = element.document!;
       this.holidayDecidingSubstitute = element.substitute!;
     } else if(element.type == HolidayTypeDto.REST_HOLIDAY){
       this.holidayDecidingSubstitute = element.substitute!;
