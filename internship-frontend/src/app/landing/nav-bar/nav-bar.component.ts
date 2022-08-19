@@ -14,7 +14,7 @@ import {StompService} from "../../service/stomp/stomp.service";
 export class NavBarComponent implements OnInit {
   name = '';
   id = 0;
-  notificationNum = 0;
+  notificationNum: number;
   notificationsVisible = false;
   canShowNotification = true;
 
@@ -38,6 +38,11 @@ export class NavBarComponent implements OnInit {
         this.canShowNotification = false;
       }
     }
+
+
+    this.notificationService.getAllUnseenNotifications(this.id).subscribe(data => {
+      this.notificationNum = data.length;
+    })
 
   }
 

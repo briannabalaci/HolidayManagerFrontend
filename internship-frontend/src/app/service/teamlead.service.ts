@@ -9,6 +9,7 @@ import {HolidayDto, HolidayTypeDto} from "../shared/data-type/HolidayDto";
 const URL = "http://localhost:8090/teamlead/";
 
 const DECLINE_REQUEST = `http://localhost:8090/holiday/deny`
+const APPROVE_REQUEST = `http://localhost:8090/holiday/approve`
 const MORE_DETAILS = `http://localhost:8090/holiday/details`
 const GET_REQUESTS = `${URL}requests?id=`;
 const GET_TEAM_REQUESTS = `${URL}team-requests?id=`;
@@ -32,6 +33,11 @@ export class TeamleadService {
 
   public declineRequest(id: number): Observable<HolidayDto>{
     let url = `${DECLINE_REQUEST}/${id}`
+    return this.httpClient.put<HolidayDto>(url, new Headers({'Content-Length': '0'}));
+  }
+
+  public approveRequest(id: number): Observable<HolidayDto>{
+    let url = `${APPROVE_REQUEST}/${id}`
     return this.httpClient.put<HolidayDto>(url, new Headers({'Content-Length': '0'}));
   }
 
