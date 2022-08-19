@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import {Component, EventEmitter, OnInit, Output} from "@angular/core";
 import { Console, time } from "console";
 import { CookieService } from "ngx-cookie-service";
 import { NotificationService } from "src/app/service/notification.service";
@@ -23,6 +23,8 @@ export class NavBarNotificationsComponent implements OnInit {
   unseenNotif1!: NotificationDTO[];
   seenNotif1!: NotificationDTO[];
   notificationMessage:boolean = false
+  @Output() refreshTableTeamLead = new EventEmitter<String>();
+
   ngOnInit(): void {
     this.getAndSetNotificationData()
 
@@ -120,7 +122,7 @@ export class NavBarNotificationsComponent implements OnInit {
   }
 
 
-  }
+}
 
 
 

@@ -35,6 +35,18 @@ export class TeamsRequestsComponent implements OnInit {
   holidayDecidingSubstitute = '';
   holidayDecidingStatus = HolidayStatusDto.PENDING;
 
+  isApproved = "APPROVED";
+  isDeclined = "DECLINED";
+
+
+  isRequestDeclined(elem: HolidayDto): boolean{
+    return elem.status == HolidayStatusDto.DENIED;
+  }
+
+  isRequestApproved(elem: HolidayDto): boolean{
+    return elem.status == HolidayStatusDto.APPROVED;
+  }
+
   displayedColumns: string[] = ['name', 'startDate', 'endDate', 'type', 'edit']
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   user!: User;
