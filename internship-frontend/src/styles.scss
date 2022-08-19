@@ -143,9 +143,31 @@ h3 {
   font-weight: bold;
   color: v.$orange-secondary;
   background-color: v.$orange-light;
+  padding: 4px !important;
+  padding-top: 12px !important;
 }
 .mat-cell {
   text-align: left !important;
+  padding: 4px !important;
+  white-space: normal;
+  word-wrap: break-word;
+  border: none !important;
+}
+
+.mat-cell:first-child {
+  text-align: left !important;
+  padding: 4px !important;
+  white-space: normal;
+  word-wrap: break-word;
+  border: none !important;
+  padding-left: 12px !important;
+}
+
+.mat-header-cell:first-child {
+  padding-left: 12px !important;
+}
+.mat-header-cell:last-child {
+  padding-right: 12px !important;
 }
 
 .mat-header-cell:not(:first-child) {
@@ -165,11 +187,6 @@ h3 {
 .state-cell {
   text-align: right;
 }
-.mat-cell {
-  white-space: normal;
-  word-wrap: break-word;
-  border: none !important;
-}
 .table-card {
   border-radius: 24px !important;
   margin: 12px;
@@ -181,6 +198,7 @@ h3 {
 }
 .delete-cell {
   text-align: center !important;
+  padding-right: 12px !important;
 }
 
 /// END OF TABLE CSS

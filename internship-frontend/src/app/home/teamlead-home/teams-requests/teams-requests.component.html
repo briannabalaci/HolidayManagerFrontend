@@ -38,8 +38,8 @@
       </ng-container>
 
       <ng-container matColumnDef="edit">
-        <th mat-header-cell class="edit-cell" *matHeaderCellDef> Edit </th>
-        <td mat-cell class="edit-cell" *matCellDef="let element">
+        <th mat-header-cell class="delete-cell" *matHeaderCellDef> Edit </th>
+        <td mat-cell class="delete-cell" *matCellDef="let element">
           <button mat-icon-button aria-label="Edit icon" type="button" id="form-button" (click)="fillFields(element)">
             <mat-icon class="section-mat-icon" color="blue">remove_red_eye</mat-icon>
             <mat-icon *ngIf="isRequestDeclined(element)" color="red">clear</mat-icon>
