@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {User} from "../../../shared/data-type/User";
 import {TeamleadService} from "../../../service/teamlead.service";
 import {RequestsTableComponent} from "../../../shared/requests-table/requests-table.component";
@@ -11,7 +11,7 @@ import {UserService} from "../../../service/user.service";
   styleUrls: ['./teamlead-requests.component.scss']
 })
 
-export class TeamleadRequestsComponent implements OnInit {
+export class TeamleadRequestsComponent implements OnInit,OnChanges {
 
   showFormCreateRequest = false;
   endDate = 'Angular';
@@ -31,6 +31,8 @@ export class TeamleadRequestsComponent implements OnInit {
   selectedTypeValue = this.requestsTypes[0].valueOf();
   selectedStatusValue = 'All'
 
+  // @Input() newNotification = "";
+
   @ViewChild(RequestsTableComponent) requests: RequestsTableComponent;
 
   constructor(private userService: UserService, private teamLeadService: TeamleadService) { }
@@ -38,6 +40,10 @@ export class TeamleadRequestsComponent implements OnInit {
   ngOnInit(): void {
     this.getAndSetTeamLeadData();
   }
+  ngOnChanges(changes: SimpleChanges): void {
+  }
+
+
 
   getAndSetTeamLeadData(){
     this.userService.getUser().subscribe(data => {
@@ -69,6 +75,7 @@ export class TeamleadRequestsComponent implements OnInit {
   changeVacationDays(eventData: any) {
     this.nrHolidays =  eventData ;
   }
+
 
 }
 
