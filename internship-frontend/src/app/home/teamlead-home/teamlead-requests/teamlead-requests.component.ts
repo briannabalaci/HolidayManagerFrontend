@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {User} from "../../../shared/data-type/User";
 import {TeamleadService} from "../../../service/teamlead.service";
 import {RequestsTableComponent} from "../../../shared/requests-table/requests-table.component";
@@ -11,7 +11,7 @@ import {UserService} from "../../../service/user.service";
   styleUrls: ['./teamlead-requests.component.scss']
 })
 
-export class TeamleadRequestsComponent implements OnInit {
+export class TeamleadRequestsComponent implements OnInit,OnChanges {
 
   showFormCreateRequest = false;
   endDate = 'Angular';
@@ -23,13 +23,15 @@ export class TeamleadRequestsComponent implements OnInit {
   holidayUpdatingStartDate = '';
   holidayUpdatingEndDate = '';
   holidayUpdatingSubstitute = '';
-  nrHolidays: number = 0;
+  nrHolidays: number;
   user!: User;
   details = '';
   requestsTypes: string[] = ['All requests', 'Rest holiday', 'Special holiday', 'Unpaid holiday']
 
   selectedTypeValue = this.requestsTypes[0].valueOf();
   selectedStatusValue = 'All'
+
+  // @Input() newNotification = "";
 
   @ViewChild(RequestsTableComponent) requests: RequestsTableComponent;
 
@@ -38,6 +40,13 @@ export class TeamleadRequestsComponent implements OnInit {
   ngOnInit(): void {
     this.getAndSetTeamLeadData();
   }
+  ngOnChanges(changes: SimpleChanges): void {
+  }
+
+  newRequestAddedHandler(message:string){
+    this.getAndSetTeamLeadData()
+  }
+
 
   getAndSetTeamLeadData(){
     this.userService.getUser().subscribe(data => {
@@ -66,6 +75,7 @@ export class TeamleadRequestsComponent implements OnInit {
   get refreshDataFunc() {
     return this.refreshData.bind(this);
   }
+
 
 }
 

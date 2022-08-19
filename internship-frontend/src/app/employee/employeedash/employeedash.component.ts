@@ -1,4 +1,4 @@
-import { Component, OnInit , ViewChild, AfterViewInit} from '@angular/core';
+import {Component, OnInit, ViewChild, AfterViewInit, Input, OnChanges, SimpleChanges} from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { CookieService } from 'ngx-cookie-service';
 import { HolidayService } from 'src/app/service/holiday.service';
@@ -21,7 +21,7 @@ const HOLIDAY_DATA: Holiday[] =[
   templateUrl: './employeedash.component.html',
   styleUrls: ['./employeedash.component.scss']
 })
-export class EmployeedashComponent implements OnInit {
+export class EmployeedashComponent implements OnInit,OnChanges {
 
   showFormCreateRequest = false;
 
@@ -41,12 +41,37 @@ export class EmployeedashComponent implements OnInit {
   dataSource = new MatTableDataSource(HOLIDAY_DATA);
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private holidayService:HolidayService, private cookieService: CookieService, private userService: UserService) {}
-  vacationDays: number = 0;
+  vacationDays: number ;
   user!: User;
 
 
   requestsTypes: string[] = ['All request', 'Rest holiday', 'Special holiday', 'Unpaid holiday']
   requestsStatus: string[] = ['All', 'Pending', 'Approved', 'Denied']
+
+  @Input() newNotification = "";
+
+  sendNewNotificationSignal(message:string){
+    console.log("In parinteee")
+    this.userService.getUser().subscribe(data => {
+
+      this.user = data;
+      this.vacationDays = +data.nrHolidays!;
+
+    })
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    // console.log("In copil afara de oif")
+    // if(this.newNotification!=""){
+    //   console.log("In copiiil")
+    //   this.userService.getUser().subscribe(data => {
+    //
+    //     this.user = data;
+    //     this.vacationDays = +data.nrHolidays!;
+    //
+    //   })
+    // }
+  }
+
 
 
   // deleteHoliday(row: Holiday) {
@@ -64,7 +89,7 @@ export class EmployeedashComponent implements OnInit {
   //       });
   //     }
   //   })
-    
+
   // }
   clearData(): void{
   this.endDate = '';

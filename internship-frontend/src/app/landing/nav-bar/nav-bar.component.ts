@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Output,EventEmitter} from '@angular/core';
 import { Router } from '@angular/router';
 import {  CookieService } from 'ngx-cookie-service';
 import { NotificationService } from 'src/app/service/notification.service';
 import { UserType } from 'src/app/shared/data-type/User';
 import { parseJwt } from 'src/app/utils/JWTParser';
 import {StompService} from "../../service/stomp/stomp.service";
+import {Team} from "../../shared/data-type/Team";
+import {UserService} from "../../service/user.service";
 
 @Component({
   selector: 'app-nav-bar',
@@ -17,8 +19,10 @@ export class NavBarComponent implements OnInit {
   notificationNum: number;
   notificationsVisible = false;
   canShowNotification = true;
+  @Output() newNoification = new EventEmitter<string>()
 
-  constructor(private router: Router, private cookieService: CookieService, private notificationService: NotificationService, private stompService:StompService) { }
+
+  constructor(private router: Router, private cookieService: CookieService, private userService:UserService, private notificationService: NotificationService, private stompService:StompService) { }
 
   ngOnInit(): void {
 
@@ -26,14 +30,19 @@ export class NavBarComponent implements OnInit {
       this.notificationService.getAllUnseenNotifications(this.id).subscribe(data => {
         this.notificationNum = data.length;
       })
+      console.log("Se emite")
+      this.newNoification.emit("Something changed! ")
     })
 
 
     const token = this.cookieService.get('Token');
     if (token) {
       const parsed = parseJwt(token);
-      this.name = parsed.username;
       this.id = parsed.id;
+
+      this.userService.getUserById(this.id).subscribe( user => {
+        this.name = user.forname + " " + user.surname;
+      })
       if (parsed.type == UserType.ADMIN) {
         this.canShowNotification = false;
       }
