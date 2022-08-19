@@ -35,6 +35,18 @@ export class TeamsRequestsComponent implements OnInit {
   holidayDecidingSubstitute = '';
   holidayDecidingStatus = HolidayStatusDto.PENDING;
 
+  isApproved = "APPROVED";
+  isDeclined = "DECLINED";
+
+
+  isRequestDeclined(elem: HolidayDto): boolean{
+    return elem.status == HolidayStatusDto.DENIED;
+  }
+
+  isRequestApproved(elem: HolidayDto): boolean{
+    return elem.status == HolidayStatusDto.APPROVED;
+  }
+
   displayedColumns: string[] = ['name', 'startDate', 'endDate', 'type', 'edit']
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   user!: User;
@@ -114,6 +126,25 @@ export class TeamsRequestsComponent implements OnInit {
       this.dataSource.filterPredicate = this.createFilter();
 
       this.dataSource.paginator = this.paginator;
+
+      for(let i = 0; i < this.dataSource.data.length; i++){
+        if(this.dataSource.data[i].status == HolidayStatusDto.DENIED){
+          // @ts-ignore
+          document.getElementById("approved-icon").hidden = false;
+          // @ts-ignore
+          document.getElementById("declined-icon").hidden = true;
+        } else if (this.dataSource.data[i].status == HolidayStatusDto.APPROVED){
+          // @ts-ignore
+          document.getElementById("approved-icon").hidden = true;
+          // @ts-ignore
+          document.getElementById("declined-icon").hidden = false;
+        } else {
+          // @ts-ignore
+          document.getElementById("approved-icon").hidden = false;
+          // @ts-ignore
+          document.getElementById("declined-icon").hidden = false;
+        }
+      }
 
     })
   }
