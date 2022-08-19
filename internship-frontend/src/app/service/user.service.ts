@@ -13,6 +13,8 @@ const GET_ALL_USERS_WITHOUT_TEAM = URL_BASE + "/users-noteam"
 const FILTER_USERS_BY_NAME = URL_BASE + "/filter-name"
 const GET_USER = `${URL_BASE}/user-info`
 
+const GET_USER_BY_ID = `${URL_BASE}/user`
+
 @Injectable({
   providedIn: 'root'
 })
@@ -30,11 +32,11 @@ export class UserService {
   }
 
   public getAll(): Observable<User[]> {
-      return this.httpClient.get<User[]>(GET_ALL_USERS);
+    return this.httpClient.get<User[]>(GET_ALL_USERS);
   }
 
   public getAllUsersWithoutTeam(): Observable<User[]> {
-      return this.httpClient.get<User[]>(GET_ALL_USERS_WITHOUT_TEAM);
+    return this.httpClient.get<User[]>(GET_ALL_USERS_WITHOUT_TEAM);
   }
 
   public filterUsersByName(name: String): Observable<User[]> {
@@ -43,6 +45,11 @@ export class UserService {
     } else {
       return this.httpClient.get<User[]>(GET_ALL_USERS);
     }
+  }
+
+  public getUserById(id: number): Observable<User> {
+    let url = `${GET_USER}?id=${id}`
+    return this.httpClient.get(url)
   }
 
 

@@ -1,18 +1,13 @@
-import { Component, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { FormBuilder, NgForm, Validators } from '@angular/forms';
-import { MatOption } from '@angular/material/core';
-import { MatInput } from '@angular/material/input';
-import { MatSelect } from '@angular/material/select';
-import { CookieService } from 'ngx-cookie-service';
-import { HolidayService } from 'src/app/service/holiday.service';
-import { parseJwt } from 'src/app/utils/JWTParser';
-import {HolidayTypeView, RequestType, HolidayStatus, Holiday, HolidayForUpdate} from '../data-type/Holiday';
-import { DatePipe } from '@angular/common';
-import {User} from "../data-type/User";
-import { EventEmitter } from 'stream';
-import { stringify } from 'querystring';
-import { ConfirmationDialogBoxComponent } from 'src/app/confirmation-dialog-box/confirmation-dialog-box.component';
-import { MatTableDataSource } from '@angular/material/table';
+import {Component, Input, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {FormBuilder, NgForm, Validators} from '@angular/forms';
+import {MatOption} from '@angular/material/core';
+import {MatSelect} from '@angular/material/select';
+import {CookieService} from 'ngx-cookie-service';
+import {HolidayService} from 'src/app/service/holiday.service';
+import {parseJwt} from 'src/app/utils/JWTParser';
+import {Holiday, HolidayForUpdate, HolidayStatus, HolidayTypeView, RequestType} from '../data-type/Holiday';
+import {DatePipe} from '@angular/common';
+import {UserService} from "../../service/user.service";
 
 
 @Component({
@@ -23,10 +18,10 @@ import { MatTableDataSource } from '@angular/material/table';
 
 export class CreateRequestComponent implements OnInit {
   holidayRequestFormGroup = this.formBuilder.group({
-    startDate:[new Date(),Validators.required],
+    startDate: [new Date(), Validators.required],
     endDate: [new Date(), Validators.required],
     substitute: [""],
-    document:[""]
+    document: [""]
   })
   @ViewChild('matRef') matRef!: MatSelect;
   @ViewChild('formDirective') private formDirective!: NgForm;
@@ -37,32 +32,45 @@ export class CreateRequestComponent implements OnInit {
   @Input() updatingEndDate!: string;
   @Input() updatingSubstitute!: string;
   @Input() deviceValue!: string;
+  @Input() details!: string;
+  @Input()
+  parent: any;
 
+
+  userNoHolidays = 0;
+  numberDaysRequired = 0;
+  unpaidDaysRequired = 0;
+
+
+  showSuccess = false;
+  showError = false;
+
+  stopCreateRequest = false;
   showDateErrorMessage = false;
   showFillErrorMessage = false;
+  showNumberHolidaysErrorMessage = false;
   showSuccessfulMessage = false;
   showSuccessfulUpdateMessage = false;
   showFieldForStartDate = false;
   showFieldForEndDate = false;
   showFieldForSubstitute = false;
   showFieldForDocument = false;
-
   fileName = '';
   holidayList: HolidayTypeView[] = [
     {value: 'rest-holiday', viewValue: 'Rest holiday'},
     {value: 'special-holiday', viewValue: 'Special holiday'},
     {value: 'unpaid-holiday', viewValue: 'Unpaid holiday'}
   ];
-  dialogBox: any;
-  holidays: any;
-  dataSource: any;
-  constructor(private formBuilder:FormBuilder, private cookieService: CookieService, private holidayService: HolidayService) { }
+
+  constructor(private formBuilder: FormBuilder, private cookieService: CookieService, private holidayService: HolidayService, private userService: UserService) {
+  }
 
   ngOnInit(): void {
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     const idChange = changes['updatingId'];
-    if(idChange && idChange.previousValue != idChange.currentValue){
+    if (idChange && idChange.previousValue != idChange.currentValue) {
       if (this.updating) {
         console.log(this.updatingId);
         this.loadFields();
@@ -77,8 +85,9 @@ export class CreateRequestComponent implements OnInit {
       }
     }
   }
+
   loadFields() {
-    switch(this.deviceValue){
+    switch (this.deviceValue) {
       case 'rest-holiday': {
         this.showFieldForStartDate = true;
         this.showFieldForEndDate = true;
@@ -102,11 +111,14 @@ export class CreateRequestComponent implements OnInit {
       }
     }
   }
-  onChange(deviceValue: any): void{
+
+  onChange(deviceValue: any): void {
     this.deviceValue = deviceValue;
     this.loadFields();
   }
+
   file: File | null = null;
+
   onFileInput(files: FileList | null): void {
     if (files) {
       this.file = files.item(0);
@@ -116,8 +128,46 @@ export class CreateRequestComponent implements OnInit {
       }
     }
   }
-  sendHolidayRequest() {
+
+  // @ts-ignore
+  checkAndSend(): any {
+
+    const datePipe = new DatePipe('en-US');
+
     const valuesFromForm = this.holidayRequestFormGroup.value;
+
+    let startDate = datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!
+    let endDate = datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!
+
+    this.userService.getUser().subscribe(result => {
+      this.userNoHolidays = result.nrHolidays!
+      this.holidayService.getNoHolidays(startDate, endDate).subscribe(result => {
+        this.numberDaysRequired = result
+        this.unpaidDaysRequired = Math.floor(this.numberDaysRequired/10)
+        console.log(this.unpaidDaysRequired + " " + this.numberDaysRequired + " " +this.userNoHolidays)
+        if (this.numberDaysRequired > this.userNoHolidays && this.deviceValue == 'rest-holiday') {
+          this.showError = true;
+          this.showSuccess = false
+          this.showMessage()
+        } if(this.unpaidDaysRequired > this.userNoHolidays && this.deviceValue == 'unpaid-holiday'){
+          this.showError = true;
+          this.showSuccess = false
+          this.showMessage()
+        }
+        else {
+          this.showSuccess = true
+          this.showError = false
+          this.sendHolidayRequest()
+        }
+
+      })
+    })
+  }
+
+  sendHolidayRequest() {
+
+    const valuesFromForm = this.holidayRequestFormGroup.value;
+
     let hType = RequestType.REST;
     const token = this.cookieService.get('Token');
     const uID = parseJwt(token).id;
@@ -135,15 +185,16 @@ export class CreateRequestComponent implements OnInit {
         break;
       }
     }
+
     if (this.file && this.deviceValue == 'special-holiday') {
       console.log("It's a special holiday" + this.updating);
       this.file.arrayBuffer().then(buff => {
         let x = new Uint8Array(buff);
         if (!this.updating) {
           const datePipe = new DatePipe('en-US');
-          const holidayData:Holiday = {
+          const holidayData: Holiday = {
             startDate: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
-           // startDate: 'sfsdgsdgsg',
+            // startDate: 'sfsdgsdgsg',
             endDate: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!,
             status: HolidayStatus.PENDING!,
             substitute: valuesFromForm.substitute!,
@@ -153,10 +204,13 @@ export class CreateRequestComponent implements OnInit {
               id: uID
             }
           }
+
+
           console.log("currently inserting");
           this.holidayService.createHoliday(holidayData).subscribe(result => {
             // Call parent's function to refresh table.
             this.refreshData();
+            this.showMessage()
             console.log(result);
           });
         } else {
@@ -176,6 +230,7 @@ export class CreateRequestComponent implements OnInit {
             if (!this.updating) {
               this.clearSelect();
             } else {
+              this.details = '';
               this.updating = false;
             }
           });
@@ -185,17 +240,17 @@ export class CreateRequestComponent implements OnInit {
       if (!this.updating) {
         const datePipe = new DatePipe('en-US');
         let holidayData: Holiday;
-        if(this.deviceValue == 'rest-holiday') {
-        holidayData = {
-          startDate: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
-          endDate: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!,
-          status: HolidayStatus.PENDING!,
-          substitute: valuesFromForm.substitute!,
-          type: hType,
-          user: {
-            id: uID
+        if (this.deviceValue == 'rest-holiday') {
+          holidayData = {
+            startDate: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
+            endDate: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!,
+            status: HolidayStatus.PENDING!,
+            substitute: valuesFromForm.substitute!,
+            type: hType,
+            user: {
+              id: uID
+            }
           }
-        }
         } else {
           holidayData = {
             startDate: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
@@ -206,9 +261,10 @@ export class CreateRequestComponent implements OnInit {
               id: uID
             }
           }
-      }
+        }
         this.holidayService.createHoliday(holidayData).subscribe(result => {
           // Call parent's function to refresh table.
+          this.showMessage()
           this.refreshData();
           console.log(result);
         });
@@ -229,19 +285,21 @@ export class CreateRequestComponent implements OnInit {
             endDate: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!
           }
         }
-          this.holidayService.updateHoliday(holidayData).subscribe(result => {
-            // Call parent's function to refresh table.
-            this.refreshData();
-            console.log(result);
-            if (!this.updating) {
-              this.clearSelect();
-            } else {
-              this.updating = false;
-            }
-          });
-        }
+        this.holidayService.updateHoliday(holidayData).subscribe(result => {
+          // Call parent's function to refresh table.
+          this.refreshData();
+          console.log(result);
+          if (!this.updating) {
+            this.clearSelect();
+          } else {
+            this.details = '';
+            this.updating = false;
+          }
+        });
+      }
     }
   }
+
   verifyHolidayRequest() {
     const valuesFromForm = this.holidayRequestFormGroup.value;
     let anyFieldIsEmpty = false;
@@ -251,11 +309,11 @@ export class CreateRequestComponent implements OnInit {
         break;
       }
       case 'special-holiday': {
-        anyFieldIsEmpty = (valuesFromForm.startDate == null || valuesFromForm.endDate == null  || valuesFromForm.substitute == '');
+        anyFieldIsEmpty = (valuesFromForm.startDate == null || valuesFromForm.endDate == null || valuesFromForm.substitute == '');
         break;
       }
       case 'unpaid-holiday': {
-        anyFieldIsEmpty =  (valuesFromForm.startDate == null || valuesFromForm.endDate == null );
+        anyFieldIsEmpty = (valuesFromForm.startDate == null || valuesFromForm.endDate == null);
         break;
       }
     }
@@ -265,34 +323,37 @@ export class CreateRequestComponent implements OnInit {
       this.showDateErrorMessage = true;
     } else {
       this.resetWarnings();
-      this.sendHolidayRequest();
+      this.checkAndSend();
+    }
+  }
+
+  showMessage() {
+    if (this.showSuccess) {
       this.showSuccessfulMessage = true;
+      this.showFieldForStartDate = false;
+      this.showFieldForEndDate = false;
+      this.showFieldForSubstitute = false;
+      this.showFieldForDocument = false;
+    } else if (this.showError) {
+      this.showNumberHolidaysErrorMessage = true;
       this.showFieldForStartDate = false;
       this.showFieldForEndDate = false;
       this.showFieldForSubstitute = false;
       this.showFieldForDocument = false;
     }
   }
+
   resetWarnings() {
     console.log(this.deviceValue);
     this.showFillErrorMessage = false;
     this.showSuccessfulMessage = false;
     this.showDateErrorMessage = false;
+    this.showNumberHolidaysErrorMessage = false;
   }
 
   clearSelect() {
     this.matRef.options.forEach((data: MatOption) => data.deselect());
     this.updating = false;
-  }
-
-
-  applyFilters(selected2: any, selected: any) {
-    throw new Error('Method not implemented.');
-  }
-  selected2(selected2: any, selected: any) {
-    throw new Error('Method not implemented.');
-  }
-  selected(selected2: any, selected: any) {
-    throw new Error('Method not implemented.');
+    this.details = '';
   }
 }
