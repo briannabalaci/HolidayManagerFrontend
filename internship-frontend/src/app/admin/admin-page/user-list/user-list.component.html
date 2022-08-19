@@ -2,6 +2,12 @@
   <h1>User Management</h1>
 </div>
 <mat-card class="table-card">
+  <mat-form-field class="filter" (keydown.space)="$event.stopPropagation()" appearance="outline" color="accent">
+    <input matInput class="form-field" [formControl]="surnameFilter" placeholder="Fiter by surname">
+  </mat-form-field>
+  <mat-form-field (keydown.space)="$event.stopPropagation()" appearance="outline" color="accent">
+    <input matInput class="form-field" [formControl]="fornameFilter" placeholder="Filter by forname">
+  </mat-form-field>
     <table mat-table [dataSource]="dataSource">
  
       <ng-container matColumnDef="surname">
