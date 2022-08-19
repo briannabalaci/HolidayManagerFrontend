@@ -4,8 +4,8 @@
   <mat-card-title>Edit {{email_d}}</mat-card-title>
 <br>
 <form id="edit-form" [formGroup]="createUserForm" (ngSubmit)="updateUser()">
-  <mat-card class="edit-hint" *ngIf="showEditErrorMessage" (click)="resetWarnings()">Update Error!</mat-card>
-  <mat-card class="edit-hint-green" *ngIf="showEditOkMessage" (click)="resetWarnings()">User updated!</mat-card>
+  <mat-card class="edit-hint" *ngIf="showEditErrorMessage" (click)="resetWarnings()">Could not update user.</mat-card>
+  <mat-card class="edit-hint-green" *ngIf="showEditOkMessage" (click)="resetWarnings()">User updated successfully.</mat-card>
   <p>First name</p> 
   <mat-form-field appearance="outline" color="accent" >
       <input matInput [placeholder]="surname_d" [(ngModel)]="surname_d" formControlName="surName" (click)="resetWarnings()">
