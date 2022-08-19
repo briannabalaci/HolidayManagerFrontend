@@ -15,6 +15,7 @@ export class CreateUserComponent implements OnInit,OnChanges {
   @Output()
   public createSignal = new EventEmitter<void>();
   @Input() editUserDto!: User;
+  @Input() parent: any;
   
   displayUpdate=false;
 
@@ -48,6 +49,7 @@ export class CreateUserComponent implements OnInit,OnChanges {
 
   }
   cancelUpdate() {
+    this.parent.showUserForm = false;
     this.displayUpdate = false;
   }
 }

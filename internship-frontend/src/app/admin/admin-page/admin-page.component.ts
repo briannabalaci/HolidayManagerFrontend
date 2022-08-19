@@ -8,14 +8,19 @@ import { User } from 'src/app/shared/data-type/User';
 })
 export class AdminPageComponent implements OnInit {
   inputValue = " ";
-  userUpdateDto!:User;
+  userUpdateDto!: User;
+  showUserForm = false;
   constructor() { }
 
   ngOnInit(): void {
   }
   updateTable() { this.inputValue += "a"; }
   updateUser(user: User) {
+    this.showUserForm = true;
     console.log("admin.page.component",user)
     this.userUpdateDto = user;
+  }
+  showForm() {
+    this.showUserForm = !this.showUserForm;
   }
 }
