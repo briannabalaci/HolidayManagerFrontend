@@ -35,15 +35,17 @@ $workshop-theme: mat-light-theme((
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 /* You can add global styles to this file, and also import other style files */
 html, body { height: 100%; }
-body { margin: 0; background-color: rgb(245, 245, 245); font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; background-color: v.$grey; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .mat-raised-button{
+  box-shadow: none !important;
   color: white !important;
 }
 .centered {
   text-align: center;
 }
 .mat-card {
+  box-shadow: none !important;
   overflow-x: scroll;
 }
 .vacation-days-field {
