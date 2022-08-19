@@ -21,7 +21,7 @@
     <h2>Requests</h2>
 
 
-  <app-requests-table [parent]="this"></app-requests-table>
+  <app-requests-table (deletedApprovedEvent)="changeVacationDays($event)" [parent]="this"></app-requests-table>
 
 </section>
 <div class="div-holiday-request">

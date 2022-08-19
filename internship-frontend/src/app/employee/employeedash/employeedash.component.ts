@@ -40,7 +40,7 @@ export class EmployeedashComponent implements OnInit {
   dataSource = new MatTableDataSource(HOLIDAY_DATA);
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private holidayService:HolidayService, private cookieService: CookieService, private userService: UserService) {}
-  vacationDays: number = 0;
+  vacationDays?: number = 0;
   user!: User;
 
 
@@ -112,6 +112,9 @@ export class EmployeedashComponent implements OnInit {
   }
   get refreshDataFunc() {
     return this.refreshData.bind(this);
+  }
+  changeVacationDays(eventData: any) {
+    this.vacationDays =  eventData ;
   }
 
 }

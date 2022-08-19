@@ -19,6 +19,7 @@
 
     <mat-option *ngFor="let request of requestsTypes" [value]="request">
       {{request}}
+      
     </mat-option>
   </mat-select>
 </mat-form-field>
@@ -37,7 +38,7 @@
 <br>
 </div>
 <h2>Your requests</h2>
-<app-requests-table [parent]="this"></app-requests-table>
+<app-requests-table (deletedApprovedEvent)="changeVacationDays($event)" [parent]="this"></app-requests-table>
 <br>
 
 <div class="div-holiday-request">
@@ -47,5 +48,6 @@
   </mat-card>
 </div>
 <footer></footer>
+
 
 
