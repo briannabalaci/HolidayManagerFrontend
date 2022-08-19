@@ -24,7 +24,7 @@ export class UserListComponent implements OnInit,OnChanges {
   constructor(private adminService: AdminService, private router: Router, public dialog: MatDialog, private changeDetectorRefs: ChangeDetectorRef) {
    
   }
-  displayedColumns: string[] = ['email', 'department',"edituser","deleteuser"];
+  displayedColumns: string[] = ['surname','forname','department',"edituser","deleteuser"];
 
   @ViewChild(MatPaginator, { static: true })
   paginator!: MatPaginator;
