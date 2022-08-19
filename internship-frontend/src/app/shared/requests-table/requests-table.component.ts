@@ -210,6 +210,7 @@ export class RequestsTableComponent implements AfterViewInit {
     });
     dialogResponse.afterClosed().subscribe( (response: any) => {
       if (response) {
+        
         this.holidayService.deleteHoliday(element.id).subscribe(data => {
           this.holidays?.forEach( (item: { id: number | undefined; }, index: any) => {
             if(item.id === element.id) this.holidays?.splice(index,1);
