@@ -200,6 +200,11 @@ export class RequestsTableComponent implements AfterViewInit {
     this.parent.holidayUpdatingStartDate = element.startDate;
     this.parent.holidayUpdatingEndDate = element.endDate;
     this.parent.holidayUpdatingSubstitute = element.substitute;
+    if (element.details != null) {
+      this.parent.details = element.details;
+    } else {
+      this.parent.details = '';
+    }
     switch (element.type) {
       case HolidayTypeDto.UNPAID_HOLIDAY:
         this.parent.holidayType = 'unpaid-holiday';

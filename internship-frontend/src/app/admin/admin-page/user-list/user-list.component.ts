@@ -8,7 +8,8 @@ import { UpdateUser, User } from 'src/app/shared/data-type/User';
 import { __param } from 'tslib';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ConfirmationDialogBoxComponent } from 'src/app/confirmation-dialog-box/confirmation-dialog-box.component';
-
+import { FormControl } from '@angular/forms';
+import {MatSort, Sort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-user-list',
@@ -17,18 +18,30 @@ import { ConfirmationDialogBoxComponent } from 'src/app/confirmation-dialog-box/
 })
 export class UserListComponent implements OnInit,OnChanges {
   @Input() someInput?: string;
-
+  @ViewChild(MatSort) sort!: MatSort;
   @Output() updateUserSignal = new EventEmitter<User>();
   users?: User[];
   dataSource = new MatTableDataSource<User>();
   constructor(private adminService: AdminService, private router: Router, public dialog: MatDialog, private changeDetectorRefs: ChangeDetectorRef) {
    
   }
+  fornameFilter = new FormControl('');
+  surnameFilter = new FormControl('');
+
+  filteredValues = {
+    forname: '', surname: ''
+  };
   displayedColumns: string[] = ['surname','forname','department',"edituser","deleteuser"];
 
   @ViewChild(MatPaginator, { static: true })
   paginator!: MatPaginator;
-  
+  createFilter(): (data: User, filter: string) => boolean {
+    return function (data, filter): boolean {
+      let searchUser = JSON.parse(filter);
+      return (data.surname+"").toLowerCase().indexOf(searchUser.surname.toLowerCase()) !== -1
+        && data.forname!.toString().toLowerCase().indexOf(searchUser.forname.toLowerCase()) !== -1
+    };
+  }
   ngOnInit() {
     
     this.adminService.getAllUsers().subscribe(data => {
@@ -36,20 +49,40 @@ export class UserListComponent implements OnInit,OnChanges {
       this.dataSource.data = data;
       this.dataSource.paginator = this.paginator;
     });
+    this.fornameFilter.valueChanges.subscribe(
+      fornameFilterValue => {
+        // @ts-ignore
+        this.filteredValues.forname= fornameFilterValue;
+        this.dataSource.filter = JSON.stringify(this.filteredValues);
+      }
+    );
+
+    this.surnameFilter.valueChanges.subscribe(
+      surnameFilterValue => {
+        // @ts-ignore
+        this.filteredValues.surname = surnameFilterValue;
+        this.dataSource.filter = JSON.stringify(this.filteredValues);
+      }
+    );
 }
-  private ReloadData():void {
-    console.log("RELOAD");
-    this.adminService.getAllUsers().subscribe(data => {
-      console.log("RELOAD USERS");
-      this.dataSource.data = data;
-   
-  })}
+ 
   ngOnChanges() {
 
-    this.ReloadData();
+    this.populateUserList() 
     
   }
-  
+  populateUserList() {
+    this.adminService.getAllUsers().subscribe(data => {
+
+      this.dataSource = new MatTableDataSource<User>(data);
+      this.dataSource.sort = this.sort;
+
+      this.dataSource.filterPredicate = this.createFilter();
+
+      this.dataSource.paginator = this.paginator;
+
+    })
+  }
   getRecord(user:User)
   {
     this.updateUserSignal.emit(user);
@@ -64,7 +97,7 @@ export class UserListComponent implements OnInit,OnChanges {
     });
     dialogRef.afterClosed().subscribe( response => {
       if (response) {
-        this.adminService.deleteUser(user.email || "").subscribe(result => {this.ReloadData();});
+        this.adminService.deleteUser(user.email || "").subscribe(result => {this.populateUserList() });
       
         
       }

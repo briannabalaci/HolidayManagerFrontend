@@ -11,8 +11,6 @@ import { DatePipe } from '@angular/common';
 import {User} from "../data-type/User";
 import { EventEmitter } from 'stream';
 import { stringify } from 'querystring';
-import { ConfirmationDialogBoxComponent } from 'src/app/confirmation-dialog-box/confirmation-dialog-box.component';
-import { MatTableDataSource } from '@angular/material/table';
 
 
 @Component({
@@ -37,6 +35,9 @@ export class CreateRequestComponent implements OnInit {
   @Input() updatingEndDate!: string;
   @Input() updatingSubstitute!: string;
   @Input() deviceValue!: string;
+  @Input() details!: string;
+  @Input()
+    parent: any;
 
   showDateErrorMessage = false;
   showFillErrorMessage = false;
@@ -46,16 +47,12 @@ export class CreateRequestComponent implements OnInit {
   showFieldForEndDate = false;
   showFieldForSubstitute = false;
   showFieldForDocument = false;
-
   fileName = '';
   holidayList: HolidayTypeView[] = [
     {value: 'rest-holiday', viewValue: 'Rest holiday'},
     {value: 'special-holiday', viewValue: 'Special holiday'},
     {value: 'unpaid-holiday', viewValue: 'Unpaid holiday'}
   ];
-  dialogBox: any;
-  holidays: any;
-  dataSource: any;
   constructor(private formBuilder:FormBuilder, private cookieService: CookieService, private holidayService: HolidayService) { }
 
   ngOnInit(): void {
@@ -176,9 +173,10 @@ export class CreateRequestComponent implements OnInit {
             if (!this.updating) {
               this.clearSelect();
             } else {
+              this.details = '';
               this.updating = false;
             }
-          });
+          });         
         }
       });
     } else {
@@ -205,7 +203,7 @@ export class CreateRequestComponent implements OnInit {
             user: {
               id: uID
             }
-          }
+          }         
       }
         this.holidayService.createHoliday(holidayData).subscribe(result => {
           // Call parent's function to refresh table.
@@ -236,9 +234,10 @@ export class CreateRequestComponent implements OnInit {
             if (!this.updating) {
               this.clearSelect();
             } else {
+              this.details = '';
               this.updating = false;
             }
-          });
+          });         
         }
     }
   }
@@ -283,16 +282,6 @@ export class CreateRequestComponent implements OnInit {
   clearSelect() {
     this.matRef.options.forEach((data: MatOption) => data.deselect());
     this.updating = false;
-  }
-
-
-  applyFilters(selected2: any, selected: any) {
-    throw new Error('Method not implemented.');
-  }
-  selected2(selected2: any, selected: any) {
-    throw new Error('Method not implemented.');
-  }
-  selected(selected2: any, selected: any) {
-    throw new Error('Method not implemented.');
+    this.details = '';
   }
 }
