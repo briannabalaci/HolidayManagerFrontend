@@ -16,13 +16,15 @@
         width: 80%;
      }
   }
-  .email-hint {
+  .edit-hint {
     width: 325px;
     font-size: 12px;
     color: white;
     background: v.$red;
-}
-.email-hint-green {
+    margin-bottom: 12px;
+  }
+
+.edit-hint-green {
     width: 325px;
     font-size: 12px;
     color: white;
@@ -46,5 +48,4 @@ div{
  }
  .edit-buttons {
     margin: 4px;
-    margin-bottom: 8px;
  }
