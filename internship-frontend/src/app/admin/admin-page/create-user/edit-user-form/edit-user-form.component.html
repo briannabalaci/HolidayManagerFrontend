@@ -1,56 +1,58 @@
 
-<div id="div-edit-panel">
+<mat-card id="div-create-panel" class="bg-card">
   <br>
-  <mat-card-title>EDIT {{email_d}}</mat-card-title>
+  <mat-card-title>Edit {{email_d}}</mat-card-title>
 <br>
 <form id="edit-form" [formGroup]="createUserForm" (ngSubmit)="updateUser()">
-    <mat-form-field appearance="fill" >
+  <mat-card class="edit-hint" *ngIf="showEditErrorMessage" (click)="resetWarnings()">Update Error!</mat-card>
+  <mat-card class="edit-hint-green" *ngIf="showEditOkMessage" (click)="resetWarnings()">User updated!</mat-card>
+    <mat-form-field appearance="outline" color="accent" >
       <mat-label>First name</mat-label>
-      <input matInput [placeholder]="surname_d" [(ngModel)]="surname_d" formControlName="surName">
+      <input matInput [placeholder]="surname_d" [(ngModel)]="surname_d" formControlName="surName" (click)="resetWarnings()">
     </mat-form-field><br>
-    <mat-form-field appearance="fill" >
+    <mat-form-field appearance="outline" color="accent" >
         <mat-label>Last name</mat-label>
-        <input matInput [placeholder]="forname_d" [(ngModel)]="forname_d" formControlName="forName">
+        <input matInput [placeholder]="forname_d" [(ngModel)]="forname_d" formControlName="forName" (click)="resetWarnings()">
       </mat-form-field><br>
     
-     <!-- -->
+
      
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="outline" color="accent" >
         <mat-label>Holydays nr  .</mat-label>
-        <input matInput type="number" [placeholder]=$any(nrHolidays_d)  [(ngModel)]=nrHolidays_d  formControlName="nrHolidays">
+        <input matInput type="number" [placeholder]=$any(nrHolidays_d)  [(ngModel)]=nrHolidays_d  formControlName="nrHolidays" (click)="resetWarnings()">
       </mat-form-field><br>
-<mat-form-field appearance="fill">
+<mat-form-field appearance="outline" color="accent" >
   <mat-label>Department</mat-label>
-  <mat-select (selectionChange)="changeDepartment($event.value)"  [(value)]="department_d" placeholder="Mode">
+  <mat-select (selectionChange)="changeDepartment($event.value)"  [(value)]="department_d" placeholder="Mode" (click)="resetWarnings()">
     <mat-option *ngFor="let department of departments" [value]="department.value"  >
       {{department.viewValue}}
     </mat-option>
   </mat-select>
 </mat-form-field>
 <br>
-<mat-form-field appearance="fill">
+<mat-form-field appearance="outline" color="accent" >
     <mat-label >Role</mat-label>
-    <mat-select (selectionChange)="changeRole($event.value)" [(value)]="role_d" placeholder="Mode">
+    <mat-select (selectionChange)="changeRole($event.value)" [(value)]="role_d" placeholder="Mode" (click)="resetWarnings()">
       <mat-option *ngFor="let role of roles" [value]="role.value" >
         {{role.viewValue}}
       </mat-option>
     </mat-select>
   </mat-form-field>
 <br>
-    <mat-checkbox formControlName="boolEditPassword"   [(ngModel)]="boolEditPassword">Edit User Password</mat-checkbox>
+    <mat-checkbox formControlName="boolEditPassword"   [(ngModel)]="boolEditPassword" (click)="resetWarnings()">Edit User Password</mat-checkbox>
     <br>
-    <mat-form-field appearance="fill" *ngIf="boolEditPassword">
+    <mat-form-field appearance="outline" color="accent" *ngIf="boolEditPassword">
       <mat-label>Password</mat-label>
-      <input matInput [placeholder]="password_d"  [(ngModel)]="password_d" [type]="hide ? 'password' : 'text'" formControlName="password">
+      <input matInput [placeholder]="password_d"  [(ngModel)]="password_d" [type]="hide ? 'password' : 'text'" formControlName="password" (click)="resetWarnings()">
       <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
     </mat-form-field><br>
-  
-  <br>
-  <button mat-raised-button color="accent" type="submit" id="form-button">Edit User</button>
-  <button mat-raised-button color="accent" (click)="cancelEdit()" >Cancel Edit</button>
+
+  <button mat-raised-button class="edit-buttons" color="accent" (click)="cancelEdit()" >Cancel Edit</button>
+  <button mat-raised-button class="edit-buttons"  color="accent" type="submit" id="form-button">Edit User</button>
 </form>
 
 
-</div>
+</mat-card>
+<footer></footer>

@@ -43,8 +43,9 @@ export class CreateUserComponent implements OnInit,OnChanges {
   }
   updateUser(updUser: UpdateUser): void{
     console.log(updUser);
-    this.adminService.updateUser(updUser).subscribe(result =>console.log(typeof result));
-    
+    this.createSignal.emit()
+   
+
   }
   cancelUpdate() {
     this.displayUpdate = false;

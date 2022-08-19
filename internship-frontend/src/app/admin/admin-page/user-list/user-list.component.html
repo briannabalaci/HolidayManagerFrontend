@@ -1,9 +1,16 @@
-<div class="mat-elevation-z8">
+<div class="centered">
+  <h1>User Management</h1>
+</div>
+<mat-card class="table-card">
     <table mat-table [dataSource]="dataSource">
  
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef> Email </th>
-        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+      <ng-container matColumnDef="surname">
+        <th mat-header-cell *matHeaderCellDef> Surname </th>
+        <td mat-cell *matCellDef="let element"> {{element.surname}} </td>
+      </ng-container>
+      <ng-container matColumnDef="forname">
+        <th mat-header-cell *matHeaderCellDef> Forname </th>
+        <td mat-cell *matCellDef="let element"> {{element.forname}} </td>
       </ng-container>
     
       <ng-container matColumnDef="department">
@@ -12,18 +19,18 @@
       </ng-container>
    
       <ng-container matColumnDef="edituser">
-        <th mat-header-cell *matHeaderCellDef> Edit</th>
-        <td mat-cell *matCellDef="let element"> <button (click)="getRecord(element)"><mat-icon>edit</mat-icon></button> </td>
+        <th mat-header-cell class="edit-cell" *matHeaderCellDef>Edit</th>
+        <td mat-cell class="edit-cell" *matCellDef="let element"> <button mat-button (click)="getRecord(element)"><mat-icon color="blue">edit</mat-icon></button> </td>
       </ng-container>
       <ng-container matColumnDef="deleteuser">
-        <th mat-header-cell *matHeaderCellDef> Delete</th>
-        <td mat-cell *matCellDef="let element"> <button  (click)="getRecordDelete(element)"><mat-icon>delete_forever</mat-icon></button> </td>
+        <th mat-header-cell class="edit-cell" *matHeaderCellDef> Delete</th>
+        <td mat-cell class="delete-cell" *matCellDef="let element"> <button mat-button (click)="getRecordDelete(element)"><mat-icon color="red">delete_forever</mat-icon></button> </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-  </div>
+  </mat-card>
 
 
 

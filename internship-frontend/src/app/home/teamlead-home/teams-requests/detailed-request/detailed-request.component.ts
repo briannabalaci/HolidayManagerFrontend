@@ -1,10 +1,9 @@
-import {Component, Input, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {CookieService} from "ngx-cookie-service";
 import {HolidayService} from "../../../../service/holiday.service";
 import {HolidayDto, HolidayStatusDto, HolidayTypeDto} from "../../../../shared/data-type/HolidayDto";
 import {TeamleadService} from "../../../../service/teamlead.service";
-import {ConfirmationDialogBoxComponent} from "../../../../confirmation-dialog-box/confirmation-dialog-box.component";
 import {MatDialog} from "@angular/material/dialog";
 import { MoreDetailsDialogBoxComponent } from '../more-details-dialog-box/more-details-dialog-box.component';
 
@@ -44,6 +43,8 @@ export class DetailedRequestComponent implements OnInit {
   @Input() decidingStatus: HolidayStatusDto;
 
 
+  statusRequest: HolidayStatusDto;
+
   modifiedRequest: HolidayDto;
 
   documentExists = false;
@@ -54,17 +55,19 @@ export class DetailedRequestComponent implements OnInit {
   showFieldForEndDate = true;
   showFieldForSubstitute = true;
   showFieldForDocument = true;
+
   isErrorMessage = false;
+  isSuccessMessage = false;
+
   successString: string;
   errorString: string;
-  isSuccessMessage = false;
+  isDisabled = false;
 
   ngOnInit(): void {
 
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.resetWarnings();
     this.loadFields()
     this.holidayRequestFormGroup.patchValue({
       startDate: new Date(this.decidingStartDate),
@@ -75,8 +78,10 @@ export class DetailedRequestComponent implements OnInit {
 
     if(this.decidingType == HolidayTypeDto.SPECIAL_HOLIDAY){
       this.holidayRequestFormGroup.controls['substitute'].setValue(this.decidingSubstitute.toString())
-
-      this.holidayRequestFormGroup.controls['document'].setValue(this.decidingDocumentName.toString())
+      if(this.decidingDocumentName == null)
+        this.holidayRequestFormGroup.controls['document'].setValue("No document attached")
+      else
+        this.holidayRequestFormGroup.controls['document'].setValue(this.decidingDocumentName.toString())
     } else if(this.decidingType == HolidayTypeDto.REST_HOLIDAY){
       this.holidayRequestFormGroup.controls['substitute'].setValue(this.decidingSubstitute.toString())
     }
@@ -84,6 +89,10 @@ export class DetailedRequestComponent implements OnInit {
 
 
   loadFields() {
+    if(this.decidingStatus == HolidayStatusDto.DENIED || this.decidingStatus == HolidayStatusDto.APPROVED || this.statusRequest == HolidayStatusDto.APPROVED || this.statusRequest == HolidayStatusDto.DENIED) {
+      this.isDisabled = true;
+    }
+
     switch(this.decidingType){
       case HolidayTypeDto.REST_HOLIDAY: {
         this.showFieldForName = true;
@@ -122,22 +131,61 @@ export class DetailedRequestComponent implements OnInit {
   }
 
   declineRequest(){
-    if(this.decidingStatus == HolidayStatusDto.DENIED){
-      this.isErrorMessage = true;
-      this.isSuccessMessage = false;
-      this.errorString = "Request already declined!";
-      return;
-    }
+    //todo: -> i don't know yet if this part is still necessary
+    // if(this.decidingStatus == HolidayStatusDto.DENIED || this.statusRequest == HolidayStatusDto.DENIED){
+    //   this.isErrorMessage = true;
+    //   this.isSuccessMessage = false;
+    //   this.errorString = "Request already declined!";
+    //   return;
+    // } else {
     this.teamLeadService.declineRequest(this.decidingId).subscribe(result => {
+
       this.modifiedRequest = result
-      this.decidingStatus = this.modifiedRequest.status!
-      if(this.modifiedRequest.status == HolidayStatusDto.DENIED){
+      this.statusRequest = this.modifiedRequest.status!
+      if (this.modifiedRequest.status == HolidayStatusDto.DENIED) {
         this.isSuccessMessage = true;
         this.isErrorMessage = false;
         this.successString = "Request declined successfully!";
+      } else {
+        this.isSuccessMessage = false;
+        this.isErrorMessage = true;
+        this.errorString = "An error occurred while declining the request!";
       }
+      this.parent.refreshData();
     })
-    this.parent.refreshData();
+  }
+
+  approveRequest() {
+    //todo: -> i don't know yet if this part is still necessary
+    // if(this.decidingStatus == HolidayStatusDto.APPROVED || this.statusRequest == HolidayStatusDto.APPROVED){
+    //   this.isErrorMessage = true;
+    //   this.isSuccessMessage = false;
+    //   this.errorString = "Request already approved!";
+    //   return;
+    // } else {
+
+    if(this.decidingDocumentName == null && this.decidingType == HolidayTypeDto.SPECIAL_HOLIDAY){
+      this.isErrorMessage = true;
+      this.isSuccessMessage = false;
+      this.errorString = "Document missing! Request cannot be approved!";
+      return;
+    }
+
+    this.teamLeadService.approveRequest(this.decidingId).subscribe(result => {
+
+      this.modifiedRequest = result
+      this.statusRequest = this.modifiedRequest.status!
+      if (this.modifiedRequest.status == HolidayStatusDto.APPROVED) {
+        this.isSuccessMessage = true;
+        this.isErrorMessage = false;
+        this.successString = "Request approved successfully!";
+      } else {
+        this.isSuccessMessage = false;
+        this.isErrorMessage = true;
+        this.errorString = "An error occurred while approving the request!";
+      }
+      this.parent.refreshData();
+    })
   }
 
   moreDetails(){
@@ -166,4 +214,5 @@ export class DetailedRequestComponent implements OnInit {
     window.open(url);
 
   }
+
 }

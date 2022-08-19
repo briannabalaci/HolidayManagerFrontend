@@ -25,7 +25,7 @@ export class TeamleadRequestsComponent implements OnInit {
   holidayUpdatingSubstitute = '';
   nrHolidays: number = 0;
   user!: User;
-  requestsTypes: string[] = ['All request', 'Rest holiday', 'Special holiday', 'Unpaid holiday']
+  requestsTypes: string[] = ['All requests', 'Rest holiday', 'Special holiday', 'Unpaid holiday']
 
   selectedTypeValue = this.requestsTypes[0].valueOf();
   selectedStatusValue = 'All'
@@ -52,6 +52,11 @@ export class TeamleadRequestsComponent implements OnInit {
     this.requests.selectedTypeChild = value;
     this.requests.selectedStatusChild = this.selectedStatusValue;
     this.requests.filterByTypeAndStatus(this.requests.selectedTypeChild, this.requests.selectedStatusChild)
+  }
+
+  showForm() {
+    this.showFormCreateRequest = !this.showFormCreateRequest;
+    this.holidayUpdating = false;
   }
 
   refreshData() {

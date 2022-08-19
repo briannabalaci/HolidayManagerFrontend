@@ -1,21 +1,22 @@
-div{
-    text-align: center;
-    //padding: 20px;
-}
+@use "../../variables" as v;
+
 h1 {
   padding: 20px;
   text-align:center;
 }
 
-.btn{
-  padding: 0 10px 0 10px;
-  margin: 20px 8px 20px 8px;
-  min-width: 88px;
-  border-radius: 3px;
-  font-size: 20px;
+.div-create-team {
+  background-color: v.$grey-secondary;
+  width: 100%;
+  padding-top: 24px;
+  padding-bottom: 24px;
   text-align: center;
-  border: none;
-  outline: none;
+
+  position: fixed;
+  bottom:0;
+
+  max-width: 100vw; 
+  max-height: calc(100vh - 100px);
+  overflow-y: scroll;
+  z-index: 1;
 }
-
-

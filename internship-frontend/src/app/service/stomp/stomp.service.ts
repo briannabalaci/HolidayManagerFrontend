@@ -21,11 +21,16 @@ export class StompService {
     this.stompClient.connect({},() : any => {
       this.subscribeToTopic(topic, callback);
     })
+
   }
 
   private subscribeToTopic(topic: string, callback: any): void{
     this.stompClient.subscribe(topic, (): any => {
       callback();
     })
+  }
+
+  disconnectWebSocket():void{
+    this.stompClient.disconnect()
   }
 }

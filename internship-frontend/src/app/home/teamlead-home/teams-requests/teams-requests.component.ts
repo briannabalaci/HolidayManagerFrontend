@@ -10,7 +10,6 @@ import {FormControl} from "@angular/forms";
 import {MatPaginator} from "@angular/material/paginator";
 import {UserService} from "../../../service/user.service";
 import {DetailedRequestComponent} from "./detailed-request/detailed-request.component";
-import {MoreDetailsDialogBoxComponent} from "./more-details-dialog-box/more-details-dialog-box.component";
 
 
 const ELEMENT_DATA: HolidayDto[] = []
@@ -128,10 +127,7 @@ export class TeamsRequestsComponent implements OnInit {
   }
 
   fillFields(element: HolidayDto){
-    if(!this.showFormApproveRequest)
-    {
-      this.showFormApproveRequest = true;
-    }
+    this.showFormApproveRequest = !this.showFormApproveRequest;
     this.holidayType = element.type!;
     this.holidayDecidingId = element.id!;
     this.holidayDecidingName = element.user.surname + " " + element.user.forname;
@@ -139,6 +135,7 @@ export class TeamsRequestsComponent implements OnInit {
     this.holidayDecidingStartDate = element.startDate!;
     this.holidayDecidingEndDate = element.endDate!;
     this.holidayDecidingStatus = element.status!;
+
 
     if(element.type == HolidayTypeDto.SPECIAL_HOLIDAY){
       this.holidayDecidingDocumentName = element.document!;
