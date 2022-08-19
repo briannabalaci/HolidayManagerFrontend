@@ -218,7 +218,7 @@ export class RequestsTableComponent implements AfterViewInit {
     }
 
   }
-  deleteHoliday(element: HolidayDto) {
+ async deleteHoliday(element: HolidayDto) {
     const dialogResponse = this.dialogBox.open(ConfirmationDialogBoxComponent,{
       data:"Are you sure you want to delete this holiday request?"
     });
@@ -226,15 +226,19 @@ export class RequestsTableComponent implements AfterViewInit {
       if (response) {
         
         this.holidayService.deleteHoliday(element.id).subscribe(data => {
-          this.holidays?.forEach( (item: { id: number | undefined; }, index: any) => {
-            if(item.id === element.id) this.holidays?.splice(index,1);
-          });
-        });
-        this.userService.getUser().subscribe(data => {
-          this.deletedApprovedEvent.emit(data.nrHolidays);
-          console.log("In copil: " + data.nrHolidays)
-         // this.user = data;
-        })
+          console.log("Tara2")
+          // this.holidays?.forEach( (item: { id: number | undefined; }, index: any) => {
+          //   if (item.id === element.id) this.holidays?.splice(index, 1);
+            console.log("Tara")
+            this.userService.getUser().subscribe(data => {
+              console.log("In copil: " + data.nrHolidays)
+              this.deletedApprovedEvent.emit(data.nrHolidays);
+              
+            });
+            })
+        
+        
+    
         this.refreshData();
         
       }
