@@ -171,7 +171,7 @@ export class CreateTeamComponent implements OnInit,OnChanges {
       if(element.id===user.id) {
         this.addedMembers.splice(index, 1);
         this.clickDeleteUserFromTeam.emit(user)
-
+        this.filterUsers()
         if(this.addedMembers.length == 0 || (this.teamLeader!=null && this.teamLeader.id == user.id)) {
           this.teamLeader = new User()
         }
