@@ -14,7 +14,11 @@
 .upload-btn {
     margin-left: 8px;
 }
-
+.more-information {
+  border-radius: 12px;
+  background-color: v.$grey;
+  color: black;
+}
 .password-hint {
     width: 325px;
     font-size: 12px;
@@ -27,6 +31,11 @@
     color: white;
     background: v.$green;
     margin-bottom: 12px;
+}
+.p-more-information {
+  background-color: v.$blue;
+  color: v.$white;
+  border-radius: 12px;
 }
 @media screen and ( max-width: 500px ) {
     .password-hint, .password-hint-green {
