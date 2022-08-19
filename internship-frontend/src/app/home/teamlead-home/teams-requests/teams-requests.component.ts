@@ -127,25 +127,6 @@ export class TeamsRequestsComponent implements OnInit {
 
       this.dataSource.paginator = this.paginator;
 
-      for(let i = 0; i < this.dataSource.data.length; i++){
-        if(this.dataSource.data[i].status == HolidayStatusDto.DENIED){
-          // @ts-ignore
-          document.getElementById("approved-icon").hidden = false;
-          // @ts-ignore
-          document.getElementById("declined-icon").hidden = true;
-        } else if (this.dataSource.data[i].status == HolidayStatusDto.APPROVED){
-          // @ts-ignore
-          document.getElementById("approved-icon").hidden = true;
-          // @ts-ignore
-          document.getElementById("declined-icon").hidden = false;
-        } else {
-          // @ts-ignore
-          document.getElementById("approved-icon").hidden = false;
-          // @ts-ignore
-          document.getElementById("declined-icon").hidden = false;
-        }
-      }
-
     })
   }
 
