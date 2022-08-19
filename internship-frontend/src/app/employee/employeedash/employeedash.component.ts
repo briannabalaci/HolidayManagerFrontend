@@ -41,7 +41,7 @@ export class EmployeedashComponent implements OnInit,OnChanges {
   dataSource = new MatTableDataSource(HOLIDAY_DATA);
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private holidayService:HolidayService, private cookieService: CookieService, private userService: UserService) {}
-  vacationDays: number = 0;
+  vacationDays: number ;
   user!: User;
 
 
