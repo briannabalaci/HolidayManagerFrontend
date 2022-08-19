@@ -46,7 +46,7 @@ body { margin: 0; background-color: v.$grey; font-family: Roboto, "Helvetica Neu
 }
 .mat-card {
   box-shadow: none !important;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 .vacation-days-field {
   padding: 8px;
