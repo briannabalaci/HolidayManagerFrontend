@@ -232,7 +232,7 @@ export class RequestsTableComponent implements AfterViewInit {
         });
         this.userService.getUser().subscribe(data => {
           this.deletedApprovedEvent.emit(data.nrHolidays);
-          console.log(data.nrHolidays)
+          console.log("In copil: " + data.nrHolidays)
          // this.user = data;
         })
         this.refreshData();
