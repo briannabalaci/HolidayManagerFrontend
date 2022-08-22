@@ -16,6 +16,9 @@
         width: 80%;
      }
   }
+  .div-create-panel {
+    text-align: center;
+  }
   .edit-hint {
     width: 325px;
     font-size: 12px;
@@ -34,9 +37,6 @@
   .mat-raised-button{
     color: white !important;
   }
-footer {
-    height: 24px;
-}
 div{
   text-align: center;
   display: block;
@@ -45,7 +45,19 @@ div{
     .bg-card {
        width: 80% !important;
    }
+   .edit-hint-green{
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+   }
+   .edit-hint{
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+   }
  }
  .edit-buttons {
-    margin: 4px;
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-bottom: 18px;
  }

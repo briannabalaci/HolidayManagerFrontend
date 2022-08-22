@@ -1,4 +1,4 @@
-import { Component,EventEmitter, OnInit,Output, } from '@angular/core';
+import { Component,EventEmitter, Input, OnInit,Output, } from '@angular/core';
 import { FormBuilder,Validators } from '@angular/forms';
 import { catchError, map } from 'rxjs';
 import { AdminService } from 'src/app/service/admin.service';
@@ -25,7 +25,8 @@ interface UserTypeInt {
 })
 
 export class CreateUserFormComponent implements OnInit {
-  @Output() clickCreate =new EventEmitter<User>();
+  @Output() clickCreate = new EventEmitter<User>();
+  @Input() parent: any;
   hide = true;
   hide_confirm = true;
   type_d = "";
@@ -109,7 +110,10 @@ changeType(value: string) {
       let resp = JSON.stringify(results);
       console.log(resp);
       if (resp == '"User created succesfully!"') { this.showEmailOkMessage = true; console.log("aici"); }
-      if(resp=='"The user already exists!"'){ this.showEmailErrorMessage = true; }  });
+      if (resp == '"The user already exists!"') { this.showEmailErrorMessage = true; }
+      this.clickCreate.emit()
+    });
+    
   }
 
      

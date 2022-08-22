@@ -20,6 +20,7 @@ export class UserListComponent implements OnInit,OnChanges {
   @Input() someInput?: string;
   @ViewChild(MatSort) sort!: MatSort;
   @Output() updateUserSignal = new EventEmitter<User>();
+  @Input() parent: any;
   users?: User[];
   dataSource = new MatTableDataSource<User>();
   constructor(private adminService: AdminService, private router: Router, public dialog: MatDialog, private changeDetectorRefs: ChangeDetectorRef) {
@@ -102,11 +103,6 @@ export class UserListComponent implements OnInit,OnChanges {
         
       }
     })
-
-
-
-
-
     };
   }
 

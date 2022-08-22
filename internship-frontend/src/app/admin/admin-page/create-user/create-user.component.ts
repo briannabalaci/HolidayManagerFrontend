@@ -14,7 +14,8 @@ import { EventEmitter } from '@angular/core';
 export class CreateUserComponent implements OnInit,OnChanges {
   @Output()
   public createSignal = new EventEmitter<void>();
-  @Input() editUserDto!: User;
+  @Input() editUserDto!: any;
+  @Input() parent: any;
   
   displayUpdate=false;
 
@@ -30,15 +31,16 @@ export class CreateUserComponent implements OnInit,OnChanges {
     else {this.displayUpdate = true; }
   }
   ngOnChanges() {
+    console.log("ngOnChanges");
     if (this.editUserDto == null) {
       this.displayUpdate = false;
 
     }
     else {this.displayUpdate = true; }
       } 
-  createUser(newUser: User): void{
+  createUser(): void{
     
-    console.log(newUser);
+
     this.createSignal.emit();
   }
   updateUser(updUser: UpdateUser): void{
@@ -48,6 +50,10 @@ export class CreateUserComponent implements OnInit,OnChanges {
 
   }
   cancelUpdate() {
+    console.log("create-user cancelUpdate");
+    this.editUserDto = null;
+    this.parent.showUserForm = false;
     this.displayUpdate = false;
+    this.createSignal.emit();
   }
 }

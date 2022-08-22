@@ -3,6 +3,7 @@ import { Validators, FormBuilder } from '@angular/forms';
 import { AdminService } from 'src/app/service/admin.service';
 import { Team } from 'src/app/shared/data-type/Team';
 import { Department, Role, UpdateUser, User, UserType } from 'src/app/shared/data-type/User';
+import { AdminPageComponent } from '../../admin-page.component';
 
 interface DepartmentInt {
   value: string;
@@ -27,6 +28,8 @@ interface RoleInt {
 export class EditUserFormComponent implements OnInit , OnChanges{
   @Output() clickUpdate = new EventEmitter<UpdateUser>();
   @Output() cancelUpdate = new EventEmitter<void>();
+  @Input() parent: any;
+
   @Input()
   userDto!: User;
   boolEditPassword= false;
@@ -114,7 +117,7 @@ export class EditUserFormComponent implements OnInit , OnChanges{
     this.adminService.updateUser(updUser).subscribe(result => {
 
       this.clickUpdate.emit(updUser);
-     
+      this.cancelUpdate.emit();
     
     });
     this.showEditErrorMessage = false;
@@ -149,6 +152,7 @@ export class EditUserFormComponent implements OnInit , OnChanges{
       
       this.updtUser(updUser);
       
+      
     }
     else {
       this.showEditErrorMessage = true;
@@ -160,5 +164,4 @@ export class EditUserFormComponent implements OnInit , OnChanges{
     this.showEditErrorMessage = false;
     this.showEditOkMessage=false
   }
-  cancelEdit() {this.cancelUpdate.emit(); };
 }
