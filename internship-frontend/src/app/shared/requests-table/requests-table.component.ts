@@ -25,7 +25,7 @@ const ELEMENT_DATA: HolidayDto[] = []
 
 export class RequestsTableComponent implements AfterViewInit {
 
-  displayedColumns: string[] = ['startDate', 'endDate', 'type', 'edit', 'delete']
+  displayedColumns: string[] = ['startDate', 'endDate', 'type', 'edit', 'status', 'delete']
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   @Input() selectedTypeChild: any;
