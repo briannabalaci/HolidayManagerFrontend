@@ -144,8 +144,8 @@ export class CreateRequestComponent implements OnInit {
     this.userService.getUser().subscribe(result => {
       this.userNoHolidays = result.nrHolidays!
       this.holidayService.getNoHolidays(startDate, endDate).subscribe(result => {
-        this.numberDaysRequired = result
-        this.unpaidDaysRequired = Math.floor(this.numberDaysRequired/10)
+        this.numberDaysRequired = result;
+        this.unpaidDaysRequired = Math.floor(this.numberDaysRequired / 10);
         
         console.log(this.unpaidDaysRequired + " " + this.numberDaysRequired + " " +this.userNoHolidays)
         if (this.numberDaysRequired > this.userNoHolidays && this.deviceValue == 'rest-holiday') {
@@ -153,7 +153,7 @@ export class CreateRequestComponent implements OnInit {
           this.showSuccess = false;
           this.showMessage();
         } else if(this.unpaidDaysRequired > this.userNoHolidays && this.deviceValue == 'unpaid-holiday'){
-          console.log(this.deviceValue)
+          console.log(this.deviceValue);
           this.showError = true;
           this.showSuccess = false;
           this.showMessage();
@@ -230,11 +230,15 @@ export class CreateRequestComponent implements OnInit {
           console.log("currently updating");
           this.holidayService.updateHoliday(holidayData).subscribe(result => {
             // Call parent's function to refresh table.
+            
             this.refreshData();
+            this.showMessage();
             console.log(result);
             this.details = '';
+            this.updating = false;
             this.clearSelect();
             this.showSuccess = true;
+            this.showError = false;
             this.showMessage();
           });
         }
@@ -290,12 +294,15 @@ export class CreateRequestComponent implements OnInit {
           }
         }
         this.holidayService.updateHoliday(holidayData).subscribe(result => {
-          // Call parent's function to refresh table.
+          
           this.refreshData();
+          this.showMessage();
           console.log(result);
           this.details = '';
+          this.updating = false;
           this.clearSelect();
           this.showSuccess = true;
+          this.showError = false;
           this.showMessage();
         });
       }
@@ -336,7 +343,7 @@ export class CreateRequestComponent implements OnInit {
       this.showFieldForEndDate = false;
       this.showFieldForSubstitute = false;
       this.showFieldForDocument = false;
-    } else if (this.showError) {
+    } else {
       this.showNumberHolidaysErrorMessage = true;
       this.showFieldForStartDate = false;
       this.showFieldForEndDate = false;
