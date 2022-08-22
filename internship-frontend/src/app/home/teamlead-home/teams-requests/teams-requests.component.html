@@ -7,8 +7,14 @@
     <mat-form-field class="filter" (keydown.space)="$event.stopPropagation()" appearance="outline" color="accent">
       <input matInput class="form-field" [formControl]="nameFilter" placeholder="Fiter by name">
     </mat-form-field>
-    <mat-form-field (keydown.space)="$event.stopPropagation()" appearance="outline" color="accent">
-      <input matInput class="form-field" [formControl]="typeFilter" placeholder="Filter by type">
+    <mat-form-field class="filter" appearance="outline" color="accent" >
+      <mat-select  [formControl]="typeFilter2" placeholder="Fiter by type">
+    
+        <mat-option *ngFor="let request of requestsTypes" [value]="request.value">
+          {{request.viewValue}}
+          
+        </mat-option>
+      </mat-select>
     </mat-form-field>
     <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
 

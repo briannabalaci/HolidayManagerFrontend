@@ -110,7 +110,10 @@ changeType(value: string) {
       let resp = JSON.stringify(results);
       console.log(resp);
       if (resp == '"User created succesfully!"') { this.showEmailOkMessage = true; console.log("aici"); }
-      if(resp=='"The user already exists!"'){ this.showEmailErrorMessage = true; }  });
+      if (resp == '"The user already exists!"') { this.showEmailErrorMessage = true; }
+      this.clickCreate.emit()
+    });
+    
   }
 
      

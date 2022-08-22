@@ -1,5 +1,5 @@
 <section>
-    <app-create-user-form [parent]="this" (clickCreate)="createUser($event)" *ngIf="!displayUpdate"></app-create-user-form>
+    <app-create-user-form [parent]="this" (clickCreate)="createUser()" *ngIf="!displayUpdate"></app-create-user-form>
 </section>
 <section>
       <app-edit-user-form [parent]="this" [userDto] ="editUserDto"  (clickUpdate)="updateUser($event)" (cancelUpdate)="cancelUpdate()"  *ngIf="displayUpdate"></app-edit-user-form>

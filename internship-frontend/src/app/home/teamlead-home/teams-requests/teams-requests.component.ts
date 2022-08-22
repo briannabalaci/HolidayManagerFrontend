@@ -10,6 +10,7 @@ import {FormControl} from "@angular/forms";
 import {MatPaginator} from "@angular/material/paginator";
 import {UserService} from "../../../service/user.service";
 import {DetailedRequestComponent} from "./detailed-request/detailed-request.component";
+import { HolidayTypeView } from 'src/app/shared/data-type/Holiday';
 
 
 const ELEMENT_DATA: HolidayDto[] = []
@@ -48,10 +49,12 @@ export class TeamsRequestsComponent implements OnInit {
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   user!: User;
   team!: Team;
+  requestsTypes: HolidayTypeView[] = [{ value: '', viewValue: 'All types of requests' }, { value: 'rest', viewValue: 'Rest holiday requests' },
+    { value: 'special', viewValue: 'Special holiday requests' },{value:'unpaid', viewValue:'Unpaid holiday requests'}]
 
   showFormApproveRequest = false;
 
-  typeFilter = new FormControl('');
+  typeFilter2 = new FormControl('');
   nameFilter = new FormControl('');
 
   filteredValues = {
@@ -83,19 +86,7 @@ export class TeamsRequestsComponent implements OnInit {
         && data.type!.toString().toLowerCase().indexOf(searchTerms.type) !== -1
     };
   }
-
-  ngOnInit() {
-
-    this.getTeamLeaderData();
-
-    this.typeFilter.valueChanges.subscribe(
-      typeFilterValue => {
-        // @ts-ignore
-        this.filteredValues.type = typeFilterValue;
-        this.dataSource.filter = JSON.stringify(this.filteredValues);
-      }
-    );
-
+  filterByNameAndType(){
     this.nameFilter.valueChanges.subscribe(
       nameFilterValue => {
         // @ts-ignore
@@ -103,6 +94,20 @@ export class TeamsRequestsComponent implements OnInit {
         this.dataSource.filter = JSON.stringify(this.filteredValues);
       }
     );
+    this.typeFilter2.valueChanges.subscribe(
+      typeFilter2Value => {
+        // @ts-ignore
+        this.filteredValues.type = typeFilter2Value;
+        this.dataSource.filter = JSON.stringify(this.filteredValues);
+      }
+    );
+  }
+
+  ngOnInit() {
+
+    this.getTeamLeaderData();
+
+    this.filterByNameAndType()
 
   }
 
