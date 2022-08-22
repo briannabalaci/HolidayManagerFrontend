@@ -52,7 +52,7 @@ export class EmployeedashComponent implements OnInit,OnChanges {
 
   @Input() newNotification = "";
 
-  sendNewNotificationSignal(message:string){
+  newNotificationSignalReceived(message:string){
     console.log("In parinteee")
     this.userService.getUser().subscribe(data => {
 
@@ -60,6 +60,7 @@ export class EmployeedashComponent implements OnInit,OnChanges {
       this.vacationDays = +data.nrHolidays!;
 
     })
+    this.refreshData()
   }
   ngOnChanges(changes: SimpleChanges): void {
     // console.log("In copil afara de oif")

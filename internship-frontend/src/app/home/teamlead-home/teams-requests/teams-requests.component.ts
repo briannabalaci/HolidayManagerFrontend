@@ -1,11 +1,11 @@
-import {Component, Input, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {TeamleadService} from "../../../service/teamlead.service";
 import {HolidayDto, HolidayStatusDto, HolidayTypeDto} from "../../../shared/data-type/HolidayDto";
 import {User} from "../../../shared/data-type/User";
 import {Team} from "../../../shared/data-type/Team";
 import {LiveAnnouncer} from '@angular/cdk/a11y';
 import {MatSort, Sort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
+import {MatTable, MatTableDataSource} from '@angular/material/table';
 import {FormControl} from "@angular/forms";
 import {MatPaginator} from "@angular/material/paginator";
 import {UserService} from "../../../service/user.service";
@@ -20,7 +20,7 @@ const ELEMENT_DATA: HolidayDto[] = []
   templateUrl: './teams-requests.component.html',
   styleUrls: ['./teams-requests.component.scss']
 })
-export class TeamsRequestsComponent implements OnInit {
+export class TeamsRequestsComponent implements OnInit,OnChanges {
 
 
   endDate = 'Angular';
@@ -49,8 +49,8 @@ export class TeamsRequestsComponent implements OnInit {
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   user!: User;
   team!: Team;
-  requestsTypes: HolidayTypeView[] = [{ value: '', viewValue: 'All types of requests' }, { value: 'rest', viewValue: 'Rest holiday requests' },
-    { value: 'special', viewValue: 'Special holiday requests' },{value:'unpaid', viewValue:'Unpaid holiday requests'}]
+  requestsTypes: HolidayTypeView[] = [{ value: '', viewValue: 'All requests' }, { value: 'rest', viewValue: 'Rest holiday' },
+    { value: 'special', viewValue: 'Special holiday' },{value:'unpaid', viewValue:'Unpaid holiday'}]
 
   showFormApproveRequest = false;
 
@@ -64,10 +64,25 @@ export class TeamsRequestsComponent implements OnInit {
 
   @ViewChild(DetailedRequestComponent) detailsRequest: DetailedRequestComponent;
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatTable) table: MatTable<Request>
   @ViewChild('paginator') paginator!: MatPaginator;
+
+  @Input() newNotification:{ message: string }
 
   constructor(private userService: UserService, private teamLeadService: TeamleadService, private _liveAnnouncer: LiveAnnouncer) {
 
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log("Filter values: ")
+    console.log(this.filteredValues)
+
+    if (this.newNotification != null)
+      if (this.newNotification["message"] != "") {
+        this.refreshData()
+        // this.filterByNameAndType()
+        // this.table.renderRows()
+      }
   }
 
   refreshData(){
@@ -86,6 +101,7 @@ export class TeamsRequestsComponent implements OnInit {
         && data.type!.toString().toLowerCase().indexOf(searchTerms.type) !== -1
     };
   }
+
   filterByNameAndType(){
     this.nameFilter.valueChanges.subscribe(
       nameFilterValue => {
@@ -103,14 +119,13 @@ export class TeamsRequestsComponent implements OnInit {
     );
   }
 
+
   ngOnInit() {
 
     this.getTeamLeaderData();
-
     this.filterByNameAndType()
 
   }
-
 
   getTeamLeaderData() {
     this.userService.getUser().subscribe(data => {
@@ -164,5 +179,7 @@ export class TeamsRequestsComponent implements OnInit {
   closeForm(){
     this.showFormApproveRequest = !this.showFormApproveRequest
   }
+
+
 
 }

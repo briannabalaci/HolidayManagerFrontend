@@ -1,7 +1,7 @@
 
-<app-nav-bar ></app-nav-bar>
+<app-nav-bar (newNotification)="newNotificationSignalReceived($event)"></app-nav-bar>
 <app-teamlead-requests></app-teamlead-requests>
 
-<app-teams-requests></app-teams-requests>
+<app-teams-requests [newNotification]="this.newNotification" ></app-teams-requests>
 
 <footer></footer>

@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TeamleadHomeComponent implements OnInit {
 
+  newNotification:{ message: string }
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  newNotificationSignalReceived(message:string) {
+    const mess = {"message": "Update the tables! "}
+    this.newNotification = Object.assign({}, mess)
+  }
 }

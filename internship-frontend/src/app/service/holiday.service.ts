@@ -5,20 +5,21 @@ import { Holiday } from '../shared/data-type/Holiday';
 import { User } from '../shared/data-type/User';
 import {HolidayDto, HolidayStatusDto, HolidayTypeDto} from "../shared/data-type/HolidayDto";
 
-const GET_USERS_HOLIDAYS = "http://localhost:8090/holiday/get-users-holidays"
-const CREATE_HOLIDAY = "http://localhost:8090/holiday/add-holiday"
+const URL_BASE = "http://localhost:8090/holiday"
+const GET_USERS_HOLIDAYS = URL_BASE + "/get-users-holidays"
+const CREATE_HOLIDAY = URL_BASE + "/add-holiday"
 
-const DELETE_HOLIDAY = "http://localhost:8090/holiday/delete-holiday"
-
-
-const UPDATE_HOLIDAY = "http://localhost:8090/holiday/update-holiday"
-const URL = "http://localhost:8090/holiday";
-const GET_REQUESTS_FILTERED = `${URL}/requests-filtered-by`;
-
-const GET_NO_HOLIDAYS_REQUIRED = "http://localhost:8090/holiday/number-of-holidays"
+const DELETE_HOLIDAY = URL_BASE + "/delete-holiday"
 
 
-@Injectable({
+const UPDATE_HOLIDAY = URL_BASE + "/update-holiday"
+const GET_REQUESTS_FILTERED = `${URL_BASE}/requests-filtered-by`;
+
+const GET_NO_HOLIDAYS_REQUIRED = URL_BASE + "/number-of-holidays"
+const REQUEST_DETAILS = URL_BASE +"/details"
+
+
+  @Injectable({
   providedIn: 'root'
 })
 export class HolidayService {

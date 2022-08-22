@@ -146,7 +146,7 @@ export class CreateRequestComponent implements OnInit {
       this.holidayService.getNoHolidays(startDate, endDate).subscribe(result => {
         this.numberDaysRequired = result
         this.unpaidDaysRequired = Math.floor(this.numberDaysRequired/10)
-        
+
         console.log(this.unpaidDaysRequired + " " + this.numberDaysRequired + " " +this.userNoHolidays)
         if (this.numberDaysRequired > this.userNoHolidays && this.deviceValue == 'rest-holiday') {
           this.showError = true;
@@ -238,6 +238,8 @@ export class CreateRequestComponent implements OnInit {
               this.details = '';
               this.updating = false;
             }
+            this.newRequest.emit("New request created!")
+
           });
         }
       });
@@ -291,18 +293,20 @@ export class CreateRequestComponent implements OnInit {
             endDate: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!
           }
         }
-        this.holidayService.updateHoliday(holidayData).subscribe(result => {
-          // Call parent's function to refresh table.
-          this.refreshData();
-          console.log(result);
-          if (!this.updating) {
-            this.clearSelect();
-          } else {
-            this.details = '';
-            this.updating = false;
-          }
-        });
-      }
+          this.holidayService.updateHoliday(holidayData).subscribe(result => {
+            // Call parent's function to refresh table.
+            this.refreshData();
+            console.log(result);
+            if (!this.updating) {
+              this.clearSelect();
+            } else {
+              this.details = '';
+              this.updating = false;
+            }
+            this.newRequest.emit("New request created!")
+
+          });
+        }
     }
   }
 
