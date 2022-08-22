@@ -30,7 +30,7 @@ export class NavBarComponent implements OnInit {
       this.notificationService.getAllUnseenNotifications(this.id).subscribe(data => {
         this.notificationNum = data.length;
       })
-      console.log("Se emite")
+      console.log("Se emite notificare")
       this.newNoification.emit("Something changed! ")
     })
 

@@ -50,7 +50,7 @@ export class EmployeedashComponent implements OnInit,OnChanges {
 
   @Input() newNotification = "";
 
-  sendNewNotificationSignal(message:string){
+  newNotificationSignalReceived(message:string){
     console.log("In parinteee")
     this.userService.getUser().subscribe(data => {
 
@@ -139,7 +139,6 @@ export class EmployeedashComponent implements OnInit,OnChanges {
   get refreshDataFunc() {
     return this.refreshData.bind(this);
   }
-
 }
 
 

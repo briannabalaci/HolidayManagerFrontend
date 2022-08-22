@@ -1,11 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {TeamleadService} from "../../../service/teamlead.service";
 import {HolidayDto, HolidayStatusDto, HolidayTypeDto} from "../../../shared/data-type/HolidayDto";
 import {User} from "../../../shared/data-type/User";
 import {Team} from "../../../shared/data-type/Team";
 import {LiveAnnouncer} from '@angular/cdk/a11y';
 import {MatSort, Sort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
+import {MatTable, MatTableDataSource} from '@angular/material/table';
 import {FormControl} from "@angular/forms";
 import {MatPaginator} from "@angular/material/paginator";
 import {UserService} from "../../../service/user.service";
@@ -19,7 +19,7 @@ const ELEMENT_DATA: HolidayDto[] = []
   templateUrl: './teams-requests.component.html',
   styleUrls: ['./teams-requests.component.scss']
 })
-export class TeamsRequestsComponent implements OnInit {
+export class TeamsRequestsComponent implements OnInit,OnChanges {
 
 
   endDate = 'Angular';
@@ -63,9 +63,22 @@ export class TeamsRequestsComponent implements OnInit {
 
   @ViewChild(DetailedRequestComponent) detailsRequest: DetailedRequestComponent;
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatTable) table: MatTable<Request>
   @ViewChild('paginator') paginator!: MatPaginator;
 
+  @Input() newNotification:{ message: string }
+
   constructor(private userService: UserService, private teamLeadService: TeamleadService, private _liveAnnouncer: LiveAnnouncer) {
+
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log("Filter values: ")
+    console.log(this.filteredValues)
+
+    this.getTeamLeaderData()
+    this.filterByNameAndType()
+    this.table.renderRows()
 
   }
 
@@ -86,10 +99,9 @@ export class TeamsRequestsComponent implements OnInit {
     };
   }
 
-  ngOnInit() {
-
-    this.getTeamLeaderData();
-
+  filterByNameAndType(){
+    console.log("in filter")
+    console.log(this.filteredValues)
     this.typeFilter.valueChanges.subscribe(
       typeFilterValue => {
         // @ts-ignore
@@ -105,9 +117,13 @@ export class TeamsRequestsComponent implements OnInit {
         this.dataSource.filter = JSON.stringify(this.filteredValues);
       }
     );
+  }
+  ngOnInit() {
+
+    this.getTeamLeaderData();
+    this.filterByNameAndType()
 
   }
-
 
   getTeamLeaderData() {
     this.userService.getUser().subscribe(data => {
@@ -161,5 +177,7 @@ export class TeamsRequestsComponent implements OnInit {
   closeForm(){
     this.showFormApproveRequest = !this.showFormApproveRequest
   }
+
+
 
 }

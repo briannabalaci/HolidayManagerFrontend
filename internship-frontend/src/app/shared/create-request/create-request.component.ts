@@ -177,6 +177,8 @@ export class CreateRequestComponent implements OnInit {
               this.details = '';
               this.updating = false;
             }
+            this.newRequest.emit("New request created!")
+
           });
         }
       });
@@ -239,6 +241,8 @@ export class CreateRequestComponent implements OnInit {
               this.details = '';
               this.updating = false;
             }
+            this.newRequest.emit("New request created!")
+
           });
         }
     }
