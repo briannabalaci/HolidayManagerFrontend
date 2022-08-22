@@ -78,9 +78,9 @@ export class TeamsRequestsComponent implements OnInit,OnChanges {
 
     if (this.newNotification != null)
       if (this.newNotification["message"] != "") {
-        this.getTeamLeaderData()
-        this.filterByNameAndType()
-        this.table.renderRows()
+        this.refreshData()
+        // this.filterByNameAndType()
+        // this.table.renderRows()
       }
   }
 
