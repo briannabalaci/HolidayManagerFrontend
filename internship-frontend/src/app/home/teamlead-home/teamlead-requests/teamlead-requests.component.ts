@@ -23,7 +23,7 @@ export class TeamleadRequestsComponent implements OnInit,OnChanges {
   holidayUpdatingStartDate = '';
   holidayUpdatingEndDate = '';
   holidayUpdatingSubstitute = '';
-  nrHolidays: number = 0;
+  nrHolidays: number;
   user!: User;
   details = '';
   requestsTypes: string[] = ['All requests', 'Rest holiday', 'Special holiday', 'Unpaid holiday']
@@ -43,6 +43,9 @@ export class TeamleadRequestsComponent implements OnInit,OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
   }
 
+  newRequestAddedHandler(message:string){
+    this.getAndSetTeamLeadData()
+  }
 
 
   getAndSetTeamLeadData(){

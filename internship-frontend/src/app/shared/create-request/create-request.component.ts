@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, Output, SimpleChanges, ViewChild,EventEmitter } from '@angular/core';
 import { FormBuilder, NgForm, Validators } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
 import { MatInput } from '@angular/material/input';
@@ -9,7 +9,6 @@ import { parseJwt } from 'src/app/utils/JWTParser';
 import {HolidayTypeView, RequestType, HolidayStatus, Holiday, HolidayForUpdate} from '../data-type/Holiday';
 import { DatePipe } from '@angular/common';
 import {User} from "../data-type/User";
-import { EventEmitter } from 'stream';
 import { stringify } from 'querystring';
 
 
@@ -38,6 +37,7 @@ export class CreateRequestComponent implements OnInit {
   @Input() details!: string;
   @Input()
     parent: any;
+  @Output() newRequest = new EventEmitter<string>()
 
   showDateErrorMessage = false;
   showFillErrorMessage = false;
@@ -153,6 +153,7 @@ export class CreateRequestComponent implements OnInit {
           console.log("currently inserting");
           this.holidayService.createHoliday(holidayData).subscribe(result => {
             // Call parent's function to refresh table.
+            this.newRequest.emit("New request created!")
             this.refreshData();
             console.log(result);
           });
@@ -176,7 +177,7 @@ export class CreateRequestComponent implements OnInit {
               this.details = '';
               this.updating = false;
             }
-          });         
+          });
         }
       });
     } else {
@@ -203,10 +204,11 @@ export class CreateRequestComponent implements OnInit {
             user: {
               id: uID
             }
-          }         
+          }
       }
         this.holidayService.createHoliday(holidayData).subscribe(result => {
           // Call parent's function to refresh table.
+          this.newRequest.emit("New request created!")
           this.refreshData();
           console.log(result);
         });
@@ -237,7 +239,7 @@ export class CreateRequestComponent implements OnInit {
               this.details = '';
               this.updating = false;
             }
-          });         
+          });
         }
     }
   }
