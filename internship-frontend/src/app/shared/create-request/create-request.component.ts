@@ -232,14 +232,10 @@ export class CreateRequestComponent implements OnInit {
             // Call parent's function to refresh table.
             this.refreshData();
             console.log(result);
-            if (!this.updating) {
-              this.clearSelect();
-              this.showSuccess = true;
-              this.showMessage();
-            } else {
-              this.details = '';
-              this.updating = false;
-            }
+            this.details = '';
+            this.clearSelect();
+            this.showSuccess = true;
+            this.showMessage();
           });
         }
       });
@@ -297,14 +293,10 @@ export class CreateRequestComponent implements OnInit {
           // Call parent's function to refresh table.
           this.refreshData();
           console.log(result);
-          if (!this.updating) {
-            this.clearSelect();
-            this.showSuccess = true;
-            this.showMessage();
-          } else {
-            this.details = '';
-            this.updating = false;
-          }
+          this.details = '';
+          this.clearSelect();
+          this.showSuccess = true;
+          this.showMessage();
         });
       }
     }
