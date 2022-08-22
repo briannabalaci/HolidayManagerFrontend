@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {TeamleadService} from "../../../service/teamlead.service";
 import {HolidayDto, HolidayStatusDto, HolidayTypeDto} from "../../../shared/data-type/HolidayDto";
 import {User} from "../../../shared/data-type/User";
@@ -36,9 +36,6 @@ export class TeamsRequestsComponent implements OnInit {
   holidayDecidingSubstitute = '';
   holidayDecidingStatus = HolidayStatusDto.PENDING;
 
-  isApproved = "APPROVED";
-  isDeclined = "DECLINED";
-
 
   isRequestDeclined(elem: HolidayDto): boolean{
     return elem.status == HolidayStatusDto.DENIED;
@@ -63,6 +60,7 @@ export class TeamsRequestsComponent implements OnInit {
   filteredValues = {
     name: '', type: ''
   };
+
 
   @ViewChild(DetailedRequestComponent) detailsRequest: DetailedRequestComponent;
   @ViewChild(MatSort) sort!: MatSort;

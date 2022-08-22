@@ -1,9 +1,10 @@
 
-<mat-card id="div-create-panel" class="bg-card">
-  <h2>Add New User</h2>
+<div class="centered">
+<h2>Create new user</h2>
+</div>
 <form id="create-form" [formGroup]="createUserForm" (ngSubmit)="createUser()">
   <mat-card class="email-hint" *ngIf="showEmailErrorMessage" (click)="resetWarnings()">The email or the password is incorrect.</mat-card>
-  <mat-card class="email-hint-green" *ngIf="showEmailOkMessage" (click)="resetWarnings()">User Created</mat-card>
+  <mat-card class="email-hint-green" *ngIf="showEmailOkMessage" (click)="resetWarnings()">User created successfully.</mat-card>
     <mat-form-field appearance="outline" color="accent">
       <input matInput placeholder="First name" formControlName="surName" (click)="resetWarnings()">
     </mat-form-field><br>
@@ -44,6 +45,6 @@
       <br>
 
 </form>
+
       
-</mat-card>
 <footer></footer>

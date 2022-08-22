@@ -4,5 +4,12 @@
 </section>
 <br>
 <section>
-    <app-create-user (createSignal)="updateTable()" [editUserDto]="userUpdateDto" ></app-create-user>
+    
+    <div class="div-holiday-request">
+        <mat-card class="bg-card">
+            <app-create-user [parent]="this" *ngIf="showUserForm" (createSignal)="updateTable()" [editUserDto]="userUpdateDto" ></app-create-user>
+          <button mat-button color="accent" type="button" (click)="showForm()" id="form-button">{{ showUserForm? "Close" : "Create new user" }}</button>
+        </mat-card>
+      </div>
 </section>
+<footer></footer>

@@ -1,63 +1,71 @@
 
 <h2> {{updating ? "Update request" : "Send new request" }}</h2>
 <form id="login-form" [formGroup]="holidayRequestFormGroup" (ngSubmit) = "verifyHolidayRequest()" #formDirective="ngForm">
-    <div *ngIf="updating && details != '' ">
-        <mat-card class="more-information">
-            <mat-icon color="blue">info</mat-icon>
-            <h3>More information required</h3>
-            <p>Please provide more information for your request:</p>
-            <mat-card class="p-more-information">
-            <p>{{details}}</p>
-            </mat-card>
-        </mat-card>
-    </div>
-<mat-form-field appearance="outline" color="accent"  *ngIf="!updating" >
+
+
+  <div *ngIf="updating && details != '' ">
+    <mat-card class="more-information">
+      <mat-icon color="blue">info</mat-icon>
+      <h3>More information required</h3>
+      <p>Please provide more information for your request:</p>
+      <mat-card class="p-more-information">
+        <p>{{details}}</p>
+      </mat-card>
+    </mat-card>
+  </div>
+  <mat-form-field appearance="outline" color="accent"  *ngIf="!updating" >
+
+
     <mat-select (selectionChange)="onChange($event.value)" placeholder="Select holiday type" (click)="resetWarnings()" #matRef>
-    <mat-option *ngFor="let holiday of holidayList" [value]="holiday.value" (click)="resetWarnings()">
+      <mat-option *ngFor="let holiday of holidayList" [value]="holiday.value" (click)="resetWarnings()">
         {{holiday.viewValue}}</mat-option>
     </mat-select>
-</mat-form-field><br>
+  </mat-form-field><br>
 
-<mat-form-field *ngIf="showFieldForStartDate" appearance="outline" color="accent">
+  <mat-form-field *ngIf="showFieldForStartDate" appearance="outline" color="accent">
     <input matInput [matDatepicker]="pickerStart" name="startDate" placeholder="Select start date" formControlName="startDate" (click)="resetWarnings()">
     <mat-datepicker-toggle matSuffix [for]="pickerStart" (click)="resetWarnings()">
-        <mat-icon matDatepickerToggleIcon color="accent">calendar_month</mat-icon>
+      <mat-icon matDatepickerToggleIcon color="accent">calendar_month</mat-icon>
     </mat-datepicker-toggle>
     <mat-datepicker #pickerStart></mat-datepicker>
-</mat-form-field><br *ngIf="showFieldForStartDate">
+  </mat-form-field><br *ngIf="showFieldForStartDate">
 
-<mat-form-field *ngIf="showFieldForEndDate" appearance="outline" color="accent">
+  <mat-form-field *ngIf="showFieldForEndDate" appearance="outline" color="accent">
     <input matInput [matDatepicker]="pickerEnd" name="endDate" placeholder="Select end date" formControlName="endDate" (click)="resetWarnings()">
-    <mat-datepicker-toggle matSuffix [for]="pickerEnd" (click)="resetWarnings()">   
-        <mat-icon matDatepickerToggleIcon color="accent">calendar_month</mat-icon></mat-datepicker-toggle>
+    <mat-datepicker-toggle matSuffix [for]="pickerEnd" (click)="resetWarnings()">
+      <mat-icon matDatepickerToggleIcon color="accent">calendar_month</mat-icon></mat-datepicker-toggle>
     <mat-datepicker #pickerEnd></mat-datepicker>
-</mat-form-field><br *ngIf="showFieldForEndDate">
+  </mat-form-field><br *ngIf="showFieldForEndDate">
 
-<mat-form-field *ngIf="showFieldForSubstitute" appearance="outline" color="accent">
+  <mat-form-field *ngIf="showFieldForSubstitute" appearance="outline" color="accent">
     <input matInput name="substitute" formControlName="substitute" placeholder="Substitute" (click)="resetWarnings()">
-    </mat-form-field><br *ngIf="showFieldForSubstitute">
+  </mat-form-field><br *ngIf="showFieldForSubstitute">
 
-<!-- <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload> -->
-<div *ngIf="showFieldForDocument">
-        <!--<input type="file" #fileInput (change)="onFileInput(fileInput.files)" /> -->
+  <!-- <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload> -->
+  <div *ngIf="showFieldForDocument">
+    <!--<input type="file" #fileInput (change)="onFileInput(fileInput.files)" /> -->
 
     <input type="file" id="file" class="file-input" accept="application/pdf" #fileInput (click)="resetWarnings()" (change)="onFileInput(fileInput.files)"  required>
     <div class="file-upload">
-        {{fileName || "Attach your document."}}
-    <button mat-mini-fab *ngIf="!fileName" type="button" color="blue-bg" class="upload-btn"
-    (click)="fileInput.click()">
+      {{fileName || "Attach your document."}}
+      <button mat-mini-fab *ngIf="!fileName" type="button" color="blue-bg" class="upload-btn"
+              (click)="fileInput.click()">
         <mat-icon color="blue-bg">attach_file</mat-icon>
-    </button>
-    <button mat-mini-fab *ngIf="fileName" type="button" color="green-bg" class="upload-btn"
-    (click)="fileInput.click()">
+      </button>
+      <button mat-mini-fab *ngIf="fileName" type="button" color="green-bg" class="upload-btn"
+              (click)="fileInput.click()">
         <mat-icon color="green-bg">attach_file</mat-icon>
-    </button>
+      </button>
     </div>
 
-</div>
 
-<mat-card class="password-hint" *ngIf="showFillErrorMessage">Please fill out all fields correctly.</mat-card> 
-<mat-card class="password-hint" *ngIf="showDateErrorMessage">Invalid date interval.</mat-card> 
-<mat-card class="password-hint-green" *ngIf="showSuccessfulMessage">Request sent successfully.</mat-card> 
-<button mat-raised-button type="submit" id="create-button" color="accent" *ngIf="showFieldForStartDate" >{{ updating ? "Update request" : "Create request" }}</button>
+
+  </div>
+
+  <mat-card class="password-hint" *ngIf="showFillErrorMessage">Please fill out all fields correctly.</mat-card>
+  <mat-card class="password-hint" *ngIf="showNumberHolidaysErrorMessage">You don't have enough vacation days.</mat-card>
+
+  <mat-card class="password-hint" *ngIf="showDateErrorMessage">Invalid date interval.</mat-card>
+  <mat-card class="password-hint-green" *ngIf="showSuccessfulMessage">Request sent successfully.</mat-card>
+  <button mat-raised-button type="submit" id="create-button" color="accent" *ngIf="showFieldForStartDate" >{{ updating ? "Update request" : "Create request" }}</button>
 </form>

@@ -31,11 +31,11 @@ export class UserService {
   }
 
   public getAll(): Observable<User[]> {
-      return this.httpClient.get<User[]>(GET_ALL_USERS);
+    return this.httpClient.get<User[]>(GET_ALL_USERS);
   }
 
   public getAllUsersWithoutTeam(): Observable<User[]> {
-      return this.httpClient.get<User[]>(GET_ALL_USERS_WITHOUT_TEAM);
+    return this.httpClient.get<User[]>(GET_ALL_USERS_WITHOUT_TEAM);
   }
 
   public filterUsersByName(name: String): Observable<User[]> {
@@ -49,7 +49,5 @@ export class UserService {
   public getUserById(id:number): Observable<User>{
     return this.httpClient.get<User>(GET_USER_BY_ID+"/"+id.toString());
   }
-
-
 
 }

@@ -1,11 +1,10 @@
 
-<mat-card id="div-create-panel" class="bg-card">
   <br>
   <mat-card-title>Edit {{email_d}}</mat-card-title>
 <br>
 <form id="edit-form" [formGroup]="createUserForm" (ngSubmit)="updateUser()">
-  <mat-card class="edit-hint" *ngIf="showEditErrorMessage" (click)="resetWarnings()">Update Error!</mat-card>
-  <mat-card class="edit-hint-green" *ngIf="showEditOkMessage" (click)="resetWarnings()">User updated!</mat-card>
+  <mat-card class="edit-hint" *ngIf="showEditErrorMessage" (click)="resetWarnings()">Could not update user.</mat-card>
+  <mat-card class="edit-hint-green" *ngIf="showEditOkMessage" (click)="resetWarnings()">User updated successfully.</mat-card>
   <p>First name</p> 
   <mat-form-field appearance="outline" color="accent" >
       <input matInput [placeholder]="surname_d" [(ngModel)]="surname_d" formControlName="surName" (click)="resetWarnings()">
@@ -44,11 +43,5 @@
         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
     </mat-form-field><br>
-
-  <button mat-raised-button class="edit-buttons" color="accent" (click)="cancelEdit()" >Cancel Edit</button>
-  <button mat-raised-button class="edit-buttons"  color="accent" type="submit" id="form-button">Edit User</button>
+  <button mat-raised-button class="edit-buttons"  color="green" type="submit" id="form-button">Edit</button>
 </form>
-
-
-</mat-card>
-<footer></footer>
