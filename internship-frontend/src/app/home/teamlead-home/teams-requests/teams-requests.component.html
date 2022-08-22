@@ -48,8 +48,15 @@
         <td mat-cell class="delete-cell" *matCellDef="let element">
           <button mat-icon-button aria-label="Edit icon" type="button" id="form-button" (click)="fillFields(element)">
             <mat-icon class="section-mat-icon" color="blue">remove_red_eye</mat-icon>
-            <mat-icon *ngIf="isRequestDeclined(element)" color="red">clear</mat-icon>
-            <mat-icon *ngIf="isRequestApproved(element)" color="green">check</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="status">
+        <th class="edit-cell" mat-header-cell *matHeaderCellDef> Status </th>
+        
+        <td class="status-cell" mat-cell *matCellDef="let element">
+          <button mat-icon-button disabled>
+           <mat-icon color="green" *ngIf="element.status == 'APPROVED'">done</mat-icon><mat-icon color="red" *ngIf="element.status == 'DENIED'">close</mat-icon><mat-icon color="blue" *ngIf="element.status == 'PENDING'">schedule</mat-icon>
           </button>
         </td>
       </ng-container>

@@ -193,30 +193,31 @@ export class RequestsTableComponent implements AfterViewInit {
   }
 
   fillFields(element: HolidayDto) {
-    console.log(element);
-    this.parent.showFormCreateRequest = true;
-    this.parent.holidayUpdating = true;
-    this.parent.holidayUpdatingId = element.id;
-    this.parent.holidayUpdatingStartDate = element.startDate;
-    this.parent.holidayUpdatingEndDate = element.endDate;
-    this.parent.holidayUpdatingSubstitute = element.substitute;
-    if (element.details != null) {
-      this.parent.details = element.details;
-    } else {
-      this.parent.details = '';
-    }
-    switch (element.type) {
-      case HolidayTypeDto.UNPAID_HOLIDAY:
-        this.parent.holidayType = 'unpaid-holiday';
-        break;
+    if (this.parent.showFormCreateRequest == false) {
+      console.log(element);
+      this.parent.showFormCreateRequest = true;
+      this.parent.holidayUpdating = true;
+      this.parent.holidayUpdatingId = element.id;
+      this.parent.holidayUpdatingStartDate = element.startDate;
+      this.parent.holidayUpdatingEndDate = element.endDate;
+      this.parent.holidayUpdatingSubstitute = element.substitute;
+      if (element.details != null) {
+        this.parent.details = element.details;
+      } else {
+        this.parent.details = '';
+      }
+      switch (element.type) {
+        case HolidayTypeDto.UNPAID_HOLIDAY:
+          this.parent.holidayType = 'unpaid-holiday';
+          break;
         case HolidayTypeDto.REST_HOLIDAY:
           this.parent.holidayType = 'rest-holiday';
-        break;
+          break;
         case HolidayTypeDto.SPECIAL_HOLIDAY:
           this.parent.holidayType = 'special-holiday';
           break;
+      }
     }
-
   }
  async deleteHoliday(element: HolidayDto) {
     const dialogResponse = this.dialogBox.open(ConfirmationDialogBoxComponent,{

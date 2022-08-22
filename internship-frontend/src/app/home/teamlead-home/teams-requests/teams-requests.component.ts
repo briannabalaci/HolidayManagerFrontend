@@ -45,7 +45,7 @@ export class TeamsRequestsComponent implements OnInit {
     return elem.status == HolidayStatusDto.APPROVED;
   }
 
-  displayedColumns: string[] = ['name', 'startDate', 'endDate', 'type', 'edit']
+  displayedColumns: string[] = ['name', 'startDate', 'endDate', 'type', 'edit', 'status']
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   user!: User;
   team!: Team;

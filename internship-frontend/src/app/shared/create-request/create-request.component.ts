@@ -213,7 +213,8 @@ export class CreateRequestComponent implements OnInit {
           console.log("currently inserting");
           this.holidayService.createHoliday(holidayData).subscribe(result => {
             // Call parent's function to refresh table.
-            this.newRequest.emit("New request created!")
+            this.newRequest.emit("New request created!");
+            this.clearSelect();
             this.refreshData();
             this.showMessage()
             console.log(result);
@@ -271,7 +272,8 @@ export class CreateRequestComponent implements OnInit {
         }
         this.holidayService.createHoliday(holidayData).subscribe(result => {
           // Call parent's function to refresh table.
-          this.newRequest.emit("New request created!")
+          this.newRequest.emit("New request created!");
+          this.clearSelect();
           this.showMessage();
           this.refreshData();
           console.log(result);
