@@ -54,6 +54,8 @@ export class HolidayService {
   }
 
   public getRequestsFilteredByStatusAndType(status: HolidayStatusDto, type: HolidayTypeDto, id: number): Observable<HolidayDto[]>{
+
+    console.log("service - status - " + status + " type - " + type + "teamlead id - " + id)
     let url = `${GET_REQUESTS_FILTERED}?status=${status}&type=${type}&id=${id}`
     return this.httpClient.get<HolidayDto[]>(url);
 

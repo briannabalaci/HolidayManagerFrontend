@@ -142,28 +142,34 @@ export class CreateRequestComponent implements OnInit {
     let endDate = datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!
 
     this.userService.getUser().subscribe(result => {
+
       this.userNoHolidays = result.nrHolidays!
+
       this.holidayService.getNoHolidays(startDate, endDate).subscribe(result => {
+
         this.numberDaysRequired = result
         this.unpaidDaysRequired = Math.floor(this.numberDaysRequired/10)
 
-        console.log(this.unpaidDaysRequired + " " + this.numberDaysRequired + " " +this.userNoHolidays)
-        if (this.numberDaysRequired > this.userNoHolidays && this.deviceValue == 'rest-holiday') {
-          this.showError = true;
-          this.showSuccess = false
-          this.showMessage()
-        } else if(this.unpaidDaysRequired > this.userNoHolidays && this.deviceValue == 'unpaid-holiday'){
-          console.log(this.deviceValue)
-          this.showError = true;
-          this.showSuccess = false
-          this.showMessage()
+        if(!this.updating) {
+          console.log(this.unpaidDaysRequired + " " + this.numberDaysRequired + " " + this.userNoHolidays)
+          if (this.numberDaysRequired > this.userNoHolidays && this.deviceValue == 'rest-holiday') {
+            this.showError = true;
+            this.showSuccess = false
+            this.showMessage()
+          } else if (this.unpaidDaysRequired > this.userNoHolidays && this.deviceValue == 'unpaid-holiday') {
+            console.log(this.deviceValue)
+            this.showError = true;
+            this.showSuccess = false
+            this.showMessage()
+          } else {
+            this.showSuccess = true
+            this.showError = false
+            this.sendHolidayRequest()
+          }
         }
         else {
-          this.showSuccess = true
-          this.showError = false
-          this.sendHolidayRequest()
+          this.sendHolidayRequest();
         }
-
       })
     })
   }
@@ -232,12 +238,6 @@ export class CreateRequestComponent implements OnInit {
             // Call parent's function to refresh table.
             this.refreshData();
             console.log(result);
-            if (!this.updating) {
-              this.clearSelect();
-            } else {
-              this.details = '';
-              this.updating = false;
-            }
             this.newRequest.emit("New request created!")
 
           });
@@ -293,20 +293,13 @@ export class CreateRequestComponent implements OnInit {
             endDate: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!
           }
         }
-          this.holidayService.updateHoliday(holidayData).subscribe(result => {
-            // Call parent's function to refresh table.
-            this.refreshData();
-            console.log(result);
-            if (!this.updating) {
-              this.clearSelect();
-            } else {
-              this.details = '';
-              this.updating = false;
-            }
-            this.newRequest.emit("New request created!")
-
-          });
-        }
+        this.holidayService.updateHoliday(holidayData).subscribe(result => {
+          // Call parent's function to refresh table.
+          this.refreshData();
+          console.log(result);
+          this.newRequest.emit("New request created!")
+        });
+      }
     }
   }
 

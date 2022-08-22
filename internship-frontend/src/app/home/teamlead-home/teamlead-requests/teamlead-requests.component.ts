@@ -31,8 +31,6 @@ export class TeamleadRequestsComponent implements OnInit,OnChanges {
   selectedTypeValue = this.requestsTypes[0].valueOf();
   selectedStatusValue = 'All'
 
-  // @Input() newNotification = "";
-
   @ViewChild(RequestsTableComponent) requests: RequestsTableComponent;
 
   constructor(private userService: UserService, private teamLeadService: TeamleadService) { }
@@ -44,7 +42,8 @@ export class TeamleadRequestsComponent implements OnInit,OnChanges {
   }
 
   newRequestAddedHandler(message:string){
-    this.getAndSetTeamLeadData()
+    // this.getAndSetTeamLeadData()
+    this.refreshData()
   }
 
 
