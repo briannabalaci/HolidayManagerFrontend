@@ -8,11 +8,11 @@ import {TeamleadService} from "../../service/teamlead.service";
 import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {UserService} from "../../service/user.service";
 import {HolidayService} from "../../service/holiday.service";
-import { CreateRequestComponent } from '../create-request/create-request.component';
-import { ConfirmationDialogBoxComponent } from 'src/app/confirmation-dialog-box/confirmation-dialog-box.component';
-import { MatDialog } from '@angular/material/dialog';
-import { Output } from '@angular/core';
-import { EventEmitter } from '@angular/core';
+import {CreateRequestComponent} from '../create-request/create-request.component';
+import {ConfirmationDialogBoxComponent} from 'src/app/confirmation-dialog-box/confirmation-dialog-box.component';
+import {MatDialog} from '@angular/material/dialog';
+import {Output} from '@angular/core';
+import {EventEmitter} from '@angular/core';
 
 
 const ELEMENT_DATA: HolidayDto[] = []
@@ -37,11 +37,12 @@ export class RequestsTableComponent implements AfterViewInit {
   @ViewChild('paginator') paginator!: MatPaginator;
   @ViewChild(CreateRequestComponent) requestComponent: CreateRequestComponent;
   @Input()
-    parent: any;
+  parent: any;
   holidays: any;
-  @Output() deletedApprovedEvent = new EventEmitter<number >();
+  @Output() deletedApprovedEvent = new EventEmitter<number>();
 
-  constructor(private holidayService: HolidayService, private userService: UserService, private teamLeadService: TeamleadService, private _liveAnnouncer: LiveAnnouncer, private dialogBox:MatDialog) {}
+  constructor(private holidayService: HolidayService, private userService: UserService, private teamLeadService: TeamleadService, private _liveAnnouncer: LiveAnnouncer, private dialogBox: MatDialog) {
+  }
 
   ngAfterViewInit() {
 
@@ -59,7 +60,8 @@ export class RequestsTableComponent implements AfterViewInit {
   }
 
   populateTeamLeadRequests() {
-    this.teamLeadService.getTeamLeadsRequests(this.user!.id!).subscribe(data => {
+
+      this.teamLeadService.getTeamLeadsRequests(this.user!.id!).subscribe(data => {
 
       this.dataSource = new MatTableDataSource<HolidayDto>(data);
 
@@ -78,11 +80,11 @@ export class RequestsTableComponent implements AfterViewInit {
     }
   }
 
-  getStatus(status: any): HolidayStatusDto{
-    if(status == 'Pending'){
+  getStatus(status: any): HolidayStatusDto {
+    if (status == 'Pending') {
       this.selectedStatusChild = HolidayStatusDto.PENDING;
       status = HolidayStatusDto.PENDING;
-    } else if(status == 'Approved'){
+    } else if (status == 'Approved') {
       this.selectedStatusChild = HolidayStatusDto.APPROVED;
       status = HolidayStatusDto.APPROVED;
     } else {
@@ -94,14 +96,13 @@ export class RequestsTableComponent implements AfterViewInit {
   }
 
   getType(type: any): HolidayTypeDto {
-    if(type == 'Rest holiday'){
+    if (type == 'Rest holiday') {
       this.selectedTypeChild = HolidayTypeDto.REST_HOLIDAY;
       type = HolidayTypeDto.REST_HOLIDAY;
-    }
-    else if(type == 'Special holiday'){
+    } else if (type == 'Special holiday') {
       this.selectedTypeChild = HolidayTypeDto.SPECIAL_HOLIDAY;
       type = HolidayTypeDto.SPECIAL_HOLIDAY;
-    } else{
+    } else {
       this.selectedTypeChild = HolidayTypeDto.UNPAID_HOLIDAY;
       type = HolidayTypeDto.UNPAID_HOLIDAY;
     }
@@ -109,21 +110,25 @@ export class RequestsTableComponent implements AfterViewInit {
     return type
   }
 
-  getFilteredByType(type: any){
+  getFilteredByType(type: any) {
     this.holidayService.getRequestsFilteredByType(this.getType(type), this.user!.id!).subscribe(data => {
       this.dataSource.data = data;
+      this.selectedTypeChild = type;
     })
   }
 
-  getFilteredByStatus(status: any){
+  getFilteredByStatus(status: any) {
     this.holidayService.getRequestsFilteredByStatus(this.getStatus(status), this.user!.id!).subscribe(data => {
       this.dataSource.data = data;
+      this.selectedStatusChild = status
     })
   }
 
-  getFilteredByStatusAndType(status: any, type: any){
+  getFilteredByStatusAndType(status: any, type: any) {
     this.holidayService.getRequestsFilteredByStatusAndType(this.getStatus(status), this.getType(type), this.user!.id!).subscribe(data => {
       this.dataSource.data = data;
+      this.selectedStatusChild = status;
+      this.selectedTypeChild = type;
     })
   }
 
@@ -131,8 +136,8 @@ export class RequestsTableComponent implements AfterViewInit {
     switch (true) {
       case type == 'All request' && status == 'All':
         this.populateTeamLeadRequests();
-        this.selectedTypeChild = null;
-        this.selectedStatusChild = null;
+        this.selectedTypeChild = 'All request';
+        this.selectedStatusChild = 'All';
         break;
 
       case type != 'All request' && status == 'All':
@@ -175,16 +180,17 @@ export class RequestsTableComponent implements AfterViewInit {
   }
 
   refreshData() {
-    if(this.selectedStatusChild == null && this.selectedTypeChild == null){
+    if (this.selectedStatusChild == null && this.selectedTypeChild == null) {
       this.populateTeamLeadRequests();
-    } else if(this.selectedStatusChild != null && this.selectedTypeChild == null){
+    } else if (this.selectedStatusChild != null && this.selectedTypeChild == null) {
       this.getFilteredByStatus(this.selectedStatusChild)
-    } else if(this.selectedStatusChild == null && this.selectedTypeChild != null){
+    } else if (this.selectedStatusChild == null && this.selectedTypeChild != null) {
       this.getFilteredByType(this.selectedTypeChild)
     } else {
       this.getFilteredByStatusAndType(this.selectedStatusChild, this.selectedTypeChild)
     }
   }
+
   refreshUserData() {
     this.userService.getUser().subscribe(data => {
 
@@ -217,41 +223,42 @@ export class RequestsTableComponent implements AfterViewInit {
           this.parent.holidayType = 'special-holiday';
           break;
       }
+
     }
   }
- async deleteHoliday(element: HolidayDto) {
-    const dialogResponse = this.dialogBox.open(ConfirmationDialogBoxComponent,{
-      data:"Are you sure you want to delete this holiday request?"
+
+  async deleteHoliday(element: HolidayDto) {
+    const dialogResponse = this.dialogBox.open(ConfirmationDialogBoxComponent, {
+      data: "Are you sure you want to delete this holiday request?"
     });
-    dialogResponse.afterClosed().subscribe( (response: any) => {
+    dialogResponse.afterClosed().subscribe((response: any) => {
       if (response) {
-        
+
         this.holidayService.deleteHoliday(element.id).subscribe(data => {
           console.log("Tara2")
           // this.holidays?.forEach( (item: { id: number | undefined; }, index: any) => {
           //   if (item.id === element.id) this.holidays?.splice(index, 1);
-            console.log("Tara")
-            this.userService.getUser().subscribe(data => {
-              console.log("In copil: " + data.nrHolidays)
-              this.deletedApprovedEvent.emit(data.nrHolidays);
-              
-            });
-            })
-        
-        
-    
+          console.log("Tara")
+          this.userService.getUser().subscribe(data => {
+            console.log("In copil: " + data.nrHolidays)
+            this.deletedApprovedEvent.emit(data.nrHolidays);
+
+          });
+        })
+
         this.refreshData();
-        
       }
     })
-    
   }
+
   applyFilters(selected2: any, selected: any) {
     throw new Error('Method not implemented.');
   }
+
   selected2(selected2: any, selected: any) {
     throw new Error('Method not implemented.');
   }
+
   selected(selected2: any, selected: any) {
     throw new Error('Method not implemented.');
   }

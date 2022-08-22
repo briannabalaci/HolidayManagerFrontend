@@ -121,6 +121,7 @@ export class EmployeedashComponent implements OnInit,OnChanges {
     this.selectedTypeValue = value;
     this.requests.selectedTypeChild = value;
     this.requests.selectedStatusChild = this.selectedStatusValue;
+
     this.requests.filterByTypeAndStatus(this.requests.selectedTypeChild, this.requests.selectedStatusChild)
   }
 
@@ -128,6 +129,7 @@ export class EmployeedashComponent implements OnInit,OnChanges {
     this.selectedStatusValue = value;
     this.requests.selectedStatusChild = value;
     this.requests.selectedTypeChild = this.selectedTypeValue;
+
     this.requests.filterByTypeAndStatus(this.requests.selectedTypeChild, this.requests.selectedStatusChild)
   }
 
