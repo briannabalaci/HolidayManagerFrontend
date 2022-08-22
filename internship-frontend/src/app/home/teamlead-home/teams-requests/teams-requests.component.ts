@@ -50,7 +50,7 @@ export class TeamsRequestsComponent implements OnInit {
   user!: User;
   team!: Team;
   requestsTypes: HolidayTypeView[] = [{ value: '', viewValue: 'All types of requests' }, { value: 'rest', viewValue: 'Rest holiday requests' },
-    { value: 'special', viewValue: 'Special holiday requests' },{value:'unpaid', viewValue:'Uunpaid holiday requests'}]
+    { value: 'special', viewValue: 'Special holiday requests' },{value:'unpaid', viewValue:'Unpaid holiday requests'}]
 
   showFormApproveRequest = false;
 
