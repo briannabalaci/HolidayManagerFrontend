@@ -38,9 +38,9 @@ export class CreateUserComponent implements OnInit,OnChanges {
     }
     else {this.displayUpdate = true; }
       } 
-  createUser(newUser: User): void{
+  createUser(): void{
     
-    console.log(newUser);
+
     this.createSignal.emit();
   }
   updateUser(updUser: UpdateUser): void{

@@ -142,28 +142,36 @@ export class CreateRequestComponent implements OnInit {
     let endDate = datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!
 
     this.userService.getUser().subscribe(result => {
+
       this.userNoHolidays = result.nrHolidays!
+
       this.holidayService.getNoHolidays(startDate, endDate).subscribe(result => {
+
         this.numberDaysRequired = result
         this.unpaidDaysRequired = Math.floor(this.numberDaysRequired/10)
-        
-        console.log(this.unpaidDaysRequired + " " + this.numberDaysRequired + " " +this.userNoHolidays)
-        if (this.numberDaysRequired > this.userNoHolidays && this.deviceValue == 'rest-holiday') {
-          this.showError = true;
-          this.showSuccess = false
-          this.showMessage()
-        } else if(this.unpaidDaysRequired > this.userNoHolidays && this.deviceValue == 'unpaid-holiday'){
-          console.log(this.deviceValue)
-          this.showError = true;
-          this.showSuccess = false
-          this.showMessage()
+
+
+        if(!this.updating) {
+          console.log(this.unpaidDaysRequired + " " + this.numberDaysRequired + " " + this.userNoHolidays)
+          if (this.numberDaysRequired > this.userNoHolidays && this.deviceValue == 'rest-holiday') {
+            this.showError = true;
+            this.showSuccess = false
+            this.showMessage()
+          } else if (this.unpaidDaysRequired > this.userNoHolidays && this.deviceValue == 'unpaid-holiday') {
+            console.log(this.deviceValue)
+            this.showError = true;
+            this.showSuccess = false
+            this.showMessage()
+          } else {
+            this.showSuccess = true
+            this.showError = false
+            this.sendHolidayRequest()
+          }
         }
         else {
-          this.showSuccess = true
-          this.showError = false
-          this.sendHolidayRequest()
-        }
 
+          this.sendHolidayRequest();
+        }
       })
     })
   }
@@ -213,7 +221,8 @@ export class CreateRequestComponent implements OnInit {
           console.log("currently inserting");
           this.holidayService.createHoliday(holidayData).subscribe(result => {
             // Call parent's function to refresh table.
-            this.newRequest.emit("New request created!")
+            this.newRequest.emit("New request created!");
+            this.clearSelect();
             this.refreshData();
             this.showMessage()
             console.log(result);
@@ -230,14 +239,16 @@ export class CreateRequestComponent implements OnInit {
           console.log("currently updating");
           this.holidayService.updateHoliday(holidayData).subscribe(result => {
             // Call parent's function to refresh table.
+            
             this.refreshData();
+            this.showMessage();
             console.log(result);
-            if (!this.updating) {
-              this.clearSelect();
-            } else {
-              this.details = '';
-              this.updating = false;
-            }
+            this.details = '';
+            this.updating = false;
+            this.clearSelect();
+            this.showSuccess = true;
+            this.showError = false;
+            this.showMessage();
           });
         }
       });
@@ -269,8 +280,9 @@ export class CreateRequestComponent implements OnInit {
         }
         this.holidayService.createHoliday(holidayData).subscribe(result => {
           // Call parent's function to refresh table.
-          this.showMessage()
-          this.newRequest.emit("New request created!")
+          this.newRequest.emit("New request created!");
+          this.clearSelect();
+          this.showMessage();
           this.refreshData();
           console.log(result);
         });
@@ -292,15 +304,16 @@ export class CreateRequestComponent implements OnInit {
           }
         }
         this.holidayService.updateHoliday(holidayData).subscribe(result => {
-          // Call parent's function to refresh table.
+          
           this.refreshData();
+          this.showMessage();
           console.log(result);
-          if (!this.updating) {
-            this.clearSelect();
-          } else {
-            this.details = '';
-            this.updating = false;
-          }
+          this.details = '';
+          this.updating = false;
+          this.clearSelect();
+          this.showSuccess = true;
+          this.showError = false;
+          this.showMessage();
         });
       }
     }
@@ -340,7 +353,7 @@ export class CreateRequestComponent implements OnInit {
       this.showFieldForEndDate = false;
       this.showFieldForSubstitute = false;
       this.showFieldForDocument = false;
-    } else if (this.showError) {
+    } else {
       this.showNumberHolidaysErrorMessage = true;
       this.showFieldForStartDate = false;
       this.showFieldForEndDate = false;
