@@ -146,12 +146,13 @@ export class CreateRequestComponent implements OnInit {
       this.holidayService.getNoHolidays(startDate, endDate).subscribe(result => {
         this.numberDaysRequired = result
         this.unpaidDaysRequired = Math.floor(this.numberDaysRequired/10)
+        
         console.log(this.unpaidDaysRequired + " " + this.numberDaysRequired + " " +this.userNoHolidays)
         if (this.numberDaysRequired > this.userNoHolidays && this.deviceValue == 'rest-holiday') {
           this.showError = true;
           this.showSuccess = false
           this.showMessage()
-        } if(this.unpaidDaysRequired > this.userNoHolidays && this.deviceValue == 'unpaid-holiday'){
+        } else if(this.unpaidDaysRequired > this.userNoHolidays && this.deviceValue == 'unpaid-holiday'){
           console.log(this.deviceValue)
           this.showError = true;
           this.showSuccess = false
