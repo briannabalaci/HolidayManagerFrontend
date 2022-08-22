@@ -103,11 +103,6 @@ export class UserListComponent implements OnInit,OnChanges {
         
       }
     })
-
-
-
-
-
     };
   }
 

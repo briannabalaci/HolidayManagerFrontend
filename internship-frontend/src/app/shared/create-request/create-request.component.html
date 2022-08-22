@@ -55,9 +55,9 @@
     </div>
 
 </div>
-
 <mat-card class="password-hint" *ngIf="showFillErrorMessage">Please fill out all fields correctly.</mat-card> 
 <mat-card class="password-hint" *ngIf="showDateErrorMessage">Invalid date interval.</mat-card> 
 <mat-card class="password-hint-green" *ngIf="showSuccessfulMessage">Request sent successfully.</mat-card> 
+
 <button mat-raised-button type="submit" id="create-button" color="accent" *ngIf="showFieldForStartDate" >{{ updating ? "Update request" : "Create request" }}</button>
 </form>

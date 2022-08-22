@@ -8,7 +8,7 @@ import { User } from 'src/app/shared/data-type/User';
 })
 export class AdminPageComponent implements OnInit {
   inputValue = " ";
-  userUpdateDto!: User;
+  userUpdateDto!: any;
   showUserForm = false;
   constructor() { }
 
@@ -21,6 +21,7 @@ export class AdminPageComponent implements OnInit {
     this.userUpdateDto = user;
   }
   showForm() {
+    this.userUpdateDto = null;
     this.showUserForm = !this.showUserForm;
   }
 }
