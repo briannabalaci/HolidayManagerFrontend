@@ -142,7 +142,6 @@ export class EmployeedashComponent implements OnInit,OnChanges {
     return this.refreshData.bind(this);
   }
   changeVacationDays(eventData: any) {
-    console.log("In parinte: "+eventData)
     this.vacationDays =  eventData ;
   }
 
