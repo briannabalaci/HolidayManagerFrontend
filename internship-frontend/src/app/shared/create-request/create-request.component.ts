@@ -146,25 +146,6 @@ export class CreateRequestComponent implements OnInit {
       this.userNoHolidays = result.nrHolidays!
 
       this.holidayService.getNoHolidays(startDate, endDate).subscribe(result => {
-<<<<<<< HEAD
-        this.numberDaysRequired = result;
-        this.unpaidDaysRequired = Math.floor(this.numberDaysRequired / 10);
-        
-        console.log(this.unpaidDaysRequired + " " + this.numberDaysRequired + " " +this.userNoHolidays)
-        if (this.numberDaysRequired > this.userNoHolidays && this.deviceValue == 'rest-holiday') {
-          this.showError = true;
-          this.showSuccess = false;
-          this.showMessage();
-        } else if(this.unpaidDaysRequired > this.userNoHolidays && this.deviceValue == 'unpaid-holiday'){
-          console.log(this.deviceValue);
-          this.showError = true;
-          this.showSuccess = false;
-          this.showMessage();
-        }
-        else {
-          this.showSuccess = true;
-          this.showError = false;
-=======
 
         this.numberDaysRequired = result
         this.unpaidDaysRequired = Math.floor(this.numberDaysRequired/10)
@@ -188,7 +169,7 @@ export class CreateRequestComponent implements OnInit {
           }
         }
         else {
->>>>>>> development
+
           this.sendHolidayRequest();
         }
       })
@@ -262,15 +243,12 @@ export class CreateRequestComponent implements OnInit {
             this.refreshData();
             this.showMessage();
             console.log(result);
-<<<<<<< HEAD
             this.details = '';
             this.updating = false;
             this.clearSelect();
             this.showSuccess = true;
             this.showError = false;
             this.showMessage();
-=======
->>>>>>> development
           });
         }
       });
@@ -330,15 +308,12 @@ export class CreateRequestComponent implements OnInit {
           this.refreshData();
           this.showMessage();
           console.log(result);
-<<<<<<< HEAD
           this.details = '';
           this.updating = false;
           this.clearSelect();
           this.showSuccess = true;
           this.showError = false;
           this.showMessage();
-=======
->>>>>>> development
         });
       }
     }
