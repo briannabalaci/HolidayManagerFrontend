@@ -15,6 +15,8 @@ const UPDATE_HOLIDAY = "http://localhost:8090/holiday/update-holiday"
 const URL = "http://localhost:8090/holiday";
 const GET_REQUESTS_FILTERED = `${URL}/requests-filtered-by`;
 
+const GET_NO_HOLIDAYS_REQUIRED = "http://localhost:8090/holiday/number-of-holidays"
+
 
 @Injectable({
   providedIn: 'root'
@@ -55,5 +57,12 @@ export class HolidayService {
     return this.httpClient.get<HolidayDto[]>(url);
 
   }
+
+  public getNoHolidays(startDate: string, endDate: string): Observable<number>{
+    let url =`${GET_NO_HOLIDAYS_REQUIRED}?startDate=${startDate}&endDate=${endDate}`
+    return this.httpClient.get<number>(url)
+  }
+
+
 
 }

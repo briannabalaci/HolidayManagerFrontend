@@ -75,6 +75,9 @@ export class TeamleadRequestsComponent implements OnInit,OnChanges {
   get refreshDataFunc() {
     return this.refreshData.bind(this);
   }
+  changeVacationDays(eventData: any) {
+    this.nrHolidays =  eventData ;
+  }
 
 
 }

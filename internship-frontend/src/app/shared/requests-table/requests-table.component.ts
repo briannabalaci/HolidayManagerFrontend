@@ -11,6 +11,8 @@ import {HolidayService} from "../../service/holiday.service";
 import { CreateRequestComponent } from '../create-request/create-request.component';
 import { ConfirmationDialogBoxComponent } from 'src/app/confirmation-dialog-box/confirmation-dialog-box.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Output } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 
 
 const ELEMENT_DATA: HolidayDto[] = []
@@ -37,6 +39,7 @@ export class RequestsTableComponent implements AfterViewInit {
   @Input()
     parent: any;
   holidays: any;
+  @Output() deletedApprovedEvent = new EventEmitter<number >();
 
   constructor(private holidayService: HolidayService, private userService: UserService, private teamLeadService: TeamleadService, private _liveAnnouncer: LiveAnnouncer, private dialogBox:MatDialog) {}
 
@@ -182,6 +185,12 @@ export class RequestsTableComponent implements AfterViewInit {
       this.getFilteredByStatusAndType(this.selectedStatusChild, this.selectedTypeChild)
     }
   }
+  refreshUserData() {
+    this.userService.getUser().subscribe(data => {
+
+      this.user = data;
+    })
+  }
 
   fillFields(element: HolidayDto) {
     console.log(element);
@@ -209,18 +218,29 @@ export class RequestsTableComponent implements AfterViewInit {
     }
 
   }
-  deleteHoliday(element: HolidayDto) {
+ async deleteHoliday(element: HolidayDto) {
     const dialogResponse = this.dialogBox.open(ConfirmationDialogBoxComponent,{
       data:"Are you sure you want to delete this holiday request?"
     });
     dialogResponse.afterClosed().subscribe( (response: any) => {
       if (response) {
+        
         this.holidayService.deleteHoliday(element.id).subscribe(data => {
-          this.holidays?.forEach( (item: { id: number | undefined; }, index: any) => {
-            if(item.id === element.id) this.holidays?.splice(index,1);
-          });
-          this.refreshData();
-        });
+          console.log("Tara2")
+          // this.holidays?.forEach( (item: { id: number | undefined; }, index: any) => {
+          //   if (item.id === element.id) this.holidays?.splice(index, 1);
+            console.log("Tara")
+            this.userService.getUser().subscribe(data => {
+              console.log("In copil: " + data.nrHolidays)
+              this.deletedApprovedEvent.emit(data.nrHolidays);
+              
+            });
+            })
+        
+        
+    
+        this.refreshData();
+        
       }
     })
     
