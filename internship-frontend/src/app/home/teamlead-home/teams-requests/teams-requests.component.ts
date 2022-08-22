@@ -76,10 +76,12 @@ export class TeamsRequestsComponent implements OnInit,OnChanges {
     console.log("Filter values: ")
     console.log(this.filteredValues)
 
-    this.getTeamLeaderData()
-    this.filterByNameAndType()
-    this.table.renderRows()
-
+    if (this.newNotification != null)
+      if (this.newNotification["message"] != "") {
+        this.getTeamLeaderData()
+        this.filterByNameAndType()
+        this.table.renderRows()
+      }
   }
 
   refreshData(){
