@@ -5,7 +5,8 @@ import {HolidayService} from "../../../../service/holiday.service";
 import {HolidayDto, HolidayStatusDto, HolidayTypeDto} from "../../../../shared/data-type/HolidayDto";
 import {TeamleadService} from "../../../../service/teamlead.service";
 import {MatDialog} from "@angular/material/dialog";
-import {MoreDetailsDialogBoxComponent} from "../more-details-dialog-box/more-details-dialog-box.component";
+import { MoreDetailsDialogBoxComponent } from '../more-details-dialog-box/more-details-dialog-box.component';
+
 
 @Component({
   selector: 'app-detailed-request',

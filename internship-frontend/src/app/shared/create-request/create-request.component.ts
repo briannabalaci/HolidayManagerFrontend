@@ -1,5 +1,3 @@
-import {Component, Input, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import {FormBuilder, NgForm, Validators} from '@angular/forms';
 import {MatOption} from '@angular/material/core';
 import {MatSelect} from '@angular/material/select';
 import {CookieService} from 'ngx-cookie-service';
@@ -8,6 +6,10 @@ import {parseJwt} from 'src/app/utils/JWTParser';
 import {Holiday, HolidayForUpdate, HolidayStatus, HolidayTypeView, RequestType} from '../data-type/Holiday';
 import {DatePipe} from '@angular/common';
 import {UserService} from "../../service/user.service";
+import { Component, Input, OnInit, Output, SimpleChanges, ViewChild,EventEmitter } from '@angular/core';
+import { FormBuilder, NgForm, Validators } from '@angular/forms';
+import {User} from "../data-type/User";
+import { stringify } from 'querystring';
 
 
 @Component({
@@ -33,8 +35,9 @@ export class CreateRequestComponent implements OnInit {
   @Input() updatingSubstitute!: string;
   @Input() deviceValue!: string;
   @Input() details!: string;
-  @Input()
-  parent: any;
+  @Input() parent: any;
+  @Output() newRequest = new EventEmitter<string>()
+
 
 
   userNoHolidays = 0;
@@ -61,7 +64,6 @@ export class CreateRequestComponent implements OnInit {
     {value: 'special-holiday', viewValue: 'Special holiday'},
     {value: 'unpaid-holiday', viewValue: 'Unpaid holiday'}
   ];
-
   constructor(private formBuilder: FormBuilder, private cookieService: CookieService, private holidayService: HolidayService, private userService: UserService) {
   }
 
@@ -150,6 +152,7 @@ export class CreateRequestComponent implements OnInit {
           this.showSuccess = false
           this.showMessage()
         } if(this.unpaidDaysRequired > this.userNoHolidays && this.deviceValue == 'unpaid-holiday'){
+          console.log(this.deviceValue)
           this.showError = true;
           this.showSuccess = false
           this.showMessage()
@@ -209,6 +212,7 @@ export class CreateRequestComponent implements OnInit {
           console.log("currently inserting");
           this.holidayService.createHoliday(holidayData).subscribe(result => {
             // Call parent's function to refresh table.
+            this.newRequest.emit("New request created!")
             this.refreshData();
             this.showMessage()
             console.log(result);
@@ -265,6 +269,7 @@ export class CreateRequestComponent implements OnInit {
         this.holidayService.createHoliday(holidayData).subscribe(result => {
           // Call parent's function to refresh table.
           this.showMessage()
+          this.newRequest.emit("New request created!")
           this.refreshData();
           console.log(result);
         });

@@ -12,8 +12,7 @@ const GET_ALL_USERS = URL_BASE + "/get-all-users"
 const GET_ALL_USERS_WITHOUT_TEAM = URL_BASE + "/users-noteam"
 const FILTER_USERS_BY_NAME = URL_BASE + "/filter-name"
 const GET_USER = `${URL_BASE}/user-info`
-
-const GET_USER_BY_ID = `${URL_BASE}/user`
+const GET_USER_BY_ID = URL_BASE + "/find-user-by-id"
 
 @Injectable({
   providedIn: 'root'
@@ -47,11 +46,8 @@ export class UserService {
     }
   }
 
-  public getUserById(id: number): Observable<User> {
-    let url = `${GET_USER}?id=${id}`
-    return this.httpClient.get(url)
+  public getUserById(id:number): Observable<User>{
+    return this.httpClient.get<User>(GET_USER_BY_ID+"/"+id.toString());
   }
-
-
 
 }

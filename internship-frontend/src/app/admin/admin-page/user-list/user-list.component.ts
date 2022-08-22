@@ -38,8 +38,8 @@ export class UserListComponent implements OnInit,OnChanges {
   createFilter(): (data: User, filter: string) => boolean {
     return function (data, filter): boolean {
       let searchUser = JSON.parse(filter);
-      return (data.surname + " " + data.forname).toLowerCase().indexOf(searchUser.surname) !== -1
-        && data.type!.toString().toLowerCase().indexOf(searchUser.forname) !== -1
+      return (data.surname+"").toLowerCase().indexOf(searchUser.surname.toLowerCase()) !== -1
+        && data.forname!.toString().toLowerCase().indexOf(searchUser.forname.toLowerCase()) !== -1
     };
   }
   ngOnInit() {

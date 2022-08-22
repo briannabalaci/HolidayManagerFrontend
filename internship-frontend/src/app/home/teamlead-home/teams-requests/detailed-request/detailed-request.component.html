@@ -50,8 +50,8 @@
     <mat-card *ngIf="isSuccessMessage" class="success-message">{{this.successString}}</mat-card>
 
     <div class="button-container">
-      <button mat-raised-button type="button" id="approve-button" [disabled]="isDisabled" color="accent" (click)="approveRequest()">Approve</button>
-      <button mat-raised-button type="button" id="decline-button" [disabled]="isDisabled" color="accent" (click) = "declineRequest()">Decline</button>
+      <button mat-raised-button type="button" id="decline-button" [disabled]="isDisabled" color="red" (click) = "declineRequest()">Decline</button>
+      <button mat-raised-button type="button" id="approve-button" [disabled]="isDisabled" color="green" (click)="approveRequest()">Approve</button>
       <button mat-raised-button type="button" id="details-button" [disabled]="isDisabled" color="accent" (click) = "moreDetails()">More details</button>
     </div>
 
