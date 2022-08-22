@@ -150,18 +150,18 @@ export class CreateRequestComponent implements OnInit {
         console.log(this.unpaidDaysRequired + " " + this.numberDaysRequired + " " +this.userNoHolidays)
         if (this.numberDaysRequired > this.userNoHolidays && this.deviceValue == 'rest-holiday') {
           this.showError = true;
-          this.showSuccess = false
-          this.showMessage()
+          this.showSuccess = false;
+          this.showMessage();
         } else if(this.unpaidDaysRequired > this.userNoHolidays && this.deviceValue == 'unpaid-holiday'){
           console.log(this.deviceValue)
           this.showError = true;
-          this.showSuccess = false
-          this.showMessage()
+          this.showSuccess = false;
+          this.showMessage();
         }
         else {
-          this.showSuccess = true
-          this.showError = false
-          this.sendHolidayRequest()
+          this.showSuccess = true;
+          this.showError = false;
+          this.sendHolidayRequest();
         }
 
       })
@@ -234,6 +234,8 @@ export class CreateRequestComponent implements OnInit {
             console.log(result);
             if (!this.updating) {
               this.clearSelect();
+              this.showSuccess = true;
+              this.showMessage();
             } else {
               this.details = '';
               this.updating = false;
@@ -269,8 +271,8 @@ export class CreateRequestComponent implements OnInit {
         }
         this.holidayService.createHoliday(holidayData).subscribe(result => {
           // Call parent's function to refresh table.
-          this.showMessage()
           this.newRequest.emit("New request created!")
+          this.showMessage();
           this.refreshData();
           console.log(result);
         });
@@ -297,6 +299,8 @@ export class CreateRequestComponent implements OnInit {
           console.log(result);
           if (!this.updating) {
             this.clearSelect();
+            this.showSuccess = true;
+            this.showMessage();
           } else {
             this.details = '';
             this.updating = false;
