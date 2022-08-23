@@ -25,7 +25,7 @@ const ELEMENT_DATA: HolidayDto[] = []
 
 export class RequestsTableComponent implements AfterViewInit {
 
-  displayedColumns: string[] = ['startDate', 'endDate', 'type', 'edit', 'delete']
+  displayedColumns: string[] = ['startDate', 'endDate', 'type', 'edit', 'status', 'delete']
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   @Input() selectedTypeChild: any;
@@ -199,53 +199,52 @@ export class RequestsTableComponent implements AfterViewInit {
   }
 
   fillFields(element: HolidayDto) {
-    this.parent.showFormCreateRequest = true;
-    this.parent.holidayUpdating = true;
-    this.parent.holidayUpdatingId = element.id;
-    this.parent.holidayUpdatingStartDate = element.startDate;
-    this.parent.holidayUpdatingEndDate = element.endDate;
-    this.parent.holidayUpdatingSubstitute = element.substitute;
-    if (element.details != null) {
-      this.parent.details = element.details;
-    } else {
-      this.parent.details = '';
-    }
-    switch (element.type) {
-      case HolidayTypeDto.UNPAID_HOLIDAY:
-        this.parent.holidayType = 'unpaid-holiday';
-        break;
-      case HolidayTypeDto.REST_HOLIDAY:
-        this.parent.holidayType = 'rest-holiday';
-        break;
-      case HolidayTypeDto.SPECIAL_HOLIDAY:
-        this.parent.holidayType = 'special-holiday';
-        break;
-    }
+    if (this.parent.showFormCreateRequest == false) {
+      console.log(element);
+      this.parent.showFormCreateRequest = true;
+      this.parent.holidayUpdating = true;
+      this.parent.holidayUpdatingId = element.id;
+      this.parent.holidayUpdatingStartDate = element.startDate;
+      this.parent.holidayUpdatingEndDate = element.endDate;
+      this.parent.holidayUpdatingSubstitute = element.substitute;
+      if (element.details != null) {
+        this.parent.details = element.details;
+      } else {
+        this.parent.details = '';
+      }
+      switch (element.type) {
+        case HolidayTypeDto.UNPAID_HOLIDAY:
+          this.parent.holidayType = 'unpaid-holiday';
+          break;
+        case HolidayTypeDto.REST_HOLIDAY:
+          this.parent.holidayType = 'rest-holiday';
+          break;
+        case HolidayTypeDto.SPECIAL_HOLIDAY:
+          this.parent.holidayType = 'special-holiday';
+          break;
+      }
 
+    }
   }
 
-  async deleteHoliday(element: HolidayDto) {
-    const dialogResponse = this.dialogBox.open(ConfirmationDialogBoxComponent, {
-      data: "Are you sure you want to delete this holiday request?"
+ deleteHoliday(element: HolidayDto) {
+    const dialogResponse = this.dialogBox.open(ConfirmationDialogBoxComponent,{
+      data:"Are you sure you want to delete this holiday request?"
     });
     dialogResponse.afterClosed().subscribe((response: any) => {
       if (response) {
-
         this.holidayService.deleteHoliday(element.id).subscribe(data => {
-          console.log("Tara2")
-          // this.holidays?.forEach( (item: { id: number | undefined; }, index: any) => {
-          //   if (item.id === element.id) this.holidays?.splice(index, 1);
-          console.log("Tara")
+          this.refreshData();
           this.userService.getUser().subscribe(data => {
-            console.log("In copil: " + data.nrHolidays)
             this.deletedApprovedEvent.emit(data.nrHolidays);
-
-          });
+           });
         })
-
-        this.refreshData();
+        console.log("Am trecut");
       }
     })
+   
+
+
   }
 
   applyFilters(selected2: any, selected: any) {

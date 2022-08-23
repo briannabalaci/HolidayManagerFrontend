@@ -45,7 +45,7 @@ export class TeamsRequestsComponent implements OnInit {
     return elem.status == HolidayStatusDto.APPROVED;
   }
 
-  displayedColumns: string[] = ['name', 'startDate', 'endDate', 'type', 'edit']
+  displayedColumns: string[] = ['name', 'startDate', 'endDate', 'type', 'edit', 'status']
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   user!: User;
   team!: Team;
@@ -53,7 +53,7 @@ export class TeamsRequestsComponent implements OnInit {
     { value: 'special', viewValue: 'Special holiday requests' },{value:'unpaid', viewValue:'Unpaid holiday requests'}]
 
   showFormApproveRequest = false;
-
+  showPdfMessage = false;
   typeFilter2 = new FormControl('');
   nameFilter = new FormControl('');
 
@@ -163,6 +163,10 @@ export class TeamsRequestsComponent implements OnInit {
 
   closeForm(){
     this.showFormApproveRequest = !this.showFormApproveRequest
+  }
+  generatePdf() {
+    this.showPdfMessage = true;
+    console.log("PDF generated");
   }
 
 }

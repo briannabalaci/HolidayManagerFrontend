@@ -4,6 +4,7 @@
     <h2 class="section-title">Team's Requests</h2>
   </header>
   <mat-card class="table-card">
+
     <mat-form-field class="filter" (keydown.space)="$event.stopPropagation()" appearance="outline" color="accent">
       <input matInput class="form-field" [formControl]="nameFilter" placeholder="Fiter by name">
     </mat-form-field>
@@ -16,6 +17,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+  
     <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
 
       <ng-container matColumnDef="name">
@@ -48,8 +50,15 @@
         <td mat-cell class="delete-cell" *matCellDef="let element">
           <button mat-icon-button aria-label="Edit icon" type="button" id="form-button" (click)="fillFields(element)">
             <mat-icon class="section-mat-icon" color="blue">remove_red_eye</mat-icon>
-            <mat-icon *ngIf="isRequestDeclined(element)" color="red">clear</mat-icon>
-            <mat-icon *ngIf="isRequestApproved(element)" color="green">check</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="status">
+        <th class="edit-cell" mat-header-cell *matHeaderCellDef> Status </th>
+        
+        <td class="status-cell" mat-cell *matCellDef="let element">
+          <button mat-icon-button disabled>
+           <mat-icon color="green" *ngIf="element.status == 'APPROVED'">done</mat-icon><mat-icon color="red" *ngIf="element.status == 'DENIED'">close</mat-icon><mat-icon color="blue" *ngIf="element.status == 'PENDING'">schedule</mat-icon>
           </button>
         </td>
       </ng-container>
@@ -60,6 +69,11 @@
 
     <mat-paginator #paginator [pageSizeOptions]="[2, 4, 6]"
                    showFirstLastButtons></mat-paginator>
+  <p *ngIf="showPdfMessage" id="pdf-p">Document successfully generated.</p>
+  <mat-card class="button-card">
+    <button mat-raised-button type="button" id="pdf-button" (click)="generatePdf()" color="green"><mat-icon id="pdf-icon">description</mat-icon></button>
+  </mat-card>
+
 
   </mat-card>
 

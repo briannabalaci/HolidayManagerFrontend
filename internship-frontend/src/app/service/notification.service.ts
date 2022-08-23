@@ -7,6 +7,7 @@ const URL = "http://localhost:8090/notification";
 const GET_UNSEEN_NOTIFICATIONS = `${URL}/all-unread`;
 const GET_SEEN_NOTIFICATIONS = `${URL}/all-read`;
 const UPDATE_SEEN_NOTIFICATIONS = `${URL}/seen-all/`;
+const DELETE_SEEN_NOTIFICATIONS = `${URL}/delete-read/`;
 @Injectable({
   providedIn: 'root'
 })
@@ -24,6 +25,10 @@ export class NotificationService {
   }
   public updateSeenNotifications(id: number): Observable<any>{
     let path = UPDATE_SEEN_NOTIFICATIONS + id.toString();
+    return this.httpClient.put(path,null,{responseType: 'text'});
+  }
+  public deleteSeenNotifications(id: number): Observable<any> {
+    let path = DELETE_SEEN_NOTIFICATIONS + id.toString();
     return this.httpClient.put(path,null,{responseType: 'text'});
   }
 }
