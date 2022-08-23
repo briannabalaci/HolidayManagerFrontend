@@ -13,7 +13,7 @@ const APPROVE_REQUEST = `http://localhost:8090/holiday/approve`
 const MORE_DETAILS = `http://localhost:8090/holiday/details`
 const GET_REQUESTS = `${URL}requests?id=`;
 const GET_TEAM_REQUESTS = `${URL}team-requests?id=`;
-const GET_PDF = `http://localhost:8090/teamlead/getPDF`;
+const GET_PDF = `http://localhost:8090/teamlead/getPDF?id=`;
 @Injectable({
   providedIn: 'root'
 })
@@ -47,14 +47,11 @@ export class TeamleadService {
       details: message
     })
   }
-  public getPDF(id: number): Observable<any> {
-    let url=`${GET_PDF}/${id}`
-    return this.httpClient.get(url, { responseType: 'blob' }).pipe(map((response:any)=>{
-        return {
-            filename: 'yourFileName.pdf',
-            data: response.blob()
-        };
-    }));
+  public getPDF(id: number): Observable<Blob> {
+    let url = GET_PDF + id;
+    return this.httpClient.get(url, {
+      responseType: 'blob'
+    });
   }
 
 }

@@ -11,10 +11,14 @@ import {MatPaginator} from "@angular/material/paginator";
 import {UserService} from "../../../service/user.service";
 import {DetailedRequestComponent} from "./detailed-request/detailed-request.component";
 import { HolidayTypeView } from 'src/app/shared/data-type/Holiday';
-
+import { saveAs } from 'file-saver';
 
 const ELEMENT_DATA: HolidayDto[] = []
-
+export class FileData {
+  filename?: string;
+  contentType?: string;
+  size?: number;
+}
 @Component({
   selector: 'app-teams-requests',
   templateUrl: './teams-requests.component.html',
@@ -22,7 +26,7 @@ const ELEMENT_DATA: HolidayDto[] = []
 })
 export class TeamsRequestsComponent implements OnInit {
 
-
+  file: FileData;
   endDate = 'Angular';
   startDate = 'Angular';
   substitute = '';
@@ -160,37 +164,18 @@ export class TeamsRequestsComponent implements OnInit {
     }
 
   }
-  downloadFile(data: Response) {
-    const blob = new Blob([data], { type: 'text/csv' });
-    const url= window.URL.createObjectURL(blob);
-    window.open(url);
-  }
+
   closeForm(){
     this.showFormApproveRequest = !this.showFormApproveRequest
   }
   generatePdf() {
+   
     this.showPdfMessage = true;
     console.log("PDF generated");
-    this.teamLeadService.getPDF(51).subscribe(response => {
-
-      console.log(response);
-      var binaryData = [];
-      binaryData.push(response.data);
-      var url = window.URL.createObjectURL(new Blob(binaryData, {type: "application/pdf"}));
-      var a = document.createElement('a');
-      document.body.appendChild(a);
-      a.setAttribute('style', 'display: none');
-      a.setAttribute('target', 'blank');
-      a.href = url;
-      a.download = response.filename;
-      a.click();
-      window.URL.revokeObjectURL(url);
-      a.remove();
-
-  }, error => {
-
-      console.log(error);
-  });
+    this.teamLeadService
+    .getPDF(51)
+    .subscribe(blob => saveAs(blob,"Team_Lead_Data"));
+    };
   }
 
-}
+
