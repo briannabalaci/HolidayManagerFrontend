@@ -243,7 +243,9 @@ export class CreateRequestComponent implements OnInit {
           console.log("currently updating");
           this.holidayService.updateHoliday(holidayData).subscribe(result => {
             // Call parent's function to refresh table.
-            
+            this.userService.getUser().subscribe(data => {
+              this.createRequest.emit(data.nrHolidays);
+             });
             this.refreshData();
             this.showMessage();
             console.log(result);
@@ -311,7 +313,9 @@ export class CreateRequestComponent implements OnInit {
           }
         }
         this.holidayService.updateHoliday(holidayData).subscribe(result => {
-          
+          this.userService.getUser().subscribe(data => {
+            this.createRequest.emit(data.nrHolidays);
+           });
           this.refreshData();
           this.showMessage();
           console.log(result);
