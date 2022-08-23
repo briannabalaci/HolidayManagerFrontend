@@ -5,18 +5,15 @@ import { Holiday } from '../shared/data-type/Holiday';
 import { User } from '../shared/data-type/User';
 import {HolidayDto, HolidayStatusDto, HolidayTypeDto} from "../shared/data-type/HolidayDto";
 
-const GET_USERS_HOLIDAYS = "http://localhost:8090/holiday/get-users-holidays"
-const CREATE_HOLIDAY = "http://localhost:8090/holiday/add-holiday"
-
-const DELETE_HOLIDAY = "http://localhost:8090/holiday/delete-holiday"
-
-
-const UPDATE_HOLIDAY = "http://localhost:8090/holiday/update-holiday"
 const URL = "http://localhost:8090/holiday";
+
+const UPDATE_HOLIDAY = `${URL}/update-holiday`
 const GET_REQUESTS_FILTERED = `${URL}/requests-filtered-by`;
-
-const GET_NO_HOLIDAYS_REQUIRED = "http://localhost:8090/holiday/number-of-holidays"
-
+const GET_USERS_HOLIDAYS = `${URL}/get-users-holidays`
+const CREATE_HOLIDAY = `${URL}/add-holiday`
+const DELETE_HOLIDAY =`${URL}/delete-holiday`
+const GET_NO_HOLIDAYS_REQUIRED = `${URL}/number-of-holidays`
+const GET_HOLIDAY = `${URL}/holiday-info`
 
 @Injectable({
   providedIn: 'root'
@@ -53,8 +50,6 @@ export class HolidayService {
   }
 
   public getRequestsFilteredByStatusAndType(status: HolidayStatusDto, type: HolidayTypeDto, id: number): Observable<HolidayDto[]>{
-
-    console.log("service - status - " + status + " type - " + type + "teamlead id - " + id)
     let url = `${GET_REQUESTS_FILTERED}?status=${status}&type=${type}&id=${id}`
     return this.httpClient.get<HolidayDto[]>(url);
 
@@ -65,6 +60,10 @@ export class HolidayService {
     return this.httpClient.get<number>(url)
   }
 
+  public getHoliday(id: number): Observable<HolidayDto>{
+    let url = `${GET_HOLIDAY}?id=${id}`
+    return this.httpClient.get<HolidayDto>(url)
+  }
 
 
 }

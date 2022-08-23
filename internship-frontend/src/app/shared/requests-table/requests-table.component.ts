@@ -81,10 +81,10 @@ export class RequestsTableComponent implements AfterViewInit {
   }
 
   getStatus(status: any): HolidayStatusDto {
-    if (status == 'Pending') {
+    if (status == 'Pending' || status == 'PENDING') {
       this.selectedStatusChild = HolidayStatusDto.PENDING;
       status = HolidayStatusDto.PENDING;
-    } else if (status == 'Approved') {
+    } else if (status == 'Approved' || status == 'APPROVED') {
       this.selectedStatusChild = HolidayStatusDto.APPROVED;
       status = HolidayStatusDto.APPROVED;
     } else {
@@ -96,10 +96,10 @@ export class RequestsTableComponent implements AfterViewInit {
   }
 
   getType(type: any): HolidayTypeDto {
-    if (type == 'Rest holiday') {
+    if (type == 'Rest holiday' || type == 'REST') {
       this.selectedTypeChild = HolidayTypeDto.REST_HOLIDAY;
       type = HolidayTypeDto.REST_HOLIDAY;
-    } else if (type == 'Special holiday') {
+    } else if (type == 'Special holiday' || type == 'SPECIAL') {
       this.selectedTypeChild = HolidayTypeDto.SPECIAL_HOLIDAY;
       type = HolidayTypeDto.SPECIAL_HOLIDAY;
     } else {
