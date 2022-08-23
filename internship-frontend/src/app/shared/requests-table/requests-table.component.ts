@@ -210,6 +210,7 @@ export class RequestsTableComponent implements AfterViewInit {
       this.parent.holidayUpdatingStartDate = element.startDate;
       this.parent.holidayUpdatingEndDate = element.endDate;
       this.parent.holidayUpdatingSubstitute = element.substitute;
+      this.parent.holidayUpdatingStatus = element.status;
       if (element.details != null) {
         this.parent.details = element.details;
       } else {

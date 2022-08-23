@@ -33,6 +33,7 @@ export class CreateRequestComponent implements OnInit {
   @Input() updatingStartDate!: string;
   @Input() updatingEndDate!: string;
   @Input() updatingSubstitute!: string;
+  @Input() updatingStatus!: string;
   @Input() deviceValue!: string;
   @Input() details!: string;
   @Input() parent: any;
