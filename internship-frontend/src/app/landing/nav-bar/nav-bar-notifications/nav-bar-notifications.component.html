@@ -7,6 +7,8 @@
         <p class="notificationText">{{notif.message}}<span class="bold">{{notif.sender}}</span>.</p>
     </mat-card>
     <hr>
+    <button mat-button type="button" *ngIf="seenNotif1 != undefined && seenNotif1.length > 0" id="clear-notif" (click)="clearNotifications()" color="grey">Clear all</button>
+    <br clear="all" />
     <mat-card class="notificationItemRead" *ngFor="let notif of seenNotif1">
         <mat-card-title class="notificationHeader">{{notif.header}}<p class="notificationDateRead">{{notif.time}}</p></mat-card-title>
         <p class="notificationText">{{notif.message}}<span class="bold">{{notif.sender}}</span>.</p>

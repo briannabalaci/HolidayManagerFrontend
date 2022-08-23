@@ -18,6 +18,8 @@ const GET_REQUESTS_FILTERED = `${URL_BASE}/requests-filtered-by`;
 const GET_NO_HOLIDAYS_REQUIRED = URL_BASE + "/number-of-holidays"
 const REQUEST_DETAILS = URL_BASE +"/details"
 
+const GET_HOLIDAY = `${URL_BASE}/holiday-info`
+const CHECK_REQUEST = `${URL_BASE}/check-request`
 
   @Injectable({
   providedIn: 'root'
@@ -54,8 +56,6 @@ export class HolidayService {
   }
 
   public getRequestsFilteredByStatusAndType(status: HolidayStatusDto, type: HolidayTypeDto, id: number): Observable<HolidayDto[]>{
-
-    console.log("service - status - " + status + " type - " + type + "teamlead id - " + id)
     let url = `${GET_REQUESTS_FILTERED}?status=${status}&type=${type}&id=${id}`
     return this.httpClient.get<HolidayDto[]>(url);
 
@@ -66,6 +66,14 @@ export class HolidayService {
     return this.httpClient.get<number>(url)
   }
 
+  public getHoliday(id: number): Observable<HolidayDto>{
+    let url = `${GET_HOLIDAY}?id=${id}`
+    return this.httpClient.get<HolidayDto>(url)
+  }
 
 
+  checkAndCreateRequest(username: string, startDate: string, endDate: string): Observable<number> {
+      let url = `${CHECK_REQUEST}?email=${username}&startDate=${startDate}&endDate=${endDate}`;
+      return this.httpClient.get<number>(url);
+  }
 }

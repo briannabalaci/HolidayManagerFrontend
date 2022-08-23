@@ -6,10 +6,10 @@ import {parseJwt} from 'src/app/utils/JWTParser';
 import {Holiday, HolidayForUpdate, HolidayStatus, HolidayTypeView, RequestType} from '../data-type/Holiday';
 import {DatePipe} from '@angular/common';
 import {UserService} from "../../service/user.service";
-import { Component, Input, OnInit, Output, SimpleChanges, ViewChild,EventEmitter } from '@angular/core';
-import { FormBuilder, NgForm, Validators } from '@angular/forms';
-import {User} from "../data-type/User";
-import { stringify } from 'querystring';
+import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {FormBuilder, NgForm, Validators} from '@angular/forms';
+import {UpdateUser, User} from "../data-type/User";
+import {AdminService} from "../../service/admin.service";
 
 
 @Component({
@@ -37,13 +37,17 @@ export class CreateRequestComponent implements OnInit {
   @Input() details!: string;
   @Input() parent: any;
   @Output() newRequest = new EventEmitter<string>()
-
+  @Output() createRequest = new EventEmitter<number>()
+  userForUpdate: User;
+  requestForUpdate: Holiday;
 
 
   userNoHolidays = 0;
   numberDaysRequired = 0;
   unpaidDaysRequired = 0;
-
+  daysToBeTakenOrAdded = 0;
+  numberDaysRequiredInitialRequest = 0;
+  unpaidDaysRequiredInitialRequest = 0;
 
   showSuccess = false;
   showError = false;
@@ -52,6 +56,7 @@ export class CreateRequestComponent implements OnInit {
   showDateErrorMessage = false;
   showFillErrorMessage = false;
   showNumberHolidaysErrorMessage = false;
+  showPastDateErrorMessage = false;
   showSuccessfulMessage = false;
   showSuccessfulUpdateMessage = false;
   showFieldForStartDate = false;
@@ -64,6 +69,7 @@ export class CreateRequestComponent implements OnInit {
     {value: 'special-holiday', viewValue: 'Special holiday'},
     {value: 'unpaid-holiday', viewValue: 'Unpaid holiday'}
   ];
+
   constructor(private formBuilder: FormBuilder, private cookieService: CookieService, private holidayService: HolidayService, private userService: UserService) {
   }
 
@@ -141,34 +147,110 @@ export class CreateRequestComponent implements OnInit {
     let startDate = datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!
     let endDate = datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!
 
+    // if(!this.updating){
+    //   this.holidayService.checkAndCreateRequest(parseJwt(this.cookieService.get("Token")).username, startDate, endDate).subscribe(result => {
+    //     if(result > 0){
+    //       this.showSuccess = true
+    //       this.showError = false
+    //       this.sendHolidayRequest()
+    //     }
+    //     else {
+    //       this.showError = true;
+    //       this.showSuccess = false
+    //       this.showMessage()
+    //     }
+    //   })
+    // }
+
     this.userService.getUser().subscribe(result => {
+
+      this.userForUpdate = result;
 
       this.userNoHolidays = result.nrHolidays!
 
       this.holidayService.getNoHolidays(startDate, endDate).subscribe(result => {
 
         this.numberDaysRequired = result
-        this.unpaidDaysRequired = Math.floor(this.numberDaysRequired/10)
+        this.unpaidDaysRequired = Math.floor(this.numberDaysRequired / 10)
 
         if(!this.updating) {
-          console.log(this.unpaidDaysRequired + " " + this.numberDaysRequired + " " + this.userNoHolidays)
           if (this.numberDaysRequired > this.userNoHolidays && this.deviceValue == 'rest-holiday') {
+
             this.showError = true;
             this.showSuccess = false
             this.showMessage()
+
           } else if (this.unpaidDaysRequired > this.userNoHolidays && this.deviceValue == 'unpaid-holiday') {
-            console.log(this.deviceValue)
+
             this.showError = true;
             this.showSuccess = false
             this.showMessage()
+
           } else {
+
             this.showSuccess = true
             this.showError = false
             this.sendHolidayRequest()
+
           }
-        }
-        else {
-          this.sendHolidayRequest();
+        } else {
+
+          this.holidayService.getHoliday(this.updatingId).subscribe(result => {
+
+            let startDateI = datePipe.transform(result.startDate, 'yyyy-MM-dd HH:mm:ss')!
+            let endDateI = datePipe.transform(result.endDate, 'yyyy-MM-dd HH:mm:ss')!
+
+            this.holidayService.getNoHolidays(startDateI, endDateI).subscribe(result => {
+
+              this.numberDaysRequiredInitialRequest = result;
+
+              this.daysToBeTakenOrAdded = this.numberDaysRequired - this.numberDaysRequiredInitialRequest;
+
+              if (this.deviceValue == 'rest-holiday') {
+
+                if (this.daysToBeTakenOrAdded > this.userNoHolidays) {
+
+                  this.showError = true;
+                  this.showSuccess = false
+                  this.showMessage()
+                } else {
+
+                  this.showSuccess = true
+                  this.showError = false
+                  this.showMessage()
+                  this.userForUpdate.nrHolidays = this.userNoHolidays - this.daysToBeTakenOrAdded
+                  this.sendHolidayRequest()
+                  this.userService.updateVacationDays(this.userForUpdate.email!, this.userForUpdate.nrHolidays).subscribe(result => console.log(result))
+                }
+
+              } else if (this.deviceValue == 'unpaid-holiday') {
+
+                this.unpaidDaysRequiredInitialRequest = Math.floor(this.numberDaysRequiredInitialRequest / 10);
+
+                this.daysToBeTakenOrAdded = this.unpaidDaysRequired - this.unpaidDaysRequiredInitialRequest;
+
+                if (this.daysToBeTakenOrAdded > this.userNoHolidays) {
+
+                  this.showError = true;
+                  this.showSuccess = false
+                  this.showMessage()
+                } else {
+
+                  this.showSuccess = true
+                  this.showError = false
+                  this.showMessage()
+                  this.userForUpdate.nrHolidays = this.userNoHolidays - this.daysToBeTakenOrAdded
+                  this.sendHolidayRequest()
+                  this.userService.updateVacationDays(this.userForUpdate.email!, this.userForUpdate.nrHolidays).subscribe(result => console.log(result))
+                }
+              } else {
+                this.showSuccess = true
+                this.showError = false
+                this.showMessage()
+                this.sendHolidayRequest()
+              }
+            })
+          })
         }
       })
     })
@@ -218,8 +300,12 @@ export class CreateRequestComponent implements OnInit {
 
           console.log("currently inserting");
           this.holidayService.createHoliday(holidayData).subscribe(result => {
+            this.userService.getUser().subscribe(data => {
+              this.createRequest.emit(data.nrHolidays);
+             });
             // Call parent's function to refresh table.
-            this.newRequest.emit("New request created!")
+            this.newRequest.emit("New request created!");
+            this.clearSelect();
             this.refreshData();
             this.showMessage()
             console.log(result);
@@ -235,10 +321,23 @@ export class CreateRequestComponent implements OnInit {
           }
           console.log("currently updating");
           this.holidayService.updateHoliday(holidayData).subscribe(result => {
+            this.userService.getUser().subscribe(data => {
+              this.createRequest.emit(data.nrHolidays);
+              this.newRequest.emit("New request created!")
+
+            });
             // Call parent's function to refresh table.
+
             this.refreshData();
+            this.showMessage();
             console.log(result);
-            this.newRequest.emit("New request created!")
+
+            this.details = '';
+            this.updating = false;
+            this.clearSelect();
+            this.showSuccess = true;
+            this.showError = false;
+            this.showMessage();
 
           });
         }
@@ -270,9 +369,13 @@ export class CreateRequestComponent implements OnInit {
           }
         }
         this.holidayService.createHoliday(holidayData).subscribe(result => {
+          this.userService.getUser().subscribe(data => {
+            this.createRequest.emit(data.nrHolidays);
+           });
           // Call parent's function to refresh table.
-          this.showMessage()
-          this.newRequest.emit("New request created!")
+          this.newRequest.emit("New request created!");
+          this.clearSelect();
+          this.showMessage();
           this.refreshData();
           console.log(result);
         });
@@ -294,10 +397,21 @@ export class CreateRequestComponent implements OnInit {
           }
         }
         this.holidayService.updateHoliday(holidayData).subscribe(result => {
-          // Call parent's function to refresh table.
+          this.userService.getUser().subscribe(data => {
+            this.createRequest.emit(data.nrHolidays);
+            this.newRequest.emit("New request created!")
+
+          });
+
           this.refreshData();
+          this.showMessage();
           console.log(result);
-          this.newRequest.emit("New request created!")
+          this.details = '';
+          this.updating = false;
+          this.clearSelect();
+          this.showSuccess = true;
+          this.showError = false;
+          this.showMessage();
         });
       }
     }
@@ -320,10 +434,15 @@ export class CreateRequestComponent implements OnInit {
         break;
       }
     }
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
     if (anyFieldIsEmpty) {
       this.showFillErrorMessage = true;
     } else if (valuesFromForm.startDate! > valuesFromForm.endDate!) {
       this.showDateErrorMessage = true;
+    } else if (valuesFromForm.startDate! <= yesterday) {
+      this.showPastDateErrorMessage = true;
     } else {
       this.resetWarnings();
       this.checkAndSend();
@@ -337,7 +456,7 @@ export class CreateRequestComponent implements OnInit {
       this.showFieldForEndDate = false;
       this.showFieldForSubstitute = false;
       this.showFieldForDocument = false;
-    } else if (this.showError) {
+    } else {
       this.showNumberHolidaysErrorMessage = true;
       this.showFieldForStartDate = false;
       this.showFieldForEndDate = false;
@@ -352,6 +471,7 @@ export class CreateRequestComponent implements OnInit {
     this.showSuccessfulMessage = false;
     this.showDateErrorMessage = false;
     this.showNumberHolidaysErrorMessage = false;
+    this.showPastDateErrorMessage = false;
   }
 
   clearSelect() {

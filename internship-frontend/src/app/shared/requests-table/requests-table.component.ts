@@ -25,7 +25,7 @@ const ELEMENT_DATA: HolidayDto[] = []
 
 export class RequestsTableComponent implements AfterViewInit {
 
-  displayedColumns: string[] = ['startDate', 'endDate', 'type', 'edit', 'delete']
+  displayedColumns: string[] = ['startDate', 'endDate', 'type', 'edit', 'status', 'delete']
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   @Input() selectedTypeChild: any;
@@ -130,18 +130,19 @@ export class RequestsTableComponent implements AfterViewInit {
   }
 
   filterByTypeAndStatus(type: any, status: any): void {
+    console.log(type + " " + status)
     switch (true) {
-      case type == 'All request' && status == 'All':
+      case type == 'All requests' && status == 'All':
         this.populateTeamLeadRequests();
-        this.selectedTypeChild = 'All request';
+        this.selectedTypeChild = 'All requests';
         this.selectedStatusChild = 'All';
         break;
 
-      case type != 'All request' && status == 'All':
+      case type != 'All requests' && status == 'All':
         this.getFilteredByType(type)
         break;
 
-      case type == 'All request' && status != 'All':
+      case type == 'All requests' && status != 'All':
         this.getFilteredByStatus(status)
         break;
 
@@ -153,9 +154,10 @@ export class RequestsTableComponent implements AfterViewInit {
 
   filterByType(value: any): void {
     switch (value) {
-      case 'All request': {
+      case 'All requests': {
         this.populateTeamLeadRequests();
-        this.selectedTypeChild = null;
+        this.selectedTypeChild = 'All requests';
+        this.selectedStatusChild = 'All';
         break;
       }
       case 'Rest holiday': {
@@ -177,11 +179,11 @@ export class RequestsTableComponent implements AfterViewInit {
   }
 
   refreshData() {
-    if (this.selectedStatusChild == "All" && this.selectedTypeChild == "All request") {
+    if ((this.selectedStatusChild == 'All' || this.selectedStatusChild == null) && (this.selectedTypeChild == 'All requests' || this.selectedTypeChild == null)) {
       this.populateTeamLeadRequests();
-    } else if (this.selectedStatusChild != "All" && this.selectedTypeChild == "All request") {
+    } else if ((this.selectedStatusChild != 'All' || this.selectedStatusChild != null) && (this.selectedTypeChild == 'All requests' || this.selectedTypeChild == null)) {
       this.getFilteredByStatus(this.selectedStatusChild)
-    } else if (this.selectedStatusChild == "All" && this.selectedTypeChild != "All request") {
+    } else if ((this.selectedStatusChild == 'All' || this.selectedStatusChild == null) && (this.selectedTypeChild != 'All requests' || this.selectedTypeChild != null)) {
       this.getFilteredByType(this.selectedTypeChild)
     } else {
       this.getFilteredByStatusAndType(this.selectedStatusChild, this.selectedTypeChild)
@@ -196,48 +198,52 @@ export class RequestsTableComponent implements AfterViewInit {
   }
 
   fillFields(element: HolidayDto) {
-    this.parent.showFormCreateRequest = true;
-    this.parent.holidayUpdating = true;
-    this.parent.holidayUpdatingId = element.id;
-    this.parent.holidayUpdatingStartDate = element.startDate;
-    this.parent.holidayUpdatingEndDate = element.endDate;
-    this.parent.holidayUpdatingSubstitute = element.substitute;
-    if (element.details != null) {
-      this.parent.details = element.details;
-    } else {
-      this.parent.details = '';
-    }
-    switch (element.type) {
-      case HolidayTypeDto.UNPAID_HOLIDAY:
-        this.parent.holidayType = 'unpaid-holiday';
-        break;
-      case HolidayTypeDto.REST_HOLIDAY:
-        this.parent.holidayType = 'rest-holiday';
-        break;
-      case HolidayTypeDto.SPECIAL_HOLIDAY:
-        this.parent.holidayType = 'special-holiday';
-        break;
-    }
+    if (this.parent.showFormCreateRequest == false) {
+      console.log(element);
+      this.parent.showFormCreateRequest = true;
+      this.parent.holidayUpdating = true;
+      this.parent.holidayUpdatingId = element.id;
+      this.parent.holidayUpdatingStartDate = element.startDate;
+      this.parent.holidayUpdatingEndDate = element.endDate;
+      this.parent.holidayUpdatingSubstitute = element.substitute;
+      if (element.details != null) {
+        this.parent.details = element.details;
+      } else {
+        this.parent.details = '';
+      }
+      switch (element.type) {
+        case HolidayTypeDto.UNPAID_HOLIDAY:
+          this.parent.holidayType = 'unpaid-holiday';
+          break;
+        case HolidayTypeDto.REST_HOLIDAY:
+          this.parent.holidayType = 'rest-holiday';
+          break;
+        case HolidayTypeDto.SPECIAL_HOLIDAY:
+          this.parent.holidayType = 'special-holiday';
+          break;
+      }
 
+    }
   }
 
-  async deleteHoliday(element: HolidayDto) {
-    const dialogResponse = this.dialogBox.open(ConfirmationDialogBoxComponent, {
-      data: "Are you sure you want to delete this holiday request?"
+ deleteHoliday(element: HolidayDto) {
+    const dialogResponse = this.dialogBox.open(ConfirmationDialogBoxComponent,{
+      data:"Are you sure you want to delete this holiday request?"
     });
     dialogResponse.afterClosed().subscribe((response: any) => {
       if (response) {
-
         this.holidayService.deleteHoliday(element.id).subscribe(data => {
+          this.refreshData();
           this.userService.getUser().subscribe(data => {
             this.deletedApprovedEvent.emit(data.nrHolidays);
-
-          });
+           });
         })
-
-        this.refreshData();
+        console.log("Am trecut");
       }
     })
+
+
+
   }
 
   applyFilters(selected2: any, selected: any) {

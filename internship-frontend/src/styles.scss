@@ -91,7 +91,9 @@ h3 {
 .mat-raised-button.mat-red {
   background-color: v.$red;
 }
-
+.mat-button.mat-grey {
+  color: v.$grey-dark;
+}
 .mat-icon.mat-green {
   color: v.$green;
 }
@@ -196,6 +198,9 @@ h3 {
   text-align: center !important;
 }
 .edit-cell {
+  text-align: center !important;
+}
+.status-cell {
   text-align: center !important;
 }
 .delete-cell {

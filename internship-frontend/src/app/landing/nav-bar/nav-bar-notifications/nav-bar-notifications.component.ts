@@ -120,8 +120,11 @@ export class NavBarNotificationsComponent implements OnInit {
     }
     return Math.floor(seconds) + " sec";
   }
-
-
+  clearNotifications(){
+    this.notificationService.deleteSeenNotifications(this.id).subscribe(data => {
+      this.seenNotif1 = [];
+    })
+  }
 }
 
 

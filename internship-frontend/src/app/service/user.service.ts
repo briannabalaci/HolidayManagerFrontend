@@ -14,6 +14,8 @@ const GET_USER = `${URL_BASE}/user-info`
 const GET_USER_BY_ID = URL_BASE + "/find-user-by-id"
 const FILTER_BY_NAME = URL_BASE + "/filter-by-name"
 
+const UPDATE_VACATION_DAYS = `${URL_BASE}/update-vacation-days`
+
 @Injectable({
   providedIn: 'root'
 })
@@ -42,8 +44,14 @@ export class UserService {
     return this.httpClient.get<User>(GET_USER_BY_ID+"/"+id.toString());
   }
 
-  public filterByName(data:UserName):Observable<User[]>{
-      return this.httpClient.get<User[]>(FILTER_BY_NAME);
+
+  public filterByName(data:UserName):Observable<User[]> {
+    return this.httpClient.get<User[]>(FILTER_BY_NAME);
+  }
+
+  public updateVacationDays(email: string, noDays: number): Observable<User>{
+    let url = `${UPDATE_VACATION_DAYS}?email=${email}&noDays=${noDays}`
+    return this.httpClient.put(url,  new Headers({'Content-Length': '0'}));
   }
 
 }

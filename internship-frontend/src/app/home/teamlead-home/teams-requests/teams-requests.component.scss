@@ -57,3 +57,19 @@
   padding-bottom: 10px;
 
 }
+
+.button-card {
+  float: right;
+  background-color:v.$green;
+  border-radius: 24px;
+  max-width: 64px;
+  max-height: 40px;
+}
+
+#pdf-p {
+  padding-top: 14px;
+  float: left;
+  font-size: 14px;
+  max-width: 50%;
+  color: v.$green;
+}
