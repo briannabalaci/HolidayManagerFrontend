@@ -52,6 +52,7 @@ export class CreateRequestComponent implements OnInit {
   showDateErrorMessage = false;
   showFillErrorMessage = false;
   showNumberHolidaysErrorMessage = false;
+  showPastDateErrorMessage = false;
   showSuccessfulMessage = false;
   showSuccessfulUpdateMessage = false;
   showFieldForStartDate = false;
@@ -342,10 +343,15 @@ export class CreateRequestComponent implements OnInit {
         break;
       }
     }
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
     if (anyFieldIsEmpty) {
       this.showFillErrorMessage = true;
     } else if (valuesFromForm.startDate! > valuesFromForm.endDate!) {
       this.showDateErrorMessage = true;
+    } else if (valuesFromForm.startDate! <= yesterday) { 
+      this.showPastDateErrorMessage = true;
     } else {
       this.resetWarnings();
       this.checkAndSend();
@@ -374,6 +380,7 @@ export class CreateRequestComponent implements OnInit {
     this.showSuccessfulMessage = false;
     this.showDateErrorMessage = false;
     this.showNumberHolidaysErrorMessage = false;
+    this.showPastDateErrorMessage = false;
   }
 
   clearSelect() {
