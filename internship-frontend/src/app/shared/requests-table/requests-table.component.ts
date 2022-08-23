@@ -133,18 +133,19 @@ export class RequestsTableComponent implements AfterViewInit {
   }
 
   filterByTypeAndStatus(type: any, status: any): void {
+    console.log(type + " " + status)
     switch (true) {
-      case type == 'All request' && status == 'All':
+      case type == 'All requests' && status == 'All':
         this.populateTeamLeadRequests();
-        this.selectedTypeChild = 'All request';
+        this.selectedTypeChild = 'All requests';
         this.selectedStatusChild = 'All';
         break;
 
-      case type != 'All request' && status == 'All':
+      case type != 'All requests' && status == 'All':
         this.getFilteredByType(type)
         break;
 
-      case type == 'All request' && status != 'All':
+      case type == 'All requests' && status != 'All':
         this.getFilteredByStatus(status)
         break;
 
@@ -156,9 +157,10 @@ export class RequestsTableComponent implements AfterViewInit {
 
   filterByType(value: any): void {
     switch (value) {
-      case 'All request': {
+      case 'All requests': {
         this.populateTeamLeadRequests();
-        this.selectedTypeChild = null;
+        this.selectedTypeChild = 'All requests';
+        this.selectedStatusChild = 'All';
         break;
       }
       case 'Rest holiday': {
@@ -180,11 +182,11 @@ export class RequestsTableComponent implements AfterViewInit {
   }
 
   refreshData() {
-    if (this.selectedStatusChild == null && this.selectedTypeChild == null) {
+    if (this.selectedStatusChild == 'All' && this.selectedTypeChild == 'All requests') {
       this.populateTeamLeadRequests();
-    } else if (this.selectedStatusChild != null && this.selectedTypeChild == null) {
+    } else if (this.selectedStatusChild != 'All' && this.selectedTypeChild == 'All requests') {
       this.getFilteredByStatus(this.selectedStatusChild)
-    } else if (this.selectedStatusChild == null && this.selectedTypeChild != null) {
+    } else if (this.selectedStatusChild == 'All' && this.selectedTypeChild != 'All requests') {
       this.getFilteredByType(this.selectedTypeChild)
     } else {
       this.getFilteredByStatusAndType(this.selectedStatusChild, this.selectedTypeChild)
@@ -242,7 +244,7 @@ export class RequestsTableComponent implements AfterViewInit {
         console.log("Am trecut");
       }
     })
-   
+
 
 
   }
