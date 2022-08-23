@@ -37,7 +37,7 @@ export class CreateRequestComponent implements OnInit {
   @Input() details!: string;
   @Input() parent: any;
   @Output() newRequest = new EventEmitter<string>()
-
+  @Output() createRequest = new EventEmitter<number>()
   userForUpdate: User;
   requestForUpdate: Holiday;
 
@@ -286,6 +286,9 @@ export class CreateRequestComponent implements OnInit {
 
           console.log("currently inserting");
           this.holidayService.createHoliday(holidayData).subscribe(result => {
+            this.userService.getUser().subscribe(data => {
+              this.createRequest.emit(data.nrHolidays);
+             });
             // Call parent's function to refresh table.
             this.newRequest.emit("New request created!");
             this.clearSelect();
@@ -304,6 +307,9 @@ export class CreateRequestComponent implements OnInit {
           }
           console.log("currently updating");
           this.holidayService.updateHoliday(holidayData).subscribe(result => {
+            this.userService.getUser().subscribe(data => {
+              this.createRequest.emit(data.nrHolidays);
+             });
             // Call parent's function to refresh table.
 
             this.refreshData();
@@ -345,6 +351,9 @@ export class CreateRequestComponent implements OnInit {
           }
         }
         this.holidayService.createHoliday(holidayData).subscribe(result => {
+          this.userService.getUser().subscribe(data => {
+            this.createRequest.emit(data.nrHolidays);
+           });
           // Call parent's function to refresh table.
           this.newRequest.emit("New request created!");
           this.clearSelect();
@@ -370,6 +379,9 @@ export class CreateRequestComponent implements OnInit {
           }
         }
         this.holidayService.updateHoliday(holidayData).subscribe(result => {
+          this.userService.getUser().subscribe(data => {
+            this.createRequest.emit(data.nrHolidays);
+           });
 
           this.refreshData();
           this.showMessage();
