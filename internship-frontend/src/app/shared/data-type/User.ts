@@ -52,3 +52,8 @@ export class UpdateUser {
   role?: Role;
   nrHolidays?: number;
 }
+
+export class UserName {
+  forname?: string;
+  surname?: string;
+}

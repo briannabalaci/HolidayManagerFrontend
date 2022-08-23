@@ -14,6 +14,7 @@ export class TeamleadHomeComponent implements OnInit {
   }
 
   newNotificationSignalReceived(message:string) {
+    console.log("1. In teamlead home")
     const mess = {"message": "Update the tables! "}
     this.newNotification = Object.assign({}, mess)
   }

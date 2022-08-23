@@ -9,10 +9,10 @@
     </mat-form-field>
     <mat-form-field class="filter" appearance="outline" color="accent" >
       <mat-select  [formControl]="typeFilter2" placeholder="Fiter by type">
-    
+
         <mat-option *ngFor="let request of requestsTypes" [value]="request.value">
           {{request.viewValue}}
-          
+
         </mat-option>
       </mat-select>
     </mat-form-field>

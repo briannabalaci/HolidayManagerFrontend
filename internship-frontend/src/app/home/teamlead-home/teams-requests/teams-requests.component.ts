@@ -74,19 +74,18 @@ export class TeamsRequestsComponent implements OnInit,OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log("Filter values: ")
-    console.log(this.filteredValues)
-
     if (this.newNotification != null)
       if (this.newNotification["message"] != "") {
-        this.refreshData()
-        // this.filterByNameAndType()
-        // this.table.renderRows()
+
+        this.getTeamLeaderData();
+
       }
   }
 
   refreshData(){
-    this.populateTeamRequests();
+    // this.populateTeamRequests();
+    this.getTeamLeaderData();
+    this.filterByNameAndType()
   }
 
   get refreshDataFunc() {
@@ -103,7 +102,9 @@ export class TeamsRequestsComponent implements OnInit,OnChanges {
   }
 
   filterByNameAndType(){
+    console.log("Filter by both....")
     this.nameFilter.valueChanges.subscribe(
+
       nameFilterValue => {
         // @ts-ignore
         this.filteredValues.name = nameFilterValue;

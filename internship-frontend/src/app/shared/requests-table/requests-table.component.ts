@@ -122,10 +122,6 @@ export class RequestsTableComponent implements AfterViewInit {
   }
 
   getFilteredByStatusAndType(status: any, type: any) {
-    console.log("Before: ")
-    console.log(status, type)
-    console.log(this.getStatus(status))
-    console.log(this.getType(type))
     this.holidayService.getRequestsFilteredByStatusAndType(this.getStatus(status), this.getType(type), this.user!.id!).subscribe(data => {
       this.dataSource.data = data;
       this.selectedStatusChild = status;
@@ -181,11 +177,11 @@ export class RequestsTableComponent implements AfterViewInit {
   }
 
   refreshData() {
-    if (this.selectedStatusChild == null && this.selectedTypeChild == null) {
+    if (this.selectedStatusChild == "All" && this.selectedTypeChild == "All request") {
       this.populateTeamLeadRequests();
-    } else if (this.selectedStatusChild != null && this.selectedTypeChild == null) {
+    } else if (this.selectedStatusChild != "All" && this.selectedTypeChild == "All request") {
       this.getFilteredByStatus(this.selectedStatusChild)
-    } else if (this.selectedStatusChild == null && this.selectedTypeChild != null) {
+    } else if (this.selectedStatusChild == "All" && this.selectedTypeChild != "All request") {
       this.getFilteredByType(this.selectedTypeChild)
     } else {
       this.getFilteredByStatusAndType(this.selectedStatusChild, this.selectedTypeChild)
@@ -233,12 +229,7 @@ export class RequestsTableComponent implements AfterViewInit {
       if (response) {
 
         this.holidayService.deleteHoliday(element.id).subscribe(data => {
-          console.log("Tara2")
-          // this.holidays?.forEach( (item: { id: number | undefined; }, index: any) => {
-          //   if (item.id === element.id) this.holidays?.splice(index, 1);
-          console.log("Tara")
           this.userService.getUser().subscribe(data => {
-            console.log("In copil: " + data.nrHolidays)
             this.deletedApprovedEvent.emit(data.nrHolidays);
 
           });

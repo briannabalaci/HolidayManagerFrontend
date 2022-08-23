@@ -42,7 +42,7 @@ export class TeamleadRequestsComponent implements OnInit,OnChanges {
   }
 
   newRequestAddedHandler(message:string){
-    // this.getAndSetTeamLeadData()
+    this.getAndSetTeamLeadData() //update the vacation days
     this.refreshData()
   }
 
