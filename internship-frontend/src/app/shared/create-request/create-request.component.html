@@ -1,5 +1,7 @@
 
 <h2> {{updating ? "Update request" : "Send new request" }}</h2>
+<p class="request-msg-green" *ngIf="updatingStatus == 'APPROVED'">This request was approved.</p>
+<p class="request-msg-red" *ngIf="updatingStatus == 'DENIED'">This request was declined.</p>
 <form id="login-form" [formGroup]="holidayRequestFormGroup" (ngSubmit) = "verifyHolidayRequest()" #formDirective="ngForm">
 
 

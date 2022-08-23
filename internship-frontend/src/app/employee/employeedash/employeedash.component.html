@@ -44,7 +44,7 @@
 
 <div class="div-holiday-request">
   <mat-card class="bg-card">
-    <app-create-request *ngIf="showFormCreateRequest" (createRequest)="changeVacationDays($event)" [refreshData]="refreshDataFunc" [details]="details" [updating] ="holidayUpdating" [updatingId]="holidayUpdatingId" [updatingStartDate]="holidayUpdatingStartDate" [updatingEndDate]="holidayUpdatingEndDate" [updatingSubstitute]="holidayUpdatingSubstitute" [deviceValue]="holidayType"></app-create-request>
+    <app-create-request *ngIf="showFormCreateRequest" (createRequest)="changeVacationDays($event)" [refreshData]="refreshDataFunc" [details]="details" [updating] ="holidayUpdating" [updatingStatus]="holidayUpdatingStatus" [updatingId]="holidayUpdatingId" [updatingStartDate]="holidayUpdatingStartDate" [updatingEndDate]="holidayUpdatingEndDate" [updatingSubstitute]="holidayUpdatingSubstitute" [deviceValue]="holidayType"></app-create-request>
     <button mat-button color="accent" type="button" (click)="showForm()" id="form-button">{{showFormCreateRequest? "Close" : "Create new request"}}</button>
   </mat-card>
 </div>

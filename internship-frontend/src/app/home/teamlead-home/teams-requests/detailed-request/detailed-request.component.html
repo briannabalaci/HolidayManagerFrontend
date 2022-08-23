@@ -3,7 +3,8 @@
   <header>
     <h2 class="section-title">Request View</h2>
   </header>
-
+  <p class="request-msg-green" *ngIf="decidingStatus == 'APPROVED'">This request was approved.</p>
+  <p class="request-msg-red" *ngIf="decidingStatus == 'DENIED'">This request was declined.</p>
   <form [formGroup]="holidayRequestFormGroup" #formDirective="ngForm">
     <p *ngIf="showFieldForName">Name: </p>
     <mat-form-field *ngIf="showFieldForName" appearance="outline" color="accent">
