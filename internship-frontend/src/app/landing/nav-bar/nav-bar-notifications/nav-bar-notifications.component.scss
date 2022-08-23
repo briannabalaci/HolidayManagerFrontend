@@ -4,7 +4,7 @@ hr{
     height: 2px;
     border-radius: 2px;
     background: v.$grey;
-    margin-bottom: 24px;
+    margin-bottom: 6px;
  }
 .notificationContainer {
     display: flex;
@@ -69,7 +69,7 @@ hr{
   }
   .notificationInfo {
     text-align: center;
-    font-size: 12px;
+    font-size: 14px;
     color: v.$orange;
   }
 .triangle-up {
@@ -94,4 +94,9 @@ hr{
         border-radius: 38px;
         background-color: v.$white;
       }
+  }
+  #clear-notif {
+    float:right;
+    margin-bottom: 6px;
+
   }
