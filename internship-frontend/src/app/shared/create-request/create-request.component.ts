@@ -148,6 +148,21 @@ export class CreateRequestComponent implements OnInit {
     let startDate = datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!
     let endDate = datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!
 
+    // if(!this.updating){
+    //   this.holidayService.checkAndCreateRequest(parseJwt(this.cookieService.get("Token")).username, startDate, endDate).subscribe(result => {
+    //     if(result > 0){
+    //       this.showSuccess = true
+    //       this.showError = false
+    //       this.sendHolidayRequest()
+    //     }
+    //     else {
+    //       this.showError = true;
+    //       this.showSuccess = false
+    //       this.showMessage()
+    //     }
+    //   })
+    // }
+
     this.userService.getUser().subscribe(result => {
 
       this.userForUpdate = result;
@@ -218,6 +233,7 @@ export class CreateRequestComponent implements OnInit {
                 this.daysToBeTakenOrAdded = this.unpaidDaysRequired - this.unpaidDaysRequiredInitialRequest;
 
                 if (this.daysToBeTakenOrAdded > this.userNoHolidays) {
+
                   this.showError = true;
                   this.showSuccess = false
                   this.showMessage()

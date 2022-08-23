@@ -14,6 +14,7 @@ const CREATE_HOLIDAY = `${URL}/add-holiday`
 const DELETE_HOLIDAY =`${URL}/delete-holiday`
 const GET_NO_HOLIDAYS_REQUIRED = `${URL}/number-of-holidays`
 const GET_HOLIDAY = `${URL}/holiday-info`
+const CHECK_REQUEST = `${URL}/check-request`
 
 @Injectable({
   providedIn: 'root'
@@ -66,4 +67,8 @@ export class HolidayService {
   }
 
 
+  checkAndCreateRequest(username: string, startDate: string, endDate: string): Observable<number> {
+      let url = `${CHECK_REQUEST}?email=${username}&startDate=${startDate}&endDate=${endDate}`;
+      return this.httpClient.get<number>(url);
+  }
 }

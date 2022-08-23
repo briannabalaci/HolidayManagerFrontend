@@ -182,11 +182,12 @@ export class RequestsTableComponent implements AfterViewInit {
   }
 
   refreshData() {
-    if (this.selectedStatusChild == 'All' && this.selectedTypeChild == 'All requests') {
+    console.log(this.selectedTypeChild + " " + this.selectedStatusChild)
+    if ((this.selectedStatusChild == 'All' || this.selectedStatusChild == null) && (this.selectedTypeChild == 'All requests' || this.selectedTypeChild == null)) {
       this.populateTeamLeadRequests();
-    } else if (this.selectedStatusChild != 'All' && this.selectedTypeChild == 'All requests') {
+    } else if ((this.selectedStatusChild != 'All' || this.selectedStatusChild != null) && (this.selectedTypeChild == 'All requests' || this.selectedTypeChild == null)) {
       this.getFilteredByStatus(this.selectedStatusChild)
-    } else if (this.selectedStatusChild == 'All' && this.selectedTypeChild != 'All requests') {
+    } else if ((this.selectedStatusChild == 'All' || this.selectedStatusChild == null) && (this.selectedTypeChild != 'All requests' || this.selectedTypeChild != null)) {
       this.getFilteredByType(this.selectedTypeChild)
     } else {
       this.getFilteredByStatusAndType(this.selectedStatusChild, this.selectedTypeChild)
