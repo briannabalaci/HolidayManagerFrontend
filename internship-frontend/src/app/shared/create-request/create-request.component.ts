@@ -193,11 +193,14 @@ export class CreateRequestComponent implements OnInit {
               this.daysToBeTakenOrAdded = this.numberDaysRequired - this.numberDaysRequiredInitialRequest;
 
               if (this.deviceValue == 'rest-holiday') {
+
                 if (this.daysToBeTakenOrAdded > this.userNoHolidays) {
+
                   this.showError = true;
                   this.showSuccess = false
                   this.showMessage()
                 } else {
+
                   this.showSuccess = true
                   this.showError = false
                   this.showMessage()
@@ -205,20 +208,19 @@ export class CreateRequestComponent implements OnInit {
                   this.sendHolidayRequest()
                   this.userService.updateVacationDays(this.userForUpdate.email!, this.userForUpdate.nrHolidays).subscribe(result => console.log(result))
                 }
+
               } else if (this.deviceValue == 'unpaid-holiday') {
+
                 this.unpaidDaysRequiredInitialRequest = Math.floor(this.numberDaysRequiredInitialRequest / 10);
+
                 this.daysToBeTakenOrAdded = this.unpaidDaysRequired - this.unpaidDaysRequiredInitialRequest;
-                console.log(this.daysToBeTakenOrAdded)
-                console.log(this.unpaidDaysRequiredInitialRequest)
-                console.log(this.unpaidDaysRequired)
+
                 if (this.daysToBeTakenOrAdded > this.userNoHolidays) {
                   this.showError = true;
                   this.showSuccess = false
                   this.showMessage()
                 } else {
-                  console.log(this.daysToBeTakenOrAdded)
-                  console.log(this.unpaidDaysRequiredInitialRequest)
-                  console.log(this.unpaidDaysRequired)
+
                   this.showSuccess = true
                   this.showError = false
                   this.showMessage()
