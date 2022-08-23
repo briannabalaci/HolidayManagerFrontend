@@ -8,8 +8,8 @@ import {DatePipe} from '@angular/common';
 import {UserService} from "../../service/user.service";
 import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {FormBuilder, NgForm, Validators} from '@angular/forms';
-import {UpdateUser, User} from "../data-type/User";
-import {AdminService} from "../../service/admin.service";
+import {User} from "../data-type/User";
+import {HolidayTypeDto} from "../data-type/HolidayDto";
 
 
 @Component({
@@ -137,6 +137,36 @@ export class CreateRequestComponent implements OnInit {
     }
   }
 
+  checkAndCreateRequest(type: HolidayTypeDto, startDate: string, endDate: string){
+    this.holidayService.checkAndCreateRequest(parseJwt(this.cookieService.get("Token")).username, type, startDate, endDate).subscribe(result => {
+      console.log(result)
+      if (result > 0) {
+        this.showSuccess = true
+        this.showError = false
+        this.sendHolidayRequest()
+      } else {
+        this.showError = true;
+        this.showSuccess = false
+        this.showMessage()
+      }
+    })
+  }
+
+  checkAndUpdateRequest(type: HolidayTypeDto, startDate: string, endDate: string){
+    this.holidayService.checkAndUpdateRequest(parseJwt(this.cookieService.get("Token")).username, type, startDate, endDate, this.updatingId).subscribe(result => {
+      console.log(result)
+      if(result > 0){
+        this.showSuccess = true
+        this.showError = false
+        this.sendHolidayRequest()
+      } else {
+        this.showError = true;
+        this.showSuccess = false
+        this.showMessage()
+      }
+    })
+  }
+
   // @ts-ignore
   checkAndSend(): any {
 
@@ -147,115 +177,46 @@ export class CreateRequestComponent implements OnInit {
     let startDate = datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!
     let endDate = datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!
 
-    // if(!this.updating){
-    //   this.holidayService.checkAndCreateRequest(parseJwt(this.cookieService.get("Token")).username, startDate, endDate).subscribe(result => {
-    //     if(result > 0){
-    //       this.showSuccess = true
-    //       this.showError = false
-    //       this.sendHolidayRequest()
-    //     }
-    //     else {
-    //       this.showError = true;
-    //       this.showSuccess = false
-    //       this.showMessage()
-    //     }
-    //   })
-    // }
+    if(!this.updating) {
 
-    this.userService.getUser().subscribe(result => {
+      let type;
+      if (this.deviceValue == 'special-holiday') {
 
-      this.userForUpdate = result;
+        this.showSuccess = true
+        this.showError = false
+        this.sendHolidayRequest()
 
-      this.userNoHolidays = result.nrHolidays!
+      }
+      else if (this.deviceValue == 'unpaid-holiday') {
 
-      this.holidayService.getNoHolidays(startDate, endDate).subscribe(result => {
+        this.checkAndCreateRequest(HolidayTypeDto.UNPAID_HOLIDAY, startDate, endDate)
 
-        this.numberDaysRequired = result
-        this.unpaidDaysRequired = Math.floor(this.numberDaysRequired / 10)
+      }
+      else {
 
+        this.checkAndCreateRequest(HolidayTypeDto.REST_HOLIDAY, startDate, endDate)
 
-        if (!this.updating) {
+      }
+    } else {
 
-          if (this.numberDaysRequired > this.userNoHolidays && this.deviceValue == 'rest-holiday') {
+      if (this.deviceValue == 'special-holiday') {
 
-            this.showError = true;
-            this.showSuccess = false
-            this.showMessage()
+        this.showSuccess = true
+        this.showError = false
+        this.sendHolidayRequest()
 
-          } else if (this.unpaidDaysRequired > this.userNoHolidays && this.deviceValue == 'unpaid-holiday') {
+      }
+      else if (this.deviceValue == 'unpaid-holiday') {
 
-            this.showError = true;
-            this.showSuccess = false
-            this.showMessage()
+        this.checkAndUpdateRequest(HolidayTypeDto.UNPAID_HOLIDAY, startDate, endDate)
 
-          } else {
+      }
+      else {
 
-            this.showSuccess = true
-            this.showError = false
-            this.sendHolidayRequest()
+        this.checkAndUpdateRequest(HolidayTypeDto.REST_HOLIDAY, startDate, endDate)
 
-          }
-        } else {
-
-          this.holidayService.getHoliday(this.updatingId).subscribe(result => {
-
-            let startDateI = datePipe.transform(result.startDate, 'yyyy-MM-dd HH:mm:ss')!
-            let endDateI = datePipe.transform(result.endDate, 'yyyy-MM-dd HH:mm:ss')!
-
-            this.holidayService.getNoHolidays(startDateI, endDateI).subscribe(result => {
-
-              this.numberDaysRequiredInitialRequest = result;
-
-              this.daysToBeTakenOrAdded = this.numberDaysRequired - this.numberDaysRequiredInitialRequest;
-
-              if (this.deviceValue == 'rest-holiday') {
-
-                if (this.daysToBeTakenOrAdded > this.userNoHolidays) {
-
-                  this.showError = true;
-                  this.showSuccess = false
-                  this.showMessage()
-                } else {
-
-                  this.showSuccess = true
-                  this.showError = false
-                  this.showMessage()
-                  this.userForUpdate.nrHolidays = this.userNoHolidays - this.daysToBeTakenOrAdded
-                  this.sendHolidayRequest()
-                  this.userService.updateVacationDays(this.userForUpdate.email!, this.userForUpdate.nrHolidays).subscribe(result => console.log(result))
-                }
-
-              } else if (this.deviceValue == 'unpaid-holiday') {
-
-                this.unpaidDaysRequiredInitialRequest = Math.floor(this.numberDaysRequiredInitialRequest / 10);
-
-                this.daysToBeTakenOrAdded = this.unpaidDaysRequired - this.unpaidDaysRequiredInitialRequest;
-
-                if (this.daysToBeTakenOrAdded > this.userNoHolidays) {
-
-                  this.showError = true;
-                  this.showSuccess = false
-                  this.showMessage()
-                } else {
-
-                  this.showSuccess = true
-                  this.showError = false
-                  this.showMessage()
-                  this.userForUpdate.nrHolidays = this.userNoHolidays - this.daysToBeTakenOrAdded
-                  this.sendHolidayRequest()
-                  this.userService.updateVacationDays(this.userForUpdate.email!, this.userForUpdate.nrHolidays).subscribe(result => console.log(result))
-                }
-              } else {
-                this.showSuccess = true
-                this.showError = false
-                this.showMessage()
-                this.sendHolidayRequest()
-              }
-            })
-          })
-        }
-      })
-    })
+      }
+    }
   }
 
   sendHolidayRequest() {
