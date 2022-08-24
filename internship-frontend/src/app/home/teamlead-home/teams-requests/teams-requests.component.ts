@@ -173,7 +173,7 @@ export class TeamsRequestsComponent implements OnInit {
     this.showPdfMessage = true;
     console.log("PDF generated");
     this.teamLeadService
-    .getPDF(51)
+    .getPDF(this.user!.team!.id!)
     .subscribe(blob => saveAs(blob,"Team_Lead_Data"));
     };
   }
