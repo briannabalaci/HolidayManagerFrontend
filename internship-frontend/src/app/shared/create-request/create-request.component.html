@@ -16,8 +16,6 @@
     </mat-card>
   </div>
   <mat-form-field appearance="outline" color="accent"  *ngIf="!updating" >
-
-
     <mat-select (selectionChange)="onChange($event.value)" placeholder="Select holiday type" (click)="resetWarnings()" #matRef>
       <mat-option *ngFor="let holiday of holidayList" [value]="holiday.value" (click)="resetWarnings()">
         {{holiday.viewValue}}</mat-option>
@@ -43,6 +41,13 @@
     <input matInput name="substitute" formControlName="substitute" placeholder="Substitute" (click)="resetWarnings()">
   </mat-form-field><br *ngIf="showFieldForSubstitute">
 
+  <mat-form-field *ngIf="showFieldForReplacement" appearance="outline" color="accent">
+    <mat-select placeholder="Teamlead replacement" (click)="resetWarnings()" #matRef>
+      <mat-option *ngFor="let user of replacementUserList" [value]="user" (click)="resetWarnings()">
+        {{user.forname + " " + user.surname}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field><br *ngIf="showFieldForReplacement">
   <!-- <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload> -->
   <div *ngIf="showFieldForDocument">
     <!--<input type="file" #fileInput (change)="onFileInput(fileInput.files)" /> -->
