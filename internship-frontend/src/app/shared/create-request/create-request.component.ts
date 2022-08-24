@@ -8,7 +8,7 @@ import {DatePipe} from '@angular/common';
 import {UserService} from "../../service/user.service";
 import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {FormBuilder, NgForm, Validators} from '@angular/forms';
-import {User} from "../data-type/User";
+import {User, UserType} from "../data-type/User";
 import {HolidayTypeDto} from "../data-type/HolidayDto";
 
 
@@ -85,7 +85,9 @@ export class CreateRequestComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.refreshSubstitutes();
+    if(parseJwt(this.cookieService.get("Token")).type === UserType.TEAMLEAD){
+      this.refreshSubstitutes();
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -308,7 +310,6 @@ export class CreateRequestComponent implements OnInit {
             this.showMessage()
           }
         })
-
       }
       else if (this.deviceValue == 'unpaid-holiday') {
 
