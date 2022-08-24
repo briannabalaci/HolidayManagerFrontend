@@ -95,20 +95,21 @@ export class HolidayService {
     }
 
     public filterByTypeAndUserName(data: HolidayTypeUserName):Observable<HolidayDto[]> {
-      console.log("service apelat")
       if (data.type == null && data.forname != null && data.surname != null)
-        return this.httpClient.get<HolidayDto[]>(`${FILTER}?forname=${data.forname}&surname=${data.surname}`);
+        return this.httpClient.get<HolidayDto[]>(`${FILTER}?teamLeaderId=${data.teamLeaderId}&forname=${data.forname}&surname=${data.surname}`);
       else if (data.type == null && data.forname == null && data.surname != null)
-        return this.httpClient.get<HolidayDto[]>(`${FILTER}?surname=${data.surname}`);
+        return this.httpClient.get<HolidayDto[]>(`${FILTER}?teamLeaderId=${data.teamLeaderId}&surname=${data.surname}`);
       else if (data.type == null && data.forname != null && data.surname == null)
-        return this.httpClient.get<HolidayDto[]>(`${FILTER}?forname=${data.forname}`);
+        return this.httpClient.get<HolidayDto[]>(`${FILTER}?teamLeaderId=${data.teamLeaderId}&forname=${data.forname}`);
       else if (data.type != null && data.forname == null && data.surname == null)
-        return this.httpClient.get<HolidayDto[]>(`${FILTER}?type=${data.type}`);
+        return this.httpClient.get<HolidayDto[]>(`${FILTER}?teamLeaderId=${data.teamLeaderId}&type=${data.type}`);
       else if (data.type != null && data.forname != null && data.surname == null)
-        return this.httpClient.get<HolidayDto[]>(`${FILTER}?type=${data.type}&forname=${data.forname}`);
+        return this.httpClient.get<HolidayDto[]>(`${FILTER}?teamLeaderId=${data.teamLeaderId}&type=${data.type}&forname=${data.forname}`);
       else if (data.type != null && data.forname == null && data.surname != null)
-        return this.httpClient.get<HolidayDto[]>(`${FILTER}?type=${data.type}&surname=${data.surname}`);
-      else
-        return this.httpClient.get<HolidayDto[]>(`${FILTER}?type=${data.type}&forname=${data.forname}&surname=${data.surname}`);
+        return this.httpClient.get<HolidayDto[]>(`${FILTER}?teamLeaderId=${data.teamLeaderId}&type=${data.type}&surname=${data.surname}`);
+      else if (data.type != null && data.forname != null && data.surname != null)
+        return this.httpClient.get<HolidayDto[]>(`${FILTER}?teamLeaderId=${data.teamLeaderId}&type=${data.type}&forname=${data.forname}&surname=${data.surname}`);
+      else return this.httpClient.get<HolidayDto[]>(`${FILTER}?teamLeaderId=${data.teamLeaderId}`);
+
     }
 }

@@ -11,11 +11,17 @@ import {MatPaginator} from "@angular/material/paginator";
 import {UserService} from "../../../service/user.service";
 import {DetailedRequestComponent} from "./detailed-request/detailed-request.component";
 import { HolidayTypeView } from 'src/app/shared/data-type/Holiday';
+import { saveAs } from 'file-saver';
 import {HolidayService} from "../../../service/holiday.service";
 
 
-const ELEMENT_DATA: HolidayDto[] = []
 
+const ELEMENT_DATA: HolidayDto[] = []
+export class FileData {
+  filename?: string;
+  contentType?: string;
+  size?: number;
+}
 @Component({
   selector: 'app-teams-requests',
   templateUrl: './teams-requests.component.html',
@@ -23,7 +29,7 @@ const ELEMENT_DATA: HolidayDto[] = []
 })
 export class TeamsRequestsComponent implements OnInit,OnChanges {
 
-
+  file: FileData;
   endDate = 'Angular';
   startDate = 'Angular';
   substitute = '';
@@ -87,7 +93,10 @@ export class TeamsRequestsComponent implements OnInit,OnChanges {
     console.log("here in ng on change-------------------------------")
     if (this.newNotification != null)
       if (this.newNotification["message"] != "") {
-        // this.getTeamLeaderData();
+        console.log("In ng on change: "+this.selectedSurname + " "+ this.selectedForname+ " "+ this.selectedType)
+
+        // if(this.selectedType == undefined && this.selectedForname == undefined && this.selectedSurname == undefined)
+        //     this.getTeamLeaderData();
         console.log(this.selectedType)
         console.log(this.selectedSurname)
         console.log(this.selectedForname)
@@ -110,6 +119,9 @@ export class TeamsRequestsComponent implements OnInit,OnChanges {
   }
 
   refreshData(){
+    // if(this.selectedType == undefined && this.selectedForname == undefined && this.selectedSurname == undefined)
+    //   this.getTeamLeaderData();
+    console.log("In refresh: "+ this.selectedSurname + " "+ this.selectedForname+ " "+ this.selectedType)
     this.filterByTypeAndName(this.selectedSurname, this.selectedForname, this.selectedType)
   }
 
@@ -131,7 +143,8 @@ export class TeamsRequestsComponent implements OnInit,OnChanges {
     const dto : HolidayTypeUserName = {
       type:this.getType(type),
       surname:surname,
-      forname:forname
+      forname:forname,
+      teamLeaderId: this.user.id!,
     }
     this.holidayService.filterByTypeAndUserName(dto).subscribe(
       data => {
@@ -226,10 +239,14 @@ export class TeamsRequestsComponent implements OnInit,OnChanges {
     this.showFormApproveRequest = !this.showFormApproveRequest
   }
   generatePdf() {
+   
     this.showPdfMessage = true;
     console.log("PDF generated");
+    this.teamLeadService
+    .getPDF(this.user!.team!.id!)
+    .subscribe(blob => saveAs(blob,"Team_Lead_Data"));
+  };
+  
   }
 
 
-
-}

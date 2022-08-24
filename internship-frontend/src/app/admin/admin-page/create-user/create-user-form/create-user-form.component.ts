@@ -59,7 +59,7 @@ changeType(value: string) {
   createUserForm = this.formBuilder.group({
     
     password: ['', Validators.required],
-    email: ['', Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")],
+    email: ['', Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$")],
     forName: ['', Validators.required],
     surName: ['', Validators.required],
     nrHolidays: ['', Validators.required],
@@ -95,10 +95,35 @@ changeType(value: string) {
     let u: User = Object.assign({}, newUser);
     if (!this.createUserForm.invalid) {
       this.sendAddUserRequest(u);
-    
       this.createUserForm.reset();
+      this.createUserForm.controls["email"].clearValidators();
+      this.createUserForm.controls["email"].updateValueAndValidity();
+      this.createUserForm.controls["email"].addValidators([Validators.required]);
+      this.createUserForm.controls["email"].addValidators(Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"));
+      this.createUserForm.controls["email"].updateValueAndValidity();
+
+    
+     
+
+
+      
     }
-    else { console.log("DATE INVALIDE"); }
+    else {
+      
+      this.createUserForm.reset();
+      this.createUserForm.controls["email"].clearValidators();
+      this.createUserForm.controls["email"].updateValueAndValidity();
+      this.createUserForm.controls["email"].addValidators([Validators.required]);
+      this.createUserForm.controls["email"].addValidators(Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"));
+      this.createUserForm.controls["email"].updateValueAndValidity();
+    
+     
+
+
+      
+    
+   
+    }
   }
   resetWarnings() {
     this.showEmailErrorMessage = false;

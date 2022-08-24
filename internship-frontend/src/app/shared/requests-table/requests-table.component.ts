@@ -40,7 +40,6 @@ export class RequestsTableComponent implements AfterViewInit {
   parent: any;
   holidays: any;
   @Output() deletedApprovedEvent = new EventEmitter<number>();
-  @Output() newModification = new EventEmitter<string>();
 
   constructor(private holidayService: HolidayService, private userService: UserService, private teamLeadService: TeamleadService, private _liveAnnouncer: LiveAnnouncer, private dialogBox: MatDialog) {
   }
@@ -238,15 +237,11 @@ export class RequestsTableComponent implements AfterViewInit {
           this.refreshData();
           this.userService.getUser().subscribe(data => {
             this.deletedApprovedEvent.emit(data.nrHolidays);
-            this.newModification.emit("Update the tables hihi ")
            });
         })
         console.log("Am trecut");
       }
     })
-
-
-
   }
 
   applyFilters(selected2: any, selected: any) {
