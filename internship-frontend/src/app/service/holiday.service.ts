@@ -34,8 +34,9 @@ export class HolidayService {
   public getAllHolidaysById(id: number): Observable<Holiday[]> {
     return this.httpClient.get<Holiday[]>(GET_USERS_HOLIDAYS+'/'+id.toString());
   }
-  public createHoliday(holiday: Holiday): Observable<Holiday>{
-    return this.httpClient.post<Holiday>(CREATE_HOLIDAY, holiday);
+  public createHoliday(holiday: Holiday, substituteId:number): Observable<Holiday>{
+    let url = `${CREATE_HOLIDAY}?substituteId=${substituteId}`
+    return this.httpClient.post<Holiday>(url, holiday);
   }
 
   public deleteHoliday(id?: number): Observable<Holiday> {
@@ -84,7 +85,7 @@ export class HolidayService {
     let url = `${CHECK_REQUEST_UPDATE}?email=${username}&type=${holidayType}&startDate=${startDate}&endDate=${endDate}&holidayId=${holidayId}`;
     return this.httpClient.get<number>(url);
     }
-    
+
   checkDateOverlap(username: string,  startDate: string, endDate: string): Observable<number> {
     let url = `${CHECK_DATE_OVERLAP}?email=${username}&startDate=${startDate}&endDate=${endDate}`;
     return this.httpClient.get<number>(url);

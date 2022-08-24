@@ -80,6 +80,7 @@ export class CreateRequestComponent implements OnInit {
     {value: 'unpaid-holiday', viewValue: 'Unpaid holiday'}
   ];
   replacementUserList: User[];
+  substitute:User
   constructor(private formBuilder: FormBuilder, private cookieService: CookieService, private holidayService: HolidayService, private userService: UserService) {
   }
 
@@ -113,6 +114,9 @@ export class CreateRequestComponent implements OnInit {
       }
     }
 
+  }
+  onReplacementClick(user:User){
+    this.substitute = user
   }
   refreshSubstitutes() {
     const token = this.cookieService.get('Token');
@@ -362,7 +366,9 @@ export class CreateRequestComponent implements OnInit {
 
 
           console.log("currently inserting");
-          this.holidayService.createHoliday(holidayData).subscribe(result => {
+          // substituteId =
+          // if(this.isTeamlead)
+          this.holidayService.createHoliday(holidayData, this.substitute.id!).subscribe(result => {
             this.userService.getUser().subscribe(data => {
               this.createRequest.emit(data.nrHolidays);
             });
@@ -434,7 +440,7 @@ export class CreateRequestComponent implements OnInit {
             }
           }
         }
-        this.holidayService.createHoliday(holidayData).subscribe(result => {
+        this.holidayService.createHoliday(holidayData,this.substitute.id!).subscribe(result => {
           this.userService.getUser().subscribe(data => {
             this.createRequest.emit(data.nrHolidays);
           });
