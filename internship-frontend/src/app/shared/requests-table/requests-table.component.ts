@@ -40,6 +40,7 @@ export class RequestsTableComponent implements AfterViewInit {
   parent: any;
   holidays: any;
   @Output() deletedApprovedEvent = new EventEmitter<number>();
+  @Output() newModification = new EventEmitter<string>();
 
   constructor(private holidayService: HolidayService, private userService: UserService, private teamLeadService: TeamleadService, private _liveAnnouncer: LiveAnnouncer, private dialogBox: MatDialog) {
   }
@@ -81,32 +82,29 @@ export class RequestsTableComponent implements AfterViewInit {
   }
 
   getStatus(status: any): HolidayStatusDto {
-    if (status == 'Pending') {
+    if (status == 'Pending' || status == 'PENDING') {
       this.selectedStatusChild = HolidayStatusDto.PENDING;
       status = HolidayStatusDto.PENDING;
-    } else if (status == 'Approved') {
+    } else if (status == 'Approved' || status == 'APPROVED') {
       this.selectedStatusChild = HolidayStatusDto.APPROVED;
       status = HolidayStatusDto.APPROVED;
     } else {
       this.selectedStatusChild = HolidayStatusDto.DENIED;
       status = HolidayStatusDto.DENIED;
     }
-
     return status
   }
-
   getType(type: any): HolidayTypeDto {
-    if (type == 'Rest holiday') {
+    if (type == 'Rest holiday' || type == 'REST') {
       this.selectedTypeChild = HolidayTypeDto.REST_HOLIDAY;
       type = HolidayTypeDto.REST_HOLIDAY;
-    } else if (type == 'Special holiday') {
+    } else if (type == 'Special holiday' || type == 'SPECIAL') {
       this.selectedTypeChild = HolidayTypeDto.SPECIAL_HOLIDAY;
       type = HolidayTypeDto.SPECIAL_HOLIDAY;
     } else {
       this.selectedTypeChild = HolidayTypeDto.UNPAID_HOLIDAY;
       type = HolidayTypeDto.UNPAID_HOLIDAY;
     }
-
     return type
   }
 
@@ -133,18 +131,19 @@ export class RequestsTableComponent implements AfterViewInit {
   }
 
   filterByTypeAndStatus(type: any, status: any): void {
+    console.log(type + " " + status)
     switch (true) {
-      case type == 'All request' && status == 'All':
+      case type == 'All requests' && status == 'All':
         this.populateTeamLeadRequests();
-        this.selectedTypeChild = 'All request';
+        this.selectedTypeChild = 'All requests';
         this.selectedStatusChild = 'All';
         break;
 
-      case type != 'All request' && status == 'All':
+      case type != 'All requests' && status == 'All':
         this.getFilteredByType(type)
         break;
 
-      case type == 'All request' && status != 'All':
+      case type == 'All requests' && status != 'All':
         this.getFilteredByStatus(status)
         break;
 
@@ -156,9 +155,10 @@ export class RequestsTableComponent implements AfterViewInit {
 
   filterByType(value: any): void {
     switch (value) {
-      case 'All request': {
+      case 'All requests': {
         this.populateTeamLeadRequests();
-        this.selectedTypeChild = null;
+        this.selectedTypeChild = 'All requests';
+        this.selectedStatusChild = 'All';
         break;
       }
       case 'Rest holiday': {
@@ -180,11 +180,11 @@ export class RequestsTableComponent implements AfterViewInit {
   }
 
   refreshData() {
-    if (this.selectedStatusChild == null && this.selectedTypeChild == null) {
+    if ((this.selectedStatusChild == 'All' || this.selectedStatusChild == null) && (this.selectedTypeChild == 'All requests' || this.selectedTypeChild == null)) {
       this.populateTeamLeadRequests();
-    } else if (this.selectedStatusChild != null && this.selectedTypeChild == null) {
+    } else if ((this.selectedStatusChild != 'All' || this.selectedStatusChild != null) && (this.selectedTypeChild == 'All requests' || this.selectedTypeChild == null)) {
       this.getFilteredByStatus(this.selectedStatusChild)
-    } else if (this.selectedStatusChild == null && this.selectedTypeChild != null) {
+    } else if ((this.selectedStatusChild == 'All' || this.selectedStatusChild == null) && (this.selectedTypeChild != 'All requests' || this.selectedTypeChild != null)) {
       this.getFilteredByType(this.selectedTypeChild)
     } else {
       this.getFilteredByStatusAndType(this.selectedStatusChild, this.selectedTypeChild)
@@ -207,6 +207,7 @@ export class RequestsTableComponent implements AfterViewInit {
       this.parent.holidayUpdatingStartDate = element.startDate;
       this.parent.holidayUpdatingEndDate = element.endDate;
       this.parent.holidayUpdatingSubstitute = element.substitute;
+      this.parent.holidayUpdatingStatus = element.status;
       if (element.details != null) {
         this.parent.details = element.details;
       } else {
@@ -237,12 +238,13 @@ export class RequestsTableComponent implements AfterViewInit {
           this.refreshData();
           this.userService.getUser().subscribe(data => {
             this.deletedApprovedEvent.emit(data.nrHolidays);
+            this.newModification.emit("Update the tables hihi ")
            });
         })
         console.log("Am trecut");
       }
     })
-   
+
 
 
   }

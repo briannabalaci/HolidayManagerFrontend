@@ -19,7 +19,7 @@ export class NavBarComponent implements OnInit {
   notificationNum: number;
   notificationsVisible = false;
   canShowNotification = true;
-  @Output() newNoification = new EventEmitter<string>()
+  @Output() newNotification = new EventEmitter<string>()
 
 
   constructor(private router: Router, private cookieService: CookieService, private userService:UserService, private notificationService: NotificationService, private stompService:StompService) { }
@@ -30,8 +30,9 @@ export class NavBarComponent implements OnInit {
       this.notificationService.getAllUnseenNotifications(this.id).subscribe(data => {
         this.notificationNum = data.length;
       })
-      console.log("Se emite")
-      this.newNoification.emit("Something changed! ")
+      console.log("Se emite notificarea")
+      this.newNotification.emit("Something changed! ")
+
     })
 
 

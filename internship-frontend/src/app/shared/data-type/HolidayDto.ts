@@ -24,3 +24,9 @@ export class HolidayDto{
   details?:string;
   user!:User;
 }
+
+export class HolidayTypeUserName{
+  type:HolidayTypeDto;
+  surname:string;
+  forname:string;
+}

@@ -91,6 +91,9 @@ h3 {
 .mat-raised-button.mat-red {
   background-color: v.$red;
 }
+.mat-button.mat-grey {
+  color: v.$grey-dark;
+}
 .mat-icon.mat-green {
   color: v.$green;
 }
@@ -206,3 +209,11 @@ h3 {
 }
 
 /// END OF TABLE CSS
+.request-msg-green {
+  color: v.$green;
+  font-weight: bold;
+}
+.request-msg-red {
+  color: v.$red;
+  font-weight: bold;
+}

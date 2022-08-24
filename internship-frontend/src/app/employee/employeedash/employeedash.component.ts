@@ -36,6 +36,7 @@ export class EmployeedashComponent implements OnInit,OnChanges {
   holidayUpdatingStartDate = '';
   holidayUpdatingEndDate = '';
   holidayUpdatingSubstitute = '';
+  holidayUpdatingStatus = 'PENDING';
   details = '';
 
   dataSource = new MatTableDataSource(HOLIDAY_DATA);
@@ -47,12 +48,12 @@ export class EmployeedashComponent implements OnInit,OnChanges {
   user!: User;
 
 
-  requestsTypes: string[] = ['All request', 'Rest holiday', 'Special holiday', 'Unpaid holiday']
+  requestsTypes: string[] = ['All requests', 'Rest holiday', 'Special holiday', 'Unpaid holiday']
   requestsStatus: string[] = ['All', 'Pending', 'Approved', 'Denied']
 
   @Input() newNotification = "";
 
-  sendNewNotificationSignal(message:string){
+  newNotificationSignalReceived(message:string){
     console.log("In parinteee")
     this.userService.getUser().subscribe(data => {
 
@@ -60,39 +61,12 @@ export class EmployeedashComponent implements OnInit,OnChanges {
       this.vacationDays = +data.nrHolidays!;
 
     })
+    this.refreshData()
   }
   ngOnChanges(changes: SimpleChanges): void {
-    // console.log("In copil afara de oif")
-    // if(this.newNotification!=""){
-    //   console.log("In copiiil")
-    //   this.userService.getUser().subscribe(data => {
-    //
-    //     this.user = data;
-    //     this.vacationDays = +data.nrHolidays!;
-    //
-    //   })
-    // }
+
   }
 
-
-
-  // deleteHoliday(row: Holiday) {
-  //   const dialogResponse = this.dialogBox.open(ConfirmationDialogBoxComponent,{
-  //     data:"Are you sure you want to delete this holiday request?"
-  //   });
-  //   dialogResponse.afterClosed().subscribe( response => {
-  //     if(response){
-  //       this.holidayService.deleteHoliday(row.id).subscribe(data => {
-  //         this.holidays?.forEach( (item, index) => {
-  //           if(item.id === row.id) this.holidays?.splice(index,1);
-  //         });
-  //         this.dataSource = new MatTableDataSource(this.holidays);
-  //         this.applyFilters(this.selected2, this.selected);
-  //       });
-  //     }
-  //   })
-
-  // }
   clearData(): void{
   this.endDate = '';
   this.startDate = '';
