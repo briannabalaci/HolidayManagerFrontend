@@ -1,10 +1,15 @@
+
 <section class="section-detailed-request">
 
   <header>
     <h2 class="section-title">Request View</h2>
   </header>
-  <p class="request-msg-green" *ngIf="decidingStatus == 'APPROVED'">This request was approved.</p>
-  <p class="request-msg-red" *ngIf="decidingStatus == 'DENIED'">This request was declined.</p>
+  <div class="centered">
+    <mat-icon color="green" *ngIf="decidingStatus == 'APPROVED'">done</mat-icon>
+    <p class="request-msg-green" *ngIf="decidingStatus == 'APPROVED'">This request was approved.</p>
+    <mat-icon color="red" *ngIf="decidingStatus == 'DENIED'">close</mat-icon>
+    <p class="request-msg-red" *ngIf="decidingStatus == 'DENIED'">This request was declined.</p>
+  </div>
   <form [formGroup]="holidayRequestFormGroup" #formDirective="ngForm">
     <p *ngIf="showFieldForName">Name: </p>
     <mat-form-field *ngIf="showFieldForName" appearance="outline" color="accent">
