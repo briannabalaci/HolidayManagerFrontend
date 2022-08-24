@@ -65,7 +65,7 @@ export class SubstituteRequestsComponent implements OnInit {
   }
 
   refreshData(){
-    this.getTeamLeaderData()
+    this.getSubstituteData()
   }
 
   get refreshDataFunc() {
@@ -74,26 +74,17 @@ export class SubstituteRequestsComponent implements OnInit {
 
   ngOnInit() {
     console.log("am ajuns in substitute")
-    this.getTeamLeaderData();
+    this.getSubstituteData()
   }
 
-  getTeamLeaderData() {
-    this.userService.getUser().subscribe(data => {
-
-      this.user = data;
-      this.populateTeamRequests();
-    })
-  }
-
-  populateTeamRequests() {
-    this.teamLeadService.getTeamRequests(this.user!.team!.id!).subscribe(data => {
-
+  getSubstituteData() {
+    this.holidayService.getSubstituteRequests().subscribe(data => {
       this.dataSource = new MatTableDataSource<HolidayDto>(data);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
-
     })
   }
+
 
   announceSortChange(sortState: Sort) {
     if (sortState.direction) {

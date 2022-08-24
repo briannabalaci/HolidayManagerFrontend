@@ -325,6 +325,11 @@ export class CreateRequestComponent implements OnInit {
 
   sendHolidayRequest() {
 
+    if(this.substitute === undefined) {
+      this.substitute = new User();
+      this.substitute.id = -1;
+    }
+
     const valuesFromForm = this.holidayRequestFormGroup.value;
 
     let hType = RequestType.REST;
