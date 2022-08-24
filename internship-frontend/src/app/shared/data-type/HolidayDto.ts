@@ -29,4 +29,5 @@ export class HolidayTypeUserName{
   type:HolidayTypeDto;
   surname:string;
   forname:string;
+  teamLeaderId:number;
 }

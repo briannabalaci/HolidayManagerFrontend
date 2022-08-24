@@ -62,6 +62,8 @@ export class NavBarNotificationsComponent implements OnInit {
     switch (type.toString()) {
       case "SENT":
         return "A holiday request was sent by "
+      case "CANCELED":
+        return "A holiday request was canceled by "
       case "UPDATE":
         return "A holiday request was updated by "
       case "MORE_DETAILS":
@@ -81,6 +83,8 @@ export class NavBarNotificationsComponent implements OnInit {
     switch (type.toString()) {
       case "SENT":
         return "Request sent"
+      case "CANCELED":
+        return "Request canceled"
       case "UPDATE":
         return "Request updated"
       case "MORE_DETAILS":

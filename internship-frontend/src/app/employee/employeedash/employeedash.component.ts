@@ -51,7 +51,6 @@ export class EmployeedashComponent implements OnInit,OnChanges {
   requestsTypes: string[] = ['All requests', 'Rest holiday', 'Special holiday', 'Unpaid holiday']
   requestsStatus: string[] = ['All', 'Pending', 'Approved', 'Denied']
 
-  @Input() newNotification = "";
 
   newNotificationSignalReceived(message:string){
     console.log("In parinteee")
@@ -64,7 +63,7 @@ export class EmployeedashComponent implements OnInit,OnChanges {
     this.refreshData()
   }
   ngOnChanges(changes: SimpleChanges): void {
-
+    this.refreshData()
   }
 
   clearData(): void{
