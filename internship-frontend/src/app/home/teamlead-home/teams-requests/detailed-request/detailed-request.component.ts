@@ -131,13 +131,6 @@ export class DetailedRequestComponent implements OnInit {
   }
 
   declineRequest(){
-    //todo: -> i don't know yet if this part is still necessary
-    // if(this.decidingStatus == HolidayStatusDto.DENIED || this.statusRequest == HolidayStatusDto.DENIED){
-    //   this.isErrorMessage = true;
-    //   this.isSuccessMessage = false;
-    //   this.errorString = "Request already declined!";
-    //   return;
-    // } else {
     this.teamLeadService.declineRequest(this.decidingId).subscribe(result => {
 
       this.modifiedRequest = result
@@ -156,14 +149,6 @@ export class DetailedRequestComponent implements OnInit {
   }
 
   approveRequest() {
-    //todo: -> i don't know yet if this part is still necessary
-    // if(this.decidingStatus == HolidayStatusDto.APPROVED || this.statusRequest == HolidayStatusDto.APPROVED){
-    //   this.isErrorMessage = true;
-    //   this.isSuccessMessage = false;
-    //   this.errorString = "Request already approved!";
-    //   return;
-    // } else {
-
     if(this.decidingDocumentName == null && this.decidingType == HolidayTypeDto.SPECIAL_HOLIDAY){
       this.isErrorMessage = true;
       this.isSuccessMessage = false;

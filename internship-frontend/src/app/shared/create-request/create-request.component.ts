@@ -42,6 +42,8 @@ export class CreateRequestComponent implements OnInit {
   userForUpdate: User;
   requestForUpdate: Holiday;
 
+  documentExists = false;
+
 
   userNoHolidays = 0;
   numberDaysRequired = 0;
@@ -95,6 +97,26 @@ export class CreateRequestComponent implements OnInit {
     }
   }
 
+  downloadDocument() {
+
+    this.holidayService.getHoliday(this.updatingId).subscribe(result => {
+
+      let binary_string = window.atob(result.document!)
+      let len = binary_string.length;
+      let bytes = new Uint8Array(len);
+
+      for (let i = 0; i < len; i++) {
+        bytes[i] = binary_string.charCodeAt(i);
+      }
+
+      let blob = new Blob([bytes.buffer], { type: 'application/pdf' })
+      let url = URL.createObjectURL(blob);
+
+      window.open(url);
+
+    })
+  }
+
   loadFields() {
     switch (this.deviceValue) {
       case 'rest-holiday': {
@@ -102,6 +124,7 @@ export class CreateRequestComponent implements OnInit {
         this.showFieldForEndDate = true;
         this.showFieldForSubstitute = true;
         this.showFieldForDocument = false;
+        this.documentExists = false;
         break;
       }
       case 'special-holiday': {
@@ -109,6 +132,7 @@ export class CreateRequestComponent implements OnInit {
         this.showFieldForEndDate = true;
         this.showFieldForSubstitute = true;
         this.showFieldForDocument = true;
+        this.documentExists = true;
         break;
       }
       case 'unpaid-holiday': {
@@ -116,6 +140,7 @@ export class CreateRequestComponent implements OnInit {
         this.showFieldForEndDate = true;
         this.showFieldForSubstitute = false;
         this.showFieldForDocument = false;
+        this.documentExists = false;
         break;
       }
     }
@@ -178,7 +203,7 @@ export class CreateRequestComponent implements OnInit {
     let startDate = datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!
     let endDate = datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!
 
-      if(!this.updating) {
+    if(!this.updating) {
 
       let type;
       if (this.deviceValue == 'special-holiday') {
@@ -266,7 +291,7 @@ export class CreateRequestComponent implements OnInit {
           this.holidayService.createHoliday(holidayData).subscribe(result => {
             this.userService.getUser().subscribe(data => {
               this.createRequest.emit(data.nrHolidays);
-             });
+            });
             // Call parent's function to refresh table.
             this.newRequest.emit("New request created!");
             this.clearSelect();
@@ -335,7 +360,7 @@ export class CreateRequestComponent implements OnInit {
         this.holidayService.createHoliday(holidayData).subscribe(result => {
           this.userService.getUser().subscribe(data => {
             this.createRequest.emit(data.nrHolidays);
-           });
+          });
           // Call parent's function to refresh table.
           this.newRequest.emit("New request created!");
           this.clearSelect();
@@ -420,12 +445,14 @@ export class CreateRequestComponent implements OnInit {
       this.showFieldForEndDate = false;
       this.showFieldForSubstitute = false;
       this.showFieldForDocument = false;
+      this.documentExists = false;
     } else {
       this.showNumberHolidaysErrorMessage = true;
       this.showFieldForStartDate = false;
       this.showFieldForEndDate = false;
       this.showFieldForSubstitute = false;
       this.showFieldForDocument = false;
+      this.documentExists = false;
     }
   }
 
