@@ -12,6 +12,8 @@ const CREATE_HOLIDAY = URL_BASE + "/add-holiday"
 const DELETE_HOLIDAY = URL_BASE + "/delete-holiday"
 const CHECK_REQUEST_CREATE = `${URL_BASE}/check-request-create`
 const CHECK_REQUEST_UPDATE = `${URL_BASE}/check-request-update`
+const CHECK_DATE_OVERLAP = `${URL_BASE}/check-date-overlap`
+const CHECK_DATE_OVERLAP_UPDATE = `${URL_BASE}/check-date-overlap-update`
 
 const UPDATE_HOLIDAY = URL_BASE + "/update-holiday"
 const GET_REQUESTS_FILTERED = `${URL_BASE}/requests-filtered-by`;
@@ -81,7 +83,16 @@ export class HolidayService {
   checkAndUpdateRequest(username: string, holidayType: HolidayTypeDto, startDate: string, endDate: string, holidayId: number): Observable<number> {
     let url = `${CHECK_REQUEST_UPDATE}?email=${username}&type=${holidayType}&startDate=${startDate}&endDate=${endDate}&holidayId=${holidayId}`;
     return this.httpClient.get<number>(url);
-  }
+    }
+    
+  checkDateOverlap(username: string,  startDate: string, endDate: string): Observable<number> {
+    let url = `${CHECK_DATE_OVERLAP}?email=${username}&startDate=${startDate}&endDate=${endDate}`;
+    return this.httpClient.get<number>(url);
+    }
+    checkDateOverlapUpdate(username: string,  startDate: string, endDate: string, holidayId: number): Observable<number> {
+      let url = `${CHECK_DATE_OVERLAP}?email=${username}&startDate=${startDate}&endDate=${endDate}&holidayId=${holidayId}`;
+      return this.httpClient.get<number>(url);
+    }
 
     public filterByTypeAndUserName(data: HolidayTypeUserName):Observable<HolidayDto[]> {
       if (data.type == null && data.forname != null && data.surname != null)

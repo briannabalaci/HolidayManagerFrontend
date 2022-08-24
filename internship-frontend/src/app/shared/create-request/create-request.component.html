@@ -74,7 +74,7 @@
   <br *ngIf="documentExists">
 
   <mat-card class="password-hint" *ngIf="showFillErrorMessage">Please fill out all fields correctly.</mat-card>
-  <mat-card class="password-hint" *ngIf="showNumberHolidaysErrorMessage">You don't have enough vacation days.</mat-card>
+  <mat-card class="password-hint" *ngIf="showNumberHolidaysErrorMessage">{{showCreateErrorMsg}}</mat-card>
 
   <mat-card class="password-hint" *ngIf="showDateErrorMessage">Invalid date interval.</mat-card>
   <mat-card class="password-hint" *ngIf="showPastDateErrorMessage">The date interval can't be in the past.</mat-card>
