@@ -209,3 +209,11 @@ h3 {
 }
 
 /// END OF TABLE CSS
+.request-msg-green {
+  color: v.$green;
+  font-weight: bold;
+}
+.request-msg-red {
+  color: v.$red;
+  font-weight: bold;
+}

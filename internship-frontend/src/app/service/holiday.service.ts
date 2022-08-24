@@ -3,19 +3,26 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Holiday } from '../shared/data-type/Holiday';
 import { User } from '../shared/data-type/User';
-import {HolidayDto, HolidayStatusDto, HolidayTypeDto} from "../shared/data-type/HolidayDto";
+import {HolidayDto, HolidayStatusDto, HolidayTypeDto, HolidayTypeUserName} from "../shared/data-type/HolidayDto";
 
-const URL = "http://localhost:8090/holiday";
+const URL_BASE = "http://localhost:8090/holiday"
+const GET_USERS_HOLIDAYS = URL_BASE + "/get-users-holidays"
+const CREATE_HOLIDAY = URL_BASE + "/add-holiday"
 
-const UPDATE_HOLIDAY = `${URL}/update-holiday`
-const GET_REQUESTS_FILTERED = `${URL}/requests-filtered-by`;
-const GET_USERS_HOLIDAYS = `${URL}/get-users-holidays`
-const CREATE_HOLIDAY = `${URL}/add-holiday`
-const DELETE_HOLIDAY =`${URL}/delete-holiday`
-const GET_NO_HOLIDAYS_REQUIRED = `${URL}/number-of-holidays`
-const GET_HOLIDAY = `${URL}/holiday-info`
+const DELETE_HOLIDAY = URL_BASE + "/delete-holiday"
+const CHECK_REQUEST_CREATE = `${URL_BASE}/check-request-create`
+const CHECK_REQUEST_UPDATE = `${URL_BASE}/check-request-update`
 
-@Injectable({
+const UPDATE_HOLIDAY = URL_BASE + "/update-holiday"
+const GET_REQUESTS_FILTERED = `${URL_BASE}/requests-filtered-by`;
+
+const GET_NO_HOLIDAYS_REQUIRED = URL_BASE + "/number-of-holidays"
+const REQUEST_DETAILS = URL_BASE +"/details"
+
+const GET_HOLIDAY = `${URL_BASE}/holiday-info`
+const FILTER = URL_BASE + "/filter"
+
+  @Injectable({
   providedIn: 'root'
 })
 export class HolidayService {
@@ -66,4 +73,31 @@ export class HolidayService {
   }
 
 
+  checkAndCreateRequest(username: string, holidayType: HolidayTypeDto, startDate: string, endDate: string): Observable<number> {
+      let url = `${CHECK_REQUEST_CREATE}?email=${username}&type=${holidayType}&startDate=${startDate}&endDate=${endDate}`;
+      return this.httpClient.get<number>(url);
+  }
+
+  checkAndUpdateRequest(username: string, holidayType: HolidayTypeDto, startDate: string, endDate: string, holidayId: number): Observable<number> {
+    let url = `${CHECK_REQUEST_UPDATE}?email=${username}&type=${holidayType}&startDate=${startDate}&endDate=${endDate}&holidayId=${holidayId}`;
+    return this.httpClient.get<number>(url);
+  }
+
+    public filterByTypeAndUserName(data: HolidayTypeUserName):Observable<HolidayDto[]> {
+      console.log("service apelat")
+      if (data.type == null && data.forname != null && data.surname != null)
+        return this.httpClient.get<HolidayDto[]>(`${FILTER}?forname=${data.forname}&surname=${data.surname}`);
+      else if (data.type == null && data.forname == null && data.surname != null)
+        return this.httpClient.get<HolidayDto[]>(`${FILTER}?surname=${data.surname}`);
+      else if (data.type == null && data.forname != null && data.surname == null)
+        return this.httpClient.get<HolidayDto[]>(`${FILTER}?forname=${data.forname}`);
+      else if (data.type != null && data.forname == null && data.surname == null)
+        return this.httpClient.get<HolidayDto[]>(`${FILTER}?type=${data.type}`);
+      else if (data.type != null && data.forname != null && data.surname == null)
+        return this.httpClient.get<HolidayDto[]>(`${FILTER}?type=${data.type}&forname=${data.forname}`);
+      else if (data.type != null && data.forname == null && data.surname != null)
+        return this.httpClient.get<HolidayDto[]>(`${FILTER}?type=${data.type}&surname=${data.surname}`);
+      else
+        return this.httpClient.get<HolidayDto[]>(`${FILTER}?type=${data.type}&forname=${data.forname}&surname=${data.surname}`);
+    }
 }

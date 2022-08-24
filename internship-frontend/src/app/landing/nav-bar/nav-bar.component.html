@@ -1,5 +1,6 @@
 <nav>
-    <button mat-button type="button" id="nav-bar-profile-button" (click)="redirectUser()" color="white"><mat-icon matPrefix id="nav-bar-profile">home</mat-icon></button>
+    <button mat-button *ngIf="!canShowNotification" type="button" id="nav-bar-profile-button" (click)="redirectUser()" color="white"><mat-icon matPrefix id="nav-bar-profile">home</mat-icon></button>
+    <p id="username-buff" *ngIf="canShowNotification"></p>
     <p id="username">{{name}}</p>
     <button *ngIf="canShowNotification" mat-button type="button" id="nav-bar-notification-button" (click)="showNotifications()" color="white">
        <mat-icon *ngIf="notificationNum > 0" matBadge="{{notificationNum}}" matBadgeColor="warn">notifications</mat-icon>

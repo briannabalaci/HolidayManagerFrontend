@@ -8,8 +8,8 @@ import {DatePipe} from '@angular/common';
 import {UserService} from "../../service/user.service";
 import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {FormBuilder, NgForm, Validators} from '@angular/forms';
-import {UpdateUser, User} from "../data-type/User";
-import {AdminService} from "../../service/admin.service";
+import {User} from "../data-type/User";
+import {HolidayTypeDto} from "../data-type/HolidayDto";
 
 
 @Component({
@@ -33,13 +33,16 @@ export class CreateRequestComponent implements OnInit {
   @Input() updatingStartDate!: string;
   @Input() updatingEndDate!: string;
   @Input() updatingSubstitute!: string;
+  @Input() updatingStatus!: string;
   @Input() deviceValue!: string;
   @Input() details!: string;
   @Input() parent: any;
   @Output() newRequest = new EventEmitter<string>()
-
+  @Output() createRequest = new EventEmitter<number>()
   userForUpdate: User;
   requestForUpdate: Holiday;
+
+  documentExists = false;
 
 
   userNoHolidays = 0;
@@ -94,6 +97,26 @@ export class CreateRequestComponent implements OnInit {
     }
   }
 
+  downloadDocument() {
+
+    this.holidayService.getHoliday(this.updatingId).subscribe(result => {
+
+      let binary_string = window.atob(result.document!)
+      let len = binary_string.length;
+      let bytes = new Uint8Array(len);
+
+      for (let i = 0; i < len; i++) {
+        bytes[i] = binary_string.charCodeAt(i);
+      }
+
+      let blob = new Blob([bytes.buffer], { type: 'application/pdf' })
+      let url = URL.createObjectURL(blob);
+
+      window.open(url);
+
+    })
+  }
+
   loadFields() {
     switch (this.deviceValue) {
       case 'rest-holiday': {
@@ -101,6 +124,7 @@ export class CreateRequestComponent implements OnInit {
         this.showFieldForEndDate = true;
         this.showFieldForSubstitute = true;
         this.showFieldForDocument = false;
+        this.documentExists = false;
         break;
       }
       case 'special-holiday': {
@@ -108,6 +132,7 @@ export class CreateRequestComponent implements OnInit {
         this.showFieldForEndDate = true;
         this.showFieldForSubstitute = true;
         this.showFieldForDocument = true;
+        this.documentExists = true;
         break;
       }
       case 'unpaid-holiday': {
@@ -115,6 +140,7 @@ export class CreateRequestComponent implements OnInit {
         this.showFieldForEndDate = true;
         this.showFieldForSubstitute = false;
         this.showFieldForDocument = false;
+        this.documentExists = false;
         break;
       }
     }
@@ -137,6 +163,36 @@ export class CreateRequestComponent implements OnInit {
     }
   }
 
+  checkAndCreateRequest(type: HolidayTypeDto, startDate: string, endDate: string){
+    this.holidayService.checkAndCreateRequest(parseJwt(this.cookieService.get("Token")).username, type, startDate, endDate).subscribe(result => {
+      console.log(result)
+      if (result > 0) {
+        this.showSuccess = true
+        this.showError = false
+        this.sendHolidayRequest()
+      } else {
+        this.showError = true;
+        this.showSuccess = false
+        this.showMessage()
+      }
+    })
+  }
+
+  checkAndUpdateRequest(type: HolidayTypeDto, startDate: string, endDate: string){
+    this.holidayService.checkAndUpdateRequest(parseJwt(this.cookieService.get("Token")).username, type, startDate, endDate, this.updatingId).subscribe(result => {
+      console.log(result)
+      if(result > 0){
+        this.showSuccess = true
+        this.showError = false
+        this.sendHolidayRequest()
+      } else {
+        this.showError = true;
+        this.showSuccess = false
+        this.showMessage()
+      }
+    })
+  }
+
   // @ts-ignore
   checkAndSend(): any {
 
@@ -147,99 +203,46 @@ export class CreateRequestComponent implements OnInit {
     let startDate = datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!
     let endDate = datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!
 
-    this.userService.getUser().subscribe(result => {
+    if(!this.updating) {
 
-      this.userForUpdate = result;
+      let type;
+      if (this.deviceValue == 'special-holiday') {
 
-      this.userNoHolidays = result.nrHolidays!
+        this.showSuccess = true
+        this.showError = false
+        this.sendHolidayRequest()
 
-      this.holidayService.getNoHolidays(startDate, endDate).subscribe(result => {
+      }
+      else if (this.deviceValue == 'unpaid-holiday') {
 
-        this.numberDaysRequired = result
-        this.unpaidDaysRequired = Math.floor(this.numberDaysRequired / 10)
+        this.checkAndCreateRequest(HolidayTypeDto.UNPAID_HOLIDAY, startDate, endDate)
 
+      }
+      else {
 
-        if (!this.updating) {
+        this.checkAndCreateRequest(HolidayTypeDto.REST_HOLIDAY, startDate, endDate)
 
-          if (this.numberDaysRequired > this.userNoHolidays && this.deviceValue == 'rest-holiday') {
+      }
+    } else {
 
-            this.showError = true;
-            this.showSuccess = false
-            this.showMessage()
+      if (this.deviceValue == 'special-holiday') {
 
-          } else if (this.unpaidDaysRequired > this.userNoHolidays && this.deviceValue == 'unpaid-holiday') {
+        this.showSuccess = true
+        this.showError = false
+        this.sendHolidayRequest()
 
-            this.showError = true;
-            this.showSuccess = false
-            this.showMessage()
+      }
+      else if (this.deviceValue == 'unpaid-holiday') {
 
-          } else {
+        this.checkAndUpdateRequest(HolidayTypeDto.UNPAID_HOLIDAY, startDate, endDate)
 
-            this.showSuccess = true
-            this.showError = false
-            this.sendHolidayRequest()
+      }
+      else {
 
-          }
-        } else {
+        this.checkAndUpdateRequest(HolidayTypeDto.REST_HOLIDAY, startDate, endDate)
 
-          this.holidayService.getHoliday(this.updatingId).subscribe(result => {
-
-            let startDateI = datePipe.transform(result.startDate, 'yyyy-MM-dd HH:mm:ss')!
-            let endDateI = datePipe.transform(result.endDate, 'yyyy-MM-dd HH:mm:ss')!
-
-            this.holidayService.getNoHolidays(startDateI, endDateI).subscribe(result => {
-
-              this.numberDaysRequiredInitialRequest = result;
-
-              this.daysToBeTakenOrAdded = this.numberDaysRequired - this.numberDaysRequiredInitialRequest;
-
-              if (this.deviceValue == 'rest-holiday') {
-
-                if (this.daysToBeTakenOrAdded > this.userNoHolidays) {
-
-                  this.showError = true;
-                  this.showSuccess = false
-                  this.showMessage()
-                } else {
-
-                  this.showSuccess = true
-                  this.showError = false
-                  this.showMessage()
-                  this.userForUpdate.nrHolidays = this.userNoHolidays - this.daysToBeTakenOrAdded
-                  this.sendHolidayRequest()
-                  this.userService.updateVacationDays(this.userForUpdate.email!, this.userForUpdate.nrHolidays).subscribe(result => console.log(result))
-                }
-
-              } else if (this.deviceValue == 'unpaid-holiday') {
-
-                this.unpaidDaysRequiredInitialRequest = Math.floor(this.numberDaysRequiredInitialRequest / 10);
-
-                this.daysToBeTakenOrAdded = this.unpaidDaysRequired - this.unpaidDaysRequiredInitialRequest;
-
-                if (this.daysToBeTakenOrAdded > this.userNoHolidays) {
-                  this.showError = true;
-                  this.showSuccess = false
-                  this.showMessage()
-                } else {
-
-                  this.showSuccess = true
-                  this.showError = false
-                  this.showMessage()
-                  this.userForUpdate.nrHolidays = this.userNoHolidays - this.daysToBeTakenOrAdded
-                  this.sendHolidayRequest()
-                  this.userService.updateVacationDays(this.userForUpdate.email!, this.userForUpdate.nrHolidays).subscribe(result => console.log(result))
-                }
-              } else {
-                this.showSuccess = true
-                this.showError = false
-                this.showMessage()
-                this.sendHolidayRequest()
-              }
-            })
-          })
-        }
-      })
-    })
+      }
+    }
   }
 
   sendHolidayRequest() {
@@ -286,6 +289,9 @@ export class CreateRequestComponent implements OnInit {
 
           console.log("currently inserting");
           this.holidayService.createHoliday(holidayData).subscribe(result => {
+            this.userService.getUser().subscribe(data => {
+              this.createRequest.emit(data.nrHolidays);
+            });
             // Call parent's function to refresh table.
             this.newRequest.emit("New request created!");
             this.clearSelect();
@@ -304,17 +310,24 @@ export class CreateRequestComponent implements OnInit {
           }
           console.log("currently updating");
           this.holidayService.updateHoliday(holidayData).subscribe(result => {
+            this.userService.getUser().subscribe(data => {
+              this.createRequest.emit(data.nrHolidays);
+              this.newRequest.emit("New request created!")
+
+            });
             // Call parent's function to refresh table.
 
             this.refreshData();
             this.showMessage();
             console.log(result);
+
             this.details = '';
             this.updating = false;
             this.clearSelect();
             this.showSuccess = true;
             this.showError = false;
             this.showMessage();
+
           });
         }
       });
@@ -345,6 +358,9 @@ export class CreateRequestComponent implements OnInit {
           }
         }
         this.holidayService.createHoliday(holidayData).subscribe(result => {
+          this.userService.getUser().subscribe(data => {
+            this.createRequest.emit(data.nrHolidays);
+          });
           // Call parent's function to refresh table.
           this.newRequest.emit("New request created!");
           this.clearSelect();
@@ -370,6 +386,11 @@ export class CreateRequestComponent implements OnInit {
           }
         }
         this.holidayService.updateHoliday(holidayData).subscribe(result => {
+          this.userService.getUser().subscribe(data => {
+            this.createRequest.emit(data.nrHolidays);
+            this.newRequest.emit("New request created!")
+
+          });
 
           this.refreshData();
           this.showMessage();
@@ -424,12 +445,14 @@ export class CreateRequestComponent implements OnInit {
       this.showFieldForEndDate = false;
       this.showFieldForSubstitute = false;
       this.showFieldForDocument = false;
+      this.documentExists = false;
     } else {
       this.showNumberHolidaysErrorMessage = true;
       this.showFieldForStartDate = false;
       this.showFieldForEndDate = false;
       this.showFieldForSubstitute = false;
       this.showFieldForDocument = false;
+      this.documentExists = false;
     }
   }
 

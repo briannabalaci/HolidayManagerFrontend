@@ -23,6 +23,7 @@ export class TeamleadRequestsComponent implements OnInit,OnChanges {
   holidayUpdatingStartDate = '';
   holidayUpdatingEndDate = '';
   holidayUpdatingSubstitute = '';
+  holidayUpdatingStatus = 'PENDING';
   nrHolidays: number;
   user!: User;
   details = '';
@@ -30,8 +31,6 @@ export class TeamleadRequestsComponent implements OnInit,OnChanges {
 
   selectedTypeValue = this.requestsTypes[0].valueOf();
   selectedStatusValue = 'All'
-
-  // @Input() newNotification = "";
 
   @ViewChild(RequestsTableComponent) requests: RequestsTableComponent;
 
@@ -44,7 +43,8 @@ export class TeamleadRequestsComponent implements OnInit,OnChanges {
   }
 
   newRequestAddedHandler(message:string){
-    this.getAndSetTeamLeadData()
+    this.getAndSetTeamLeadData() //update the vacation days
+    this.refreshData()
   }
 
 
