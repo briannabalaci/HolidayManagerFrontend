@@ -23,6 +23,7 @@ export class TeamleadRequestsComponent implements OnInit,OnChanges {
   holidayUpdatingStartDate = '';
   holidayUpdatingEndDate = '';
   holidayUpdatingSubstitute = '';
+  holidayUpdatingStatus = 'PENDING';
   nrHolidays: number;
   user!: User;
   details = '';
