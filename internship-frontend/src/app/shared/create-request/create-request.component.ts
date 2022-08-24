@@ -36,6 +36,7 @@ export class CreateRequestComponent implements OnInit {
   @Input() updatingStatus!: string;
   @Input() deviceValue!: string;
   @Input() details!: string;
+  @Input() isTeamlead!: boolean;
   @Input() parent: any;
   @Output() newRequest = new EventEmitter<string>()
   @Output() createRequest = new EventEmitter<number>()
@@ -71,20 +72,23 @@ export class CreateRequestComponent implements OnInit {
   showFieldForSubstitute = false;
   showFieldForDocument = false;
   showCreateErrorMsg = "";
+  showFieldForReplacement = false;
   fileName = '';
   holidayList: HolidayTypeView[] = [
     {value: 'rest-holiday', viewValue: 'Rest holiday'},
     {value: 'special-holiday', viewValue: 'Special holiday'},
     {value: 'unpaid-holiday', viewValue: 'Unpaid holiday'}
   ];
-
+  replacementUserList: User[];
   constructor(private formBuilder: FormBuilder, private cookieService: CookieService, private holidayService: HolidayService, private userService: UserService) {
   }
 
   ngOnInit(): void {
+    this.refreshSubstitutes();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+
     const idChange = changes['updatingId'];
     if (idChange && idChange.previousValue != idChange.currentValue) {
       if (this.updating) {
@@ -108,8 +112,17 @@ export class CreateRequestComponent implements OnInit {
         }
       }
     }
-  }
 
+  }
+  refreshSubstitutes() {
+    const token = this.cookieService.get('Token');
+    if (token) {
+      const parsed = parseJwt(token);
+      this.userService.getUserSubstitutes(parsed.id).subscribe(data => {
+        this.replacementUserList = data;
+      })
+    }
+  }
   downloadDocument() {
 
     this.holidayService.getHoliday(this.updatingId).subscribe(result => {
@@ -137,6 +150,9 @@ export class CreateRequestComponent implements OnInit {
         this.showFieldForEndDate = true;
         this.showFieldForSubstitute = true;
         this.showFieldForDocument = false;
+        if(this.isTeamlead) {
+          this.showFieldForReplacement = true;
+        }
         this.documentExists = false;
         break;
       }
@@ -145,6 +161,9 @@ export class CreateRequestComponent implements OnInit {
         this.showFieldForEndDate = true;
         this.showFieldForSubstitute = true;
         this.showFieldForDocument = true;
+        if (this.isTeamlead) {
+          this.showFieldForReplacement = true;
+        }
         this.documentExists = true;
         break;
       }
@@ -153,6 +172,9 @@ export class CreateRequestComponent implements OnInit {
         this.showFieldForEndDate = true;
         this.showFieldForSubstitute = false;
         this.showFieldForDocument = false;
+        if (this.isTeamlead) {
+          this.showFieldForReplacement = true;
+        }
         this.documentExists = false;
         break;
       }
