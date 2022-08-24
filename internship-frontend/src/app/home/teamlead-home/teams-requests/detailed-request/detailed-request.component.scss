@@ -1,7 +1,7 @@
 @use '../../../../../variables' as v;
 .section-detailed-request{
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   flex-direction: column;
 }
 
@@ -51,4 +51,13 @@
   color: white;
   background: v.$green;
   margin-top: 12px;
+}
+
+.mat-red {
+  color: white;
+  background-color: v.$red;
+}
+.mat-green {
+  color: white;
+  background-color: v.$green;
 }

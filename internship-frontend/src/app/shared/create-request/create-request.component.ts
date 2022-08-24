@@ -60,6 +60,7 @@ export class CreateRequestComponent implements OnInit {
   showFillErrorMessage = false;
   showNumberHolidaysErrorMessage = false;
   showPastDateErrorMessage = false;
+  showStartedMessage = false;
   showSuccessfulMessage = false;
   showSuccessfulUpdateMessage = false;
   showFieldForStartDate = false;
@@ -93,6 +94,14 @@ export class CreateRequestComponent implements OnInit {
           startDate: new Date(this.updatingStartDate),
           endDate: new Date(this.updatingEndDate),
         });
+        const today = new Date();
+        const yesterday = new Date(today);
+        yesterday.setDate(yesterday.getDate() - 1);
+        if (new Date(this.updatingStartDate) <= yesterday) {
+          this.showStartedMessage = true;
+        } else {
+          this.showStartedMessage = false;
+        }
       }
     }
   }
