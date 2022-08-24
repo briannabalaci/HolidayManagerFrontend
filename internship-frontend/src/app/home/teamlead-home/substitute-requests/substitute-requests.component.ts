@@ -25,6 +25,8 @@ const ELEMENT_DATA: HolidayDto[] = []
 
 export class SubstituteRequestsComponent implements OnInit {
 
+  requestsExists: boolean;
+
   endDate = 'Angular';
   startDate = 'Angular';
   substitute = '';
@@ -73,6 +75,10 @@ export class SubstituteRequestsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getSubstituteData()
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
     console.log("am ajuns in substitute")
     this.getSubstituteData()
   }
@@ -82,6 +88,11 @@ export class SubstituteRequestsComponent implements OnInit {
       this.dataSource = new MatTableDataSource<HolidayDto>(data);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
+      if(this.dataSource.data.length > 0){
+        this.requestsExists = true;
+      } else {
+        this.requestsExists = false;
+      }
     })
   }
 

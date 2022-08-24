@@ -26,7 +26,7 @@ const REQUEST_DETAILS = URL_BASE +"/details"
 const GET_HOLIDAY = `${URL_BASE}/holiday-info`
 const FILTER = URL_BASE + "/filter"
 
-const GET_SUBSTITUTE_REQUESTS = `${URL_BASE}/substitute-request`
+const GET_SUBSTITUTE_REQUESTS = `${URL_BASE}/substitute-requests`
 
   @Injectable({
   providedIn: 'root'
