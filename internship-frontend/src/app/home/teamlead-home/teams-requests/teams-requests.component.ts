@@ -93,7 +93,10 @@ export class TeamsRequestsComponent implements OnInit,OnChanges {
     console.log("here in ng on change-------------------------------")
     if (this.newNotification != null)
       if (this.newNotification["message"] != "") {
-        // this.getTeamLeaderData();
+        console.log("In ng on change: "+this.selectedSurname + " "+ this.selectedForname+ " "+ this.selectedType)
+
+        // if(this.selectedType == undefined && this.selectedForname == undefined && this.selectedSurname == undefined)
+        //     this.getTeamLeaderData();
         console.log(this.selectedType)
         console.log(this.selectedSurname)
         console.log(this.selectedForname)
@@ -116,6 +119,9 @@ export class TeamsRequestsComponent implements OnInit,OnChanges {
   }
 
   refreshData(){
+    // if(this.selectedType == undefined && this.selectedForname == undefined && this.selectedSurname == undefined)
+    //   this.getTeamLeaderData();
+    console.log("In refresh: "+ this.selectedSurname + " "+ this.selectedForname+ " "+ this.selectedType)
     this.filterByTypeAndName(this.selectedSurname, this.selectedForname, this.selectedType)
   }
 
@@ -137,7 +143,8 @@ export class TeamsRequestsComponent implements OnInit,OnChanges {
     const dto : HolidayTypeUserName = {
       type:this.getType(type),
       surname:surname,
-      forname:forname
+      forname:forname,
+      teamLeaderId: this.user.id!,
     }
     this.holidayService.filterByTypeAndUserName(dto).subscribe(
       data => {
