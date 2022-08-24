@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {map, Observable} from "rxjs";
 import {User} from "../shared/data-type/User";
 import {CookieService} from "ngx-cookie-service";
 import {parseJwt} from "../utils/JWTParser";
@@ -13,7 +13,7 @@ const APPROVE_REQUEST = `http://localhost:8090/holiday/approve`
 const MORE_DETAILS = `http://localhost:8090/holiday/details`
 const GET_REQUESTS = `${URL}requests?id=`;
 const GET_TEAM_REQUESTS = `${URL}team-requests?id=`;
-
+const GET_PDF = `http://localhost:8090/teamlead/getPDF?id=`;
 @Injectable({
   providedIn: 'root'
 })
@@ -46,6 +46,12 @@ export class TeamleadService {
       id: id,
       details: message
     })
+  }
+  public getPDF(id: number): Observable<Blob> {
+    let url = GET_PDF + id;
+    return this.httpClient.get(url, {
+      responseType: 'blob'
+    });
   }
 
 }
