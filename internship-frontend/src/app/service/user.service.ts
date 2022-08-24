@@ -13,6 +13,7 @@ const GET_ALL_USERS_WITHOUT_TEAM = URL_BASE + "/users-noteam"
 const GET_USER = `${URL_BASE}/user-info`
 const GET_USER_BY_ID = URL_BASE + "/find-user-by-id"
 const FILTER_BY_NAME = URL_BASE + "/filter-by-name"
+const GET_USER_SUBSTITUTES = URL_BASE + "/substitutes?teamLeadId="
 
 const UPDATE_VACATION_DAYS = `${URL_BASE}/update-vacation-days`
 
@@ -43,7 +44,9 @@ export class UserService {
   public getUserById(id:number): Observable<User>{
     return this.httpClient.get<User>(GET_USER_BY_ID+"/"+id.toString());
   }
-
+  public getUserSubstitutes(id: number): Observable<User[]>{
+    return this.httpClient.get<User[]>(GET_USER_SUBSTITUTES + id.toString());
+  }
 
   public filterByName(data:UserName):Observable<User[]> {
     return this.httpClient.get<User[]>(FILTER_BY_NAME);
