@@ -46,8 +46,8 @@
   </mat-form-field><br *ngIf="showFieldForSubstitute">
 
   <mat-form-field *ngIf="showFieldForReplacement" appearance="outline" color="accent">
-    <mat-select placeholder="Teamlead replacement" (click)="resetWarnings()" #matRef>
-      <mat-option *ngFor="let user of replacementUserList" [value]="user" (click)="resetWarnings()">
+    <mat-select placeholder="Teamlead replacement" (click)="resetWarnings()" #matRef (selectionChange)="onReplacementClick($event.value)">
+      <mat-option *ngFor="let user of replacementUserList" [value]="user" (click)="resetWarnings()" >
         {{user.forname + " " + user.surname}}
       </mat-option>
     </mat-select>
@@ -79,7 +79,7 @@
   <br *ngIf="documentExists">
 
   <mat-card class="password-hint" *ngIf="showFillErrorMessage">Please fill out all fields correctly.</mat-card>
-  <mat-card class="password-hint" *ngIf="showNumberHolidaysErrorMessage">You don't have enough vacation days.</mat-card>
+  <mat-card class="password-hint" *ngIf="showNumberHolidaysErrorMessage">{{showCreateErrorMsg}}</mat-card>
 
   <mat-card class="password-hint" *ngIf="showDateErrorMessage">Invalid date interval.</mat-card>
   <mat-card class="password-hint" *ngIf="showPastDateErrorMessage">The date interval can't be in the past.</mat-card>
