@@ -15,6 +15,9 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import { MoreDetailsDialogBoxComponent } from './teams-requests/more-details-dialog-box/more-details-dialog-box.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import { SubstituteRequestsComponent } from './substitute-requests/substitute-requests.component';
+import {MatCardModule} from "@angular/material/card";
+import {AppModule} from "../../app.module";
 
 const routes: Routes = [
   {
@@ -27,25 +30,25 @@ const routes: Routes = [
     // TeamleadRequestsComponent,
     // TeamsRequestsComponent,
     // DetailedRequestComponent
-
   ],
   exports: [
   ],
-    imports: [
-        MatButtonModule,
-        MatSelectModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatTableModule,
-        MatIconModule,
-        MatListModule,
-        CommonModule,
-        MatSortModule,
-        FormsModule,
-        MatPaginatorModule,
-        MatDatepickerModule,
-        MatDialogModule
-    ]
+  imports: [
+    MatButtonModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTableModule,
+    MatIconModule,
+    MatListModule,
+    CommonModule,
+    MatSortModule,
+    FormsModule,
+    MatPaginatorModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatCardModule,
+  ]
 })
 export class TeamleadHomeModule { }
