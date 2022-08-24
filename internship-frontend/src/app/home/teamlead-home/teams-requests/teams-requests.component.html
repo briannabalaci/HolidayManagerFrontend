@@ -6,10 +6,10 @@
   <mat-card class="table-card">
 
     <mat-form-field class="filter" (keydown.space)="$event.stopPropagation()" appearance="outline" color="accent">
-      <input matInput class="form-field" [formControl]="nameFilter" placeholder="Fiter by name">
+      <input matInput class="form-field" [formControl]="nameFilter" placeholder="Filter by name" (keyup)="onNameChange($event)">
     </mat-form-field>
-    <mat-form-field class="filter" appearance="outline" color="accent" >
-      <mat-select  [formControl]="typeFilter2" placeholder="Fiter by type">
+    <mat-form-field class="filter" appearance="outline" color="accent"  >
+      <mat-select  [formControl]="typeFilter2" placeholder="Filter by type" (selectionChange)="onTypeChange($event.value)">
 
         <mat-option *ngFor="let request of requestsTypes" [value]="request.value">
           {{request.viewValue}}
@@ -17,7 +17,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-  
+
     <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
 
       <ng-container matColumnDef="name">
@@ -55,7 +55,7 @@
       </ng-container>
       <ng-container matColumnDef="status">
         <th class="edit-cell" mat-header-cell *matHeaderCellDef> Status </th>
-        
+
         <td class="status-cell" mat-cell *matCellDef="let element">
           <button mat-icon-button disabled>
            <mat-icon color="green" *ngIf="element.status == 'APPROVED'">done</mat-icon><mat-icon color="red" *ngIf="element.status == 'DENIED'">close</mat-icon><mat-icon color="blue" *ngIf="element.status == 'PENDING'">schedule</mat-icon>

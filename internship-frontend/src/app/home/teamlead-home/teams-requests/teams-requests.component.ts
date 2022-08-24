@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {TeamleadService} from "../../../service/teamlead.service";
-import {HolidayDto, HolidayStatusDto, HolidayTypeDto} from "../../../shared/data-type/HolidayDto";
+import {HolidayDto, HolidayStatusDto, HolidayTypeDto, HolidayTypeUserName} from "../../../shared/data-type/HolidayDto";
 import {User} from "../../../shared/data-type/User";
 import {Team} from "../../../shared/data-type/Team";
 import {LiveAnnouncer} from '@angular/cdk/a11y';
@@ -11,6 +11,7 @@ import {MatPaginator} from "@angular/material/paginator";
 import {UserService} from "../../../service/user.service";
 import {DetailedRequestComponent} from "./detailed-request/detailed-request.component";
 import { HolidayTypeView } from 'src/app/shared/data-type/Holiday';
+import {HolidayService} from "../../../service/holiday.service";
 
 
 const ELEMENT_DATA: HolidayDto[] = []
@@ -57,6 +58,10 @@ export class TeamsRequestsComponent implements OnInit,OnChanges {
   typeFilter2 = new FormControl('');
   nameFilter = new FormControl('');
 
+  selectedType:any;
+  selectedSurname:any;
+  selectedForname:any;
+
   filteredValues = {
     name: '', type: ''
   };
@@ -69,23 +74,43 @@ export class TeamsRequestsComponent implements OnInit,OnChanges {
 
   @Input() newNotification:{ message: string }
 
-  constructor(private userService: UserService, private teamLeadService: TeamleadService, private _liveAnnouncer: LiveAnnouncer) {
+  constructor(private userService: UserService, private teamLeadService: TeamleadService, private _liveAnnouncer: LiveAnnouncer,
+              private holidayService:HolidayService) {
 
+  }
+  clearFilter() {
+    this.nameFilter.setValue('');
+    this.typeFilter2.setValue('');
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log("here in ng on change-------------------------------")
     if (this.newNotification != null)
       if (this.newNotification["message"] != "") {
-
-        this.getTeamLeaderData();
-
+        // this.getTeamLeaderData();
+        console.log(this.selectedType)
+        console.log(this.selectedSurname)
+        console.log(this.selectedForname)
+        this.filterByTypeAndName(this.selectedSurname, this.selectedForname, this.selectedType)
       }
   }
 
+  getType(type: any): HolidayTypeDto {
+    if (type == 'Rest holiday' || type == 'rest') {
+      this.selectedType = HolidayTypeDto.REST_HOLIDAY;
+      type = HolidayTypeDto.REST_HOLIDAY;
+    } else if (type == 'Special holiday' || type == 'special') {
+      this.selectedType = HolidayTypeDto.SPECIAL_HOLIDAY;
+      type = HolidayTypeDto.SPECIAL_HOLIDAY;
+    } else if (type == 'Unpaid holiday' || type == 'unpaid'){
+      this.selectedType = HolidayTypeDto.UNPAID_HOLIDAY;
+      type = HolidayTypeDto.UNPAID_HOLIDAY;
+    }
+    return type
+  }
+
   refreshData(){
-    // this.populateTeamRequests();
-    this.getTeamLeaderData();
-    this.filterByNameAndType()
+    this.filterByTypeAndName(this.selectedSurname, this.selectedForname, this.selectedType)
   }
 
   get refreshDataFunc() {
@@ -101,31 +126,51 @@ export class TeamsRequestsComponent implements OnInit,OnChanges {
     };
   }
 
-  filterByNameAndType(){
-    console.log("Filter by both....")
-    this.nameFilter.valueChanges.subscribe(
 
-      nameFilterValue => {
-        // @ts-ignore
-        this.filteredValues.name = nameFilterValue;
-        this.dataSource.filter = JSON.stringify(this.filteredValues);
+  filterByTypeAndName(surname:string, forname:string, type:HolidayTypeDto){
+    const dto : HolidayTypeUserName = {
+      type:this.getType(type),
+      surname:surname,
+      forname:forname
+    }
+    this.holidayService.filterByTypeAndUserName(dto).subscribe(
+      data => {
+        this.dataSource.data = data
       }
-    );
-    this.typeFilter2.valueChanges.subscribe(
-      typeFilter2Value => {
-        // @ts-ignore
-        this.filteredValues.type = typeFilter2Value;
-        this.dataSource.filter = JSON.stringify(this.filteredValues);
-      }
-    );
+    )
   }
 
+  onNameChange(name:any){
+    let list = name.target.value.split(" ")
+    this.selectedSurname = list[0]
+    this.selectedForname= list[1]
+
+    let type=null
+    let surname = null
+    let forname = null
+    if(this.selectedType != undefined) type=this.selectedType
+    if(this.selectedForname != undefined) forname=this.selectedForname
+    if(this.selectedSurname != undefined) surname=this.selectedSurname
+
+    this.filterByTypeAndName(surname, forname, type)
+  }
+
+  onTypeChange(type:any){
+    this.selectedType = this.getType(type)
+
+    let type1=null
+    let surname = null
+    let forname = null
+    if(this.selectedType != undefined) type1=this.selectedType
+    if(this.selectedForname != undefined) forname=this.selectedForname
+    if(this.selectedSurname != undefined) surname=this.selectedSurname
+
+    this.filterByTypeAndName(this.selectedSurname, this.selectedForname, this.selectedType)
+
+  }
 
   ngOnInit() {
-
     this.getTeamLeaderData();
-    this.filterByNameAndType()
-
   }
 
   getTeamLeaderData() {
@@ -142,7 +187,7 @@ export class TeamsRequestsComponent implements OnInit,OnChanges {
       this.dataSource = new MatTableDataSource<HolidayDto>(data);
       this.dataSource.sort = this.sort;
 
-      this.dataSource.filterPredicate = this.createFilter();
+      // this.dataSource.filterPredicate = this.createFilter();
 
       this.dataSource.paginator = this.paginator;
 

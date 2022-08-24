@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Holiday } from '../shared/data-type/Holiday';
 import { User } from '../shared/data-type/User';
-import {HolidayDto, HolidayStatusDto, HolidayTypeDto} from "../shared/data-type/HolidayDto";
+import {HolidayDto, HolidayStatusDto, HolidayTypeDto, HolidayTypeUserName} from "../shared/data-type/HolidayDto";
 
 const URL_BASE = "http://localhost:8090/holiday"
 const GET_USERS_HOLIDAYS = URL_BASE + "/get-users-holidays"
@@ -20,6 +20,7 @@ const REQUEST_DETAILS = URL_BASE +"/details"
 
 const GET_HOLIDAY = `${URL_BASE}/holiday-info`
 const CHECK_REQUEST = `${URL_BASE}/check-request`
+const FILTER = URL_BASE + "/filter"
 
   @Injectable({
   providedIn: 'root'
@@ -75,5 +76,23 @@ export class HolidayService {
   checkAndCreateRequest(username: string, startDate: string, endDate: string): Observable<number> {
       let url = `${CHECK_REQUEST}?email=${username}&startDate=${startDate}&endDate=${endDate}`;
       return this.httpClient.get<number>(url);
+  }
+
+  public filterByTypeAndUserName(data: HolidayTypeUserName):Observable<HolidayDto[]>{
+    console.log("service apelat")
+    if(data.type==null && data.forname!=null && data.surname!=null)
+      return this.httpClient.get<HolidayDto[]>(`${FILTER}?forname=${data.forname}&surname=${data.surname}`);
+    else if(data.type==null && data.forname==null && data.surname!=null)
+      return this.httpClient.get<HolidayDto[]>(`${FILTER}?surname=${data.surname}`);
+    else if(data.type==null && data.forname!=null && data.surname==null)
+      return this.httpClient.get<HolidayDto[]>(`${FILTER}?forname=${data.forname}`);
+    else if(data.type!=null && data.forname==null && data.surname==null)
+      return this.httpClient.get<HolidayDto[]>(`${FILTER}?type=${data.type}`);
+    else if(data.type!=null && data.forname!=null && data.surname==null)
+      return this.httpClient.get<HolidayDto[]>(`${FILTER}?type=${data.type}&forname=${data.forname}`);
+    else if(data.type!=null && data.forname==null && data.surname!=null)
+      return this.httpClient.get<HolidayDto[]>(`${FILTER}?type=${data.type}&surname=${data.surname}`);
+    else
+      return this.httpClient.get<HolidayDto[]>(`${FILTER}?type=${data.type}&forname=${data.forname}&surname=${data.surname}`);
   }
 }
