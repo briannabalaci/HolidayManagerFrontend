@@ -59,6 +59,7 @@ import {
 } from "./home/teamlead-home/teams-requests/more-details-dialog-box/more-details-dialog-box.component";
 import {TeamleadHomeModule} from "./home/teamlead-home/teamlead-home.module";
 import {SubstituteRequestsComponent} from "./home/teamlead-home/substitute-requests/substitute-requests.component";
+import { MessageDialogBoxComponent } from './message-dialog-box/message-dialog-box.component';
 @NgModule({
 
   declarations: [
@@ -92,6 +93,7 @@ import {SubstituteRequestsComponent} from "./home/teamlead-home/substitute-reque
     NavBarNotificationsComponent,
     MoreDetailsDialogBoxComponent,
     SubstituteRequestsComponent,
+    MessageDialogBoxComponent
 
   ],
   imports: [
