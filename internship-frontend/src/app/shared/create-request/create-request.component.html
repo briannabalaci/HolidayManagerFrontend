@@ -5,7 +5,7 @@
 <mat-icon color="red" *ngIf="updating && updatingStatus == 'DENIED'">close</mat-icon>
 <p class="request-msg-red" *ngIf="updating && updatingStatus == 'DENIED'">This request was declined.</p>
 <mat-icon color="blue" *ngIf="updating && showStartedMessage">event_busy</mat-icon>
-<p class="request-msg-blue" *ngIf="updating && showStartedMessage">You can not modify this request, since it has already started.</p>
+<p class="request-msg-blue" *ngIf="updating && showStartedMessage">You can not modify this holiday, since it has already started or ended.</p>
 <form id="login-form" [formGroup]="holidayRequestFormGroup" #formDirective="ngForm">
 
 
