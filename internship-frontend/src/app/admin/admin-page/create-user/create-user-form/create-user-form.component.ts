@@ -34,6 +34,7 @@ export class CreateUserFormComponent implements OnInit {
   department_d = "";
   showEmailErrorMessage = false;
   showEmailOkMessage = false;
+  showFieldErrorMessage = false;
   departments: DepartmentInt[] = [
     {value: 'JAVA', viewValue: 'Java'},
     {value: 'ABAP', viewValue: 'ABAP'},
@@ -59,7 +60,7 @@ changeType(value: string) {
   createUserForm = this.formBuilder.group({
     
     password: ['', Validators.required],
-    email: ['', Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$")],
+    email: ['', [Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$")]],
     forName: ['', Validators.required],
     surName: ['', Validators.required],
     nrHolidays: ['', Validators.required],
@@ -73,27 +74,28 @@ changeType(value: string) {
   ngOnInit(): void {
   }
   createUser(): void{
+    this.resetWarnings();
     const valuesFromForm = this.createUserForm.value;
   
-    const newUser = {
-      
-    password:valuesFromForm.password,
-    forname: valuesFromForm.forName,
-    email: valuesFromForm.email,
-    surname:valuesFromForm.surName,
-    department: this.department_d,
-    role:this.role_d,
-    nrHolidays:valuesFromForm.nrHolidays,
-    type:"EMPLOYEE",
-
-    }
-   
-    console.log("ok",newUser);
-     //@ts-ignore
-    
-   
-    let u: User = Object.assign({}, newUser);
+  
     if (!this.createUserForm.invalid) {
+      const newUser = {
+      
+        password:valuesFromForm.password,
+        forname: valuesFromForm.forName,
+        email: valuesFromForm.email,
+        surname:valuesFromForm.surName,
+        department: this.department_d,
+        role:this.role_d,
+        nrHolidays:valuesFromForm.nrHolidays,
+        type:"EMPLOYEE",
+    
+        }
+         //@ts-ignore
+        
+       
+        let u: User = Object.assign({}, newUser);
+
       this.sendAddUserRequest(u);
       this.createUserForm.reset();
       this.createUserForm.controls["email"].clearValidators();
@@ -109,8 +111,8 @@ changeType(value: string) {
       
     }
     else {
-      
-      this.createUserForm.reset();
+      this.showFieldErrorMessage = true; 
+
       this.createUserForm.controls["email"].clearValidators();
       this.createUserForm.controls["email"].updateValueAndValidity();
       this.createUserForm.controls["email"].addValidators([Validators.required]);
@@ -127,15 +129,23 @@ changeType(value: string) {
   }
   resetWarnings() {
     this.showEmailErrorMessage = false;
-    this.showEmailOkMessage=false
+    this.showEmailOkMessage = false;
+    this.showFieldErrorMessage = false;
   }
   sendAddUserRequest(userDto: User) {
 
     this.adminService.createUser(userDto).subscribe(results => {
       let resp = JSON.stringify(results);
       console.log(resp);
-      if (resp == '"User created succesfully!"') { this.showEmailOkMessage = true; console.log("aici"); }
-      if (resp == '"The user already exists!"') { this.showEmailErrorMessage = true; }
+      this.resetWarnings();
+      if (resp == '"User created succesfully!"') {
+        this.createUserForm.reset();
+        this.showEmailOkMessage = true;
+      }
+      else {
+        if (resp == '"The user already exists!"') { this.showEmailErrorMessage = true; }
+        else { this.showFieldErrorMessage = true; }
+      }
       this.clickCreate.emit()
     });
     

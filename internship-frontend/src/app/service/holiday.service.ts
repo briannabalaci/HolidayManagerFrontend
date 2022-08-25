@@ -34,6 +34,7 @@ const GET_SUBSTITUTE_REQUESTS = `${URL_BASE}/substitute-requests`
 export class HolidayService {
 
   constructor(private httpClient: HttpClient, private cookieService: CookieService) {
+
   }
 
   public getAllHolidaysById(id: number): Observable<Holiday[]> {
@@ -43,6 +44,7 @@ export class HolidayService {
   public createHoliday(holiday: Holiday, substituteId: number): Observable<Holiday> {
     let url = `${CREATE_HOLIDAY}?substituteId=${substituteId}`
     return this.httpClient.post<Holiday>(url, holiday);
+
   }
 
   public deleteHoliday(id?: number): Observable<Holiday> {
@@ -120,9 +122,10 @@ export class HolidayService {
     else return this.httpClient.get<HolidayDto[]>(`${FILTER}?teamLeaderId=${data.teamLeaderId}`);
 
   }
-
+  
   public getSubstituteRequests(): Observable<HolidayDto[]> {
     let url = `${GET_SUBSTITUTE_REQUESTS}?id=${parseJwt(this.cookieService.get("Token")).id}`
     return this.httpClient.get<HolidayDto[]>(url);
   }
+
 }

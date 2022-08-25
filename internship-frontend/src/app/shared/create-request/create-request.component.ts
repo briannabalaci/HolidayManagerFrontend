@@ -211,21 +211,21 @@ export class CreateRequestComponent implements OnInit {
         this.holidayService.checkDateOverlap(parseJwt(this.cookieService.get("Token")).username, startDate, endDate).subscribe(result => {
           console.log(result)
           if (result > 0) {
-            this.showSuccess = true
-            this.showError = false
-            this.sendHolidayRequest()
+            this.showSuccess = true;
+            this.showError = false;
+            this.sendHolidayRequest();
           } else {
             this.showError = true;
-            this.showSuccess = false
+            this.showSuccess = false;
             this.showCreateErrorMsg = "You already have a request in the given period.";
-            this.showMessage()
+            this.showMessage();
           }
         })
       } else {
         this.showError = true;
-        this.showSuccess = false
+        this.showSuccess = false;
         this.showCreateErrorMsg = "You don't have enough vacation days.";
-        this.showMessage()
+        this.showMessage();
       }
     })
   }
@@ -237,21 +237,21 @@ export class CreateRequestComponent implements OnInit {
         this.holidayService.checkDateOverlapUpdate(parseJwt(this.cookieService.get("Token")).username, startDate, endDate, this.updatingId).subscribe(result => {
           console.log(result)
           if (result > 0) {
-            this.showSuccess = true
-            this.showError = false
-            this.sendHolidayRequest()
+            this.showSuccess = true;
+            this.showError = false;
+            this.sendHolidayRequest();
           } else {
             this.showError = true;
-            this.showSuccess = false
+            this.showSuccess = false;
             this.showCreateErrorMsg = "You already have a request in the given period.";
-            this.showMessage()
+            this.showMessage();
           }
         })
       } else {
         this.showError = true;
-        this.showSuccess = false
+        this.showSuccess = false;
         this.showCreateErrorMsg = "You don't have enough vacation days.";
-        this.showMessage()
+        this.showMessage();
       }
     })
   }
@@ -399,6 +399,7 @@ export class CreateRequestComponent implements OnInit {
           }
           console.log("currently updating");
           this.holidayService.updateHoliday(holidayData).subscribe(result => {
+            this.updatingStatus = 'PENDING';
             this.userService.getUser().subscribe(data => {
               this.createRequest.emit(data.nrHolidays);
               this.newRequest.emit("New request created!")
@@ -478,7 +479,7 @@ export class CreateRequestComponent implements OnInit {
           }
         }
         this.holidayService.updateHoliday(holidayData).subscribe(result => {
-
+          this.updatingStatus = 'PENDING';
           this.userService.getUser().subscribe(data => {
             this.createRequest.emit(data.nrHolidays);
             this.newRequest.emit("New request created!")
