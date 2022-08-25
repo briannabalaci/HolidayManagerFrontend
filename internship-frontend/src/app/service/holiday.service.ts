@@ -119,7 +119,6 @@ export class HolidayService {
     else return this.httpClient.get<HolidayDto[]>(`${FILTER}?teamLeaderId=${data.teamLeaderId}`);
 
   }
-
   public getSubstituteRequests(): Observable<HolidayDto[]> {
     let url = `${GET_SUBSTITUTE_REQUESTS}?id=${parseJwt(this.cookieService.get("Token")).id}`
     return this.httpClient.get<HolidayDto[]>(url);
