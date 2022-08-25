@@ -39,7 +39,7 @@
     <br>
     <mat-form-field appearance="outline" color="accent" *ngIf="boolEditPassword">
       <input matInput [placeholder]="password_d"  [(ngModel)]="password_d" [type]="hide ? 'password' : 'text'" formControlName="password" (click)="resetWarnings()">
-      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+      <button mat-button type ="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
     </mat-form-field><br>
