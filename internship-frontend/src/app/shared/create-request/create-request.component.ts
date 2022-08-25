@@ -100,8 +100,8 @@ export class CreateRequestComponent implements OnInit {
         });
         const today = new Date();
         const yesterday = new Date(today);
-        yesterday.setDate(yesterday.getDate() - 1);
-        if (new Date(this.updatingStartDate) <= yesterday) {
+        //yesterday.setDate(yesterday.getDate() - 1);
+        if (new Date(this.updatingStartDate) <= today) {
           this.showStartedMessage = true;
         } else {
           this.showStartedMessage = false;
