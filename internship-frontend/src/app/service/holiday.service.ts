@@ -50,8 +50,9 @@ export class HolidayService {
   }
 
 
-  public updateHoliday(holiday: Holiday): Observable<Holiday> {
-    return this.httpClient.put<Holiday>(UPDATE_HOLIDAY, holiday);
+  public updateHoliday(holiday: Holiday, substituteId:number): Observable<Holiday> {
+    let url = `${UPDATE_HOLIDAY}?substituteId=${substituteId}`
+    return this.httpClient.put<Holiday>(url, holiday);
   }
 
   public getRequestsFilteredByType(type: HolidayTypeDto, id: number): Observable<HolidayDto[]> {

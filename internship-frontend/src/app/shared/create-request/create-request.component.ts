@@ -87,6 +87,7 @@ export class CreateRequestComponent implements OnInit {
   ngOnInit(): void {
     if(parseJwt(this.cookieService.get("Token")).type === UserType.TEAMLEAD){
       this.refreshSubstitutes();
+
     }
   }
 
@@ -372,9 +373,10 @@ export class CreateRequestComponent implements OnInit {
 
 
           console.log("currently inserting");
-          // substituteId =
-          // if(this.isTeamlead)
-          this.holidayService.createHoliday(holidayData, this.substitute.id!).subscribe(result => {
+          let subs
+          if(this.substitute == undefined) subs=-1
+          else subs = this.substitute.id
+          this.holidayService.createHoliday(holidayData, subs!).subscribe(result => {
             this.userService.getUser().subscribe(data => {
               this.createRequest.emit(data.nrHolidays);
             });
@@ -398,7 +400,10 @@ export class CreateRequestComponent implements OnInit {
             document: Array.from(x)
           }
           console.log("currently updating");
-          this.holidayService.updateHoliday(holidayData).subscribe(result => {
+          let subs
+          if(this.substitute == undefined) subs=-1
+          else subs = this.substitute.id
+          this.holidayService.updateHoliday(holidayData,subs!).subscribe(result => {
             this.userService.getUser().subscribe(data => {
               this.createRequest.emit(data.nrHolidays);
               this.newRequest.emit("New request created!")
@@ -446,7 +451,10 @@ export class CreateRequestComponent implements OnInit {
             }
           }
         }
-        this.holidayService.createHoliday(holidayData,this.substitute.id!).subscribe(result => {
+        let subs
+        if(this.substitute == undefined) subs=-1
+        else subs = this.substitute.id
+        this.holidayService.createHoliday(holidayData,subs!).subscribe(result => {
           this.userService.getUser().subscribe(data => {
             this.createRequest.emit(data.nrHolidays);
           });
@@ -477,7 +485,10 @@ export class CreateRequestComponent implements OnInit {
             endDate: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!
           }
         }
-        this.holidayService.updateHoliday(holidayData).subscribe(result => {
+        let subs
+        if(this.substitute == undefined) subs=-1
+        else subs = this.substitute.id
+        this.holidayService.updateHoliday(holidayData,subs!).subscribe(result => {
 
           this.userService.getUser().subscribe(data => {
             this.createRequest.emit(data.nrHolidays);
