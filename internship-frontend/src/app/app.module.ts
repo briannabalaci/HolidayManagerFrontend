@@ -57,6 +57,7 @@ import {CommonModule} from "@angular/common";
 import {
   MoreDetailsDialogBoxComponent
 } from "./home/teamlead-home/teams-requests/more-details-dialog-box/more-details-dialog-box.component";
+import { MessageDialogBoxComponent } from './message-dialog-box/message-dialog-box.component';
 @NgModule({
 
   declarations: [
@@ -88,7 +89,8 @@ import {
 
     RequestsTableComponent,
     NavBarNotificationsComponent,
-    MoreDetailsDialogBoxComponent
+    MoreDetailsDialogBoxComponent,
+    MessageDialogBoxComponent
 
   ],
   imports: [
