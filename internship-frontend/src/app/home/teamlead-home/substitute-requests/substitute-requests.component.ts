@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {HolidayDto, HolidayStatusDto, HolidayTypeDto} from "../../../shared/data-type/HolidayDto";
 import {MatTable, MatTableDataSource} from "@angular/material/table";
 import {User} from "../../../shared/data-type/User";
@@ -23,7 +23,7 @@ const ELEMENT_DATA: HolidayDto[] = []
   styleUrls: ['./substitute-requests.component.scss']
 })
 
-export class SubstituteRequestsComponent implements OnInit {
+export class SubstituteRequestsComponent implements AfterViewInit {
 
   requestsExists: boolean;
 
@@ -74,7 +74,7 @@ export class SubstituteRequestsComponent implements OnInit {
     return this.refreshData.bind(this);
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.getSubstituteData()
   }
 
@@ -86,13 +86,9 @@ export class SubstituteRequestsComponent implements OnInit {
   getSubstituteData() {
     this.holidayService.getSubstituteRequests().subscribe(data => {
       this.dataSource = new MatTableDataSource<HolidayDto>(data);
+      this.requestsExists = this.dataSource.data.length > 0;
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
-      if(this.dataSource.data.length > 0){
-        this.requestsExists = true;
-      } else {
-        this.requestsExists = false;
-      }
     })
   }
 
