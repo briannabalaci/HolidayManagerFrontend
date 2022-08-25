@@ -20,8 +20,8 @@ import {HolidayTypeDto} from "../data-type/HolidayDto";
 
 export class CreateRequestComponent implements OnInit {
   holidayRequestFormGroup = this.formBuilder.group({
-    startDate: [new Date(), Validators.required],
-    endDate: [new Date(), Validators.required],
+    startDate: [new Date(new Date().setHours(0,0,0,0)), Validators.required],
+    endDate: [new Date(new Date().setHours(0,0,0,0)), Validators.required],
     substitute: [""],
     document: [""]
   })
@@ -378,7 +378,7 @@ export class CreateRequestComponent implements OnInit {
 
             this.details = '';
             this.updating = false;
-            this.clearSelect();
+           // this.clearSelect();
             this.showSuccess = true;
             this.showError = false;
             this.showMessage();
@@ -455,7 +455,7 @@ export class CreateRequestComponent implements OnInit {
           console.log(result);
           this.details = '';
           this.updating = false;
-          this.clearSelect();
+          //this.clearSelect();
           this.showSuccess = true;
           this.showError = false;
           this.showMessage();
@@ -487,6 +487,8 @@ export class CreateRequestComponent implements OnInit {
     if (anyFieldIsEmpty) {
       this.showFillErrorMessage = true;
     } else if (valuesFromForm.startDate! > valuesFromForm.endDate!) {
+      console.log(valuesFromForm.startDate);
+      console.log(valuesFromForm.endDate);
       this.showDateErrorMessage = true;
     } else if (valuesFromForm.startDate! <= yesterday) {
       this.showPastDateErrorMessage = true;
