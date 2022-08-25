@@ -5,6 +5,7 @@
 <form id="create-form" [formGroup]="createUserForm" (ngSubmit)="createUser()">
   <mat-card class="email-hint" *ngIf="showEmailErrorMessage" (click)="resetWarnings()">This user already exists!</mat-card>
   <mat-card class="email-hint-green" *ngIf="showEmailOkMessage" (click)="resetWarnings()">User created successfully!</mat-card>
+  <mat-card class="email-hint" *ngIf="showFieldErrorMessage" (click)="resetWarnings()">Please fill out all fields!</mat-card>
     <mat-form-field appearance="outline" color="accent">
       <input matInput placeholder="First name" formControlName="surName" (click)="resetWarnings()">
     </mat-form-field><br>
@@ -16,7 +17,7 @@
       </mat-form-field><br>
     <mat-form-field appearance="outline" color="accent">
         <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" formControlName="password" (click)="resetWarnings()">
-        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <button mat-icon-button type ="button" matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
           <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
       </mat-form-field><br>

@@ -33,8 +33,7 @@ const GET_SUBSTITUTE_REQUESTS = `${URL_BASE}/substitute-requests`
 })
 export class HolidayService {
 
-  constructor(private httpClient: HttpClient, private cookieService: CookieService) {
-  }
+  constructor(private httpClient: HttpClient, private cookieService: CookieService) {}
 
   public getAllHolidaysById(id: number): Observable<Holiday[]> {
     return this.httpClient.get<Holiday[]>(GET_USERS_HOLIDAYS + '/' + id.toString());
