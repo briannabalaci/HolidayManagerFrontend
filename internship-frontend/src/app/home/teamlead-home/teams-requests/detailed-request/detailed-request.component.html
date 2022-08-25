@@ -48,6 +48,7 @@
     <mat-form-field *ngIf="showFieldForDocument && !documentExists" appearance="outline" color="accent">
       <input readonly matInput name="document" formControlName="document" placeholder="Extra information">
     </mat-form-field><br *ngIf="showFieldForDocument">
+
     <button *ngIf="documentExists" mat-icon-button aria-label="Download icon" id="download-button" (click)="downloadDocument()">
       <mat-icon class="section-mat-icon">picture_as_pdf</mat-icon>
     </button>

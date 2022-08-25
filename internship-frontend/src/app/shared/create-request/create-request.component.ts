@@ -96,10 +96,11 @@ export class CreateRequestComponent implements OnInit {
     const idChange = changes['updatingId'];
     if (idChange && idChange.previousValue != idChange.currentValue) {
       if (this.updating) {
-        console.log(this.updatingId);
+
         this.loadFields();
         const datePipe = new DatePipe('en-US');
         if (this.deviceValue != 'unpaid-holiday') {
+
           this.holidayRequestFormGroup.controls['substitute'].setValue(this.updatingSubstitute.toString());
         }
         this.holidayRequestFormGroup.patchValue({
@@ -135,7 +136,10 @@ export class CreateRequestComponent implements OnInit {
     this.holidayService.getHoliday(this.updatingId).subscribe(result => {
 
       let binary_string = window.atob(result.document!)
+
       let len = binary_string.length;
+
+
       let bytes = new Uint8Array(len);
 
       for (let i = 0; i < len; i++) {
@@ -352,79 +356,154 @@ export class CreateRequestComponent implements OnInit {
       }
     }
 
-    if (this.file && this.deviceValue == 'special-holiday') {
-      console.log("It's a special holiday" + this.updating);
-      this.file.arrayBuffer().then(buff => {
-        let x = new Uint8Array(buff);
-        if (!this.updating) {
-          const datePipe = new DatePipe('en-US');
-          const holidayData: Holiday = {
-            startDate: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
-            // startDate: 'sfsdgsdgsg',
-            endDate: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!,
-            status: HolidayStatus.PENDING!,
-            substitute: valuesFromForm.substitute!,
-            type: hType,
-            document: Array.from(x),
-            user: {
-              id: uID
+    if (this.deviceValue == 'special-holiday') {
+      if(this.file){
+        this.file.arrayBuffer().then(buff => {
+          let x = new Uint8Array(buff);
+          if (!this.updating) {
+            const datePipe = new DatePipe('en-US');
+            const holidayData: Holiday = {
+              startDate: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
+              endDate: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!,
+              status: HolidayStatus.PENDING!,
+              substitute: valuesFromForm.substitute!,
+              type: hType,
+              document: Array.from(x),
+              user: {
+                id: uID
+              }
             }
-          }
 
 
-          console.log("currently inserting");
-          let subs
-          if(this.substitute == undefined) subs=-1
-          else subs = this.substitute.id
-          this.holidayService.createHoliday(holidayData, subs!).subscribe(result => {
-            this.userService.getUser().subscribe(data => {
-              this.createRequest.emit(data.nrHolidays);
+            console.log("currently inserting");
+            let subs
+            if(this.substitute == undefined) subs=-1
+            else subs = this.substitute.id
+            this.holidayService.createHoliday(holidayData, subs!).subscribe(result => {
+              this.userService.getUser().subscribe(data => {
+                this.createRequest.emit(data.nrHolidays);
+              });
+              // Call parent's function to refresh table.
+              this.userService.getUser().subscribe(data => {
+                this.createRequest.emit(data.nrHolidays);
+              });
+              this.newRequest.emit("New request created!");
+              this.clearSelect();
+              this.refreshData();
+              this.showMessage()
+              console.log(result);
             });
-            // Call parent's function to refresh table.
-            this.userService.getUser().subscribe(data => {
-              this.createRequest.emit(data.nrHolidays);
-             });
-            this.newRequest.emit("New request created!");
-            this.clearSelect();
-            this.refreshData();
-            this.showMessage()
-            console.log(result);
-          });
-        } else {
-          const datePipe = new DatePipe('en-US');
-          const holidayData: HolidayForUpdate = {
-            id: this.updatingId,
-            startDate: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
-            endDate: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!,
-            substitute: valuesFromForm.substitute!,
-            document: Array.from(x)
-          }
-          console.log("currently updating");
-          let subs
-          if(this.substitute == undefined) subs=-1
-          else subs = this.substitute.id
-          this.holidayService.updateHoliday(holidayData,subs!).subscribe(result => {
-            this.userService.getUser().subscribe(data => {
-              this.createRequest.emit(data.nrHolidays);
-              this.newRequest.emit("New request created!")
+          } else {
+            const datePipe = new DatePipe('en-US');
+            const holidayData: Holiday = {
+              id: this.updatingId,
+              startDate: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
+              endDate: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!,
+              substitute: valuesFromForm.substitute!,
+              document: Array.from(x),
+              user: {
+                id: uID
+              }
+            }
+            console.log("currently updating");
+            let subs
+            if(this.substitute == undefined) subs=-1
+            else subs = this.substitute.id
+            this.holidayService.updateHoliday(holidayData,subs!).subscribe(result => {
+              this.userService.getUser().subscribe(data => {
+                this.createRequest.emit(data.nrHolidays);
+                this.newRequest.emit("New request created!")
+
+              });
+              // Call parent's function to refresh table.
+
+              this.refreshData();
+              this.showMessage();
+              console.log(result);
+
+              this.details = '';
+              this.updating = false;
+              // this.clearSelect();
+              this.showSuccess = true;
+              this.showError = false;
+              this.showMessage();
 
             });
-            // Call parent's function to refresh table.
+          }
+        });
+      } else {
+          if (!this.updating) {
+            const datePipe = new DatePipe('en-US');
+            console.log(valuesFromForm.substitute!)
+            const holidayData: Holiday = {
+              startDate: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
+              endDate: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!,
+              status: HolidayStatus.PENDING!,
+              substitute: valuesFromForm.substitute!,
+              type: hType,
+              document: [],
+              user: {
+                id: uID
+              }
+            }
 
-            this.refreshData();
-            this.showMessage();
-            console.log(result);
+            console.log("currently inserting");
+            let subs
+            if(this.substitute == undefined) subs=-1
+            else subs = this.substitute.id
+            this.holidayService.createHoliday(holidayData, subs!).subscribe(result => {
+              this.userService.getUser().subscribe(data => {
+                this.createRequest.emit(data.nrHolidays);
+              });
+              // Call parent's function to refresh table.
+              this.userService.getUser().subscribe(data => {
+                this.createRequest.emit(data.nrHolidays);
+              });
+              this.newRequest.emit("New request created!");
+              this.clearSelect();
+              this.refreshData();
+              this.showMessage()
+              console.log(result);
+            });
+          } else {
+            const datePipe = new DatePipe('en-US');
+            const holidayData: Holiday = {
+              id: this.updatingId,
+              startDate: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
+              endDate: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!,
+              substitute: valuesFromForm.substitute!,
+              document: [],
+              user: {
+                id: uID
+              }
+            }
+            console.log("currently updating");
+            let subs
+            if(this.substitute == undefined) subs=-1
+            else subs = this.substitute.id
+            this.holidayService.updateHoliday(holidayData,subs!).subscribe(result => {
+              this.userService.getUser().subscribe(data => {
+                this.createRequest.emit(data.nrHolidays);
+                this.newRequest.emit("New request created!")
 
-            this.details = '';
-            this.updating = false;
-           // this.clearSelect();
-            this.showSuccess = true;
-            this.showError = false;
-            this.showMessage();
+              });
+              // Call parent's function to refresh table.
 
-          });
-        }
-      });
+              this.refreshData();
+              this.showMessage();
+              console.log(result);
+
+              this.details = '';
+              this.updating = false;
+              // this.clearSelect();
+              this.showSuccess = true;
+              this.showError = false;
+              this.showMessage();
+
+            });
+          }
+      }
+
     } else {
       if (!this.updating) {
         const datePipe = new DatePipe('en-US');
@@ -470,19 +549,25 @@ export class CreateRequestComponent implements OnInit {
         });
       } else {
         const datePipe = new DatePipe('en-US');
-        let holidayData: HolidayForUpdate;
+        let holidayData: Holiday;
         if (this.deviceValue == 'rest-holiday' || this.deviceValue == 'special-holiday') {
           holidayData = {
             id: this.updatingId,
             startDate: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
             endDate: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!,
-            substitute: valuesFromForm.substitute!
+            substitute: valuesFromForm.substitute!,
+            user: {
+              id: uID
+            }
           }
         } else {
           holidayData = {
             id: this.updatingId,
             startDate: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
-            endDate: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!
+            endDate: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!,
+            user: {
+              id: uID
+            }
           }
         }
         let subs
@@ -550,6 +635,7 @@ export class CreateRequestComponent implements OnInit {
       this.showFieldForEndDate = false;
       this.showFieldForSubstitute = false;
       this.showFieldForDocument = false;
+      this.showFieldForReplacement = false;
       this.documentExists = false;
     } else {
       this.showNumberHolidaysErrorMessage = true;
@@ -557,6 +643,7 @@ export class CreateRequestComponent implements OnInit {
       this.showFieldForEndDate = false;
       this.showFieldForSubstitute = false;
       this.showFieldForDocument = false;
+      this.showFieldForReplacement = false;
       this.documentExists = false;
     }
   }

@@ -73,10 +73,10 @@
 
   </div>
 
-  <button *ngIf="documentExists" mat-icon-button aria-label="Download icon" id="download-button" (click)="downloadDocument()">
+  <button *ngIf="documentExists && updating" mat-icon-button aria-label="Download icon" id="download-button" (click)="downloadDocument()">
     <mat-icon class="section-mat-icon">picture_as_pdf</mat-icon>
   </button>
-  <br *ngIf="documentExists">
+  <br *ngIf="documentExists && updating">
 
   <mat-card class="password-hint" *ngIf="showFillErrorMessage">Please fill out all fields correctly.</mat-card>
   <mat-card class="password-hint" *ngIf="showNumberHolidaysErrorMessage">{{showCreateErrorMsg}}</mat-card>
