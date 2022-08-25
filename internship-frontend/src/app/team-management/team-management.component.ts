@@ -32,6 +32,9 @@ export class TeamManagementComponent implements OnInit {
     this.safeForView = false
     this.userService.getAllUsersWithoutTeam().subscribe(data => this.usersWithoutTeam = data)
     this.showForm=!this.showForm;
+    const message = {"message":""}
+    this.errorMessageFromBackend = Object.assign({} ,message)
+
   }
 
   createTeam(newTeam : TeamAdd){
@@ -57,6 +60,7 @@ export class TeamManagementComponent implements OnInit {
 
 
   updateTeam(updatedTeam : TeamUpdate){
+    console.log("update team...........................")
     this.teamService.updateTeam(updatedTeam).subscribe( result => {
       console.log(result)
       if(result.name == null) {
@@ -96,6 +100,8 @@ export class TeamManagementComponent implements OnInit {
       name:team.name,
       teamLeader:team.teamLeader
     }
+    const message = {"message":""}
+    this.errorMessageFromBackend = Object.assign({} ,message)
   }
 
   addUserToTeam(user:User){
