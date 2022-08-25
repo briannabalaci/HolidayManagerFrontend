@@ -35,6 +35,7 @@ export class CreateRequestComponent implements OnInit {
   @Input() updatingSubstitute!: string;
   @Input() updatingStatus!: string;
   @Input() deviceValue!: string;
+  @Input() isTeamlead!: boolean;
   @Input() details!: string;
   @Input() parent: any;
   @Output() newRequest = new EventEmitter<string>()
