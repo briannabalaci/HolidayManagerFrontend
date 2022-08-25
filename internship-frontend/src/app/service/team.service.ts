@@ -32,6 +32,7 @@ export class TeamService {
   }
 
   public updateTeam(team:TeamUpdate):Observable<TeamUpdate> {
+    console.log("in service update team ...................")
     return this.httpClient.put<TeamUpdate>(UPDATE_TEAM,team);
   }
 
