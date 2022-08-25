@@ -35,6 +35,7 @@ export class CreateUserFormComponent implements OnInit {
   showEmailErrorMessage = false;
   showEmailOkMessage = false;
   showFieldErrorMessage = false;
+  refreshTable = true;
   departments: DepartmentInt[] = [
     {value: 'JAVA', viewValue: 'Java'},
     {value: 'ABAP', viewValue: 'ABAP'},
@@ -139,8 +140,10 @@ changeType(value: string) {
       console.log(resp);
       this.resetWarnings();
       if (resp == '"User created succesfully!"') {
+        this.refreshTable = false;
         this.createUserForm.reset();
         this.showEmailOkMessage = true;
+        this.refreshTable = true;
       }
       else {
         if (resp == '"The user already exists!"') { this.showEmailErrorMessage = true; }
