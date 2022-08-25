@@ -2,10 +2,11 @@
 <div class="centered">
 <h2>Create new user</h2>
 </div>
-<form id="create-form" [formGroup]="createUserForm" (ngSubmit)="createUser()">
+<form id="create-form" [formGroup]="createUserForm"  #formDirective="ngForm"  (ngSubmit)="createUser(formDirective)">
   <mat-card class="email-hint" *ngIf="showEmailErrorMessage" (click)="resetWarnings()">This user already exists!</mat-card>
   <mat-card class="email-hint-green" *ngIf="showEmailOkMessage" (click)="resetWarnings()">User created successfully!</mat-card>
   <mat-card class="email-hint" *ngIf="showFieldErrorMessage" (click)="resetWarnings()">Please fill out all fields!</mat-card>
+  <div *ngIf="refreshTable">
     <mat-form-field appearance="outline" color="accent">
       <input matInput placeholder="First name" formControlName="surName" (click)="resetWarnings()">
     </mat-form-field><br>
@@ -44,7 +45,7 @@
  
       <button mat-raised-button color="green" type="submit" id="form-button">Add user</button>
       <br>
-
+    </div>
 </form>
 
       
