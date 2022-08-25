@@ -116,6 +116,8 @@ export class NavBarNotificationsComponent implements OnInit {
         return "Request sent -- substitute"
       case "CANCELED_SUBSTITUTE":
         return "Request canceled -- substitute"
+      case "END_SUBSTITUTE":
+        return "Request canceled by teamlead -- substitute"
       case "UPDATE_SUBSTITUTE":
         return "Request updated -- substitute"
       case "MORE_DETAILS_SUBSTITUTE":
@@ -162,8 +164,3 @@ export class NavBarNotificationsComponent implements OnInit {
     })
   }
 }
-
-
-
-
-
