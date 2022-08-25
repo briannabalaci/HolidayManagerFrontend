@@ -84,13 +84,13 @@ export class HolidayService {
     let url = `${CHECK_REQUEST_UPDATE}?email=${username}&type=${holidayType}&startDate=${startDate}&endDate=${endDate}&holidayId=${holidayId}`;
     return this.httpClient.get<number>(url);
     }
-    
+
   checkDateOverlap(username: string,  startDate: string, endDate: string): Observable<number> {
     let url = `${CHECK_DATE_OVERLAP}?email=${username}&startDate=${startDate}&endDate=${endDate}`;
     return this.httpClient.get<number>(url);
     }
     checkDateOverlapUpdate(username: string,  startDate: string, endDate: string, holidayId: number): Observable<number> {
-      let url = `${CHECK_DATE_OVERLAP}?email=${username}&startDate=${startDate}&endDate=${endDate}&holidayId=${holidayId}`;
+      let url = `${CHECK_DATE_OVERLAP_UPDATE}?email=${username}&startDate=${startDate}&endDate=${endDate}&holidayId=${holidayId}`;
       return this.httpClient.get<number>(url);
     }
 
