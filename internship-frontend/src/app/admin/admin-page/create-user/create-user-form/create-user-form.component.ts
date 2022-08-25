@@ -35,7 +35,7 @@ export class CreateUserFormComponent implements OnInit {
   showEmailErrorMessage = false;
   showEmailOkMessage = false;
   showFieldErrorMessage = false;
-  refreshTable = true;
+
   departments: DepartmentInt[] = [
     {value: 'JAVA', viewValue: 'Java'},
     {value: 'ABAP', viewValue: 'ABAP'},
