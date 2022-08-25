@@ -497,7 +497,9 @@ export class CreateRequestComponent implements OnInit {
       this.checkAndSend();
     }
   }
-
+  sendToHr() {
+    console.log("Sent to HR!");
+  }
   showMessage() {
     if (this.showSuccess) {
       this.showSuccessfulMessage = true;
