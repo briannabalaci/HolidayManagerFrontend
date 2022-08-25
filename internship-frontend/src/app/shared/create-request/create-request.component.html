@@ -46,7 +46,7 @@
   </mat-form-field><br *ngIf="showFieldForSubstitute">
 
   <mat-form-field *ngIf="showFieldForReplacement" appearance="outline" color="accent">
-    <mat-select placeholder="Teamlead replacement" (click)="resetWarnings()" #matRef (selectionChange)="onReplacementClick($event.value)">
+    <mat-select placeholder="Teamlead replacement" [disabled]="showStartedMessage"  (click)="resetWarnings()" #matRef (selectionChange)="onReplacementClick($event.value)">
       <mat-option *ngFor="let user of replacementUserList" [value]="user" (click)="resetWarnings()" >
         {{user.forname + " " + user.surname}}
       </mat-option>
