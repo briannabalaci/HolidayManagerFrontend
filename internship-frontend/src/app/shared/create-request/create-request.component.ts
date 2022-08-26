@@ -664,7 +664,8 @@ export class CreateRequestComponent implements OnInit {
               id: uID
             }
           }
-          this.teamleadService.sendToHR(holidayData).subscribe( data => {})
+          console.log("------: "+holidayData)
+          // this.teamleadService.sendToHR(holidayData).subscribe( data => {})
         });
       }
       else{//there is no file
@@ -679,7 +680,8 @@ export class CreateRequestComponent implements OnInit {
             id: uID
           }
         }
-        this.teamleadService.sendToHR(holidayData).subscribe( data => {})
+        console.log("------: "+holidayData)
+        // this.teamleadService.sendToHR(holidayData).subscribe( data => {})
       }
     }
     else{//is not a special holiday
@@ -705,7 +707,8 @@ export class CreateRequestComponent implements OnInit {
           }
         }
       }
-      this.teamleadService.sendToHR(holidayData).subscribe( data => {})
+      console.log("------: "+holidayData)
+      // this.teamleadService.sendToHR(holidayData).subscribe( data => {})
     }
   }
     showMessage()

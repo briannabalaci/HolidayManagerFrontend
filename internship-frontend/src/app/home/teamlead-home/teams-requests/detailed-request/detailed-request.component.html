@@ -3,6 +3,10 @@
 
   <header>
     <h2 class="section-title">Request View</h2>
+
+    <mat-icon color="blue" *ngIf="showStartedMessage">event_busy</mat-icon>
+    <p class="request-msg-blue" *ngIf="showStartedMessage">You can not modify this holiday, since it has already started or ended.</p>
+
   </header>
   <div class="centered">
     <mat-icon color="green" *ngIf="decidingStatus == 'APPROVED'">done</mat-icon>
