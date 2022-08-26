@@ -33,6 +33,7 @@ export class UserListComponent implements OnInit,OnChanges {
   filteredValues = {
     forname: '', surname: ''
   };
+  readMore = false
   displayedColumns: string[] = ['surname','forname','department',"edituser","deleteuser"];
 
   @ViewChild(MatPaginator, { static: true })
@@ -84,6 +85,11 @@ export class UserListComponent implements OnInit,OnChanges {
       this.dataSource.paginator = this.paginator;
 
     })
+  }
+    
+
+  showText() {
+     this.readMore = !this.readMore
   }
   getRecord(user:User)
   {
