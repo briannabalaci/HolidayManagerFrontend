@@ -35,6 +35,7 @@ export class CreateRequestComponent implements OnInit {
   @Input() updatingSubstitute!: string;
   @Input() updatingStatus!: string;
   @Input() deviceValue!: string;
+  @Input() isTeamlead!: boolean;
   @Input() details!: string;
   @Input() isTeamlead!: boolean;
   @Input() parent: any;
@@ -627,7 +628,9 @@ export class CreateRequestComponent implements OnInit {
       this.checkAndSend();
     }
   }
-
+  sendToHr() {
+    console.log("Sent to HR!");
+  }
   showMessage() {
     if (this.showSuccess) {
       this.showSuccessfulMessage = true;
