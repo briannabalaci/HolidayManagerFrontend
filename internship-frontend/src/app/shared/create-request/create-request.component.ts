@@ -75,6 +75,7 @@ export class CreateRequestComponent implements OnInit {
   showFieldForSubstitute = false;
   showFieldForDocument = false;
   showCreateErrorMsg = "";
+  showReplacementErrorMessage = false;
   showFieldForReplacement = false;
   fileName = '';
   holidayList: HolidayTypeView[] = [
@@ -632,6 +633,8 @@ export class CreateRequestComponent implements OnInit {
       this.showDateErrorMessage = true;
     } else if (valuesFromForm.startDate! <= yesterday) {
       this.showPastDateErrorMessage = true;
+    } else if (this.substitute == undefined) {
+      this.showReplacementErrorMessage = true;
     } else {
       this.resetWarnings();
       this.checkAndSend();
@@ -667,6 +670,7 @@ export class CreateRequestComponent implements OnInit {
     this.showDateErrorMessage = false;
     this.showNumberHolidaysErrorMessage = false;
     this.showPastDateErrorMessage = false;
+    this.showReplacementErrorMessage = false;
   }
 
   clearSelect() {
