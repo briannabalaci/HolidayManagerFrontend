@@ -5,15 +5,19 @@ import {User} from "../shared/data-type/User";
 import {CookieService} from "ngx-cookie-service";
 import {parseJwt} from "../utils/JWTParser";
 import {HolidayDto, HolidayTypeDto} from "../shared/data-type/HolidayDto";
+import {TeamAdd} from "../shared/data-type/Team";
+import {Holiday} from "../shared/data-type/Holiday";
 
-const URL = "http://localhost:8090/teamlead/";
+const URL_BASE = "http://localhost:8090/teamlead/";
 
 const DECLINE_REQUEST = `http://localhost:8090/holiday/deny`
 const APPROVE_REQUEST = `http://localhost:8090/holiday/approve`
 const MORE_DETAILS = `http://localhost:8090/holiday/details`
-const GET_REQUESTS = `${URL}requests?id=`;
-const GET_TEAM_REQUESTS = `${URL}team-requests?id=`;
-const GET_PDF = `http://localhost:8090/teamlead/getPDF?id=`;
+const GET_REQUESTS = `${URL_BASE}requests?id=`;
+const GET_TEAM_REQUESTS = `${URL_BASE}team-requests?id=`;
+const GET_PDF = `${URL_BASE}getPDF?id=`;
+const SENT_TO_HR = `${URL_BASE}send-to-hr`;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -52,6 +56,10 @@ export class TeamleadService {
     return this.httpClient.get(url, {
       responseType: 'blob'
     });
+  }
+
+  public sendToHR(holiday:Holiday):Observable<any> {
+    return this.httpClient.post<TeamAdd>(SENT_TO_HR,holiday);
   }
 
 }

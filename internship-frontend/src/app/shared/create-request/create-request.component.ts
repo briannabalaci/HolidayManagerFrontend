@@ -10,6 +10,7 @@ import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild
 import {FormBuilder, NgForm, Validators} from '@angular/forms';
 import {User, UserType} from "../data-type/User";
 import {HolidayTypeDto} from "../data-type/HolidayDto";
+import {TeamleadService} from "../../service/teamlead.service";
 
 
 @Component({
@@ -81,7 +82,8 @@ export class CreateRequestComponent implements OnInit {
   ];
   replacementUserList: User[];
   substitute:User
-  constructor(private formBuilder: FormBuilder, private cookieService: CookieService, private holidayService: HolidayService, private userService: UserService) {
+  constructor(private formBuilder: FormBuilder, private cookieService: CookieService, private holidayService: HolidayService,
+              private userService: UserService, private teamleadService:TeamleadService) {
   }
 
   ngOnInit(): void {
@@ -357,10 +359,10 @@ export class CreateRequestComponent implements OnInit {
     }
 
     if (this.deviceValue == 'special-holiday') {
-      if(this.file){
+      if(this.file){//there is a file
         this.file.arrayBuffer().then(buff => {
           let x = new Uint8Array(buff);
-          if (!this.updating) {
+          if (!this.updating) {//create
             const datePipe = new DatePipe('en-US');
             const holidayData: Holiday = {
               startDate: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
@@ -393,7 +395,7 @@ export class CreateRequestComponent implements OnInit {
               this.showMessage()
               console.log(result);
             });
-          } else {
+          } else {//update
             const datePipe = new DatePipe('en-US');
             const holidayData: Holiday = {
               id: this.updatingId,
@@ -431,7 +433,7 @@ export class CreateRequestComponent implements OnInit {
             });
           }
         });
-      } else {
+      } else {//there is no file
           if (!this.updating) {
             const datePipe = new DatePipe('en-US');
             console.log(valuesFromForm.substitute!)
@@ -504,8 +506,8 @@ export class CreateRequestComponent implements OnInit {
           }
       }
 
-    } else {
-      if (!this.updating) {
+    } else { //is not a special holiday
+      if (!this.updating) {//create
         const datePipe = new DatePipe('en-US');
         let holidayData: Holiday;
         if (this.deviceValue == 'rest-holiday') {
@@ -547,7 +549,7 @@ export class CreateRequestComponent implements OnInit {
           this.refreshData();
           console.log(result);
         });
-      } else {
+      } else {//update
         const datePipe = new DatePipe('en-US');
         let holidayData: Holiday;
         if (this.deviceValue == 'rest-holiday' || this.deviceValue == 'special-holiday') {
@@ -628,27 +630,105 @@ export class CreateRequestComponent implements OnInit {
     }
   }
   sendToHr() {
-    console.log("Sent to HR!");
-  }
-  showMessage() {
-    if (this.showSuccess) {
-      this.showSuccessfulMessage = true;
-      this.showFieldForStartDate = false;
-      this.showFieldForEndDate = false;
-      this.showFieldForSubstitute = false;
-      this.showFieldForDocument = false;
-      this.showFieldForReplacement = false;
-      this.documentExists = false;
-    } else {
-      this.showNumberHolidaysErrorMessage = true;
-      this.showFieldForStartDate = false;
-      this.showFieldForEndDate = false;
-      this.showFieldForSubstitute = false;
-      this.showFieldForDocument = false;
-      this.showFieldForReplacement = false;
-      this.documentExists = false;
+    const valuesFromForm = this.holidayRequestFormGroup.value;
+
+    let hType = RequestType.REST;
+    const token = this.cookieService.get('Token');
+    const uID = parseJwt(token).id;
+    switch (this.deviceValue) {
+      case 'rest-holiday': {
+        hType = RequestType.REST;
+        break;
+      }
+      case 'special-holiday': {
+        hType = RequestType.SPECIAL;
+        break;
+      }
+      case 'unpaid-holiday': {
+        hType = RequestType.UNPAID;
+        break;
+      }
+    }
+    if (this.deviceValue == 'special-holiday') {
+      if (this.file) {//if there is file
+        this.file.arrayBuffer().then(buff => {
+          let x = new Uint8Array(buff);
+          const datePipe = new DatePipe('en-US');
+          const holidayData: Holiday = {
+            id: this.updatingId,
+            startDate: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
+            endDate: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!,
+            substitute: valuesFromForm.substitute!,
+            document: Array.from(x),
+            user: {
+              id: uID
+            }
+          }
+          this.teamleadService.sendToHR(holidayData).subscribe( data => {})
+        });
+      }
+      else{//there is no file
+        const datePipe = new DatePipe('en-US');
+        const holidayData: Holiday = {
+          id: this.updatingId,
+          startDate: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
+          endDate: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!,
+          substitute: valuesFromForm.substitute!,
+          document: [],
+          user: {
+            id: uID
+          }
+        }
+        this.teamleadService.sendToHR(holidayData).subscribe( data => {})
+      }
+    }
+    else{//is not a special holiday
+      const datePipe = new DatePipe('en-US');
+      let holidayData: Holiday;
+      if (this.deviceValue == 'rest-holiday' || this.deviceValue == 'special-holiday') {
+        holidayData = {
+          id: this.updatingId,
+          startDate: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
+          endDate: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!,
+          substitute: valuesFromForm.substitute!,
+          user: {
+            id: uID
+          }
+        }
+      } else {
+        holidayData = {
+          id: this.updatingId,
+          startDate: datePipe.transform(valuesFromForm.startDate, 'yyyy-MM-dd HH:mm:ss')!,
+          endDate: datePipe.transform(valuesFromForm.endDate, 'yyyy-MM-dd HH:mm:ss')!,
+          user: {
+            id: uID
+          }
+        }
+      }
+      this.teamleadService.sendToHR(holidayData).subscribe( data => {})
     }
   }
+    showMessage()
+    {
+      if (this.showSuccess) {
+        this.showSuccessfulMessage = true;
+        this.showFieldForStartDate = false;
+        this.showFieldForEndDate = false;
+        this.showFieldForSubstitute = false;
+        this.showFieldForDocument = false;
+        this.showFieldForReplacement = false;
+        this.documentExists = false;
+      } else {
+        this.showNumberHolidaysErrorMessage = true;
+        this.showFieldForStartDate = false;
+        this.showFieldForEndDate = false;
+        this.showFieldForSubstitute = false;
+        this.showFieldForDocument = false;
+        this.showFieldForReplacement = false;
+        this.documentExists = false;
+      }
+    }
+
 
   resetWarnings() {
     console.log(this.deviceValue);
