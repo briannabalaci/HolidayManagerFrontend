@@ -48,7 +48,7 @@ export class EmployeedashComponent implements OnInit,OnChanges {
 
 
   requestsTypes: string[] = ['All requests', 'Rest holiday', 'Special holiday', 'Unpaid holiday']
-  requestsStatus: string[] = ['All', 'Pending', 'Approved', 'Denied']
+  requestsStatus: string[] = ['All', 'Pending', 'Approved', 'Denied', 'Sent']
 
 
   newNotificationSignalReceived(message:string){

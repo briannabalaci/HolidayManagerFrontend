@@ -1,7 +1,7 @@
 import {User} from "./User";
 
 export class Holiday{
-  
+
   id?: number;
   startDate?: string;
   endDate?: string;
@@ -29,7 +29,8 @@ export enum RequestType {
 export enum HolidayStatus {
   PENDING,
   APPROVED,
-  DENIED
+  DENIED,
+  SENT
 }
 
 export class HolidayTypeView {

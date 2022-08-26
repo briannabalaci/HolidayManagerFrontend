@@ -9,7 +9,8 @@ export enum HolidayTypeDto {
 export enum HolidayStatusDto {
   DENIED = 'DENIED',
   PENDING = 'PENDING',
-  APPROVED = 'APPROVED'
+  APPROVED = 'APPROVED',
+  SENT = 'SENT'
 }
 
 
