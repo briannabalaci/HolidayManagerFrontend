@@ -217,6 +217,7 @@ export class TeamsRequestsComponent implements OnInit,OnChanges {
     this.holidayDecidingStartDate = element.startDate!;
     this.holidayDecidingEndDate = element.endDate!;
     this.holidayDecidingStatus = element.status!;
+    this.holidayDecidingDocumentName = element.document!;
 
 
     if(element.type == HolidayTypeDto.SPECIAL_HOLIDAY){

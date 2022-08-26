@@ -28,7 +28,6 @@ export class EmployeedashComponent implements OnInit,OnChanges {
   endDate = 'Angular';
   startDate = 'Angular';
   substitute = '';
-  displayedColumns: string[] = ['startDate', 'endDate',  'status', 'Edit', 'Delete'];
   holidayType = 'rest-holiday';
 
   holidayUpdating = false;

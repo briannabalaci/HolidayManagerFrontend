@@ -1,5 +1,5 @@
 import { Component,EventEmitter, Input, OnInit,Output, } from '@angular/core';
-import { FormBuilder,Validators } from '@angular/forms';
+import { FormBuilder,FormGroupDirective,Validators } from '@angular/forms';
 import { catchError, map } from 'rxjs';
 import { AdminService } from 'src/app/service/admin.service';
 import { User } from 'src/app/shared/data-type/User';
@@ -35,6 +35,7 @@ export class CreateUserFormComponent implements OnInit {
   showEmailErrorMessage = false;
   showEmailOkMessage = false;
   showFieldErrorMessage = false;
+
   departments: DepartmentInt[] = [
     {value: 'JAVA', viewValue: 'Java'},
     {value: 'ABAP', viewValue: 'ABAP'},
@@ -59,11 +60,11 @@ changeType(value: string) {
 }
   createUserForm = this.formBuilder.group({
     
-    password: ['', Validators.required],
-    email: ['', [Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$")]],
-    forName: ['', Validators.required],
-    surName: ['', Validators.required],
-    nrHolidays: ['', Validators.required],
+    password: [null, Validators.required],
+    email: [null, [Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$")]],
+    forName: [null, Validators.required],
+    surName: [null, Validators.required],
+    nrHolidays: [null, Validators.required],
    
     
   });
@@ -73,7 +74,7 @@ changeType(value: string) {
 
   ngOnInit(): void {
   }
-  createUser(): void{
+  createUser(formDirective: FormGroupDirective): void{
     this.resetWarnings();
     const valuesFromForm = this.createUserForm.value;
   
@@ -96,8 +97,8 @@ changeType(value: string) {
        
         let u: User = Object.assign({}, newUser);
 
-      this.sendAddUserRequest(u);
-      this.createUserForm.reset();
+      this.sendAddUserRequest(u,formDirective);
+    
       this.createUserForm.controls["email"].clearValidators();
       this.createUserForm.controls["email"].updateValueAndValidity();
       this.createUserForm.controls["email"].addValidators([Validators.required]);
@@ -132,15 +133,16 @@ changeType(value: string) {
     this.showEmailOkMessage = false;
     this.showFieldErrorMessage = false;
   }
-  sendAddUserRequest(userDto: User) {
+  sendAddUserRequest(userDto: User,formDirective: FormGroupDirective) {
 
     this.adminService.createUser(userDto).subscribe(results => {
       let resp = JSON.stringify(results);
       console.log(resp);
       this.resetWarnings();
       if (resp == '"User created succesfully!"') {
-        this.createUserForm.reset();
         this.showEmailOkMessage = true;
+        this.createUserForm.reset();
+        formDirective.resetForm();
       }
       else {
         if (resp == '"The user already exists!"') { this.showEmailErrorMessage = true; }

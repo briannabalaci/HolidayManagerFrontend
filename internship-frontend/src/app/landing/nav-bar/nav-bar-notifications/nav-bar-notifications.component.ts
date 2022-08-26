@@ -164,8 +164,3 @@ export class NavBarNotificationsComponent implements OnInit {
     })
   }
 }
-
-
-
-
-
