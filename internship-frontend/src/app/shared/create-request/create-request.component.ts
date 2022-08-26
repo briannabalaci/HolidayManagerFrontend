@@ -11,7 +11,7 @@ import {FormBuilder, NgForm, Validators} from '@angular/forms';
 import {User, UserType} from "../data-type/User";
 import {HolidayTypeDto} from "../data-type/HolidayDto";
 import {TeamleadService} from "../../service/teamlead.service";
-
+import { ThisReceiver } from '@angular/compiler';
 
 @Component({
   selector: 'app-create-request',
@@ -35,6 +35,7 @@ export class CreateRequestComponent implements OnInit {
   @Input() updatingEndDate!: string;
   @Input() updatingSubstitute!: string;
   @Input() updatingStatus!: string;
+  @Input() updatingDocument!: string;
   @Input() deviceValue!: string;
   @Input() isTeamlead!: boolean;
   @Input() details!: string;
@@ -66,6 +67,7 @@ export class CreateRequestComponent implements OnInit {
   showNumberHolidaysErrorMessage = false;
   showPastDateErrorMessage = false;
   showStartedMessage = false;
+  showHrMessage = false;
   showSuccessfulMessage = false;
   showSuccessfulUpdateMessage = false;
   showFieldForStartDate = false;
@@ -73,6 +75,7 @@ export class CreateRequestComponent implements OnInit {
   showFieldForSubstitute = false;
   showFieldForDocument = false;
   showCreateErrorMsg = "";
+  showReplacementErrorMessage = false;
   showFieldForReplacement = false;
   fileName = '';
   holidayList: HolidayTypeView[] = [
@@ -116,6 +119,11 @@ export class CreateRequestComponent implements OnInit {
           this.showStartedMessage = true;
         } else {
           this.showStartedMessage = false;
+        }
+        if (this.updatingStatus == 'SENT') {
+          this.showHrMessage = true;
+        } else {
+          this.showHrMessage = false;
         }
       }
     }
@@ -177,7 +185,7 @@ export class CreateRequestComponent implements OnInit {
         if (this.isTeamlead) {
           this.showFieldForReplacement = true;
         }
-        this.documentExists = true;
+        this.documentExists = (this.updatingDocument != '');
         break;
       }
       case 'unpaid-holiday': {
@@ -222,6 +230,7 @@ export class CreateRequestComponent implements OnInit {
             this.showError = false
             this.sendHolidayRequest()
           } else {
+            this.clearSelect();
             this.showError = true;
             this.showSuccess = false
             this.showCreateErrorMsg = "You already have a request in the given period.";
@@ -229,6 +238,7 @@ export class CreateRequestComponent implements OnInit {
           }
         })
       } else {
+        this.clearSelect();
         this.showError = true;
         this.showSuccess = false
         this.showCreateErrorMsg = "You don't have enough vacation days.";
@@ -624,6 +634,8 @@ export class CreateRequestComponent implements OnInit {
       this.showDateErrorMessage = true;
     } else if (valuesFromForm.startDate! <= yesterday) {
       this.showPastDateErrorMessage = true;
+    } else if (this.substitute == undefined) {
+      this.showReplacementErrorMessage = true;
     } else {
       this.resetWarnings();
       this.checkAndSend();
@@ -740,6 +752,7 @@ export class CreateRequestComponent implements OnInit {
     this.showDateErrorMessage = false;
     this.showNumberHolidaysErrorMessage = false;
     this.showPastDateErrorMessage = false;
+    this.showReplacementErrorMessage = false;
   }
 
   clearSelect() {

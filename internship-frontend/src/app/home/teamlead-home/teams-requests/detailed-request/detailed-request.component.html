@@ -11,6 +11,8 @@
   <div class="centered">
     <mat-icon color="green" *ngIf="decidingStatus == 'APPROVED'">done</mat-icon>
     <p class="request-msg-green" *ngIf="decidingStatus == 'APPROVED'">This request was approved.</p>
+    <mat-icon color="blue" *ngIf="decidingStatus == 'SENT'">outgoing_mail</mat-icon>
+    <p class="request-msg-blue" *ngIf="decidingStatus == 'SENT'">This request was sent to the HR department.</p>
     <mat-icon color="red" *ngIf="decidingStatus == 'DENIED'">close</mat-icon>
     <p class="request-msg-red" *ngIf="decidingStatus == 'DENIED'">This request was declined.</p>
   </div>
@@ -49,12 +51,14 @@
     </mat-form-field><br *ngIf="showFieldForSubstitute">
 
     <p *ngIf="showFieldForDocument">Extra information: </p>
+    <p *ngIf="showFieldForDocument && !documentExists" class="request-msg-blue">There is no uploaded document.</p>
+    <!--
     <mat-form-field *ngIf="showFieldForDocument && !documentExists" appearance="outline" color="accent">
       <input readonly matInput name="document" formControlName="document" placeholder="Extra information">
     </mat-form-field><br *ngIf="showFieldForDocument">
-
-    <button *ngIf="documentExists" mat-icon-button aria-label="Download icon" id="download-button" (click)="downloadDocument()">
-      <mat-icon class="section-mat-icon">picture_as_pdf</mat-icon>
+  -->
+    <button *ngIf="showFieldForDocument && documentExists" mat-icon-button aria-label="Download icon" id="download-button" (click)="downloadDocument()">
+      <mat-icon color="blue" class="section-mat-icon">picture_as_pdf</mat-icon>
     </button>
 
     <mat-card *ngIf="isErrorMessage" class="error-message">{{this.errorString}}</mat-card>

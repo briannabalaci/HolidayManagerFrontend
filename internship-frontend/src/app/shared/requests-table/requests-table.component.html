@@ -23,7 +23,7 @@
       
       <td class="status-cell" mat-cell *matCellDef="let element">
         <button mat-icon-button disabled>
-         <mat-icon color="green" *ngIf="element.status == 'APPROVED'">done</mat-icon><mat-icon color="red" *ngIf="element.status == 'DENIED'">close</mat-icon><mat-icon color="blue" *ngIf="element.status == 'PENDING'">schedule</mat-icon>
+         <mat-icon color="green" *ngIf="element.status == 'APPROVED'">done</mat-icon><mat-icon color="red" *ngIf="element.status == 'DENIED'">close</mat-icon><mat-icon color="blue" *ngIf="element.status == 'PENDING'">schedule</mat-icon><mat-icon *ngIf="element.status == 'SENT'">mail</mat-icon>
         </button>
       </td>
     </ng-container>
@@ -40,8 +40,9 @@
     <ng-container matColumnDef="delete">
       <th class="edit-cell" mat-header-cell *matHeaderCellDef> Delete </th>
       <td mat-cell class="delete-cell" *matCellDef="let element">
-        <button mat-icon-button aria-label="Edit icon" class="section-button--edit" (click)="deleteHoliday(element)">
-          <mat-icon class="section-mat-icon" color="red">delete_forever</mat-icon>
+        <button [disabled]="element.status == 'SENT'" mat-icon-button aria-label="Edit icon" class="section-button--edit" (click)="deleteHoliday(element)">
+          <mat-icon class="section-mat-icon" *ngIf="element.status != 'SENT'" color="red">delete_forever</mat-icon>
+          <mat-icon class="section-mat-icon" *ngIf="element.status == 'SENT'">delete_forever</mat-icon>
         </button>
       </td>
     </ng-container>
