@@ -633,7 +633,7 @@ export class CreateRequestComponent implements OnInit {
       this.showDateErrorMessage = true;
     } else if (valuesFromForm.startDate! <= yesterday) {
       this.showPastDateErrorMessage = true;
-    } else if (this.substitute == undefined) {
+    } else if (this.substitute == undefined && this.isTeamlead) {
       this.showReplacementErrorMessage = true;
     } else {
       this.resetWarnings();
