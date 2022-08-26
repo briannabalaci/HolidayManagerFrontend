@@ -21,11 +21,12 @@
     
       <ng-container matColumnDef="department">
         <th mat-header-cell *matHeaderCellDef> Department </th>
-        <td  mat-cell *matCellDef="let element"> <span>
-          {{(readMore) ? element.department : element.department | slice:0:4}} 
+        <td class="pff" mat-cell *matCellDef="let element"> 
+          <span class="pff">
+          {{(readMore) ? element.department.replace('_', ' ') : element.department.replace('_', ' ') | slice:0:4}} </span>
           <a href="javascript:;" *ngIf="!readMore && element.department?.length > 4" (click)="readMore=true">...</a>
           <a href="javascript:;" class="garage-title" *ngIf="readMore && element.department?.length > 4" (click)="readMore=false">...less</a>
-        </span> </td>
+         </td>
       </ng-container>
    
       <ng-container matColumnDef="edituser">

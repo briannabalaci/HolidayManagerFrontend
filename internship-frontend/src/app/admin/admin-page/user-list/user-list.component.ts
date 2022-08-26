@@ -35,7 +35,7 @@ export class UserListComponent implements OnInit,OnChanges {
   };
   readMore = false
   displayedColumns: string[] = ['surname','forname','department',"edituser","deleteuser"];
-
+  aux = ""
   @ViewChild(MatPaginator, { static: true })
   paginator!: MatPaginator;
   createFilter(): (data: User, filter: string) => boolean {
