@@ -20,6 +20,7 @@ export class NavBarComponent implements OnInit {
   notificationsVisible = false;
   canShowNotification = true;
   @Output() newNotification = new EventEmitter<string>()
+  // @Output() newNotificationSubstitute = new EventEmitter<string>()
 
 
   constructor(private router: Router, private cookieService: CookieService, private userService:UserService, private notificationService: NotificationService, private stompService:StompService) { }

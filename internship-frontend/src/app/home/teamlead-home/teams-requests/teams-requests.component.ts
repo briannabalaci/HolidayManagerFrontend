@@ -93,13 +93,6 @@ export class TeamsRequestsComponent implements OnInit,OnChanges {
     console.log("here in ng on change-------------------------------")
     if (this.newNotification != null)
       if (this.newNotification["message"] != "") {
-        console.log("In ng on change: "+this.selectedSurname + " "+ this.selectedForname+ " "+ this.selectedType)
-
-        // if(this.selectedType == undefined && this.selectedForname == undefined && this.selectedSurname == undefined)
-        //     this.getTeamLeaderData();
-        console.log(this.selectedType)
-        console.log(this.selectedSurname)
-        console.log(this.selectedForname)
         this.filterByTypeAndName(this.selectedSurname, this.selectedForname, this.selectedType)
       }
   }
@@ -224,6 +217,7 @@ export class TeamsRequestsComponent implements OnInit,OnChanges {
     this.holidayDecidingStartDate = element.startDate!;
     this.holidayDecidingEndDate = element.endDate!;
     this.holidayDecidingStatus = element.status!;
+    this.holidayDecidingDocumentName = element.document!;
 
 
     if(element.type == HolidayTypeDto.SPECIAL_HOLIDAY){
@@ -239,14 +233,14 @@ export class TeamsRequestsComponent implements OnInit,OnChanges {
     this.showFormApproveRequest = !this.showFormApproveRequest
   }
   generatePdf() {
-   
+
     this.showPdfMessage = true;
     console.log("PDF generated");
     this.teamLeadService
     .getPDF(this.user!.team!.id!)
     .subscribe(blob => saveAs(blob,"Team_Lead_Data"));
   };
-  
+
   }
 
 

@@ -72,6 +72,22 @@ export class NavBarNotificationsComponent implements OnInit {
         return "Your request was approved by "
       case "DENIED":
         return "Your request was denied by "
+
+      case "MADE_SUBSTITUTE":
+        return "You were made a substitute by "
+      case "SENT_SUBSTITUTE":
+        return "A holiday request was sent by "
+      case "CANCELED_SUBSTITUTE":
+        return "A holiday request was canceled by "
+      case "UPDATE_SUBSTITUTE":
+        return "A holiday request was updated by "
+      case "MORE_DETAILS_SUBSTITUTE":
+        return "You were requested more details by "
+      case "APPROVED_SUBSTITUTE":
+        return "Your request was approved by "
+      case "DENIED_SUBSTITUTE":
+        return "Your request was denied by "
+
       default:
         return "You got sent a notification by  "
     }
@@ -93,6 +109,24 @@ export class NavBarNotificationsComponent implements OnInit {
         return "Request approved"
       case "DENIED":
         return "Request denied"
+
+      case "MADE_SUBSTITUTE":
+        return "Substitute"
+      case "SENT_SUBSTITUTE":
+        return "Request sent -- substitute"
+      case "CANCELED_SUBSTITUTE":
+        return "Request canceled -- substitute"
+      case "END_SUBSTITUTE":
+        return "Request canceled by teamlead -- substitute"
+      case "UPDATE_SUBSTITUTE":
+        return "Request updated -- substitute"
+      case "MORE_DETAILS_SUBSTITUTE":
+        return "More details -- substitute"
+      case "APPROVED_SUBSTITUTE":
+        return "Request approved -- substitute"
+      case "DENIED_SUBSTITUTE":
+        return "Request denied -- substitute"
+
       default:
         return "NOTIFICATION"
     }
@@ -130,8 +164,3 @@ export class NavBarNotificationsComponent implements OnInit {
     })
   }
 }
-
-
-
-
-

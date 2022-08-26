@@ -4,6 +4,8 @@ import {Observable} from 'rxjs';
 import {Holiday} from '../shared/data-type/Holiday';
 import {User} from '../shared/data-type/User';
 import {HolidayDto, HolidayStatusDto, HolidayTypeDto, HolidayTypeUserName} from "../shared/data-type/HolidayDto";
+import {parseJwt} from "../utils/JWTParser";
+import {CookieService} from "ngx-cookie-service";
 
 const URL_BASE = "http://localhost:8090/holiday"
 const GET_USERS_HOLIDAYS = URL_BASE + "/get-users-holidays"
@@ -24,20 +26,22 @@ const REQUEST_DETAILS = URL_BASE + "/details"
 const GET_HOLIDAY = `${URL_BASE}/holiday-info`
 const FILTER = URL_BASE + "/filter"
 
+const GET_SUBSTITUTE_REQUESTS = `${URL_BASE}/substitute-requests`
+
 @Injectable({
   providedIn: 'root'
 })
 export class HolidayService {
 
-  constructor(private httpClient: HttpClient) {
-  }
+  constructor(private httpClient: HttpClient, private cookieService: CookieService) {}
 
   public getAllHolidaysById(id: number): Observable<Holiday[]> {
     return this.httpClient.get<Holiday[]>(GET_USERS_HOLIDAYS + '/' + id.toString());
   }
 
-  public createHoliday(holiday: Holiday): Observable<Holiday> {
-    return this.httpClient.post<Holiday>(CREATE_HOLIDAY, holiday);
+  public createHoliday(holiday: Holiday, substituteId: number): Observable<Holiday> {
+    let url = `${CREATE_HOLIDAY}?substituteId=${substituteId}`
+    return this.httpClient.post<Holiday>(url, holiday);
   }
 
   public deleteHoliday(id?: number): Observable<Holiday> {
@@ -46,8 +50,9 @@ export class HolidayService {
   }
 
 
-  public updateHoliday(holiday: Holiday): Observable<Holiday> {
-    return this.httpClient.put<Holiday>(UPDATE_HOLIDAY, holiday);
+  public updateHoliday(holiday: Holiday, substituteId:number): Observable<Holiday> {
+    let url = `${UPDATE_HOLIDAY}?substituteId=${substituteId}`
+    return this.httpClient.put<Holiday>(url, holiday);
   }
 
   public getRequestsFilteredByType(type: HolidayTypeDto, id: number): Observable<HolidayDto[]> {
@@ -114,5 +119,9 @@ export class HolidayService {
       return this.httpClient.get<HolidayDto[]>(`${FILTER}?teamLeaderId=${data.teamLeaderId}&type=${data.type}&forname=${data.forname}&surname=${data.surname}`);
     else return this.httpClient.get<HolidayDto[]>(`${FILTER}?teamLeaderId=${data.teamLeaderId}`);
 
+  }
+  public getSubstituteRequests(): Observable<HolidayDto[]> {
+    let url = `${GET_SUBSTITUTE_REQUESTS}?id=${parseJwt(this.cookieService.get("Token")).id}`
+    return this.httpClient.get<HolidayDto[]>(url);
   }
 }

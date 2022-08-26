@@ -14,10 +14,12 @@ import {UserService} from "../../../service/user.service";
 export class TeamleadRequestsComponent implements OnInit,OnChanges {
 
   showFormCreateRequest = false;
+
   endDate = 'Angular';
   startDate = 'Angular';
   substitute = '';
   holidayType = 'rest-holiday';
+
   holidayUpdating = false;
   holidayUpdatingId = -1;
   holidayUpdatingStartDate = '';
@@ -40,6 +42,7 @@ export class TeamleadRequestsComponent implements OnInit,OnChanges {
     this.getAndSetTeamLeadData();
   }
   ngOnChanges(changes: SimpleChanges): void {
+    this.refreshData()
   }
 
   newRequestAddedHandler(message:string){
@@ -61,6 +64,7 @@ export class TeamleadRequestsComponent implements OnInit,OnChanges {
     this.selectedTypeValue = value;
     this.requests.selectedTypeChild = value;
     this.requests.selectedStatusChild = this.selectedStatusValue;
+
     this.requests.filterByTypeAndStatus(this.requests.selectedTypeChild, this.requests.selectedStatusChild)
   }
 

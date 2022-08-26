@@ -4,12 +4,13 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { stringify } from 'querystring';
 import { AdminService } from 'src/app/service/admin.service';
-import { UpdateUser, User } from 'src/app/shared/data-type/User';
+import { UpdateUser, User, UserType } from 'src/app/shared/data-type/User';
 import { __param } from 'tslib';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ConfirmationDialogBoxComponent } from 'src/app/confirmation-dialog-box/confirmation-dialog-box.component';
 import { FormControl } from '@angular/forms';
 import {MatSort, Sort} from '@angular/material/sort';
+import { MessageDialogBoxComponent } from 'src/app/message-dialog-box/message-dialog-box.component';
 
 @Component({
   selector: 'app-user-list',
@@ -91,18 +92,27 @@ export class UserListComponent implements OnInit,OnChanges {
     //EDIT USER
   }
   getRecordDelete(user: User) {
+    if (user.type === UserType.TEAMLEAD) {
+      const dialogRef = this.dialog.open(MessageDialogBoxComponent, {
+        width: '300px',
+        data: "This user is a teamlead. Try replacing the team's teamlead first.",
   
-    const dialogRef = this.dialog.open(ConfirmationDialogBoxComponent, {
-      width: '300px',
-      data: "Are you sure you want to delete user "+user.forname+" "+user.surname+"?",
-    });
-    dialogRef.afterClosed().subscribe( response => {
-      if (response) {
-        this.adminService.deleteUser(user.email || "").subscribe(result => {this.populateUserList() });
+      });
+    }
+    else {
+      const dialogRef = this.dialog.open(ConfirmationDialogBoxComponent, {
+        width: '300px',
+        data: "Are you sure you want to delete user " + user.forname + " " + user.surname + "?"
+      });
+
+      dialogRef.afterClosed().subscribe(response => {
+        if (response) {
+          this.adminService.deleteUser(user.email || "").subscribe(result => { this.populateUserList() });
       
         
-      }
-    })
+        }
+      })
+    }
     };
   }
 

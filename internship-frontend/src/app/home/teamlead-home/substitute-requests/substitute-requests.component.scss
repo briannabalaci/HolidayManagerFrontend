@@ -1,0 +1,75 @@
+@use '../../../../variables' as v;
+.section-teams-requests{
+  display: block;
+  text-align: center;
+  overflow-y: auto;
+}
+
+.section-title{
+  text-align: left;
+  margin-left: 20px;
+}
+
+.section-button--create--request{
+  display: block;
+  text-align: left;
+}
+
+.mat-form-field {
+  margin-left: 12px;
+  margin-right: 12px;
+}
+.div-member-request {
+  padding-top: 24px;
+  padding-bottom: 24px;
+  text-align: center;
+}
+.bg-card {
+  width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 30px;
+  box-shadow: 20px;
+}
+
+.div-holiday-request {
+  background-color: v.$grey-secondary;
+  width: 100%;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  text-align: center;
+
+  position: fixed;
+  bottom:0;
+
+  max-width: 100vw;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  z-index: 1;
+}
+.approved-icon{
+  fill: #3cf142;
+  padding-bottom: 10px;
+}
+
+.declined-icon{
+  fill: #ff0b0b;
+  padding-bottom: 10px;
+
+}
+
+.button-card {
+  float: right;
+  background-color:v.$green;
+  border-radius: 24px;
+  max-width: 64px;
+  max-height: 40px;
+}
+
+#pdf-p {
+  padding-top: 14px;
+  float: left;
+  font-size: 14px;
+  max-width: 50%;
+  color: v.$green;
+}
