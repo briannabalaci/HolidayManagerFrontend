@@ -13,17 +13,18 @@ hr{
 }
 .notificationCard {
     box-shadow: 0 3px 14px rgba(0, 0, 0, 0.15) !important;
-    z-index: 2;
+    z-index: 98;
     margin: auto;
     position: fixed;
     top: 88px;
     overflow-y:auto;
     width: 80%;
-    height:80%;
+    max-height: 80%;
     border-radius: 38px;
     background-color: v.$white;
   }
   .notificationItem{
+    z-index: 99;
     background-color: v.$orange-light;
     color: v.$orange-secondary;
     border-radius: 38px;
@@ -31,6 +32,7 @@ hr{
     border: 4px;
   }
   .notificationItemRead{
+    z-index: 99;
     background-color: v.$grey-secondary;
     border-radius: 38px;
     margin-bottom: 18px;
@@ -68,11 +70,13 @@ hr{
     background-color: v.$white;
   }
   .notificationInfo {
+    z-index: 99;
     text-align: center;
     font-size: 14px;
     color: v.$orange;
   }
 .triangle-up {
+  z-index: 98;
     z-index: 2;
     position: fixed;
     top: 48px;
@@ -90,7 +94,7 @@ hr{
         right: 24px;
         overflow-y:auto;
         width: 30%;
-        height: 80%;
+        max-height: 80%;
         border-radius: 38px;
         background-color: v.$white;
       }

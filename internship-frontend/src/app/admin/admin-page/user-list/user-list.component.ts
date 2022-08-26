@@ -95,7 +95,7 @@ export class UserListComponent implements OnInit,OnChanges {
     if (user.type === UserType.TEAMLEAD) {
       const dialogRef = this.dialog.open(MessageDialogBoxComponent, {
         width: '300px',
-        data: "This user is a teamlead",
+        data: "This user is a teamlead. Try replacing the team's teamlead first.",
   
       });
     }
