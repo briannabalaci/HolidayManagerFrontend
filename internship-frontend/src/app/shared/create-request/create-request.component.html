@@ -4,8 +4,8 @@
 <p class="request-msg-green" *ngIf="updating && updatingStatus == 'APPROVED'">This request was approved.</p>
 <mat-icon color="red" *ngIf="updating && updatingStatus == 'DENIED'">close</mat-icon>
 <p class="request-msg-red" *ngIf="updating && updatingStatus == 'DENIED'">This request was declined.</p>
-<mat-icon color="blue" *ngIf="updating && showStartedMessage">event_busy</mat-icon>
-<p class="request-msg-blue" *ngIf="updating && showStartedMessage">You can not modify this holiday, since it has already started or ended.</p>
+<mat-icon color="blue" *ngIf="updating && showStartedMessage && !showHrMessage">event_busy</mat-icon>
+<p class="request-msg-blue" *ngIf="updating && showStartedMessage && !showHrMessage">You can not modify this holiday, since it has already started or ended.</p>
 <mat-icon color="blue" *ngIf="updating && showHrMessage">outgoing_mail</mat-icon>
 <p class="request-msg-blue" *ngIf="updating && showHrMessage">You can not modify this holiday, since it was already sent to the HR department.</p>
 <form id="login-form" [formGroup]="holidayRequestFormGroup" #formDirective="ngForm">
@@ -74,7 +74,7 @@
 
 
   </div>
-
+  <p *ngIf="!documentExists && updating" class="request-msg-blue">There is no uploaded document.</p>
   <button *ngIf="documentExists && updating" mat-icon-button aria-label="Download icon" id="download-button" (click)="downloadDocument()">
     <mat-icon class="section-mat-icon" color="blue">picture_as_pdf</mat-icon>
   </button>

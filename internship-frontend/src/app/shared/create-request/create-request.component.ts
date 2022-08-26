@@ -35,6 +35,7 @@ export class CreateRequestComponent implements OnInit {
   @Input() updatingEndDate!: string;
   @Input() updatingSubstitute!: string;
   @Input() updatingStatus!: string;
+  @Input() updatingDocument!: string;
   @Input() deviceValue!: string;
   @Input() isTeamlead!: boolean;
   @Input() details!: string;
@@ -182,7 +183,7 @@ export class CreateRequestComponent implements OnInit {
         if (this.isTeamlead) {
           this.showFieldForReplacement = true;
         }
-        this.documentExists = true;
+        this.documentExists = (this.updatingDocument != '');
         break;
       }
       case 'unpaid-holiday': {

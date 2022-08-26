@@ -36,6 +36,7 @@ export class EmployeedashComponent implements OnInit,OnChanges {
   holidayUpdatingEndDate = '';
   holidayUpdatingSubstitute = '';
   holidayUpdatingStatus = 'PENDING';
+  holidayUpdatingDocument = '';
   details = '';
 
   dataSource = new MatTableDataSource(HOLIDAY_DATA);
