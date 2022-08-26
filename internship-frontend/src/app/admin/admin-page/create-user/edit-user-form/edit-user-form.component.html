@@ -5,7 +5,7 @@
 <form id="edit-form" [formGroup]="createUserForm" (ngSubmit)="updateUser()">
   <mat-card class="edit-hint" *ngIf="showEditErrorMessage" (click)="resetWarnings()">Could not update user.</mat-card>
   <mat-card class="edit-hint-green" *ngIf="showEditOkMessage" (click)="resetWarnings()">User updated successfully.</mat-card>
-  <p>First name</p> 
+  <p>First name</p>
   <mat-form-field appearance="outline" color="accent" >
       <input matInput [placeholder]="surname_d" [(ngModel)]="surname_d" formControlName="surName" (click)="resetWarnings()">
     </mat-form-field><br>
@@ -15,7 +15,7 @@
       </mat-form-field><br>
       <p>Holiday days</p>
           <mat-form-field appearance="outline" color="accent" >
-        <input matInput type="number" [placeholder]=$any(nrHolidays_d)  [(ngModel)]=nrHolidays_d  formControlName="nrHolidays" (click)="resetWarnings()">
+        <input readonly matInput type="number" [placeholder]=$any(nrHolidays_d)  [(ngModel)]=nrHolidays_d  formControlName="nrHolidays" (click)="resetWarnings()">
       </mat-form-field><br>
       <p>Department</p>
 <mat-form-field appearance="outline" color="accent" >

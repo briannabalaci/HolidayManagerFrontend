@@ -45,6 +45,7 @@ export class EditUserFormComponent implements OnInit , OnChanges{
   nrHolidays_d = 0;
   email_d = "";
   password_d="";
+  
 
 
   departments: DepartmentInt[] = [

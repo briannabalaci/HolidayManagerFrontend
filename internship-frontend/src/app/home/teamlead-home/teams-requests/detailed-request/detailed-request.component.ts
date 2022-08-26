@@ -78,7 +78,7 @@ export class DetailedRequestComponent implements OnInit {
 
     if(this.decidingType == HolidayTypeDto.SPECIAL_HOLIDAY){
       this.holidayRequestFormGroup.controls['substitute'].setValue(this.decidingSubstitute.toString())
-      if(this.decidingDocumentName == null)
+      if(this.decidingDocumentName == '')
         this.holidayRequestFormGroup.controls['document'].setValue("No document attached")
       else
         this.holidayRequestFormGroup.controls['document'].setValue(this.decidingDocumentName.toString())
@@ -89,7 +89,7 @@ export class DetailedRequestComponent implements OnInit {
 
 
   loadFields() {
-    if(this.decidingStatus == HolidayStatusDto.DENIED || this.decidingStatus == HolidayStatusDto.APPROVED || this.statusRequest == HolidayStatusDto.APPROVED || this.statusRequest == HolidayStatusDto.DENIED) {
+    if(this.decidingStatus == HolidayStatusDto.DENIED || this.decidingStatus == HolidayStatusDto.APPROVED || this.decidingStatus == HolidayStatusDto.SENT || this.statusRequest == HolidayStatusDto.APPROVED || this.statusRequest == HolidayStatusDto.DENIED ||  this.statusRequest == HolidayStatusDto.SENT) {
       this.isDisabled = true;
     }
 
@@ -104,7 +104,7 @@ export class DetailedRequestComponent implements OnInit {
         break;
       }
       case HolidayTypeDto.SPECIAL_HOLIDAY: {
-        this.documentExists = this.decidingDocumentName !== null;
+        this.documentExists = (this.decidingDocumentName !== '');
         this.showFieldForName = true;
         this.showFieldForType = true;
         this.showFieldForStartDate = true;
@@ -149,7 +149,7 @@ export class DetailedRequestComponent implements OnInit {
   }
 
   approveRequest() {
-    if(this.decidingDocumentName == null && this.decidingType == HolidayTypeDto.SPECIAL_HOLIDAY){
+    if(this.decidingDocumentName == '' && this.decidingType == HolidayTypeDto.SPECIAL_HOLIDAY){
       this.isErrorMessage = true;
       this.isSuccessMessage = false;
       this.errorString = "Document missing! Request cannot be approved!";

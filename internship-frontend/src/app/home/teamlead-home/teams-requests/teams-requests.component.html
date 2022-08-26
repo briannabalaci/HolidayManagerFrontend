@@ -58,7 +58,7 @@
 
         <td class="status-cell" mat-cell *matCellDef="let element">
           <button mat-icon-button disabled>
-           <mat-icon color="green" *ngIf="element.status == 'APPROVED'">done</mat-icon><mat-icon color="red" *ngIf="element.status == 'DENIED'">close</mat-icon><mat-icon color="blue" *ngIf="element.status == 'PENDING'">schedule</mat-icon>
+           <mat-icon color="green" *ngIf="element.status == 'APPROVED'">done</mat-icon><mat-icon color="red" *ngIf="element.status == 'DENIED'">close</mat-icon><mat-icon color="blue" *ngIf="element.status == 'PENDING'">schedule</mat-icon><mat-icon *ngIf="element.status == 'SENT'">mail</mat-icon>
           </button>
         </td>
       </ng-container>

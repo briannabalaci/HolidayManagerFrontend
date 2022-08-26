@@ -4,8 +4,10 @@
 <p class="request-msg-green" *ngIf="updating && updatingStatus == 'APPROVED'">This request was approved.</p>
 <mat-icon color="red" *ngIf="updating && updatingStatus == 'DENIED'">close</mat-icon>
 <p class="request-msg-red" *ngIf="updating && updatingStatus == 'DENIED'">This request was declined.</p>
-<mat-icon color="blue" *ngIf="updating && showStartedMessage">event_busy</mat-icon>
-<p class="request-msg-blue" *ngIf="updating && showStartedMessage">You can not modify this holiday, since it has already started or ended.</p>
+<mat-icon color="blue" *ngIf="updating && showStartedMessage && !showHrMessage">event_busy</mat-icon>
+<p class="request-msg-blue" *ngIf="updating && showStartedMessage && !showHrMessage">You can not modify this holiday, since it has already started or ended.</p>
+<mat-icon color="blue" *ngIf="updating && showHrMessage">outgoing_mail</mat-icon>
+<p class="request-msg-blue" *ngIf="updating && showHrMessage">You can not modify this holiday, since it was already sent to the HR department.</p>
 <form id="login-form" [formGroup]="holidayRequestFormGroup" #formDirective="ngForm">
 
 
@@ -27,7 +29,7 @@
   </mat-form-field><br>
 
   <mat-form-field *ngIf="showFieldForStartDate" appearance="outline" color="accent">
-    <input matInput [disabled]="showStartedMessage" [matDatepicker]="pickerStart" name="startDate" placeholder="Select start date" formControlName="startDate" (click)="resetWarnings()">
+    <input matInput [disabled]="showStartedMessage || showHrMessage" [matDatepicker]="pickerStart" name="startDate" placeholder="Select start date" formControlName="startDate" (click)="resetWarnings()">
     <mat-datepicker-toggle matSuffix [for]="pickerStart" (click)="resetWarnings()">
       <mat-icon matDatepickerToggleIcon color="accent">calendar_month</mat-icon>
     </mat-datepicker-toggle>
@@ -35,18 +37,18 @@
   </mat-form-field><br *ngIf="showFieldForStartDate">
 
   <mat-form-field *ngIf="showFieldForEndDate" appearance="outline" color="accent">
-    <input matInput [disabled]="showStartedMessage" [matDatepicker]="pickerEnd" name="endDate" placeholder="Select end date" formControlName="endDate" (click)="resetWarnings()">
+    <input matInput [disabled]="showStartedMessage || showHrMessage" [matDatepicker]="pickerEnd" name="endDate" placeholder="Select end date" formControlName="endDate" (click)="resetWarnings()">
     <mat-datepicker-toggle matSuffix [for]="pickerEnd" (click)="resetWarnings()">
       <mat-icon matDatepickerToggleIcon color="accent">calendar_month</mat-icon></mat-datepicker-toggle>
     <mat-datepicker #pickerEnd></mat-datepicker>
   </mat-form-field><br *ngIf="showFieldForEndDate">
 
   <mat-form-field *ngIf="showFieldForSubstitute" appearance="outline" color="accent">
-    <input matInput name="substitute" [readonly]="showStartedMessage" formControlName="substitute" placeholder="Substitute" (click)="resetWarnings()">
+    <input matInput name="substitute" [readonly]="showStartedMessage || showHrMessage" formControlName="substitute" placeholder="Substitute" (click)="resetWarnings()">
   </mat-form-field><br *ngIf="showFieldForSubstitute">
 
   <mat-form-field *ngIf="showFieldForReplacement" appearance="outline" color="accent">
-    <mat-select placeholder="Teamlead replacement" [disabled]="showStartedMessage"  (click)="resetWarnings()" #matRef (selectionChange)="onReplacementClick($event.value)">
+    <mat-select placeholder="Teamlead replacement" [disabled]="showStartedMessage || showHrMessage"  (click)="resetWarnings()" #matRef (selectionChange)="onReplacementClick($event.value)">
       <mat-option *ngFor="let user of replacementUserList" [value]="user" (click)="resetWarnings()" >
         {{user.forname + " " + user.surname}}
       </mat-option>
@@ -56,7 +58,7 @@
   <div *ngIf="showFieldForDocument">
     <!--<input type="file" #fileInput (change)="onFileInput(fileInput.files)" /> -->
 
-    <input type="file" id="file" [disabled]="showStartedMessage" class="file-input" accept="application/pdf" #fileInput (click)="resetWarnings()" (change)="onFileInput(fileInput.files)"  required>
+    <input type="file" id="file" [disabled]="showStartedMessage || showHrMessage" class="file-input" accept="application/pdf" #fileInput (click)="resetWarnings()" (change)="onFileInput(fileInput.files)"  required>
     <div class="file-upload">
       {{fileName || "Attach your document."}}
       <button mat-mini-fab *ngIf="!fileName" type="button" color="blue-bg" class="upload-btn"
@@ -72,9 +74,9 @@
 
 
   </div>
-
+  <p *ngIf="!documentExists && updating" class="request-msg-blue">There is no uploaded document.</p>
   <button *ngIf="documentExists && updating" mat-icon-button aria-label="Download icon" id="download-button" (click)="downloadDocument()">
-    <mat-icon class="section-mat-icon">picture_as_pdf</mat-icon>
+    <mat-icon class="section-mat-icon" color="blue">picture_as_pdf</mat-icon>
   </button>
   <br *ngIf="documentExists && updating">
 
@@ -83,7 +85,10 @@
 
   <mat-card class="password-hint" *ngIf="showDateErrorMessage">Invalid date interval.</mat-card>
   <mat-card class="password-hint" *ngIf="showPastDateErrorMessage">The date interval can't be in the past.</mat-card>
+  <mat-card class="password-hint" *ngIf="showReplacementErrorMessage">You must select a replacement.</mat-card>
   <mat-card class="password-hint-green" *ngIf="showSuccessfulMessage">Request sent successfully.</mat-card>
-  <button mat-raised-button type="submit" id="create-button" [disabled]="showStartedMessage" color="accent" *ngIf="showFieldForStartDate" (click) = "verifyHolidayRequest()">{{ updating ? "Update request" : "Create request" }}</button><br>
-  <button mat-raised-button type="button" id="hr-button" color="blue" *ngIf="showFieldForStartDate && updating && updatingStatus == 'APPROVED' && !isTeamlead" (click) = "sendToHr()">Send to HR</button>
+
+  <button mat-raised-button type="submit" id="create-button" [disabled]="showStartedMessage || showHrMessage" color="accent" *ngIf="showFieldForStartDate" (click) = "verifyHolidayRequest()">{{ updating ? "Update request" : "Create request" }}</button><br>
+  <button mat-raised-button type="button" id="hr-button" color="blue" *ngIf="showFieldForStartDate && updating && updatingStatus == 'APPROVED'" (click) = "sendToHr()">Send to HR</button>
+
 </form>

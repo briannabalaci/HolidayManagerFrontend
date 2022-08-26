@@ -58,7 +58,7 @@ export class NavBarComponent implements OnInit {
   }
 
   ngOnDestroy(){
-    this.stompService.disconnectWebSocket()
+    // this.stompService.disconnectWebSocket()
   }
 
   logoutUser(){
