@@ -1,5 +1,7 @@
-import { Component,EventEmitter, Input, OnInit,Output, } from '@angular/core';
+import { Component,EventEmitter, Input, OnInit,Output, ViewChild, } from '@angular/core';
 import { FormBuilder,FormGroupDirective,Validators } from '@angular/forms';
+import { MatOption } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
 import { catchError, map } from 'rxjs';
 import { AdminService } from 'src/app/service/admin.service';
 import { User } from 'src/app/shared/data-type/User';
@@ -26,6 +28,8 @@ interface UserTypeInt {
 
 export class CreateUserFormComponent implements OnInit {
   @Output() clickCreate = new EventEmitter<User>();
+  @ViewChild('matRef') matRef!: MatSelect;
+  @ViewChild('matRef2') matRef2!: MatSelect;
   @Input() parent: any;
   hide = true;
   hide_confirm = true;
@@ -140,6 +144,7 @@ changeType(value: string) {
       console.log(resp);
       this.resetWarnings();
       if (resp == '"User created succesfully!"') {
+        this.clearSelect();
         this.showEmailOkMessage = true;
         this.createUserForm.reset();
         formDirective.resetForm();
@@ -151,6 +156,10 @@ changeType(value: string) {
       this.clickCreate.emit()
     });
     
+  }
+  clearSelect() {
+    this.matRef.options.forEach((data: MatOption) => data.deselect());
+    this.matRef2.options.forEach((data: MatOption) => data.deselect());
   }
 
      
