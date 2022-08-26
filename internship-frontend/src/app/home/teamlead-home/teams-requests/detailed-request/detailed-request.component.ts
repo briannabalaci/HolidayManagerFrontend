@@ -89,7 +89,7 @@ export class DetailedRequestComponent implements OnInit {
 
 
   loadFields() {
-    if(this.decidingStatus == HolidayStatusDto.DENIED || this.decidingStatus == HolidayStatusDto.APPROVED || this.statusRequest == HolidayStatusDto.APPROVED || this.statusRequest == HolidayStatusDto.DENIED) {
+    if(this.decidingStatus == HolidayStatusDto.DENIED || this.decidingStatus == HolidayStatusDto.APPROVED || this.decidingStatus == HolidayStatusDto.SENT || this.statusRequest == HolidayStatusDto.APPROVED || this.statusRequest == HolidayStatusDto.DENIED ||  this.statusRequest == HolidayStatusDto.SENT) {
       this.isDisabled = true;
     }
 

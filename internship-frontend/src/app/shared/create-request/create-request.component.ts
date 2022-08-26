@@ -10,6 +10,7 @@ import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild
 import {FormBuilder, NgForm, Validators} from '@angular/forms';
 import {User, UserType} from "../data-type/User";
 import {HolidayTypeDto} from "../data-type/HolidayDto";
+import { ThisReceiver } from '@angular/compiler';
 
 
 @Component({
@@ -65,6 +66,7 @@ export class CreateRequestComponent implements OnInit {
   showNumberHolidaysErrorMessage = false;
   showPastDateErrorMessage = false;
   showStartedMessage = false;
+  showHrMessage = false;
   showSuccessfulMessage = false;
   showSuccessfulUpdateMessage = false;
   showFieldForStartDate = false;
@@ -114,6 +116,11 @@ export class CreateRequestComponent implements OnInit {
           this.showStartedMessage = true;
         } else {
           this.showStartedMessage = false;
+        }
+        if (this.updatingStatus == 'SENT') {
+          this.showHrMessage = true;
+        } else {
+          this.showHrMessage = false;
         }
       }
     }
@@ -220,6 +227,7 @@ export class CreateRequestComponent implements OnInit {
             this.showError = false
             this.sendHolidayRequest()
           } else {
+            this.clearSelect();
             this.showError = true;
             this.showSuccess = false
             this.showCreateErrorMsg = "You already have a request in the given period.";
@@ -227,6 +235,7 @@ export class CreateRequestComponent implements OnInit {
           }
         })
       } else {
+        this.clearSelect();
         this.showError = true;
         this.showSuccess = false
         this.showCreateErrorMsg = "You don't have enough vacation days.";
