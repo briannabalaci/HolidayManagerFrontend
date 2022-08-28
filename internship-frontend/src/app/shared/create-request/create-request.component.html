@@ -74,7 +74,7 @@
 
 
   </div>
-  <p *ngIf="!documentExists && updating" class="request-msg-blue">There is no uploaded document.</p>
+  <p *ngIf="!documentExists && updating && showFieldForDocument" class="request-msg-blue">There is no uploaded document.</p>
   <button *ngIf="documentExists && updating" mat-icon-button aria-label="Download icon" id="download-button" (click)="downloadDocument()">
     <mat-icon class="section-mat-icon" color="blue">picture_as_pdf</mat-icon>
   </button>
