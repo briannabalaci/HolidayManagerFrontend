@@ -75,6 +75,8 @@ export class NavBarNotificationsComponent implements OnInit {
 
       case "MADE_SUBSTITUTE":
         return "You were made a substitute by "
+      case "END_SUBSTITUTE":
+        return "You are no longer a substitute for "
       case "SENT_SUBSTITUTE":
         return "A holiday request was sent by "
       case "CANCELED_SUBSTITUTE":
@@ -113,19 +115,19 @@ export class NavBarNotificationsComponent implements OnInit {
       case "MADE_SUBSTITUTE":
         return "Substitute"
       case "SENT_SUBSTITUTE":
-        return "Request sent -- substitute"
+        return "Substitute -> Request sent"
       case "CANCELED_SUBSTITUTE":
-        return "Request canceled -- substitute"
+        return "Substitute -> Request canceled"
       case "END_SUBSTITUTE":
-        return "Request canceled by teamlead -- substitute"
+        return "Substitute -> Request canceled"
       case "UPDATE_SUBSTITUTE":
-        return "Request updated -- substitute"
+        return "Substitute -> Request updated"
       case "MORE_DETAILS_SUBSTITUTE":
-        return "More details -- substitute"
+        return "Substitute -> More details"
       case "APPROVED_SUBSTITUTE":
-        return "Request approved -- substitute"
+        return "Substitute -> Request approved"
       case "DENIED_SUBSTITUTE":
-        return "Request denied -- substitute"
+        return "Substitute -> Request denied"
 
       default:
         return "NOTIFICATION"
