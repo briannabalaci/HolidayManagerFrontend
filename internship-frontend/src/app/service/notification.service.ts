@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MyNotification } from '../shared/data-type/Notification';
 import { parseJwt } from '../utils/JWTParser';
-// const URL_BASE = "http://localhost:8090/notification";
-const URL_BASE = "http://Runtimeterrorinternshipapp-env.eba-exhqmhri.us-east-1.elasticbeanstalk.com/notification"
+const URL_BASE = "http://localhost:8090/notification";
+// const URL_BASE = "http://Runtimeterrorinternshipapp-env.eba-exhqmhri.us-east-1.elasticbeanstalk.com/notification"
 
 const GET_UNSEEN_NOTIFICATIONS = `${URL_BASE}/all-unread`;
 const GET_SEEN_NOTIFICATIONS = `${URL_BASE}/all-read`;

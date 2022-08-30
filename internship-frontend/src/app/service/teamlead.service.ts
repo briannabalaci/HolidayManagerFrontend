@@ -8,8 +8,8 @@ import {HolidayDto, HolidayTypeDto} from "../shared/data-type/HolidayDto";
 import {TeamAdd} from "../shared/data-type/Team";
 import {Holiday} from "../shared/data-type/Holiday";
 
-// const URL_BASE = "http://localhost:8090/teamlead";
-const URL_BASE = "http://Runtimeterrorinternshipapp-env.eba-exhqmhri.us-east-1.elasticbeanstalk.com/teamlead"
+const URL_BASE = "http://localhost:8090/teamlead";
+// const URL_BASE = "http://Runtimeterrorinternshipapp-env.eba-exhqmhri.us-east-1.elasticbeanstalk.com/teamlead"
 
 const DECLINE_REQUEST = `${URL_BASE}/holiday/deny`
 const APPROVE_REQUEST = `${URL_BASE}/holiday/approve`
@@ -17,7 +17,7 @@ const MORE_DETAILS = `${URL_BASE}/holiday/details`
 const GET_REQUESTS = `${URL_BASE}/requests?id=`;
 const GET_TEAM_REQUESTS = `${URL_BASE}/team-requests?id=`;
 const GET_PDF = `${URL_BASE}/getPDF?id=`;
-const SENT_TO_HR = `${URL_BASE}/send-to-hr`;
+const SENT_TO_HR = `http://localhost:8090/holiday/send-to-hr`;
 
 @Injectable({
   providedIn: 'root'
@@ -59,8 +59,11 @@ export class TeamleadService {
     });
   }
 
-  public sendToHR(holiday:Holiday):Observable<any> {
-    return this.httpClient.post<TeamAdd>(SENT_TO_HR,holiday);
+  public sendToHR(holiday:Holiday):Observable<Blob> {
+    return this.httpClient.post(SENT_TO_HR, holiday, {
+        responseType: 'blob'
+      }
+    );
   }
 
 }

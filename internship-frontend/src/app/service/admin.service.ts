@@ -5,8 +5,8 @@ import { stringify } from 'querystring';
 import { catchError, map, Observable, tap } from 'rxjs';
 import { UpdateUser, User } from '../shared/data-type/User';
 
-// const URL_BASE = "http://localhost:8090"
-const URL_BASE = "http://Runtimeterrorinternshipapp-env.eba-exhqmhri.us-east-1.elasticbeanstalk.com"
+const URL_BASE = "http://localhost:8090"
+// const URL_BASE = "http://Runtimeterrorinternshipapp-env.eba-exhqmhri.us-east-1.elasticbeanstalk.com"
 
 const ADD_USER = URL_BASE + "/user/add-user"
 const GET_ALL = URL_BASE + "/user/get-all-users"

@@ -12,6 +12,7 @@ import {User, UserType} from "../data-type/User";
 import {HolidayTypeDto} from "../data-type/HolidayDto";
 import {TeamleadService} from "../../service/teamlead.service";
 import { ThisReceiver } from '@angular/compiler';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-create-request',
@@ -677,8 +678,10 @@ export class CreateRequestComponent implements OnInit {
             }
           }
           console.log("------: "+holidayData)
-          // this.teamleadService.sendToHR(holidayData).subscribe( data => {})
-        });
+          this.teamleadService.sendToHR(holidayData).subscribe(blob => {
+
+            saveAs(blob, "Team_Lead_Data");
+          })        });
       }
       else{//there is no file
         const datePipe = new DatePipe('en-US');
@@ -693,8 +696,10 @@ export class CreateRequestComponent implements OnInit {
           }
         }
         console.log("------: "+holidayData)
-        // this.teamleadService.sendToHR(holidayData).subscribe( data => {})
-      }
+        this.teamleadService.sendToHR(holidayData).subscribe(blob => {
+
+          saveAs(blob, "Team_Lead_Data");
+        })      }
     }
     else{//is not a special holiday
       const datePipe = new DatePipe('en-US');
@@ -720,8 +725,10 @@ export class CreateRequestComponent implements OnInit {
         }
       }
       console.log("------: "+holidayData)
-      // this.teamleadService.sendToHR(holidayData).subscribe( data => {})
-    }
+      this.teamleadService.sendToHR(holidayData).subscribe(blob => {
+
+        saveAs(blob, "Team_Lead_Data");
+      })    }
   }
     showMessage()
     {
