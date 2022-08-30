@@ -8,15 +8,16 @@ import {HolidayDto, HolidayTypeDto} from "../shared/data-type/HolidayDto";
 import {TeamAdd} from "../shared/data-type/Team";
 import {Holiday} from "../shared/data-type/Holiday";
 
-const URL_BASE = "http://localhost:8090/teamlead/";
+// const URL_BASE = "http://localhost:8090/teamlead";
+const URL_BASE = "http://Runtimeterrorinternshipapp-env.eba-exhqmhri.us-east-1.elasticbeanstalk.com/teamlead"
 
-const DECLINE_REQUEST = `http://localhost:8090/holiday/deny`
-const APPROVE_REQUEST = `http://localhost:8090/holiday/approve`
-const MORE_DETAILS = `http://localhost:8090/holiday/details`
-const GET_REQUESTS = `${URL_BASE}requests?id=`;
-const GET_TEAM_REQUESTS = `${URL_BASE}team-requests?id=`;
-const GET_PDF = `${URL_BASE}getPDF?id=`;
-const SENT_TO_HR = `${URL_BASE}send-to-hr`;
+const DECLINE_REQUEST = `${URL_BASE}/holiday/deny`
+const APPROVE_REQUEST = `${URL_BASE}/holiday/approve`
+const MORE_DETAILS = `${URL_BASE}/holiday/details`
+const GET_REQUESTS = `${URL_BASE}/requests?id=`;
+const GET_TEAM_REQUESTS = `${URL_BASE}/team-requests?id=`;
+const GET_PDF = `${URL_BASE}/getPDF?id=`;
+const SENT_TO_HR = `${URL_BASE}/send-to-hr`;
 
 @Injectable({
   providedIn: 'root'

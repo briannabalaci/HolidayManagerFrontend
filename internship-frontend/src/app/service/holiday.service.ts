@@ -7,7 +7,9 @@ import {HolidayDto, HolidayStatusDto, HolidayTypeDto, HolidayTypeUserName} from 
 import {parseJwt} from "../utils/JWTParser";
 import {CookieService} from "ngx-cookie-service";
 
-const URL_BASE = "http://localhost:8090/holiday"
+// const URL_BASE = "http://localhost:8090/holiday"
+const URL_BASE = "http://Runtimeterrorinternshipapp-env.eba-exhqmhri.us-east-1.elasticbeanstalk.com/holiday"
+
 const GET_USERS_HOLIDAYS = URL_BASE + "/get-users-holidays"
 const CREATE_HOLIDAY = URL_BASE + "/add-holiday"
 

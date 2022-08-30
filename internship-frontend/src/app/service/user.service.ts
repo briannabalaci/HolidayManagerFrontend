@@ -6,8 +6,10 @@ import {User, UserName} from "../shared/data-type/User";
 import {parseJwt} from "../utils/JWTParser";
 import {CookieService} from "ngx-cookie-service";
 
-const URL_BASE = "http://localhost:8090/user"
-const LOGIN = "http://localhost:8090/login/auth"
+// const URL_BASE = "http://localhost:8090/user"
+const URL_BASE = "http://Runtimeterrorinternshipapp-env.eba-exhqmhri.us-east-1.elasticbeanstalk.com/user"
+
+const LOGIN = "http://Runtimeterrorinternshipapp-env.eba-exhqmhri.us-east-1.elasticbeanstalk.com/login/auth"
 const GET_ALL_USERS = URL_BASE + "/get-all-users"
 const GET_ALL_USERS_WITHOUT_TEAM = URL_BASE + "/users-noteam"
 const GET_USER = `${URL_BASE}/user-info`
