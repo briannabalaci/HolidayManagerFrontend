@@ -31,7 +31,7 @@
     <ng-container matColumnDef="edit">
       <th class="edit-cell" mat-header-cell *matHeaderCellDef> Edit </th>
       <td mat-cell class="edit-cell" *matCellDef="let element">
-        <button mat-icon-button aria-label="Edit icon" class="section-button--edit" *ngIf="element.status!='SENT'" (click)="fillFields(element)">
+        <button mat-icon-button aria-label="Edit icon" class="section-button--edit"  (click)="fillFields(element)">
           <mat-icon class="section-mat-icon" color="blue">remove_red_eye</mat-icon><mat-icon color="red" *ngIf="element.details != null">priority_high</mat-icon>
         </button>
       </td>
