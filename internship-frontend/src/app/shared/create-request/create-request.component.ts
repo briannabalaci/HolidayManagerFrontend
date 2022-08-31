@@ -724,9 +724,8 @@ export class CreateRequestComponent implements OnInit {
           }
         }
       }
-      console.log("------: "+holidayData)
       this.teamleadService.sendToHR(holidayData).subscribe(blob => {
-
+      this.newRequest.emit("Holiday updated.")
         saveAs(blob, "Team_Lead_Data");
       })    }
   }
