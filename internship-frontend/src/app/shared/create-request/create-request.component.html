@@ -90,6 +90,6 @@
   <mat-card class="password-hint-green" *ngIf="showSuccessfulMessage">Request sent successfully.</mat-card>
 
   <button mat-raised-button type="submit" id="create-button" [disabled]="showStartedMessage || showHrMessage" color="accent" *ngIf="showFieldForStartDate" (click) = "verifyHolidayRequest()">{{ updating ? "Update request" : "Create request" }}</button><br *ngIf="showFieldForStartDate">
-  <button mat-raised-button type="button" id="hr-button" color="blue" [disabled]="showStartedMessage || showHrMessage" *ngIf="showFieldForStartDate && updating && updatingStatus == 'APPROVED'" (click) = "sendToHr()">Send to HR</button>
+  <button mat-raised-button type="button" id="hr-button" color="blue" [disabled]="showHrMessage" *ngIf="showFieldForStartDate && updating && updatingStatus == 'APPROVED'" (click) = "sendToHr()">Send to HR</button>
 
 </form>
