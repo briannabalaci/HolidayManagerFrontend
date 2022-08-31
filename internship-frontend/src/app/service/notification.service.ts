@@ -3,11 +3,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MyNotification } from '../shared/data-type/Notification';
 import { parseJwt } from '../utils/JWTParser';
-const URL = "http://localhost:8090/notification";
-const GET_UNSEEN_NOTIFICATIONS = `${URL}/all-unread`;
-const GET_SEEN_NOTIFICATIONS = `${URL}/all-read`;
-const UPDATE_SEEN_NOTIFICATIONS = `${URL}/seen-all/`;
-const DELETE_SEEN_NOTIFICATIONS = `${URL}/delete-read/`;
+const URL_BASE = "http://localhost:8090/notification";
+// const URL_BASE = "http://Runtimeterrorinternshipapp-env.eba-exhqmhri.us-east-1.elasticbeanstalk.com/notification"
+
+const GET_UNSEEN_NOTIFICATIONS = `${URL_BASE}/all-unread`;
+const GET_SEEN_NOTIFICATIONS = `${URL_BASE}/all-read`;
+const UPDATE_SEEN_NOTIFICATIONS = `${URL_BASE}/seen-all/`;
+const DELETE_SEEN_NOTIFICATIONS = `${URL_BASE}/delete-read/`;
 @Injectable({
   providedIn: 'root'
 })

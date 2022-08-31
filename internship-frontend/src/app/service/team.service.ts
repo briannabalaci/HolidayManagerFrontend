@@ -5,6 +5,8 @@ import {Team, TeamAdd, TeamUpdate} from "../shared/data-type/Team";
 import {coerceStringArray} from "@angular/cdk/coercion";
 
 const URL_BASE = "http://localhost:8090/team"
+// const URL_BASE = "http://Runtimeterrorinternshipapp-env.eba-exhqmhri.us-east-1.elasticbeanstalk.com/team"
+
 const GET_ALL_TEAMS = URL_BASE+"/all"
 const GET_TEAM_MEMBERS = URL_BASE+"/members"
 const ADD_TEAM = URL_BASE+"/add"

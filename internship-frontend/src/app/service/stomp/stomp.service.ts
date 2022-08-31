@@ -6,7 +6,9 @@ import * as Stomp from 'stompjs';
 })
 export class StompService {
 
-  socket = new SockJS('http://localhost:8090/sba-websocket');
+  URL_BASE = "http://localhost:8090"
+  // URL_BASE = "http://Runtimeterrorinternshipapp-env.eba-exhqmhri.us-east-1.elasticbeanstalk.com"
+  socket = new SockJS(this.URL_BASE + "/sba-websocket");
   stompClient = Stomp.over(this.socket);
 
   constructor() { }

@@ -62,13 +62,26 @@ export class DetailedRequestComponent implements OnInit {
   successString: string;
   errorString: string;
   isDisabled = false;
+  showStartedMessage = false;
 
   ngOnInit(): void {
 
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    const today = new Date();
+    const yesterday = new Date(today);
+    //yesterday.setDate(yesterday.getDate() - 1);
+
     this.loadFields()
+
+    if (new Date(this.decidingStartDate) <= today) {
+      this.showStartedMessage = true;
+      this.isDisabled = true;
+    } else {
+      this.showStartedMessage = false;
+    }
+
     this.holidayRequestFormGroup.patchValue({
       startDate: new Date(this.decidingStartDate),
       endDate: new Date(this.decidingEndDate),
