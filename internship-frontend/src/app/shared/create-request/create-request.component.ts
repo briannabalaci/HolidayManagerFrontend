@@ -46,6 +46,7 @@ export class CreateRequestComponent implements OnInit {
 
   userForUpdate: User;
   requestForUpdate: Holiday;
+  chosenSubstitute: User;
 
   documentExists = false;
 
@@ -78,13 +79,14 @@ export class CreateRequestComponent implements OnInit {
   showReplacementErrorMessage = false;
   showFieldForReplacement = false;
   fileName = '';
+  name = ''
   holidayList: HolidayTypeView[] = [
     {value: 'rest-holiday', viewValue: 'Rest holiday'},
     {value: 'special-holiday', viewValue: 'Special holiday'},
     {value: 'unpaid-holiday', viewValue: 'Unpaid holiday'}
   ];
   replacementUserList: User[];
-  substitute:User
+  substitute: User;
   constructor(private formBuilder: FormBuilder, private cookieService: CookieService, private holidayService: HolidayService, private userService: UserService) {
   }
 
@@ -93,6 +95,15 @@ export class CreateRequestComponent implements OnInit {
       this.refreshSubstitutes();
 
     }
+    this.userService.getUserSubstitute(this.updatingId).subscribe(result => {
+      console.log(result)
+      for (let elem of this.replacementUserList) {
+        if (result.id == elem.id) {
+          this.substitute = elem;
+          
+        }
+      }
+    })
   }
 
   ngOnChanges(changes: SimpleChanges): void {

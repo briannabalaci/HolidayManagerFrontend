@@ -8,7 +8,7 @@
 <p class="request-msg-blue" *ngIf="updating && showStartedMessage && !showHrMessage">You can not modify this holiday, since it has already started or ended.</p>
 <mat-icon color="blue" *ngIf="updating && showHrMessage">outgoing_mail</mat-icon>
 <p class="request-msg-blue" *ngIf="updating && showHrMessage">You can not modify this holiday, since it was already sent to the HR department.</p>
-<form id="login-form" [formGroup]="holidayRequestFormGroup" #formDirective="ngForm">
+<form id="login-form"  [formGroup]="holidayRequestFormGroup" #formDirective="ngForm">
 
 
   <div *ngIf="updating && details != '' ">
@@ -48,7 +48,7 @@
   </mat-form-field><br *ngIf="showFieldForSubstitute">
 
   <mat-form-field *ngIf="showFieldForReplacement" appearance="outline" color="accent">
-    <mat-select placeholder="Teamlead replacement" [disabled]="showStartedMessage || showHrMessage"  (click)="resetWarnings()" #matRef (selectionChange)="onReplacementClick($event.value)">
+    <mat-select  [(ngModel)]="substitute" [ngModelOptions]="{standalone: true}" [disabled]="showStartedMessage || showHrMessage"  (click)="resetWarnings()" #matRef (selectionChange)="onReplacementClick($event.value)">
       <mat-option *ngFor="let user of replacementUserList" [value]="user" (click)="resetWarnings()" >
         {{user.forname + " " + user.surname}}
       </mat-option>
