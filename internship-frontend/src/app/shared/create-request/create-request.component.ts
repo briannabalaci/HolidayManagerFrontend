@@ -70,6 +70,7 @@ export class CreateRequestComponent implements OnInit {
   showStartedMessage = false;
   showHrMessage = false;
   showSuccessfulMessage = false;
+  showSuccessfulHrMessage = false;
   showSuccessfulUpdateMessage = false;
   showFieldForStartDate = false;
   showFieldForEndDate = false;
@@ -679,7 +680,10 @@ export class CreateRequestComponent implements OnInit {
           }
           console.log("------: "+holidayData)
           this.teamleadService.sendToHR(holidayData).subscribe(blob => {
-
+            this.refreshData();
+            this.showHrMessage = true;
+            this.updatingStatus = 'SENT';
+            this.showSuccessfulHrMessage = true;
             saveAs(blob, "Team_Lead_Data");
           })        });
       }
@@ -697,8 +701,11 @@ export class CreateRequestComponent implements OnInit {
         }
         console.log("------: "+holidayData)
         this.teamleadService.sendToHR(holidayData).subscribe(blob => {
-
+          this.showHrMessage = true;
+          this.updatingStatus = 'SENT';
+          this.showSuccessfulHrMessage = true;
           saveAs(blob, "Team_Lead_Data");
+          this.refreshData();
         })      }
     }
     else{//is not a special holiday
@@ -726,7 +733,10 @@ export class CreateRequestComponent implements OnInit {
       }
       console.log("------: "+holidayData)
       this.teamleadService.sendToHR(holidayData).subscribe(blob => {
-
+        this.refreshData();
+        this.updatingStatus = 'SENT';
+        this.showSuccessfulHrMessage = true;
+        this.showHrMessage = true;
         saveAs(blob, "Team_Lead_Data");
       })    }
   }
@@ -760,6 +770,7 @@ export class CreateRequestComponent implements OnInit {
     this.showNumberHolidaysErrorMessage = false;
     this.showPastDateErrorMessage = false;
     this.showReplacementErrorMessage = false;
+    this.showSuccessfulHrMessage = false;
   }
 
   clearSelect() {
