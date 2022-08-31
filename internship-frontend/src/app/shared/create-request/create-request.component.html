@@ -8,7 +8,7 @@
 <p class="request-msg-blue" *ngIf="updating && showStartedMessage && !showHrMessage">You can not modify this holiday, since it has already started or ended.</p>
 <mat-icon color="blue" *ngIf="updating && showHrMessage">outgoing_mail</mat-icon>
 <p class="request-msg-blue" *ngIf="updating && showHrMessage">You can not modify this holiday, since it was already sent to the HR department.</p>
-<form id="login-form" [formGroup]="holidayRequestFormGroup" #formDirective="ngForm">
+<form id="login-form"  [formGroup]="holidayRequestFormGroup" #formDirective="ngForm">
 
 
   <div *ngIf="updating && details != '' ">
@@ -48,7 +48,7 @@
   </mat-form-field><br *ngIf="showFieldForSubstitute">
 
   <mat-form-field *ngIf="showFieldForReplacement" appearance="outline" color="accent">
-    <mat-select placeholder="Teamlead replacement" [disabled]="showStartedMessage || showHrMessage"  (click)="resetWarnings()" #matRef (selectionChange)="onReplacementClick($event.value)">
+    <mat-select  [(ngModel)]="substitute" [ngModelOptions]="{standalone: true}" [disabled]="showStartedMessage || showHrMessage"  (click)="resetWarnings()" #matRef (selectionChange)="onReplacementClick($event.value)">
       <mat-option *ngFor="let user of replacementUserList" [value]="user" (click)="resetWarnings()" >
         {{user.forname + " " + user.surname}}
       </mat-option>
@@ -86,9 +86,10 @@
   <mat-card class="password-hint" *ngIf="showDateErrorMessage">Invalid date interval.</mat-card>
   <mat-card class="password-hint" *ngIf="showPastDateErrorMessage">The date interval can't be in the past.</mat-card>
   <mat-card class="password-hint" *ngIf="showReplacementErrorMessage">You must select a replacement.</mat-card>
+  <mat-card class="password-hint-green" *ngIf="showSuccessfulHrMessage">Request sent successfully.</mat-card>
   <mat-card class="password-hint-green" *ngIf="showSuccessfulMessage">Request sent successfully.</mat-card>
 
-  <button mat-raised-button type="submit" id="create-button" [disabled]="showStartedMessage || showHrMessage" color="accent" *ngIf="showFieldForStartDate" (click) = "verifyHolidayRequest()">{{ updating ? "Update request" : "Create request" }}</button><br>
+  <button mat-raised-button type="submit" id="create-button" [disabled]="showStartedMessage || showHrMessage" color="accent" *ngIf="showFieldForStartDate" (click) = "verifyHolidayRequest()">{{ updating ? "Update request" : "Create request" }}</button><br *ngIf="showFieldForStartDate">
   <button mat-raised-button type="button" id="hr-button" color="blue" [disabled]="showStartedMessage || showHrMessage" *ngIf="showFieldForStartDate && updating && updatingStatus == 'APPROVED'" (click) = "sendToHr()">Send to HR</button>
 
 </form>

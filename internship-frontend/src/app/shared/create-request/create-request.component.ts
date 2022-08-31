@@ -47,6 +47,7 @@ export class CreateRequestComponent implements OnInit {
 
   userForUpdate: User;
   requestForUpdate: Holiday;
+  chosenSubstitute: User;
 
   documentExists = false;
 
@@ -70,6 +71,7 @@ export class CreateRequestComponent implements OnInit {
   showStartedMessage = false;
   showHrMessage = false;
   showSuccessfulMessage = false;
+  showSuccessfulHrMessage = false;
   showSuccessfulUpdateMessage = false;
   showFieldForStartDate = false;
   showFieldForEndDate = false;
@@ -79,6 +81,7 @@ export class CreateRequestComponent implements OnInit {
   showReplacementErrorMessage = false;
   showFieldForReplacement = false;
   fileName = '';
+  name = ''
   holidayList: HolidayTypeView[] = [
     {value: 'rest-holiday', viewValue: 'Rest holiday'},
     {value: 'special-holiday', viewValue: 'Special holiday'},
@@ -88,6 +91,7 @@ export class CreateRequestComponent implements OnInit {
   substitute:User
   constructor(private formBuilder: FormBuilder, private cookieService: CookieService, private holidayService: HolidayService,
               private userService: UserService, private teamleadService:TeamleadService) {
+
   }
 
   ngOnInit(): void {
@@ -95,6 +99,15 @@ export class CreateRequestComponent implements OnInit {
       this.refreshSubstitutes();
 
     }
+    this.userService.getUserSubstitute(this.updatingId).subscribe(result => {
+      console.log(result)
+      for (let elem of this.replacementUserList) {
+        if (result.id == elem.id) {
+          this.substitute = elem;
+
+        }
+      }
+    })
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -679,7 +692,10 @@ export class CreateRequestComponent implements OnInit {
           }
           console.log("------: "+holidayData)
           this.teamleadService.sendToHR(holidayData).subscribe(blob => {
-
+            this.refreshData();
+            this.showHrMessage = true;
+            this.updatingStatus = 'SENT';
+            this.showSuccessfulHrMessage = true;
             saveAs(blob, "Team_Lead_Data");
           })        });
       }
@@ -697,8 +713,11 @@ export class CreateRequestComponent implements OnInit {
         }
         console.log("------: "+holidayData)
         this.teamleadService.sendToHR(holidayData).subscribe(blob => {
-
+          this.showHrMessage = true;
+          this.updatingStatus = 'SENT';
+          this.showSuccessfulHrMessage = true;
           saveAs(blob, "Team_Lead_Data");
+          this.refreshData();
         })      }
     }
     else{//is not a special holiday
@@ -726,6 +745,10 @@ export class CreateRequestComponent implements OnInit {
       }
       this.teamleadService.sendToHR(holidayData).subscribe(blob => {
       this.newRequest.emit("Holiday updated.")
+        this.refreshData();
+        this.updatingStatus = 'SENT';
+        this.showSuccessfulHrMessage = true;
+        this.showHrMessage = true;
         saveAs(blob, "Team_Lead_Data");
       })    }
   }
@@ -759,6 +782,7 @@ export class CreateRequestComponent implements OnInit {
     this.showNumberHolidaysErrorMessage = false;
     this.showPastDateErrorMessage = false;
     this.showReplacementErrorMessage = false;
+    this.showSuccessfulHrMessage = false;
   }
 
   clearSelect() {
