@@ -238,7 +238,7 @@ export class TeamsRequestsComponent implements OnInit,OnChanges {
     console.log("PDF generated");
     this.teamLeadService
     .getPDF(this.user!.team!.id!)
-    .subscribe(blob => saveAs(blob,"Team_Lead_Data"));
+    .subscribe(blob => saveAs(blob,"TeamReport_"+this.user.surname+" "+this.user.forname));
   };
 
   }

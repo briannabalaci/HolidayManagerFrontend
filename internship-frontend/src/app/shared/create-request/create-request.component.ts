@@ -9,7 +9,7 @@ import {UserService} from "../../service/user.service";
 import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {FormBuilder, NgForm, Validators} from '@angular/forms';
 import {User, UserType} from "../data-type/User";
-import {HolidayTypeDto} from "../data-type/HolidayDto";
+import {HolidayDto, HolidayTypeDto} from "../data-type/HolidayDto";
 import {TeamleadService} from "../../service/teamlead.service";
 import { ThisReceiver } from '@angular/compiler';
 import { saveAs } from 'file-saver';
@@ -696,7 +696,7 @@ export class CreateRequestComponent implements OnInit {
             this.showHrMessage = true;
             this.updatingStatus = 'SENT';
             this.showSuccessfulHrMessage = true;
-            saveAs(blob, "Team_Lead_Data");
+            saveAs(blob, "CerereConcediu");
           })        });
       }
       else{//there is no file
@@ -716,7 +716,7 @@ export class CreateRequestComponent implements OnInit {
           this.showHrMessage = true;
           this.updatingStatus = 'SENT';
           this.showSuccessfulHrMessage = true;
-          saveAs(blob, "Team_Lead_Data");
+          saveAs(blob, "CerereConcediu");
           this.refreshData();
         })      }
     }
@@ -744,12 +744,14 @@ export class CreateRequestComponent implements OnInit {
         }
       }
       this.teamleadService.sendToHR(holidayData).subscribe(blob => {
-      this.newRequest.emit("Holiday updated.")
+        let h:HolidayDto = new HolidayDto()
+        this.holidayService.getHoliday(holidayData.id!).subscribe( data => h = data)
+        this.newRequest.emit("Holiday updated.")
         this.refreshData();
         this.updatingStatus = 'SENT';
         this.showSuccessfulHrMessage = true;
         this.showHrMessage = true;
-        saveAs(blob, "Team_Lead_Data");
+        saveAs(blob, "CerereConcediu");
       })    }
   }
     showMessage()
